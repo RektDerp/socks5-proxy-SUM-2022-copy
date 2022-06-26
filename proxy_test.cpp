@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <thread>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ts/buffer.hpp>
@@ -10,6 +10,15 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <chrono>
+#ifdef _WIN32
+    #include <windows.h>
+    #define WININIT()({\
+	    SetConsoleCP(1251);\
+	    SetConsoleOutputCP(1251);\
+	})
+#else
+    #define WININIT()({})
+#endif
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
@@ -240,8 +249,7 @@ private:
 
 int main()
 {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+	WININIT();
 	ba::io_context context;
 	std::thread thrContext = std::thread([&]()
 																			 { context.run(); });
