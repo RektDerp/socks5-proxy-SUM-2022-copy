@@ -36,3 +36,6 @@
 *.vcxproj*
 /.vs
 /Debug
+
+/bin
+/CMakeFiles
