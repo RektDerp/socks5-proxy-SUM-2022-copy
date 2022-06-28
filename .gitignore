@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# MVS 2019
+*.sln
+*.vcxproj*
+/.vs
+/Debug
