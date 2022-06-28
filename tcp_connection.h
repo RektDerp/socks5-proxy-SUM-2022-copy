@@ -13,6 +13,8 @@ struct ver_packet
 	char Method[255];
 };
 
+using barray = boost::array<unsigned char, BUFFER_LEN>;
+
 class tcp_connection : public boost::enable_shared_from_this<tcp_connection>
 {
 public:
@@ -50,8 +52,20 @@ private:
 
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
-	boost::array<unsigned char, BUFFER_LEN> client_buf_ {};
-	boost::array<unsigned char, BUFFER_LEN> server_buf_ {};
+	
+	barray client_buf_ {};
+	barray server_buf_ {};
 };
+
+inline std::string formIpAddressString(barray buf, size_t offset)
+{
+	std::string ip_address;
+	for (int i = 0; i < 4; i++)
+	{
+		ip_address += std::to_string((int)buf[offset + i]);
+		if (i != 3) ip_address += '.';
+	}
+	return ip_address;
+}
 
 #endif // _TCP_CONNECTION_H

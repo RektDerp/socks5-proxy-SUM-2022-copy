@@ -9,7 +9,7 @@ tcp_server::tcp_server(ba::io_context& io_context):
 
 void tcp_server::start_accept()
 {
-	std::cout << "waiting for new client... " << acceptor_.local_endpoint() << std::endl;
+	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
 	tcp_connection::pointer new_connection = tcp_connection::create(io_context_);
 
 	acceptor_.async_accept(new_connection->socket(),
@@ -21,6 +21,7 @@ void tcp_server::handle_accept(tcp_connection::pointer new_connection, const boo
 {
 	if (!error)
 	{
+		std::cout << "[server] client connected" << std::endl;
 		new_connection->start();
 	}
 
