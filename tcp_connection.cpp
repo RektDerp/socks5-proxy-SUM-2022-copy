@@ -1,8 +1,5 @@
 #include "tcp_connection.h"
 
-#include <boost/bind.hpp>
-
-
 void tcp_connection::init()
 {
 	std::cout << "started negotiations on " << client_socket_.local_endpoint() << std::endl;

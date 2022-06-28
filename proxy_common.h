@@ -12,7 +12,6 @@
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
-//const ba::ip::tcp ipv4 = ba::ip::tcp::v4();
 
 const size_t BUFFER_LEN = 8192;
 const unsigned short listen_port = 1080;
