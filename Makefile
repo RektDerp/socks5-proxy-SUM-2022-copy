@@ -16,3 +16,5 @@ $(bindir) :
 	mkdir -p $(bindir)
 clean :
 	rm -rf *.o $(bindir)
+format : 
+	clang-format -i $(sources)
