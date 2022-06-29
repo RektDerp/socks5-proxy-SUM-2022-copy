@@ -22,6 +22,11 @@ int main()
 	}
 	catch (std::exception &er)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << "[main] " << er.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << "[main] " << er.what() << std::endl;
 	}
 

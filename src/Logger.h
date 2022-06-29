@@ -1,63 +1,185 @@
-#ifndef CUSTOM_CLogger_H
-#define CUSTOM_CLogger_H
-#include <fstream>
+//////////////////////////////////////////////////////////////////////////////////////
+// @File Name:     Logger.h                                                  //
+// @Author:        Pankaj Choudhary                                          //
+// @Version:       0.0.1                                                     //
+// @L.M.D:         13th April 2015                                           //
+// @Upated:        23rd June 2021 by Raj Laddha                              //
+// @Description:   For Logging into file                                     //
+//                                                                           // 
+// Detail Description:                                                       //
+// Implemented complete logging mechanism, Supporting multiple logging type  //
+// like as file based logging, console base logging etc. It also supported   //
+// for different log type.                                                   //
+//                                                                           //
+// Thread Safe logging mechanism. Compatible with VC++ (Windows platform)    //
+// as well as G++ (Linux platform)                                           //
+//                                                                           //
+// Supported Log Type: ERROR, ALARM, ALWAYS, INFO, BUFFER, TRACE, DEBUG      //
+//                                                                           //
+// No control for ERROR, ALRAM and ALWAYS messages. These type of messages   //
+// should be always captured.                                                //
+//                                                                           //
+// BUFFER log type should be use while logging raw buffer or raw messages    //
+//                                                                           //
+// Having direct interface as well as C++ Singleton inface. can use          //
+// whatever interface want.                                                  //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+#ifndef _LOGGER_H_
+#define _LOGGER_H_
+
+// C++ Header File(s)
 #include <iostream>
-#include <cstdarg>
+#include <fstream>
+#include <sstream>
 #include <string>
-using namespace std;
-#define LOGGER Logger::GetLogger()
-/**
-*   Singleton Logger Class.
-*/
-class Logger
-{
-public:
-    /**
-    *   Logs a message
-    *   @param sMessage message to be logged.
-    */
-    void Log(const std::string& sMessage);
-    /**
-    *   Variable Length Logger function
-    *   @param format string for the message to be logged.
-    */
-    void Log(const char* format, ...);
-    /**
-    *   << overloaded function to Logs a message
-    *   @param sMessage message to be logged.
-    */
-    Logger& operator<<(const string& sMessage);
-    /**
-    *   Funtion to create the instance of logger class.
-    *   @return singleton object of Clogger class..
-    */
-    static Logger* GetLogger();
-    
-    ~Logger();  
-private:
-    /**
-    *    Default constructor for the Logger class.
-    */
-    Logger();
-    /**
-    *   copy constructor for the Logger class.
-    */
-    Logger(const Logger&) {};             // copy constructor is private
-    /**
-    *   assignment operator for the Logger class.
-    */
-    Logger& operator=(const Logger&) { return *this; };  // assignment operator is private
-    /**
-    *   Log file name.
-    **/
-    static const std::string m_sFileName;
-    /**
-    *   Singleton logger class object pointer.
-    **/
-    static Logger* m_pThis;
-    /**
-    *   Log file stream object.
-    **/
-    static ofstream m_Logfile;
-};
+
+#ifdef _WIN32
+// Win Socket Header File(s)
+#include <Windows.h>
+#include <process.h>
+#else
+// POSIX Socket Header File(s)
+#include <errno.h>
+#include <pthread.h>
 #endif
+
+namespace CPlusPlusLogging
+{
+    // Direct Interface for logging into log file or console using MACRO(s)
+#define LOG_ERROR(x)    Logger::getInstance()->error(x)
+#define LOG_ALARM(x)	   Logger::getInstance()->alarm(x)
+#define LOG_ALWAYS(x)	Logger::getInstance()->always(x)
+#define LOG_INFO(x)     Logger::getInstance()->info(x)
+#define LOG_BUFFER(x)   Logger::getInstance()->buffer(x)
+#define LOG_TRACE(x)    Logger::getInstance()->trace(x)
+#define LOG_DEBUG(x)    Logger::getInstance()->debug(x)
+
+// Default value for maximum number of log files 
+#define MAX_LOG_FILES 100
+
+// Default size of a log file in bytes
+#define LOG_FILE_SIZE 300000
+
+// enum for LOG_LEVEL
+    typedef enum LOG_LEVEL
+    {
+        ENABLE_LOG = 1,
+        LOG_LEVEL_INFO = 2,
+        LOG_LEVEL_BUFFER = 3,
+        LOG_LEVEL_TRACE = 4,
+        LOG_LEVEL_DEBUG = 5,
+        DISABLE_LOG = 6
+    } LogLevel;
+
+    // enum for LOG_TYPE
+    typedef enum LOG_TYPE
+    {
+        NO_LOG = 1,
+        CONSOLE = 2,
+        FILE_LOG = 3,
+    }LogType;
+
+    class Logger
+    {
+    public:
+        static Logger* getInstance() throw ();
+
+        // Interface for Error Log 
+        void error(const char* text) throw();
+        void error(std::string& text) throw();
+        void error(std::ostringstream& stream) throw();
+
+        // Interface for Alarm Log 
+        void alarm(const char* text) throw();
+        void alarm(std::string& text) throw();
+        void alarm(std::ostringstream& stream) throw();
+
+        // Interface for Always Log 
+        void always(const char* text) throw();
+        void always(std::string& text) throw();
+        void always(std::ostringstream& stream) throw();
+
+        // Interface for Buffer Log 
+        void buffer(const char* text) throw();
+        void buffer(std::string& text) throw();
+        void buffer(std::ostringstream& stream) throw();
+
+        // Interface for Info Log 
+        void info(const char* text) throw();
+        void info(std::string& text) throw();
+        void info(std::ostringstream& stream) throw();
+
+        // Interface for Trace log 
+        void trace(const char* text) throw();
+        void trace(std::string& text) throw();
+        void trace(std::ostringstream& stream) throw();
+
+        // Interface for Debug log 
+        void debug(const char* text) throw();
+        void debug(std::string& text) throw();
+        void debug(std::ostringstream& stream) throw();
+
+        // Error and Alarm log must be always enable
+        // Hence, there is no interfce to control error and alarm logs
+
+        // Interfaces to control log levels
+        void updateLogLevel(LogLevel logLevel);
+        void enaleLog();  // Enable all log levels
+        void disableLog(); // Disable all log levels, except error and alarm
+
+        // Interfaces to control log Types
+        void updateLogType(LogType logType);
+        void enableConsoleLogging();
+        void enableFileLogging();
+
+        // Interfaces to control roll over mechanism
+        void updateMaxLogFiles(const size_t maxFiles);
+        void updateLogSize(const size_t size);
+
+
+    protected:
+        Logger();
+        ~Logger();
+
+        // Wrapper function for lock/unlock
+        // For Extensible feature, lock and unlock should be in protected
+        void lock();
+        void unlock();
+
+        std::string getCurrentTime();
+
+    private:
+        void logIntoFile(std::string& data);
+        void logOnConsole(std::string& data);
+        Logger(const Logger& obj) {}
+        void operator=(const Logger& obj) {}
+        void rollLogFiles();
+        void configure();
+
+    private:
+        static Logger* m_Instance;
+        std::ofstream           m_File;
+
+#ifdef	_WIN32
+        CRITICAL_SECTION        m_Mutex;
+#else
+        pthread_mutexattr_t     m_Attr;
+        pthread_mutex_t         m_Mutex;
+#endif
+
+        LogLevel                m_LogLevel;
+        LogType                 m_LogType;
+
+        unsigned int		 logSize; // Size of a log file in bytes
+        unsigned int		 maxLogFiles; // Maximum number of log files
+        unsigned int		 logFilesCount; // Count of existing log files 
+
+
+
+    };
+
+} // End of namespace
+
+#endif // End of _LOGGER_H_

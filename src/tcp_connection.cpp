@@ -3,12 +3,22 @@
 void tcp_connection::init()
 {
 	std::cout << "[connection] started negotiations with " << client_socket_.remote_endpoint() << std::endl;
+	{
+		std::ostringstream tmp;
+		tmp << "[connection] started negotiations with " << client_socket_.remote_endpoint() << std::endl;
+		CPlusPlusLogging::LOG_TRACE(tmp);
+	}
 	bs::error_code ec;
 
 	size_t n = client_socket_.read_some(ba::buffer(client_buf_), ec);
 
 	if (ec)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << ec.what() << std::endl;
 		return;
 	}
@@ -23,7 +33,13 @@ void tcp_connection::init()
 
 	if (ec)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << ec.what() << std::endl;
+
 		return;
 	}
 
@@ -37,6 +53,11 @@ void tcp_connection::init()
 
 	if (ec)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << ec.what() << std::endl;
 		return;
 	}
@@ -50,14 +71,33 @@ void tcp_connection::init()
 		std::cout
 			<< "[connection] Failed to parse the IP address. Error code = "
 			<< ec.value() << ". Message: " << ec.message();
+		{
+			std::ostringstream tmp;
+			tmp
+				<< "[connection] Failed to parse the IP address. Error code = "
+				<< ec.value() << ". Message: " << ec.message();
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 		return;
 	}
 
 	ba::ip::tcp::endpoint ep(ip_address, server_port);
 	std::cout << "[connection] connecting to destination server..."
 			  << " at address : " << ep << std::endl;
+	{
+		std::ostringstream tmp;
+		tmp << "[connection] connecting to destination server..."
+			<< " at address : " << ep << std::endl;
+		CPlusPlusLogging::LOG_TRACE(tmp);
+	}
 	server_socket_.connect(ep, ec);
 	if (ec) {
+		{
+			std::ostringstream tmp;
+			tmp << "[connection] error occured during connection to destination address."
+				<< std::endl << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << "[connection] error occured during connection to destination address."
 			<< std::endl << ec.what() << std::endl;
 		return;
@@ -65,7 +105,11 @@ void tcp_connection::init()
 
 	unsigned short bind_port = server_socket_.local_endpoint().port();
 	std::cout << "[connection] server connected on local port " << bind_port << std::endl;
-
+	{
+		std::ostringstream tmp;
+		tmp << "[connection] server connected on local port " << bind_port << std::endl;
+		CPlusPlusLogging::LOG_TRACE(tmp);
+	}
 	/*+----+-----+-------+------+----------+----------+
 		|VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
 		+----+-----+-------+------+----------+----------+
@@ -84,6 +128,11 @@ void tcp_connection::init()
 	ba::write(client_socket_, ba::buffer(client_buf_, 10), ec);
 	if (ec)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << ec.what() << std::endl;
 		return;
 	}
@@ -102,6 +151,14 @@ void tcp_connection::client_read()
 			<< server_socket_.local_endpoint().port()
 			<< "] " <<  " - client socket is closed."
 			<< std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] " << " - client socket is closed."
+				<< std::endl;
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 	}
 }
 
@@ -109,6 +166,14 @@ void tcp_connection::client_read_handle(const bs::error_code& error, size_t byte
 {
 	if (error.value() > 0)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] " << "error occured while reading client: "
+				<< error.what() << std::endl;;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << "["
 			<< server_socket_.local_endpoint().port()
 			<< "] " << "error occured while reading client: "
@@ -121,18 +186,39 @@ void tcp_connection::client_read_handle(const bs::error_code& error, size_t byte
 		std::cout << "["
 			<< server_socket_.local_endpoint().port()
 			<< "] " << "Sending " << bytes_transferred << " bytes to client\n";
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] " << "Sending " << bytes_transferred << " bytes to client\n";
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 		bs::error_code ec;
 		ba::write(server_socket_, ba::buffer(client_buf_, bytes_transferred), ec);
 		if (ec) {
 			std::cout << "["
 				<< server_socket_.local_endpoint().port()
 				<< "] " << ec.what() << std::endl;
+			{
+				std::ostringstream tmp;
+				tmp << "["
+					<< server_socket_.local_endpoint().port()
+					<< "] " << ec.what() << std::endl;
+				CPlusPlusLogging::LOG_TRACE(tmp);
+			}
 			return;
 		}
 		else {
 			std::cout << "["
 				<< server_socket_.local_endpoint().port()
 				<< "] " << "complete!\n";
+			{
+				std::ostringstream tmp;
+				tmp << "["
+					<< server_socket_.local_endpoint().port()
+					<< "] " << "complete!\n";
+				CPlusPlusLogging::LOG_TRACE(tmp);
+			}
 		}
 	}
 	client_read();
@@ -151,6 +237,14 @@ void tcp_connection::server_read()
 			<< server_socket_.local_endpoint().port()
 			<< "] - server socket is closed."
 			<< std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] - server socket is closed."
+				<< std::endl;
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 	}
 }
 
@@ -158,31 +252,62 @@ void tcp_connection::server_read_handle(const bs::error_code& error, size_t byte
 {
 	if (error.value() > 0)
 	{
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] " << "error occured while reading client: "
+				<< error.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		std::cerr << "["
 			<< server_socket_.local_endpoint().port()
 			<< "] " << "error occured while reading client: "
-				  << error.what() << std::endl;
+			<< error.what() << std::endl;
 		return;
 	}
+
 
 	if (bytes_transferred > 0)
 	{
 		std::cout << "["
 			<< server_socket_.local_endpoint().port()
 			<< "] " << "Sending " << bytes_transferred << " bytes to client\n";
+		{
+			std::ostringstream tmp;
+			tmp << "["
+				<< server_socket_.local_endpoint().port()
+				<< "] " << "Sending " << bytes_transferred << " bytes to client\n";
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 		bs::error_code ec;
 		ba::write(client_socket_, ba::buffer(server_buf_, bytes_transferred), ec);
 		if (ec) {
 			std::cout << "["
 				<< server_socket_.local_endpoint().port()
 				<< "] " << ec.what() << std::endl;
+			{
+				std::ostringstream tmp;
+				tmp << "["
+					<< server_socket_.local_endpoint().port()
+					<< "] " << ec.what() << std::endl;
+				CPlusPlusLogging::LOG_TRACE(tmp);
+			}
 			return;
 		}
 		else {
 			std::cout << "["
 				<< server_socket_.local_endpoint().port()
 				<< "] " << "complete!\n";
+			{
+				std::ostringstream tmp;
+				tmp << "["
+					<< server_socket_.local_endpoint().port()
+					<< "] " << "complete!\n";
+				CPlusPlusLogging::LOG_TRACE(tmp);
+
+			}
 		}
+		server_read();
 	}
-	server_read();
 }

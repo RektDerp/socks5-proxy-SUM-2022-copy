@@ -1,0 +1,7 @@
+log_level = ENABLE_LOG        #specifying the log level
+ 
+log_type = FILE_LOG			  #specifying the log type
+
+max_log_files = 3			  #specifying the maximum number of log files
+
+log_size = 100000		      #specifying the size of a log file (in bytes)

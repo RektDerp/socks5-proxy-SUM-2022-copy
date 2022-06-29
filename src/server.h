@@ -14,6 +14,7 @@ private:
 
 	ba::io_context& io_context_;
 	ba::ip::tcp::acceptor acceptor_;
+
 };
 
 #endif // _SERVER_H_

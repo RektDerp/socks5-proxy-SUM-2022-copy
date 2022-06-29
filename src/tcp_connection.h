@@ -2,6 +2,7 @@
 #define _TCP_CONNECTION_H
 
 #include "proxy_common.h"
+#include "Logger.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
@@ -52,7 +53,8 @@ private:
 
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
-	
+	std::stringstream logString;
+
 	barray client_buf_ {};
 	barray server_buf_ {};
 };
