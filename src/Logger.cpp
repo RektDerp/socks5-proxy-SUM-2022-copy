@@ -30,6 +30,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <cstring>
 
 // Code Specific Header Files(s)
 #include "Logger.h"
@@ -133,7 +135,7 @@ string Logger::getCurrentTime()
     time_t now = time(0);
     // Convert current time to string
     char buffer[80];
-    ctime_s(buffer ,80, &now);
+    strncpy(buffer, std::ctime(&now), 26);
     currTime.assign(buffer);
     // Last charactor of currentTime is "\n", so remove it
     string currentTime = currTime.substr(0, currTime.size() - 1);
