@@ -13,7 +13,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 foreach (elem IN LISTS modules)
     list(GET elem 0 src)
-    if(src MATCHES ".*\.[a-z]+")
+    if(EXISTS ${sourcedir}/${src})
         message("matched, build and link")
         string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
         string(PREPEND src "${sourcedir}/")
