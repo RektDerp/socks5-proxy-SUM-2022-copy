@@ -222,6 +222,7 @@ void tcp_connection::client_read_handle(const bs::error_code& error, size_t byte
 		}
 	}
 	client_read();
+	//todo close connection
 }
 
 void tcp_connection::server_read()
@@ -310,4 +311,5 @@ void tcp_connection::server_read_handle(const bs::error_code& error, size_t byte
 		}
 		server_read();
 	}
+	//todo close connection
 }
