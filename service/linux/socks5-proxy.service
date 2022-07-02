@@ -1,0 +1,6 @@
+[Unit]
+Description=Socks 5 Proxy server
+[Service]
+ExecStart=/usr/local/bin/server
+[Install]
+WantedBy=multi-user.target
