@@ -13,6 +13,7 @@ LogConfigReader* LogConfigReader::m_pInstance = NULL_PTR;
 LogConfigReader::LogConfigReader()
 {
     m_ConfigSettingMap.clear();
+    parseFile();
 }
 
 LogConfigReader::~LogConfigReader()

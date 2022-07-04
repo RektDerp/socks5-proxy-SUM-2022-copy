@@ -16,7 +16,6 @@ int main()
 	WININIT();
 	int port = 0;
 	LogConfigReader* config = LogConfigReader::getInstance();
-	config->parseFile();
 	config->getValue("listen_port", port);
 	std::cout << port;
 	try
