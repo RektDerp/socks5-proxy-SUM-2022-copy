@@ -51,7 +51,7 @@ Logger::Logger()
     m_File.open(logFileName.c_str(), ios::out | ios::app);
     configure();
     logFilesCount = 1;
-    deley->tm_min += LOG_ROLL_OVER_DELEY;
+    deley->tm_hour += LOG_ROLL_OVER_DELEY;
 
     // Initialize mutex
 #ifdef _WIN32
@@ -118,7 +118,7 @@ void Logger::logIntoFile(std::string& data)
         rollLogFiles();
         startLog = time(0);
         deley = localtime(&startLog);
-        deley->tm_min += LOG_ROLL_OVER_DELEY;
+        deley->tm_hour += LOG_ROLL_OVER_DELEY;
     }
 
     lock();

@@ -61,8 +61,8 @@ namespace CPlusPlusLogging
 
 // Default size of a log file in bytes
 #define LOG_FILE_SIZE 300000
-
-#define LOG_ROLL_OVER_DELEY 1
+    // deley in hours
+#define LOG_ROLL_OVER_DELEY 24
 // enum for LOG_LEVEL
     typedef enum LOG_LEVEL
     {
