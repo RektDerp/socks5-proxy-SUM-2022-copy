@@ -1,3 +1,30 @@
+//////////////////////////////////////////////////////////////////////////////////////
+// @File Name:     Logger.h                                                  //
+// @Author:        Pankaj Choudhary                                          //
+// @Version:       0.0.1                                                     //
+// @L.M.D:         13th April 2015                                           //
+// @Upated:        23rd June 2021 by Raj Laddha                              //
+// @Description:   For Logging into file                                     //
+//                                                                           // 
+// Detail Description:                                                       //
+// Implemented complete logging mechanism, Supporting multiple logging type  //
+// like as file based logging, console base logging etc. It also supported   //
+// for different log type.                                                   //
+//                                                                           //
+// Thread Safe logging mechanism. Compatible with VC++ (Windows platform)    //
+// as well as G++ (Linux platform)                                           //
+//                                                                           //
+// Supported Log Type: ERROR, ALARM, ALWAYS, INFO, BUFFER, TRACE, DEBUG      //
+//                                                                           //
+// No control for ERROR, ALRAM and ALWAYS messages. These type of messages   //
+// should be always captured.                                                //
+//                                                                           //
+// BUFFER log type should be use while logging raw buffer or raw messages    //
+//                                                                           //
+// Having direct interface as well as C++ Singleton inface. can use          //
+// whatever interface want.                                                  //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
@@ -151,11 +178,8 @@ namespace CPlusPlusLogging
         unsigned int		 logFilesCount; // Count of existing log files 
 
         time_t startLog = time(0);
-        std::shared_ptr<tm> deley = std::shared_ptr<tm>(localtime(&startLog));
+        tm* deley = localtime(&startLog);
     };
-    //TODO add a hashtable and a queue, when outputting a log of the INFO type, dst ip/port and bnd ip/port and the number of bytes are transmitted
-    // if it finds a match in the table, then it adds the number of bytes and after 5 seconds this queue goes in order and is output to the file
-    // or I'll try to change it a bit to csv format tomorrow
 
 } // End of namespace
 
