@@ -31,7 +31,8 @@ void tcp_server::handle_accept(tcp_connection::pointer new_connection, const boo
 			tmp << "[server] client connected" << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}
-		new_connection->start();
+		std::thread newThread(&tcp_connection::start, new_connection);
+		newThread.detach();
 	}
 
 	start_accept();

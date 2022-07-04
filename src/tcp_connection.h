@@ -33,10 +33,14 @@ public:
 
 	void start()
 	{
-		init();
-
-		client_read();
-		server_read();
+		if (init()) {
+			std::cout << "[connection] Starting session...\n";
+			client_read();
+			server_read();
+		}
+		else {
+			close();
+		}
 	}
 
 private:
@@ -45,14 +49,18 @@ private:
 	{
 	}
 
-	void init();
+	bool init();
 	void client_read();
 	void server_read();
 	void client_read_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_read_handle(const bs::error_code& error, size_t bytes_transferred);
+	void close();
+	bool writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer);
 
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
+	unsigned short      bind_port_;
+
 	std::stringstream logString;
 
 	barray client_buf_ {};
