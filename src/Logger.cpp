@@ -76,6 +76,10 @@ Logger::Logger()
 Logger::~Logger()
 {
     m_File.close();
+    if (deley != NULL)
+    {
+        delete deley;
+    }
 #ifdef _WIN32
     DeleteCriticalSection(&m_Mutex);
 #else
