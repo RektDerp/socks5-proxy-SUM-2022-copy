@@ -10,7 +10,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port):
 void tcp_server::start_accept()
 {
 	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
-	tcp_connection::pointer new_connection = tcp_connection::create(io_context_);
+	session::pointer new_connection = session::create(io_context_);
 	{
 		std::ostringstream tmp;
 		tmp << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
@@ -21,7 +21,7 @@ void tcp_server::start_accept()
 			boost::asio::placeholders::error));
 }
 
-void tcp_server::handle_accept(tcp_connection::pointer new_connection, const boost::system::error_code& error)
+void tcp_server::handle_accept(session::pointer new_connection, const boost::system::error_code& error)
 {
 	if (!error)
 	{
@@ -31,7 +31,7 @@ void tcp_server::handle_accept(tcp_connection::pointer new_connection, const boo
 			tmp << "[server] client connected" << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}
-		std::thread newThread(&tcp_connection::start, new_connection);
+		std::thread newThread(&session::start, new_connection);
 		newThread.detach();
 	}
 

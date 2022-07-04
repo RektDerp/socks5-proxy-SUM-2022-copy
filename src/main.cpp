@@ -17,7 +17,6 @@ int main()
 	int port = 0;
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
-	std::cout << port;
 	try
 	{
 		ba::io_context context;

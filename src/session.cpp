@@ -1,6 +1,6 @@
-#include "tcp_connection.h"
+#include "session.h"
 
-bool tcp_connection::init()
+bool session::init()
 {
 	std::cout << "[connection] started negotiations with " << client_socket_.remote_endpoint() << std::endl;
 	{
@@ -49,7 +49,7 @@ bool tcp_connection::init()
 		+----+-----+-------+------+----------+----------+*/
 
 	n = client_socket_.read_some(ba::buffer(client_buf_), ec);
-
+	// todo sent response code in case of failure
 	if (ec)
 	{
 		{
@@ -139,11 +139,11 @@ bool tcp_connection::init()
 	return true;
 }
 
-void tcp_connection::client_read()
+void session::client_read()
 {
 	if (client_socket_.is_open()) {
 		client_socket_.async_read_some(ba::buffer(client_buf_),
-			boost::bind(&tcp_connection::client_read_handle, shared_from_this(),
+			boost::bind(&session::client_read_handle, shared_from_this(),
 				boost::asio::placeholders::error,
 				boost::asio::placeholders::bytes_transferred));
 	}
@@ -163,11 +163,11 @@ void tcp_connection::client_read()
 	}
 }
 
-void tcp_connection::server_read()
+void session::server_read()
 {
 	if (server_socket_.is_open()) {
 		server_socket_.async_read_some(ba::buffer(server_buf_),
-			boost::bind(&tcp_connection::server_read_handle, shared_from_this(),
+			boost::bind(&session::server_read_handle, shared_from_this(),
 				boost::asio::placeholders::error,
 				boost::asio::placeholders::bytes_transferred));
 	}
@@ -187,7 +187,7 @@ void tcp_connection::server_read()
 	}
 }
 
-void tcp_connection::client_read_handle(const bs::error_code& error, size_t bytes_transferred)
+void session::client_read_handle(const bs::error_code& error, size_t bytes_transferred)
 {
 	if (error.value() == ba::error::eof)
 	{
@@ -227,7 +227,7 @@ void tcp_connection::client_read_handle(const bs::error_code& error, size_t byte
 	}
 }
 
-void tcp_connection::server_read_handle(const bs::error_code& error, size_t bytes_transferred)
+void session::server_read_handle(const bs::error_code& error, size_t bytes_transferred)
 {
 	if (error.value() == ba::error::eof)
 	{
@@ -268,7 +268,7 @@ void tcp_connection::server_read_handle(const bs::error_code& error, size_t byte
 	}
 }
 
-bool tcp_connection::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer)
+bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
 	std::cout << "["
@@ -311,7 +311,7 @@ bool tcp_connection::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, s
 	return true;
 }
 
-void tcp_connection::close()
+void session::close()
 {
 	std::cout << "[" << bind_port_ << "] Closing sockets..." << std::endl;
 	try {

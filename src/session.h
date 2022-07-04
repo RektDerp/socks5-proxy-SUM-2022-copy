@@ -1,12 +1,11 @@
-#ifndef _TCP_CONNECTION_H
-#define _TCP_CONNECTION_H
+#ifndef _SESSION_H
+#define _SESSION_H
 
 #include "proxy_common.h"
 #include "Logger.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
-#include <boost/numeric/ublas/vector.hpp>
 
 struct ver_packet
 {
@@ -19,14 +18,14 @@ const int BUFFER_LEN = 16 * 1024;
 
 using barray = boost::array<unsigned char, BUFFER_LEN>;
 
-class tcp_connection : public boost::enable_shared_from_this<tcp_connection>
+class session : public boost::enable_shared_from_this<session>
 {
 public:
-	typedef boost::shared_ptr<tcp_connection> pointer;
+	typedef boost::shared_ptr<session> pointer;
 
 	static pointer create(ba::io_context& io_context)
 	{	
-		return pointer(new tcp_connection(io_context));
+		return pointer(new session(io_context));
 	}
 
 	ba::ip::tcp::socket& socket()
@@ -47,7 +46,7 @@ public:
 	}
 
 private:
-	tcp_connection(ba::io_context& io_context)
+	session(ba::io_context& io_context)
 		: client_socket_(io_context), server_socket_(io_context)
 	{}
 
@@ -81,4 +80,4 @@ inline std::string formIpAddressString(barray& buf, size_t offset)
 	return ip_address;
 }
 
-#endif // _TCP_CONNECTION_H
+#endif // _SESSION_H
