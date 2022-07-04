@@ -48,3 +48,5 @@ src/CMakeFiles/
 # logger
 *.log
 *.tar.gz
+*.gz
+*.log

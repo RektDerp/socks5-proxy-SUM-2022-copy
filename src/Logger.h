@@ -62,6 +62,7 @@ namespace CPlusPlusLogging
 // Default size of a log file in bytes
 #define LOG_FILE_SIZE 300000
 
+#define LOG_ROLL_OVER_DELEY 1
 // enum for LOG_LEVEL
     typedef enum LOG_LEVEL
     {
@@ -176,8 +177,8 @@ namespace CPlusPlusLogging
         unsigned int		 maxLogFiles; // Maximum number of log files
         unsigned int		 logFilesCount; // Count of existing log files 
 
-
-
+        time_t startLog = time(0);
+        tm* deley = localtime(&startLog);
     };
 
 } // End of namespace

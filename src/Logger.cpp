@@ -51,6 +51,7 @@ Logger::Logger()
     m_File.open(logFileName.c_str(), ios::out | ios::app);
     configure();
     logFilesCount = 1;
+    deley->tm_min += LOG_ROLL_OVER_DELEY;
 
     // Initialize mutex
 #ifdef _WIN32
@@ -112,10 +113,12 @@ void Logger::unlock()
 
 void Logger::logIntoFile(std::string& data)
 {
-    unsigned long pos = m_File.tellp();
-    if (pos + data.size() > logSize)
+    if (time(0) >= mktime(deley))
     {
         rollLogFiles();
+        startLog = time(0);
+        deley = localtime(&startLog);
+        deley->tm_min += LOG_ROLL_OVER_DELEY;
     }
 
     lock();
@@ -137,6 +140,8 @@ string Logger::getCurrentTime()
     char buffer[80];
     strncpy(buffer, std::ctime(&now), 26);
     currTime.assign(buffer);
+
+    //ctime_s(buffer, 80, &now);
     // Last charactor of currentTime is "\n", so remove it
     string currentTime = currTime.substr(0, currTime.size() - 1);
     return currentTime;
