@@ -443,8 +443,6 @@ void Logger::configure()
 {
     LogConfigReader* config = LogConfigReader::getInstance();
 
-    config->parseFile();
-
     LogLevel logLevel;
     LogType logType;
 

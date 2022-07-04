@@ -1,851 +1,2482 @@
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Sending 1443 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Sending 68 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Sending 132 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3328] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3328] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:43 2022  [TRACE]: [3328] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:43 2022  [TRACE]: [3328] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:44 2022  [TRACE]: [3335] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:44 2022  [TRACE]: [3335] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:44 2022  [TRACE]: [3335] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:44 2022  [TRACE]: [3335] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:52 2022  [TRACE]: [3359] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:52 2022  [TRACE]: [3359] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:52 2022  [TRACE]: [3356] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:52 2022  [TRACE]: [3356] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:52 2022  [TRACE]: [3359] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:52 2022  [TRACE]: [3359] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:52 2022  [TRACE]: [3356] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:52 2022  [TRACE]: [3356] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 158 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 1443 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 68 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 93 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 39 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:53 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 1408 bytes to client
+Mon Jul  4 18:45:59 2022  [TRACE]: [3363] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:59 2022  [TRACE]: [3363] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:45:59 2022  [TRACE]: [3363] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:45:59 2022  [TRACE]: [3363] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:00 2022  [TRACE]: [3281] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:00 2022  [TRACE]: [3281] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:00 2022  [TRACE]: [3281] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:00 2022  [TRACE]: [3281] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Sending 158 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Sending 1443 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Sending 68 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Sending 132 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:03 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:05 2022  [TRACE]: [3398] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:05 2022  [TRACE]: [3398] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:05 2022  [TRACE]: [3398] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:05 2022  [TRACE]: [3398] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3291] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:09 2022  [TRACE]: [3291] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3331] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:09 2022  [TRACE]: [3331] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3122] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:09 2022  [TRACE]: [3122] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3141] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:09 2022  [TRACE]: [3141] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3291] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:09 2022  [TRACE]: [3291] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:09 2022  [TRACE]: [3331] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:10 2022  [TRACE]: [3331] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:10 2022  [TRACE]: [3122] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:10 2022  [TRACE]: [3122] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:10 2022  [TRACE]: [3141] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:10 2022  [TRACE]: [3141] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 158 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 1443 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5120 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 68 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 4224 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 93 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 39 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:13 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:14 2022  [TRACE]: [3454] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:14 2022  [TRACE]: [3454] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:14 2022  [TRACE]: [3454] Sending 24 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:14 2022  [TRACE]: [3454] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:23 2022  [TRACE]: [3083] Sending 158 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:23 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:23 2022  [TRACE]: [3083] Sending 1443 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:23 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Sending 68 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Sending 62 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Sending 31 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5120 bytes to client
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Sending 39 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Sending 212 bytes to client
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:24 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Sending 64 bytes to server
+Mon Jul  4 18:46:26 2022  [TRACE]: [server] client connected
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [server] waiting for new client... 0.0.0.0:1080
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Sending 889 bytes to server
+Mon Jul  4 18:46:26 2022  [TRACE]: [connection] started negotiations with 127.0.0.1:3513
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [connection] connecting to destination server... at address : 142.250.203.150:443
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Sending 52 bytes to client
+Mon Jul  4 18:46:26 2022  [TRACE]: [connection] server connected on local port 3514
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Sending 649 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Sending 31 bytes to server
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Sending 212 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Sending 1352 bytes to client
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4368] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Sending 64 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 7040 bytes to client
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Sending 544 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 2816 bytes to client
+Mon Jul  4 18:46:26 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 608 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 4224 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 31 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 31 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 533 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 6144 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 1430 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 7040 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 2860 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 1408 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 10010 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 1430 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 1408 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 11281 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Sending 39 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:27 2022  [TRACE]: [3514] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [server] client connected
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [connection] started negotiations with 127.0.0.1:3516
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [server] waiting for new client... 0.0.0.0:1080
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 6144 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [connection] connecting to destination server... at address : 173.194.189.228:443
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [connection] server connected on local port 3517
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 517 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4966 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 64 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 3328 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1781 bytes to server
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 2816 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 7040 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 7040 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4224 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1408 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8448 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1536 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14080 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 15488 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 6144 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8448 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 3328 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 7040 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 3328 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11776 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 6144 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14080 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14080 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8448 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 3328 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1536 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 3328 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8960 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11264 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4224 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1920 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4736 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2432 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14080 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14592 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 2576 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 512 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 3472 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11264 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14080 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11264 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 2528 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 2816 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 14592 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 15616 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1920 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11776 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 12672 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8448 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4224 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 8448 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1408 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 12288 bytes to client
 
-Mon Jul  4 14:45:40 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 6144 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 15488 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 1408 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1408 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 5632 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 4224 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 10368 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Sending 5636 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4219] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 31 bytes to server
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 4352 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 39 bytes to server
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1920 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1408 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 6832 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 2860 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 2860 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Sending 1027 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4370] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 148 bytes to server
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 130 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16256 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 122 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 128 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 2860 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 5632 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 4678 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 1430 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 1920 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 16384 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 8192 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11776 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 5831 bytes to client
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 2816 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Sending 39 bytes to server
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 9856 bytes to client
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:41 2022  [TRACE]: [4344] Sending 299 bytes to server
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Sending 11786 bytes to client
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Complete!
+Mon Jul  4 18:46:29 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Sending 619 bytes to client
+Mon Jul  4 18:46:33 2022  [TRACE]: [3083] Sending 594 bytes to server
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Complete!
+Mon Jul  4 18:46:33 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Sending 221 bytes to client
+Mon Jul  4 18:46:33 2022  [TRACE]: [3083] Sending 288 bytes to server
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Complete!
+Mon Jul  4 18:46:33 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Sending 39 bytes to server
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Sending 69 bytes to client
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4344] Complete!
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Sending 141 bytes to server
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Sending 70 bytes to client
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Sending 94 bytes to client
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Sending 39 bytes to server
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:34 2022  [TRACE]: [3083] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Sending 1430 bytes to client
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1640 bytes to server
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Sending 681 bytes to client
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 12672 bytes to client
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Sending 39 bytes to server
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
 
-Mon Jul  4 14:45:42 2022  [TRACE]: [4204] Complete!
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
 
-Mon Jul  4 14:45:43 2022  [ERROR]: [connection] error occured during connection to destination address.
-No connection could be made because the target machine actively refused it [system:10061]
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1536 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 15488 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 12672 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 15488 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4736 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 10880 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4352 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8960 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11776 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16000 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11264 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4543 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1781 bytes to server
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 13184 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 15488 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9472 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6144 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1920 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6656 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6144 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8960 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 15488 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11264 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 512 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11264 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 15488 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4736 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 512 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 10368 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 12672 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6144 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1920 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6144 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4736 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 512 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8960 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 10368 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8960 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7040 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4736 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1408 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 10368 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11776 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 8448 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 3840 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6144 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 11776 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 4224 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 7552 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 5632 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1536 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 6656 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 9856 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 12800 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 2816 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Sending 1755 bytes to client
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3517] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3083] Sending 519 bytes to server
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3083] Sending 1857 bytes to server
+
+Mon Jul  4 18:46:35 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 73 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 3432 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 826 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 257 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 595 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 67 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 170 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] client connected
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] waiting for new client... 0.0.0.0:1080
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] started negotiations with 127.0.0.1:3519
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] connecting to destination server... at address : 216.58.209.3:443
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] server connected on local port 3520
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 655 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 163 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 1813 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 212 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 64 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 170 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 608 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 31 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 72 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 2027 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 70 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Sending 31 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3520] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 192 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 2077 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 157 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 156 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 158 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 168 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 155 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 158 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 159 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 159 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 156 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] client connected
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] waiting for new client... 0.0.0.0:1080
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] started negotiations with 127.0.0.1:3521
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] connecting to destination server... at address : 142.250.186.193:443
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 117 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 11440 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] client connected
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] started negotiations with 127.0.0.1:3523
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [server] waiting for new client... 0.0.0.0:1080
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] connecting to destination server... at address : 216.58.209.3:443
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 6496 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] server connected on local port 3522
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [connection] server connected on local port 3524
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 12870 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 651 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 653 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 4290 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 72 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 12870 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 885 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 4290 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 7926 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5842 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 3636 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 212 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 64 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 1305 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 212 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 64 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 662 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 11440 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 7150 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 11440 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 7926 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 10010 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 15730 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 10010 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 608 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 10554 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 31 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 608 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 31 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 15730 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 7150 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 13102 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 15730 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 14300 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 14300 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 15730 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 31 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 15730 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 1842 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 6882 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 3636 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 4290 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Sending 4859 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 31 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 5137 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Sending 957 bytes to client
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 39 bytes to server
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:36 2022  [TRACE]: [3524] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 7150 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Sending 969 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3524] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 575 bytes to server
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 16384 bytes to server
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 16384 bytes to server
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 7499 bytes to server
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 68 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 93 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 39 bytes to client
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Sending 39 bytes to server
+
+Mon Jul  4 18:46:37 2022  [TRACE]: [3083] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 171 bytes to server
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 343 bytes to server
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 122 bytes to client
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 39 bytes to server
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 100 bytes to client
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Sending 100 bytes to client
+
+Mon Jul  4 18:46:39 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 159 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 314 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 116 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 12870 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 4290 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 5720 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 7744 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 39 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 117 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 141 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 141 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 142 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 2860 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 7150 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 8580 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 7150 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 16130 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 11440 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 16384 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 10786 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 4290 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 103 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Sending 15329 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3514] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 5699 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 39 bytes to server
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 103 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 4127 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 1430 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Sending 1128 bytes to client
+
+Mon Jul  4 18:46:40 2022  [TRACE]: [3522] Complete!
 

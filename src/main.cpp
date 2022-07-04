@@ -1,5 +1,6 @@
 #include "server.h"
-
+#include "LogConfigReader.h"
+using namespace cppsecrets;
 #ifdef _WIN32
     #include <windows.h>
     #define WININIT() {\
@@ -13,11 +14,15 @@
 int main()
 {
 	WININIT();
-	
+	int port = 0;
+	LogConfigReader* config = LogConfigReader::getInstance();
+	config->parseFile();
+	config->getValue("listen_port", port);
+	std::cout << port;
 	try
 	{
 		ba::io_context context;
-		tcp_server server(context);
+		tcp_server server(context, port);
 		context.run();
 	}
 	catch (std::exception &er)

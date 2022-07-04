@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 
 struct ver_packet
 {
@@ -13,6 +14,8 @@ struct ver_packet
 	char nMethod;
 	char Method[255];
 };
+
+const int BUFFER_LEN = 16 * 1024;
 
 using barray = boost::array<unsigned char, BUFFER_LEN>;
 
@@ -22,7 +25,7 @@ public:
 	typedef boost::shared_ptr<tcp_connection> pointer;
 
 	static pointer create(ba::io_context& io_context)
-	{
+	{	
 		return pointer(new tcp_connection(io_context));
 	}
 
@@ -46,8 +49,7 @@ public:
 private:
 	tcp_connection(ba::io_context& io_context)
 		: client_socket_(io_context), server_socket_(io_context)
-	{
-	}
+	{}
 
 	bool init();
 	void client_read();
@@ -59,15 +61,16 @@ private:
 
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
-	unsigned short      bind_port_;
+
+	unsigned short      bind_port_ = 0;
+
+	barray client_buf_{};
+	barray server_buf_{};
 
 	std::stringstream logString;
-
-	barray client_buf_ {};
-	barray server_buf_ {};
 };
 
-inline std::string formIpAddressString(barray buf, size_t offset)
+inline std::string formIpAddressString(barray& buf, size_t offset)
 {
 	std::string ip_address;
 	for (int i = 0; i < 4; i++)

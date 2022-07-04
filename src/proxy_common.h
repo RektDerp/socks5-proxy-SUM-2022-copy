@@ -13,7 +13,4 @@
 namespace ba = boost::asio;
 namespace bs = boost::system;
 
-const size_t BUFFER_LEN = 8192;
-const unsigned short listen_port = 1080;
-
 #endif // _PROXY_COMMON_H

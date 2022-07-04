@@ -1,8 +1,8 @@
 #include "server.h"
 
-tcp_server::tcp_server(ba::io_context& io_context): 
+tcp_server::tcp_server(ba::io_context& io_context, unsigned short port): 
 	io_context_(io_context),
-	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), listen_port))
+	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port))
 {
 	start_accept();
 }

@@ -1,14 +1,12 @@
-// Code Specific Header File(s)
 #include "LogConfigReader.h"
 
-// C++ Header File(s)
 #include <fstream>
 #include <algorithm>
 
-using namespace std;
-using namespace cppsecrets;
+using namespace std; // don't use this
+using namespace cppsecrets; // why do we need this namespace? rename?
 
-#define NULL_PTR 0
+#define NULL_PTR 0 // nullptr?
 
 LogConfigReader* LogConfigReader::m_pInstance = NULL_PTR;
 
@@ -77,7 +75,7 @@ bool LogConfigReader::parseFile(string fileName)
     while (getline(inputFile, line))
     {
         // Remove comment Lines
-        size_t found = line.find_first_of('#');
+        size_t found = line.find_first_of('#');  // what if there is no comment?
         string configData = line.substr(0, found);
 
         // Remove ^M from configData
