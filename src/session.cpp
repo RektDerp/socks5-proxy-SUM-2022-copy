@@ -1,4 +1,5 @@
 #include "session.h"
+#include <memory>
 
 bool session::init()
 {
@@ -22,13 +23,23 @@ bool session::init()
 		std::cerr << ec.what() << std::endl;
 		return false;
 	}
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << (int) client_buf_[i] << ",";
+	}
 
+	std::cout << std::endl;
 	ver_packet packet;
-	packet.ver = client_buf_[0];
+	packet.ver = client_buf_[0]; // todo check version
 	packet.nMethod = client_buf_[1];
 
 	client_buf_[0] = packet.ver;
-	client_buf_[1] = 0;
+	client_buf_[1] = AUTH_FLAG ? METHOD::AUTH : METHOD::NO_AUTH;
+	for (int i = 0; i < 2; i++)
+	{
+		std::cout << (int) client_buf_[i] << ",";
+	}
+	std::cout << std::endl;
 	ba::write(client_socket_, ba::buffer(client_buf_, 2), ec);
 
 	if (ec)
@@ -41,6 +52,21 @@ bool session::init()
 		std::cerr << ec.what() << std::endl;
 		return false;
 	}
+
+	if (AUTH_FLAG)
+	{
+		client_buf_[0] = 0x1; // ver of subnegotiations
+		bool success = auth();
+		client_buf_[1] = success ? 0x0 : 0x1;
+		ba::write(client_socket_, ba::buffer(client_buf_, 2), ec);
+		if (ec); // ignored
+		if (!success)
+		{
+			client_socket_.close(ec);
+			return false;
+		}
+	}
+			
 
 	/*+----+-----+-------+------+----------+----------+
 		|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
@@ -135,6 +161,52 @@ bool session::init()
 		std::cerr << ec.what() << std::endl;
 		return false;
 	}
+
+	return true;
+}
+
+bool session::auth()
+{
+	/*
+	+---- + ------ + ---------- + ------ + ---------- +
+	| VER |  ULEN  |    UNAME   |  PLEN  |   PASSWD   |
+	+---- + ------ + ---------- + ------ + ---------- +
+	|  1  |    1   |  1 to 255  |    1   |  1 to 255  |
+	+---- + ------ + ---------- + ------ + ---------- 
+	*/
+	std::cout << "starting auth" << std::endl;
+	bs::error_code ec;
+	size_t n = client_socket_.read_some(ba::buffer(client_buf_), ec);
+	if (ec)
+	{
+		{
+			std::ostringstream tmp;
+			tmp << ec.what() << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
+		std::cerr << ec.what() << std::endl;
+		return false;
+	}
+	// todo: refactor
+	// todo: add logging
+	if (n < 2) return false;
+	unsigned char ver = client_buf_[0];
+	if (ver != 0x1) return false; // todo: add const for version
+	unsigned char ulen = client_buf_[1];
+	if (n < 2 + ulen + 1) return false;
+	std::unique_ptr<char> uname(new char[ulen + 1]);
+	uname.get()[ulen] = '\0';
+	for (int i = 0; i < ulen; i++)
+		uname.get()[i] = client_buf_[2 + i];
+	unsigned char plen = client_buf_[2 + ulen];
+	if (n < 2 + ulen + 1 + plen) return false; // todo: read exact number of bytes
+	std::unique_ptr<char> passwd(new char[plen + 1]);
+	passwd.get()[plen] = '\0';
+	for (int i = 0; i < plen; i++)
+		passwd.get()[i] = client_buf_[2 + ulen + 1 + i];
+	std::cout << "user: '" << uname << "', pass: '" << passwd << "'" << std::endl;
+	if (strcmp(user, uname.get()) != 0 || strcmp(password, passwd.get()))
+		return false;
 
 	return true;
 }

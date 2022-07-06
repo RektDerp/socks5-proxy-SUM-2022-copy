@@ -16,6 +16,17 @@ struct ver_packet
 
 const int BUFFER_LEN = 16 * 1024;
 
+// todo: move to config
+// todo: store user/pass in db with password in encrypted 
+const bool AUTH_FLAG = true;
+const char* const user = "user";
+const char* const password = "pass";
+
+enum METHOD {
+	NO_AUTH = 0,
+	AUTH = 2
+};
+
 using barray = boost::array<unsigned char, BUFFER_LEN>;
 
 class session : public boost::enable_shared_from_this<session>
@@ -51,6 +62,7 @@ private:
 	{}
 
 	bool init();
+	bool auth();
 	void client_read();
 	void server_read();
 	void client_read_handle(const bs::error_code& error, size_t bytes_transferred);
