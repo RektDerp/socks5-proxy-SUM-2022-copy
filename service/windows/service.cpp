@@ -1,103 +1,44 @@
-
-#include <windows.h>
-#include "winnt.h"
 #include <stdio.h>
 #include <string.h>
+#include <winsock2.h>
+#include <windows.h>
 
-SERVICE_STATUS serviceStatus;
-SERVICE_STATUS_HANDLE serviceStatusHandle;
-FILE *log;
-void ServiceMain(int argc, char** argv);
-const LPSTR serviceName = LPSTR("Socks5");
-void ControlHandler(DWORD request);
-int InitService();
-int addLogMessage(const char msg[]);
+#include <exception>
+#include <stdexcept>
+#include <string>
 
-int main(int argc, TCHAR* argv[]) {
-  SERVICE_TABLE_ENTRY ServiceTable[1];
-  ServiceTable[0].lpServiceName = serviceName;
-  ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
-  log = fopen("log.txt","w+");
-  StartServiceCtrlDispatcher(ServiceTable);
+#include "winnt.h"
+#include "winsvc.h"
+
+#define debug(x){send(debugsock, (x), strlen(x), 0);}
+inline unsigned int getIPAddress(char a, char b, char c, char d) {
+  return (((a & 0xff) << 24) | ((b & 0xff) << 16) | ((c & 0xff) << 8) |
+          (d & 0xff));
 }
+const int IP = getIPAddress(127, 0, 0, 1);
+const int PORT = 8080;
+const char SOCKOPTION = 1;
+struct sockaddr_in servaddr;
+SOCKET debugsock;
 
-void ServiceMain(int argc, char** argv) {
-  int error;
-  int i = 0;
-
-  serviceStatus.dwServiceType    = SERVICE_WIN32_OWN_PROCESS;
-  serviceStatus.dwCurrentState    = SERVICE_START_PENDING;
-  serviceStatus.dwControlsAccepted  = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
-  serviceStatus.dwWin32ExitCode   = 0;
-  serviceStatus.dwServiceSpecificExitCode = 0;
-  serviceStatus.dwCheckPoint     = 0;
-  serviceStatus.dwWaitHint      = 0;
-
-  serviceStatusHandle = RegisterServiceCtrlHandler(serviceName, (LPHANDLER_FUNCTION)ControlHandler);
-  if (serviceStatusHandle == (SERVICE_STATUS_HANDLE)0) {
-    return;
+int main(int argc, TCHAR *argv[]) {
+  WSADATA wsaData = {0};
+  WSAStartup(MAKEWORD(2, 2), &wsaData);
+  debugsock = socket(AF_INET, SOCK_STREAM, 0);
+  servaddr.sin_family = AF_INET;
+  servaddr.sin_addr.s_addr = htonl(IP);
+  servaddr.sin_port = htons(PORT);
+  setsockopt(debugsock, SOL_SOCKET, SO_REUSEADDR, &SOCKOPTION,
+             sizeof(SOCKOPTION));
+  if (connect(debugsock, (sockaddr *)&servaddr, sizeof(servaddr)) != 0) {
+    printf("pizdiec\n");
+    return -1;
   }
 
-  error = InitService();
-  if (error) {
-    serviceStatus.dwCurrentState    = SERVICE_STOPPED;
-    serviceStatus.dwWin32ExitCode   = -1;
-    SetServiceStatus(serviceStatusHandle, &serviceStatus);
-    return;
-  }
+  debug("main() : startup\n");
 
-  serviceStatus.dwCurrentState = SERVICE_RUNNING;
-  SetServiceStatus (serviceStatusHandle, &serviceStatus);
 
-  while (serviceStatus.dwCurrentState == SERVICE_RUNNING)
-  {
-    char buffer[255];
-    sprintf_s(buffer, "%u", i);
-    int result = addLogMessage(buffer);
-    if (result)  {
-      serviceStatus.dwCurrentState    = SERVICE_STOPPED;
-      serviceStatus.dwWin32ExitCode   = -1;
-      SetServiceStatus(serviceStatusHandle, &serviceStatus);
-      return;
-    }
-    i++;
-  }
-  fclose(log);
-  return;
-}
 
-void ControlHandler(DWORD request) {
-  switch(request)
-  {
-    case SERVICE_CONTROL_STOP:
-      addLogMessage("Stopped.");
-
-      serviceStatus.dwWin32ExitCode = 0;
-      serviceStatus.dwCurrentState = SERVICE_STOPPED;
-      SetServiceStatus (serviceStatusHandle, &serviceStatus);
-      return;
-
-    case SERVICE_CONTROL_SHUTDOWN:
-      addLogMessage("Shutdown.");
-
-      serviceStatus.dwWin32ExitCode = 0;
-      serviceStatus.dwCurrentState = SERVICE_STOPPED;
-      SetServiceStatus (serviceStatusHandle, &serviceStatus);
-      return;
-
-    default:
-      break;
-  }
-
-  SetServiceStatus (serviceStatusHandle, &serviceStatus);
-
-  return;
-}
-
-int InitService(){
-    addLogMessage("init.");
-}
-
-int addLogMessage(const char msg[]){
-    return fprintf(log, "%s\n", msg);
+  closesocket(debugsock);
+  return 0;
 }
