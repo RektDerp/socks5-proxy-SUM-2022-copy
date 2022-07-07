@@ -351,6 +351,14 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t l
 		tmp << "["
 			<< bind_port_
 			<< "] " << "Sending " << len << " bytes to " << target << std::endl;
+		if (isServer)
+		{
+			log_stat(server_socket_.remote_endpoint(), client_socket_.remote_endpoint(), len, TO_SERVER);
+		}
+		else
+		{			
+			log_stat(server_socket_.remote_endpoint(), client_socket_.remote_endpoint(), len, TO_CLIENT);
+		}
 		CPlusPlusLogging::LOG_TRACE(tmp);
 	}
 	bs::error_code ec;

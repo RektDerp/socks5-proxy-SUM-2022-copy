@@ -7,3 +7,14 @@ max_log_files = 3				#specifying the maximum number of log files
 log_size = 10 * 1024 * 1024		#specifying the size of a log file (in bytes)
 
 listen_port = 1080				# port server is listening on
+
+# Auth = 0/1
+
+# {
+# login: sds
+# password:dsds
+# login: dsddsd
+# password:dsdsds
+# login: dsdsds
+# password:dsdsd 
+# }

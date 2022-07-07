@@ -129,10 +129,11 @@ namespace CPlusPlusLogging
         void logOnConsole(std::string& data);
         Logger(const Logger& obj) {}
         void operator=(const Logger& obj) {}
-        void rollLogFiles();
+        //void rollLogFiles();
         void configure();
 
     private:
+        //todo read about crear static fields
         static Logger* m_Instance;
         std::ofstream           m_File;
 

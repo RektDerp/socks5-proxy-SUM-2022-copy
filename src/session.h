@@ -3,6 +3,7 @@
 
 #include "proxy_common.h"
 #include "Logger.h"
+#include "statWriter.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
@@ -18,7 +19,7 @@ const int BUFFER_LEN = 16 * 1024;
 
 // todo: move to config
 // todo: store user/pass in db with password in encrypted 
-const bool AUTH_FLAG = true;
+const bool AUTH_FLAG = false;
 const char* const user = "user";
 const char* const password = "pass";
 

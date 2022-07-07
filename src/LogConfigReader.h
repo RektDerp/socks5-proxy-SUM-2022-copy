@@ -13,31 +13,7 @@
 
 namespace cppsecrets
 {
-    // Defining ConfigReader as singleton class
-    // Easy to access across the multiple classes
-    //
-    // The responsibility of this class is to parse the
-    // Config file and store it in the std::map
-    // Defined getter function getValue() to get the
-    // data from the std::map.
-    //
-    // To use this class, pass the config file path to
-    // the function getInstance()
-    //
-    // This is one of the advance config reader, because this
-    // class is handling the comment line as well. Comment line 
-    // will start from hash(#). So all the string after
-    // semicolon will be discarded.
-    //
-    // NOTE: NO NEED TO MAKE THIS CLASS THREAD-SAFE. IT IS EXTRA OVEHEAD.
-    // BECAUSE MOSTLY WE ARE DOING ONLY READ OPERATION. WRITE OPERATION IS
-    // HAPPENING ONLY ONE TIME, WHICH IS IN THE FUNCTION parse(). SO CALL
-    // parse() FUNCTION AT THE TIME OF INITIALIZATION ONLY.
-    //
-    // IF YOUR CONFIGURATION FILE IS UPDATING AT THE RUN TIME AND YOU NEED
-    // UPDATED DATA FROM THE CONFIGURATION FILE AT RUN TIME, THEN YOU NEED 
-    // TO MAKE THIS CLASS THREAD-SAFE.
-
+    
     class LogConfigReader
     {
     private:

@@ -1,32 +1,3 @@
-///////////////////////////////////////////////////////////////////////////////
-// @File Name:     Logger.cpp                                                //
-// @Author:        Pankaj Choudhary                                          //
-// @Version:       0.0.1                                                     //
-// @L.M.D:         13th April 2015                                           //
-// @Upated:        23rd June 2021 by Raj Laddha                              //
-// @Description:   For Logging into file                                     //
-//                                                                           // 
-// Detail Description:                                                       //
-// Implemented complete logging mechanism, Supporting multiple logging type  //
-// like as file based logging, console base logging etc. It also supported   //
-// for different log type.                                                   //
-//                                                                           //
-// Thread Safe logging mechanism. Compatible with VC++ (Windows platform)    //
-// as well as G++ (Linux platform)                                           //
-//                                                                           //
-// Supported Log Type: ERROR, ALARM, ALWAYS, INFO, BUFFER, TRACE, DEBUG      //
-//                                                                           //
-// No control for ERROR, ALRAM and ALWAYS messages. These type of messages   //
-// should be always captured.                                                //
-//                                                                           //
-// BUFFER log type should be use while logging raw buffer or raw messages    //
-//                                                                           //
-// Having direct interface as well as C++ Singleton inface. can use          //
-// whatever interface want.                                                  //
-//                                                                           //
-///////////////////////////////////////////////////////////////////////////////
-
-// C++ Header File(s)
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -117,13 +88,15 @@ void Logger::unlock()
 
 void Logger::logIntoFile(std::string& data)
 {
-    if (time(0) >= mktime(deley))
+    unsigned long pos = m_File.tellp();
+
+    /*if (time(0) >= mktime(deley) || pos + data.size() > logSize)
     {
         rollLogFiles();
         startLog = time(0);
         deley = localtime(&startLog);
         deley->tm_hour += LOG_ROLL_OVER_DELEY;
-    }
+    }*/
 
     lock();
     m_File << getCurrentTime() << "  " << data << endl;
@@ -405,46 +378,46 @@ void Logger::updateLogSize(const size_t size)
 }
 
 // Handle roll over mechanism
-void Logger::rollLogFiles()
-{
-    m_File.close();
-
-    if (maxLogFiles > 1)
-    {
-        string logFile = logFileName.substr(0, logFileName.length() - 4); // removing ".log" from file name
-
-        // To check if the maximum files have reached
-        if (logFilesCount >= maxLogFiles)
-        {
-            string deleteFileName = logFile + "_" + to_string(maxLogFiles - 1) + ".tar.gz";
-            remove(deleteFileName.c_str());
-
-            logFilesCount--;
-        }
-
-        // Renaming the files 
-        for (int i = logFilesCount; i >= 2; --i)
-        {
-            string oldLogFileName = logFile + "_" + to_string(i - 1) + ".tar.gz";
-            string newLogFileName = logFile + "_" + to_string(i) + ".tar.gz";
-
-            rename(oldLogFileName.c_str(), newLogFileName.c_str());
-        }
-
-        string cmd = "tar -cf " + logFile + "_1.tar.gz " + logFileName;
-
-        system(cmd.c_str()); // creating tar file
-    }
-
-    remove(logFileName.c_str());
-
-    m_File.open(logFileName.c_str(), ios::out | ios::app);
-
-    if (logFilesCount < maxLogFiles)
-    {
-        logFilesCount++;
-    }
-} 
+//void Logger::rollLogFiles()
+//{
+//    m_File.close();
+//
+//    if (maxLogFiles > 1)
+//    {
+//        string logFile = logFileName.substr(0, logFileName.length() - 4); // removing ".log" from file name
+//
+//        // To check if the maximum files have reached
+//        if (logFilesCount >= maxLogFiles)
+//        {
+//            string deleteFileName = logFile + "_" + to_string(maxLogFiles - 1) + ".tar.gz";
+//            remove(deleteFileName.c_str());
+//
+//            logFilesCount--;
+//        }
+//
+//        // Renaming the files 
+//        for (int i = logFilesCount; i >= 2; --i)
+//        {
+//            string oldLogFileName = logFile + "_" + to_string(i - 1) + ".tar.gz";
+//            string newLogFileName = logFile + "_" + to_string(i) + ".tar.gz";
+//
+//            rename(oldLogFileName.c_str(), newLogFileName.c_str());
+//        }
+//
+//        string cmd = "tar -cf " + logFile + "_1.tar.gz " + logFileName;
+//
+//        system(cmd.c_str()); // creating tar file
+//    }
+//
+//    remove(logFileName.c_str());
+//
+//    m_File.open(logFileName.c_str(), ios::out | ios::app);
+//
+//    if (logFilesCount < maxLogFiles)
+//    {
+//        logFilesCount++;
+//    }
+//} 
 
 // For configuration
 // Note: The function sets the default parameters if any paramter is incorrect or missing  
