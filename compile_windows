@@ -1,0 +1,15 @@
+CXX=x86_64-w64-mingw32-g++
+all: windows
+
+windows : LogConfigReader.o  Logger.o  session.o statWriter.o server.o
+	$(CXX) src/main.cpp -O3 LogConfigReader.o  Logger.o  session.o statWriter.o server.o -o bin/main.exe -lws2_32 -lwsock32 -static-libstdc++ -static-libgcc --static
+server.o : session.o
+	$(CXX) -c src/server.cpp -O3 -lws2_32 -lwsock32
+LogConfigReader.o : 
+	$(CXX) -c src/LogConfigReader.cpp -O3
+Logger.o : LogConfigReader.o  
+	$(CXX) -c src/Logger.cpp LogConfigReader.o -O3
+session.o : statWriter.o
+	$(CXX) -c src/session.cpp statWriter.o -lws2_32 -O3
+statWriter.o :
+	$(CXX) -c src/statWriter.cpp -O3
