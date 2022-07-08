@@ -3,15 +3,30 @@ cmake_minimum_required(VERSION 3.10)
 project(socks5-proxy)
 set (CMAKE_CXX_STANDARD 11)
 
+#set(CMAKE_SYSTEM_NAME Windows)
+
 set(executable "main")
 #2D list of modules
 #If it is module from this project, first parameter is source file, second is it's dependencies
-#Othervise, first parameter is library name, second is search path
-set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "proxy_test.cpp\;" "session.cpp\;statWriter" "server.cpp\;session" "statWriter.cpp\;")
+set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "session.cpp\;statWriter" "server.cpp\;session" "statWriter.cpp\;" )
 set (libraries)
 
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
+link_directories(${libdir})
+
+message(${CMAKE_SYSTEM_NAME})
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND UNIX)
+  message("windows on unix")
+  set(CMAKE_C_COMPILER   x86_64-w64-mingw32-gcc)
+  set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
+  include_directories(/usr/x86_64-w64-mingw32/include/)
+  link_directories(/usr/x86_64-w64-mingw32/lib/ ${libdir})
+  list(APPEND modules "ws2_32\;${libdir}/ws2_32.dll")
+endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)
 
@@ -26,6 +41,11 @@ foreach (elem IN LISTS modules)
         message("\nlib " ${lib}: "\nsrc: " ${src} "\ndependencies: \n" ${dependencies})
         add_library(${lib} ${src})
         target_link_libraries (${lib} ${dependencies})
+    else()
+        string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
+        list(GET elem 1 path)
+        message(${path})
+        target_sources(${executable} PRIVATE ${path})
     endif()
 endforeach()
 

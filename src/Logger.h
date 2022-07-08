@@ -10,7 +10,7 @@
 
 #ifdef _WIN32
 // Win Socket Header File(s)
-#include <Windows.h>
+#include <windows.h>
 #include <process.h>
 #else
 // POSIX Socket Header File(s)
