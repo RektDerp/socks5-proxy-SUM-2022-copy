@@ -7,7 +7,7 @@ set(executable "main")
 #2D list of modules
 #If it is module from this project, first parameter is source file, second is it's dependencies
 #Othervise, first parameter is library name, second is search path
-set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "proxy_test.cpp\;" "session.cpp\;" "server.cpp\;session")
+set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "proxy_test.cpp\;" "session.cpp\;statWriter" "server.cpp\;session" "statWriter.cpp\;")
 set (libraries)
 
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)

@@ -84,7 +84,7 @@ int StatWriter::index_of(std::string dst, std::string bnd)
 void StatWriter::update(int pos, int numberOfBytes, Where where)
 {
     std::ifstream _fin;
-    _fin.open(filename.c_str(), std::ios::in | std::ios::beg);
+    _fin.open(filename.c_str(), std::ios::in);
     std::ofstream _fout;
     _fout.open("tmp.csv", std::ios::out);
     _fout << "TIME;DST;BND;SEND;REQST;TIME_END";
