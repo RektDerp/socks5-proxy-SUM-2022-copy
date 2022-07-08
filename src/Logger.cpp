@@ -22,7 +22,7 @@ Logger::Logger()
     m_File.open(logFileName.c_str(), ios::out | ios::app);
     configure();
     logFilesCount = 1;
-    deley->tm_hour += LOG_ROLL_OVER_DELEY;
+    //deley->tm_hour += LOG_ROLL_OVER_DELEY;
 
     // Initialize mutex
 #ifdef _WIN32
@@ -105,7 +105,9 @@ void Logger::logIntoFile(std::string& data)
 
 void Logger::logOnConsole(std::string& data)
 {
-    cout << getCurrentTime() << "  " << data << endl;
+    lock();
+    cout << data << endl;
+    unlock();
 }
 
 string Logger::getCurrentTime()
@@ -140,6 +142,11 @@ void Logger::error(const char* text) throw()
     {
         logOnConsole(data);
     }
+    else if (m_LogType == ALL_LOG && m_LogLevel)
+    {
+        logOnConsole(data);
+        logIntoFile(data);
+    }
 }
 
 void Logger::error(std::string& text) throw()
@@ -168,6 +175,11 @@ void Logger::alarm(const char* text) throw()
     else if (m_LogType == CONSOLE && m_LogLevel)
     {
         logOnConsole(data);
+    }
+    else if (m_LogType == ALL_LOG && m_LogLevel)
+    {
+        logOnConsole(data);
+        logIntoFile(data);
     }
 }
 
@@ -198,6 +210,11 @@ void Logger::always(const char* text) throw()
     {
         logOnConsole(data);
     }
+    else if (m_LogType == ALL_LOG && m_LogLevel)
+    {
+        logOnConsole(data);
+        logIntoFile(data);
+    }
 }
 
 void Logger::always(std::string& text) throw()
@@ -225,6 +242,15 @@ void Logger::buffer(const char* text) throw()
     else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_BUFFER))
     {
         cout << text << endl;
+    }
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_BUFFER))
+    {
+        lock();
+        m_File << text << endl;
+        unlock();
+        lock();
+        cout << text << endl;
+        unlock();
     }
 }
 
@@ -254,6 +280,11 @@ void Logger::info(const char* text) throw()
     {
         logOnConsole(data);
     }
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_INFO))
+    {
+        logOnConsole(data);
+        logIntoFile(data);
+    }
 }
 
 void Logger::info(std::string& text) throw()
@@ -282,6 +313,11 @@ void Logger::trace(const char* text) throw()
     {
         logOnConsole(data);
     }
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_TRACE))
+    {
+        logOnConsole(data);
+        logIntoFile(data);
+    }
 }
 
 void Logger::trace(std::string& text) throw()
@@ -309,6 +345,11 @@ void Logger::debug(const char* text) throw()
     else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG))
     {
         logOnConsole(data);
+    }
+    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG))
+    {
+        logOnConsole(data);
+        logIntoFile(data);
     }
 }
 
@@ -357,25 +398,25 @@ void Logger::enableFileLogging()
     m_LogType = FILE_LOG;
 }
 
-// Interfaces to control roll over mechanism
-void Logger::updateMaxLogFiles(const size_t maxFiles)
-{
-    if (maxFiles > 0)
-        maxLogFiles = maxFiles;
+//// Interfaces to control roll over mechanism
+//void Logger::updateMaxLogFiles(const size_t maxFiles)
+//{
+//    if (maxFiles > 0)
+//        maxLogFiles = maxFiles;
+//
+//    else
+//        maxLogFiles = MAX_LOG_FILES;
+//
+//}
 
-    else
-        maxLogFiles = MAX_LOG_FILES;
-
-}
-
-void Logger::updateLogSize(const size_t size)
-{
-    if (size > 0)
-        logSize = size;
-
-    else
-        logSize = LOG_FILE_SIZE;
-}
+//void Logger::updateLogSize(const size_t size)
+//{
+//    if (size > 0)
+//        logSize = size;
+//
+//    else
+//        logSize = LOG_FILE_SIZE;
+//}
 
 // Handle roll over mechanism
 //void Logger::rollLogFiles()
@@ -473,27 +514,27 @@ void Logger::configure()
             logType = CONSOLE;
 
         else
-            logType = FILE_LOG;
+            logType = ALL_LOG;
     }
 
     else
-        logType = FILE_LOG;
+        logType = ALL_LOG;
 
 
 
-    if (!config->getValue("max_log_files", logFiles))
-        logFiles = MAX_LOG_FILES;
+    //if (!config->getValue("max_log_files", logFiles))
+    //    logFiles = MAX_LOG_FILES;
 
-    if (!config->getValue("log_size", logFileSize))
-        logFileSize = LOG_FILE_SIZE;
+    //if (!config->getValue("log_size", logFileSize))
+    //    logFileSize = LOG_FILE_SIZE;
 
 
     // Setting the parameters
     m_LogLevel = logLevel;
     m_LogType = logType;
 
-    updateMaxLogFiles(logFiles);
+    //updateMaxLogFiles(logFiles);
 
-    updateLogSize(logFileSize);
+    //updateLogSize(logFileSize);
 
 }

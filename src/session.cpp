@@ -72,10 +72,6 @@ void session::client_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		std::cout << "["
-			<< bind_port_
-			<< "] " <<  " Stopped reading - client socket is closed."
-			<< std::endl;
 		{
 			std::ostringstream tmp;
 			tmp << "["
@@ -96,10 +92,6 @@ void session::server_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		std::cout << "["
-			<< bind_port_
-			<< "] Stopped reading - server socket is closed."
-			<< std::endl;
 		{
 			std::ostringstream tmp;
 			tmp << "["
@@ -115,7 +107,11 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		std::cout << "[" << bind_port_ << "] Client EOF." << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "[" << bind_port_ << "] Client EOF." << std::endl;
+			CPlusPlusLogging::LOG_ERROR(tmp);
+		}
 		return;
 	}
 	else if (error.value() > 0)
@@ -128,10 +124,6 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 				<< error.what() << std::endl;;
 			CPlusPlusLogging::LOG_ERROR(tmp);
 		}
-		std::cerr << "["
-			<< bind_port_
-			<< "] " << "error occured while reading client: "
-			      << error.what() << std::endl;
 		return;
 	} 
 	
@@ -146,8 +138,12 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 		}
 	}
 	else {
-		std::cout << bind_port_
-			<< "no bytes transferred, closing connection...\n";
+		{
+			std::ostringstream tmp;
+			tmp << bind_port_
+				<< "no bytes transferred, closing connection...\n";
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 	}
 }
 
@@ -155,7 +151,11 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		std::cout << "[" << bind_port_ << "] Server EOF." << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "[" << bind_port_ << "] Server EOF." << std::endl;
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 		return;
 	}
 	else if (error.value() > 0)
@@ -168,10 +168,6 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 				<< error.what() << std::endl;
 			CPlusPlusLogging::LOG_ERROR(tmp);
 		}
-		std::cerr << "["
-			<< bind_port_
-			<< "] " << "error occured while reading server: "
-			<< error.what() << std::endl;
 		return;
 	}
 
@@ -187,17 +183,18 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 		}
 	}
 	else {
-		std::cout << "[" << bind_port_
-			<< "] no bytes transferred...\n";
+		{
+			std::ostringstream tmp;
+			tmp << "[" << bind_port_
+				<< "] no bytes transferred...\n";
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 	}
 }
 
 bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
-	std::cout << "["
-		<< bind_port_
-		<< "] " << "Sending " << len << " bytes to " << target << std::endl;
 	{
 		std::ostringstream tmp;
 		tmp << "["
@@ -216,9 +213,6 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t l
 	bs::error_code ec;
 	ba::write(socket, ba::buffer(buffer, len), ec);
 	if (ec) {
-		std::cout << "["
-			<< bind_port_
-			<< "] Error occured while writing: " << ec.what() << std::endl;
 		{
 			std::ostringstream tmp;
 			tmp << "["
@@ -228,10 +222,6 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t l
 		}
 		return false;
 	}
-	
-	std::cout << "["
-		<< bind_port_
-		<< "] Complete!\n";
 	{
 		std::ostringstream tmp;
 		tmp << "["
@@ -245,13 +235,21 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t l
 
 void session::close()
 {
-	std::cout << "[" << bind_port_ << "] Closing sockets..." << std::endl;
+	{
+		std::ostringstream tmp;
+		tmp << "[" << bind_port_ << "] Closing sockets..." << std::endl;
+		CPlusPlusLogging::LOG_TRACE(tmp);
+	}
 	try {
 		client_socket_.close();
 		server_socket_.close();
 	}
 	catch (const bs::system_error& e)
 	{
-		std::cout << "[" << bind_port_ << "] Error occurred during closing: " << e.what() << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "[" << bind_port_ << "] Error occurred during closing: " << e.what() << std::endl;
+			CPlusPlusLogging::LOG_TRACE(tmp);
+		}
 	}
 }
