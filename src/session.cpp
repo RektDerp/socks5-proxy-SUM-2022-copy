@@ -204,7 +204,7 @@ bool session::auth()
 	passwd.get()[plen] = '\0';
 	for (int i = 0; i < plen; i++)
 		passwd.get()[i] = client_buf_[2 + ulen + 1 + i];
-	std::cout << "user: '" << uname << "', pass: '" << passwd << "'" << std::endl;
+	std::cout << "user: '" << uname.get() << "', pass: '" << passwd.get() << "'" << std::endl;
 	if (strcmp(user, uname.get()) != 0 || strcmp(password, passwd.get()))
 		return false;
 
