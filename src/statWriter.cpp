@@ -26,14 +26,7 @@ StatWriter::StatWriter() : size(0)
 void StatWriter::log(std::string dst, std::string bnd, unsigned int size, Where where)
 {
     int pos = index_of(dst, bnd);
-    if (pos >= 0)
-    {
-        update(pos, size, where);
-    }
-    else
-    {
-        add(dst, bnd, size, where);
-    }
+    add(dst, bnd, size, where);
 }
 
 void StatWriter::add(std::string dst, std::string bnd, unsigned int size, Where where)
@@ -45,13 +38,13 @@ void StatWriter::add(std::string dst, std::string bnd, unsigned int size, Where 
         if (where == TO_CLIENT)
         {
             lock();
-            _fout << "\n" << getCurrentTime() << ";" << dst << ";" << bnd << ";" << "0" << ";" << size << ";" << getCurrentTime();
+            _fout << "\n" << getCurrentTime() << ";" << dst << ";" << bnd << ";" << "0" << ";" << size;
             unlock();
         }
         if (where == TO_SERVER)
         {
             lock();
-            _fout << "\n" << getCurrentTime() << ";" << dst << ";" << bnd << ";" << size << ";" << "0" << ";" << getCurrentTime();
+            _fout << "\n" << getCurrentTime() << ";" << dst << ";" << bnd << ";" << size << ";" << "0";
             unlock();
         }
     }
@@ -61,7 +54,7 @@ void StatWriter::add(std::string dst, std::string bnd, unsigned int size, Where 
 int StatWriter::index_of(std::string dst, std::string bnd)
 {
     std::ifstream _fin;
-    _fin.open("csv.csv", std::ios::in);
+    _fin.open(filename.c_str(), std::ios::in);
     int count = 0;
     std::string tmp;
     std::getline(_fin, tmp);
@@ -87,7 +80,7 @@ void StatWriter::update(int pos, int numberOfBytes, Where where)
     _fin.open(filename.c_str(), std::ios::in);
     std::ofstream _fout;
     _fout.open("tmp.csv", std::ios::out);
-    _fout << "TIME;DST;BND;SEND;REQST;TIME_END";
+    _fout << "TIME;DST;BND;SEND;REQST";
     int count = 0;
     std::string tmp;
     std::getline(_fin, tmp);
@@ -113,7 +106,7 @@ void StatWriter::update(int pos, int numberOfBytes, Where where)
             row.timeEnd = getCurrentTime();
         }
         lock();
-        _fout << "\n" << row.time << ";" << row.dst << ";" << row.bnd << ";" << row.send << ";" << row.reqst << ";" << row.timeEnd;
+        _fout << "\n" << row.time << ";" << row.dst << ";" << row.bnd << ";" << row.send << ";" << row.reqst;
         unlock();
         //std::cout << row.time << ";" << row.dst << ";" << row.bnd << ";" << row.send << ";" << row.reqst << ";" << row.timeEnd;
         if (_fin.eof())
@@ -127,7 +120,7 @@ void StatWriter::update(int pos, int numberOfBytes, Where where)
     remove(filename.c_str());
     rename("tmp.csv", filename.c_str());
 }
-//todo can crash the program if the number of bytes in one of the cells is greater than max unsignet int
+//todo can crash the program if the number of bytes in one of the cells is greater than max unsignet long int
 StatWriter::CSV_ROW StatWriter::getRow(std::string& tmp)
 {
     CSV_ROW row;
@@ -141,7 +134,6 @@ StatWriter::CSV_ROW StatWriter::getRow(std::string& tmp)
     tmpForBytes.clear();
     std::getline(s, tmpForBytes, ';');
     row.reqst = (tmpForBytes == "") ? 0 : stoi(tmpForBytes);
-    std::getline(s, row.timeEnd, ';');
     tmpForBytes.clear();
     return row;
 }
@@ -171,11 +163,11 @@ void StatWriter::conf()
     std::string tmp;
     std::getline(_fin, tmp);
     _fin.close();
-    _fout.open("csv.csv", std::ios::out | std::ios::app);
+    _fout.open(filename.c_str(), std::ios::out | std::ios::app);
     _fout.seekp(0);
     if (tmp.substr(0, 3) != "TIME")
     {
-        _fout << "TIME;DST;BND;SEND;REQST;TIME_END";
+        _fout << "TIME;DST;BND;SEND;REQST";
     }
     _fout.close();
 }

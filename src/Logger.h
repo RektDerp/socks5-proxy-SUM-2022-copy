@@ -32,10 +32,6 @@ namespace CPlusPlusLogging
 // Default value for maximum number of log files 
 #define MAX_LOG_FILES 100
 
-// Default size of a log file in bytes
-#define LOG_FILE_SIZE 300000
-    // deley in hours
-#define LOG_ROLL_OVER_DELEY 24
 // enum for LOG_LEVEL
     typedef enum LOG_LEVEL
     {
@@ -53,6 +49,7 @@ namespace CPlusPlusLogging
         NO_LOG = 1,
         CONSOLE = 2,
         FILE_LOG = 3,
+        ALL_LOG = 4,
     }LogType;
 
     class Logger
@@ -109,8 +106,8 @@ namespace CPlusPlusLogging
         void enableFileLogging();
 
         // Interfaces to control roll over mechanism
-        void updateMaxLogFiles(const size_t maxFiles);
-        void updateLogSize(const size_t size);
+        //void updateMaxLogFiles(const size_t maxFiles);
+        //void updateLogSize(const size_t size);
 
 
     protected:
