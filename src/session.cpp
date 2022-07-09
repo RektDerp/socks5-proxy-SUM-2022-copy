@@ -1,9 +1,9 @@
 #include "session.h"
-#include <memory>
 #include "socks5_impl.h"
 
-session::session(ba::io_context& io_context)
-	: client_socket_(io_context), server_socket_(io_context),
+session::session(ba::io_context& io_context):
+	io_context_(io_context), 
+	client_socket_(io_context), server_socket_(io_context),
 	impl(new socks5_impl(this))
 {}
 
@@ -42,24 +42,22 @@ void session::writeBytes(const bvec& bytes, bs::error_code& ec)
 	ba::write(client_socket_, ba::buffer(bytes), ec);
 }
 
-unsigned short session::connect(ba::ip::tcp::endpoint& endpoint, bs::error_code& ec)
+unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec)
 {
-	std::cout << "[session] connecting to destination server..." << " at address : " << endpoint << std::endl;
-	/*{
-		std::ostringstream tmp;
-		tmp << "[session] connecting to destination server..."
-			<< " at address : " << endpoint << std::endl;
-		CPlusPlusLogging::LOG_TRACE(tmp);
-	}*/
-	server_socket_.connect(endpoint, ec); // todo: add timeout ?
-	if (ec) return 0;
-	bind_port_ = server_socket_.local_endpoint().port();
-	/*std::cout << "[session] server connected on local port " << bind_port_ << std::endl;
+	std::cout << "[session] connecting to destination server..." << " at address : "
+		<< query.host_name() << " " << query.service_name() << std::endl;
+	using namespace ba::ip;
+	tcp::resolver resolver(io_context_);
+	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+	tcp::resolver::iterator end;
+	ec = boost::asio::error::host_not_found;
+	while (ec && endpoint_iterator != end)
 	{
-		std::ostringstream tmp;
-		tmp << "[session] server connected on local port " << bind_port_ << std::endl;
-		CPlusPlusLogging::LOG_TRACE(tmp);
-	}*/
+		server_socket_.close(ec);
+		server_socket_.connect(*endpoint_iterator++, ec);
+	}
+	bind_port_ = server_socket_.local_endpoint().port();
+	std::cout << "[session] server connected on local port " << bind_port_ << std::endl;
 	return bind_port_;
 }
 

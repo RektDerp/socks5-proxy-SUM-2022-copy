@@ -89,11 +89,22 @@ bool socks5_impl::init()
 
 		raw_ip_address = formIpAddressString(dstAdd);
 	}
+	else if (atyp == ATYP::DOMAIN_NAME) {
+		unsigned char addSize = session_->readByte(ec);
+		if (checkError(ec)) return false;
+		bvec dstAdd;
+		dstAdd.resize(addSize);
+		session_->readBytes(dstAdd, ec);
+		if (checkError(ec)) return false;
+		raw_ip_address = to_string(dstAdd);
+	}
 	else if (atyp == ATYP::IPV6) {
+		std::cerr << "IPV6 is not suppored" << std::endl;
 		return false;
 		// todo to be implemented
 	}
 	else {
+		std::cerr << "Wrong address type: " << (int) atyp << std::endl;
 		return false;
 		// wrong atyp - send response
 	}
@@ -102,28 +113,30 @@ bool socks5_impl::init()
 	if (checkError(ec)) return false;
 	server_port = ((int)server_port << 8) | ((int)session_->readByte(ec));
 	if (checkError(ec)) return false;
-	ba::ip::address ip_address = ba::ip::address::from_string(raw_ip_address, ec);
-	if (checkError(ec)) return false;
-	ba::ip::tcp::endpoint ep(ip_address, server_port);
+
+	ba::ip::tcp::resolver::query query(raw_ip_address, std::to_string(server_port));
 
 	unsigned short bind_port = 0;
 	if (cmd == CMD::CONNECT)
 	{
-		bind_port = session_->connect(ep, ec);
+		bind_port = session_->connect(query, ec);
 		if (checkError(ec))
 			return false;
 	}
 	else if (cmd == CMD::BIND)
 	{
+		std::cerr << "Bind is not supported." << std::endl;
 		return false;
 		// todo to be implemented
 	}
 	else if (cmd == CMD::UDP_ASSOCIATE)
 	{
+		std::cerr << "UDP is not supported." << std::endl;
 		return false;
 		// todo to be implemented
 	}
 	else {
+		std::cerr << "Wrong command code." << std::endl;
 		return false;
 		// wrong cmd code - send response
 	}
@@ -147,6 +160,7 @@ bool socks5_impl::init()
 		response.push_back(0);
 	}
 	else if (atyp == IPV6) {
+		std::cerr << "IPV6 is not suppored" << std::endl;
 		return false;
 		// todo
 	}
@@ -218,11 +232,11 @@ bool socks5_impl::checkError(bs::error_code& ec)
 {
 	if (ec)
 	{
-		{
+		/*{
 			std::ostringstream tmp;
 			tmp << ec.what() << std::endl;
 			CPlusPlusLogging::LOG_ERROR(tmp);
-		}
+		}*/
 		std::cerr << ec.what() << std::endl;
 		return true;
 	}

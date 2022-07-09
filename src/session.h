@@ -35,7 +35,7 @@ public:
 	void readBytes(bvec& bytes, bs::error_code& ec);
 	void writeBytes(const bvec& bytes, bs::error_code& ec);
 
-	unsigned short connect(ba::ip::tcp::endpoint& endpoint, bs::error_code& ec);
+	unsigned short connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec);
 
 private:
 	void client_read();
@@ -44,6 +44,9 @@ private:
 	bool writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer);
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
+
+	ba::io_context& io_context_;
+
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
 

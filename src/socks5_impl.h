@@ -31,8 +31,9 @@ enum CMD {
 };
 
 enum ATYP {
-	IPV4 = 0x1,
-	IPV6 = 0x4
+	IPV4		= 0x1,
+	DOMAIN_NAME = 0x3,
+	IPV6		= 0x4
 };
 
 enum REP {
