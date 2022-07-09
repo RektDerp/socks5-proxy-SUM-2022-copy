@@ -12,7 +12,7 @@
 #include "statWriter.h"
 #endif
 
-const int BUFFER_LEN = 16 * 1024;
+const int BUFFER_LEN = 100 * 1024;
 
 using barray = boost::array<unsigned char, BUFFER_LEN>;
 class socks5_impl;
