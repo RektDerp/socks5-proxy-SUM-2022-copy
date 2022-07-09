@@ -1,7 +1,9 @@
 #include "socks5_impl.h"
 #include "string_utils.h"
 #include "session.h"
-
+#ifdef STAT
+#include "stat_db_service.h"
+#endif
 using string_utils::to_string;
 using string_utils::formIpAddressString;
 
@@ -172,6 +174,19 @@ bool socks5_impl::init()
 	if (checkError(ec)) {
 		return false;
 	}
+#ifdef STAT
+	using namespace proxy::stat;
+	id_ = create(username_,
+		session_->socket().remote_endpoint().address().to_string(),
+		std::to_string(session_->socket().remote_endpoint().port()),
+		raw_ip_address,
+		std::to_string(server_port));
+
+	if (id_ == 0) {
+		std::cout << "my id is zero" << std::endl;
+		return false;
+	}
+#endif
 	return true;
 }
 
@@ -209,13 +224,13 @@ bool socks5_impl::auth()
 	if (checkError(ec))
 		return false;
 
-	std::string userString = string_utils::to_string(uname);
+	username_ = string_utils::to_string(uname);
 	std::string passString = string_utils::to_string(passwd);
 
-	std::cout << "user: '" << userString << "', pass: '" << passString << "'" << std::endl;
+	//std::cout << "user: '" << userString << "', pass: '" << passString << "'" << std::endl;
 
 	bool success = true;
-	if (USER != userString || PASSWORD != passString)
+	if (USER != username_ || PASSWORD != passString)
 		return false;
 
 	bvec response;
@@ -241,4 +256,27 @@ bool socks5_impl::checkError(bs::error_code& ec)
 		return true;
 	}
 	return false;
+}
+
+void socks5_impl::write_stat(size_t bytes, bool isServer)
+{
+#ifdef STAT
+	if (id_ == 0) {
+		std::cerr << "id is 0\n";
+		return;
+	}
+
+	using namespace proxy::stat;
+	update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
+#endif
+}
+
+void socks5_impl::close()
+{
+#ifdef STAT
+	if (id_ != 0) {
+		proxy::stat::close(id_);
+		id_ = 0;
+	}
+#endif
 }

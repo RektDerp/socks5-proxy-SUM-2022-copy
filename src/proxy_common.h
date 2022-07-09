@@ -1,6 +1,9 @@
 #ifndef _PROXY_COMMON_H
 #define _PROXY_COMMON_H
 
+#define STAT
+//#define STAT_CSV
+
 #include <iostream>
 #include <thread>
 #include <bitset>

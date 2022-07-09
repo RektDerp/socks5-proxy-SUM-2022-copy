@@ -1,7 +1,7 @@
 #ifndef _SOCKS5_IMPL_H_ 
 #define _SOCKS5_IMPL_H_ 
 #include "proxy_common.h"
-#include "session.h"
+
 
 // todo: move to config
 // todo: store user/pass in db with password in encrypted
@@ -48,17 +48,23 @@ enum REP {
 	ADDR_TYP_NOT_SUPP	= 0x08
 };
 
+class session;
+
 class socks5_impl {
 public:
 	socks5_impl(session* s) : session_(s) {}
 	~socks5_impl() = default;
 	bool init();
+	void write_stat(size_t bytes, bool isServer);
+	void close();
 private:
 	socks5_impl(const socks5_impl&) = delete;
 
 	bool auth();
 	bool checkError(bs::error_code& ec);
 	session* session_;
+	std::string username_;
+	long long id_ = 0;
 };
 
 #endif //_SOCKS5_IMPL_H_ 

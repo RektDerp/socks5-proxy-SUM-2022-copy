@@ -9,7 +9,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port):
 
 void tcp_server::start_accept()
 {
-	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
+	//std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
 	session::pointer new_connection = session::create(io_context_);
 	/*{
 		std::ostringstream tmp;
@@ -25,7 +25,7 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 {
 	if (!error)
 	{
-		std::cout << "[server] client connected" << std::endl;
+		//std::cout << "[server] client connected" << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "[server] client connected" << std::endl;

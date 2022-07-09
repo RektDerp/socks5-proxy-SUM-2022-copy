@@ -7,7 +7,7 @@
 namespace string_utils {
 	using std::string;
 
-	inline string to_string(const bvec& vec)
+	string to_string(const bvec& vec)
 	{
 		std::stringstream ss;
 		for (auto c : vec)
@@ -15,7 +15,7 @@ namespace string_utils {
 		return ss.str();
 	}
 
-	inline string formIpAddressString(const bvec& bytes)
+	string formIpAddressString(const bvec& bytes)
 	{
 		std::string ip_address;
 		for (int i = 0; i < 4; i++)

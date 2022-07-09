@@ -3,11 +3,14 @@
 
 #include "proxy_common.h"
 #include "Logger.h"
-#include "statWriter.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
+
+#ifdef STAT_CSV
+#include "statWriter.h"
+#endif
 
 const int BUFFER_LEN = 16 * 1024;
 
@@ -34,13 +37,12 @@ public:
 	unsigned char readByte(bs::error_code& ec);
 	void readBytes(bvec& bytes, bs::error_code& ec);
 	void writeBytes(const bvec& bytes, bs::error_code& ec);
-
 	unsigned short connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec);
-
+	void close();
 private:
 	void client_read();
 	void server_read();
-	void close();
+	
 	bool writeToSocket(ba::ip::tcp::socket& socket, barray& buffer, size_t len, bool isServer);
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
@@ -51,11 +53,12 @@ private:
 	ba::ip::tcp::socket server_socket_;
 
 	unsigned short      bind_port_ = 0;
+	long long id_ = 0;
 
 	barray client_buf_{};
 	barray server_buf_{};
 
-	socks5_impl* impl;
+	socks5_impl* impl_;
 
 	std::stringstream logString;
 };
