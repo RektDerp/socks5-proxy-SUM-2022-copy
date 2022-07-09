@@ -1,6 +1,6 @@
-log_level = ENABLE_LOG        #specifying the log level
+log_level = DISABLE_LOG        #specifying the log level
  
-log_type = FILE_LOG			  #specifying the log type
+log_type = NO_LOG			  #specifying the log type
 
 max_log_files = 3			  #specifying the maximum number of log files
 

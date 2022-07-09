@@ -105,9 +105,9 @@ void Logger::logIntoFile(std::string& data)
 
 void Logger::logOnConsole(std::string& data)
 {
-    lock();
+   // lock();
     cout << data << endl;
-    unlock();
+    //unlock();
 }
 
 string Logger::getCurrentTime()
@@ -472,9 +472,6 @@ void Logger::configure()
     string logLevel_str;
     string logType_str;
 
-    int logFiles;
-    int logFileSize;
-
     // Configuring the log level
     if (config->getValue("log_level", logLevel_str))
     {
@@ -512,11 +509,11 @@ void Logger::configure()
 
         else if (logType_str == "CONSOLE" || logType_str == "2")
             logType = CONSOLE;
-
+        else if (logType_str == "FILE_LOG" || logType_str == "3")
+            logType = FILE_LOG;
         else
             logType = ALL_LOG;
     }
-
     else
         logType = ALL_LOG;
 
