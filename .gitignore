@@ -53,3 +53,6 @@ clean
 *.log
 
 *.csv
+
+*.config
+/packages
