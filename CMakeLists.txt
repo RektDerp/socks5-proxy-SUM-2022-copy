@@ -7,6 +7,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 set(executable "main")
 ###############################################################################################################
+#Format : <Library source>.cpp\;<dependencies>
 
 set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "session.cpp\;statWriter Logger sock5_impl" "server.cpp\;session" "statWriter.cpp\;" "sock5_impl.cpp\;session")
 
@@ -21,12 +22,13 @@ link_directories(${libdir})
 
 message(${CMAKE_SYSTEM_NAME})
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND UNIX)
-  message("windows on unix")
+  message("Build for windows on unix")
   set(CMAKE_C_COMPILER   x86_64-w64-mingw32-gcc)
   set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
   include_directories(/usr/x86_64-w64-mingw32/include/)
-  link_directories(/usr/x86_64-w64-mingw32/lib/ ${libdir})
-  list(APPEND modules "ws2_32\;${libdir}/ws2_32.dll")
+  link_directories(/usr/x86_64-w64-mingw32/lib/)
+  list(PREPEND modules "ws2_32\;/usr/x86_64-w64-mingw32/lib/libws2_32.a")
+  list(PREPEND modules "wsock32\;/usr/x86_64-w64-mingw32/lib/wsock32.lib")
 endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)
@@ -40,7 +42,6 @@ foreach (elem IN LISTS modules)
         list(APPEND libraries ${lib})
         message("\nlib " ${lib}: "\nsrc: " ${src} "\ndependencies:")
         add_library(${lib} ${src})
-
         string(REPLACE " " ";" dependencies "${dependencies}")
 
         foreach(dep ${dependencies})
@@ -48,10 +49,11 @@ foreach (elem IN LISTS modules)
           target_link_libraries (${lib} ${dep})
         endforeach()
     else()
+        message("\nexternal lib " ${src}:)
         string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
         list(GET elem 1 path)
-        message(${path})
-        target_sources(${executable} PRIVATE ${path})
+        add_library(${src} STATIC IMPORTED)
+        set_target_properties(${src} PROPERTIES IMPORTED_LOCATION ${path})
     endif()
 endforeach()
 
