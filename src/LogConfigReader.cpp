@@ -58,7 +58,9 @@ bool LogConfigReader::getValue(std::string tag, std::string& value)
     }
     return false;
 }
-
+//todo add method getUsers()
+// return boost vector/map off all users
+// and support private bool method which will used in parse file after getline gets '{' character
 bool LogConfigReader::parseFile(string fileName)
 {
     ifstream inputFile;

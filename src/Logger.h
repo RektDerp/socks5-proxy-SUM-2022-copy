@@ -104,7 +104,7 @@ namespace CPlusPlusLogging
         void updateLogType(LogType logType);
         void enableConsoleLogging();
         void enableFileLogging();
-
+        void enableALLLogging();
         // Interfaces to control roll over mechanism
         //void updateMaxLogFiles(const size_t maxFiles);
         //void updateLogSize(const size_t size);

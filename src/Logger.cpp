@@ -247,8 +247,6 @@ void Logger::buffer(const char* text) throw()
     {
         lock();
         m_File << text << endl;
-        unlock();
-        lock();
         cout << text << endl;
         unlock();
     }
@@ -397,7 +395,10 @@ void Logger::enableFileLogging()
 {
     m_LogType = FILE_LOG;
 }
-
+void Logger::enableALLLogging()
+{
+    m_LogType = ALL_LOG;
+}
 //// Interfaces to control roll over mechanism
 //void Logger::updateMaxLogFiles(const size_t maxFiles)
 //{
@@ -518,20 +519,8 @@ void Logger::configure()
         logType = ALL_LOG;
 
 
-
-    //if (!config->getValue("max_log_files", logFiles))
-    //    logFiles = MAX_LOG_FILES;
-
-    //if (!config->getValue("log_size", logFileSize))
-    //    logFileSize = LOG_FILE_SIZE;
-
-
     // Setting the parameters
     m_LogLevel = logLevel;
     m_LogType = logType;
-
-    //updateMaxLogFiles(logFiles);
-
-    //updateLogSize(logFileSize);
 
 }
