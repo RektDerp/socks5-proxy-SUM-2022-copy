@@ -41,7 +41,7 @@
 /CMakeFiles
 
 CMakeCache.txt
-Makefile
+./Makefile
 cmake_install.cmake
 src/CMakeFiles/
 clean
