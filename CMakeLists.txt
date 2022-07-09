@@ -6,11 +6,12 @@ set (CMAKE_CXX_STANDARD 11)
 #set(CMAKE_SYSTEM_NAME Windows)
 
 set(executable "main")
-#2D list of modules
-#If it is module from this project, first parameter is source file, second is it's dependencies
-set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "session.cpp\;statWriter" "server.cpp\;session" "statWriter.cpp\;" )
-set (libraries)
+###############################################################################################################
 
+set(modules "LogConfigReader.cpp\;" "Logger.cpp\;LogConfigReader" "session.cpp\;statWriter Logger sock5_impl" "server.cpp\;session" "statWriter.cpp\;" "sock5_impl.cpp\;session")
+
+###############################################################################################################
+set (libraries)
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
@@ -33,14 +34,19 @@ add_executable(${executable} ${sourcedir}/${executable}.cpp)
 foreach (elem IN LISTS modules)
     list(GET elem 0 src)
     if(EXISTS ${sourcedir}/${src})
-        message("matched, build and link")
         string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
         string(PREPEND src "${sourcedir}/")
         list(GET elem 1 dependencies)
         list(APPEND libraries ${lib})
-        message("\nlib " ${lib}: "\nsrc: " ${src} "\ndependencies: \n" ${dependencies})
+        message("\nlib " ${lib}: "\nsrc: " ${src} "\ndependencies:")
         add_library(${lib} ${src})
-        target_link_libraries (${lib} ${dependencies})
+
+        string(REPLACE " " ";" dependencies "${dependencies}")
+
+        foreach(dep ${dependencies})
+          message(${dep})
+          target_link_libraries (${lib} ${dep})
+        endforeach()
     else()
         string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
         list(GET elem 1 path)
