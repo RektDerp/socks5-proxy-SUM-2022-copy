@@ -41,7 +41,7 @@ private:
 	void client_read();
 	void server_read();
 	void close();
-	bool writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer);
+	bool writeToSocket(ba::ip::tcp::socket& socket, barray& buffer, size_t len, bool isServer);
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
 

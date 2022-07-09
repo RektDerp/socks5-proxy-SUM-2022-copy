@@ -212,7 +212,7 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 	}
 }
 
-bool session::writeToSocket(ba::ip::tcp::socket& socket, barray buffer, size_t len, bool isServer)
+bool session::writeToSocket(ba::ip::tcp::socket& socket, barray& buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
 	std::cout << "["
