@@ -1,6 +1,7 @@
 #ifndef _STAT_DB_SERVICE_H_
 #define _STAT_DB_SERVICE_H_
 #include "proxy_common.h"
+
 struct sqlite3_stmt;
 namespace proxy { namespace stat {
 	using std::string;

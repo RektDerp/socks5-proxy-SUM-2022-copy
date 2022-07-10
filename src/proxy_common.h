@@ -14,7 +14,7 @@
 #include <memory>
 
 #include <boost/asio.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
