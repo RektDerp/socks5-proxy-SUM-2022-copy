@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+clean () {
+    rm -rf lib/*.a bin/* CMakeFiles CMakeCache.txt cmake_install.cmake Makefile *.db
+}
+
+case $1 in
+    windows | Windows | WINDOWS)
+        clean
+        cmake . -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX"
+        cp lib/dll/* bin
+        ;;
+    Linux | linux | LINUX | "")
+        clean
+        cmake .
+        ;;
+    clean)
+        clean
+    ;;
+    *)
+        echo "usage: ./configure <linux | windows> <cmake_args>
+        ./configure clean"
+        ;;
+esac
