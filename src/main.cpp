@@ -20,15 +20,17 @@ int main()
 {
 	WININIT();
 	int port = 0;
+	int bufferSizeKB = 0;
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
+	config->getValue("buffer_size_kb", bufferSizeKB);
 #ifdef STAT
 	using namespace proxy::stat;
 	createDB();
 	createTable();
 #endif
 	ba::io_context context;
-	tcp_server server(context, port);
+	tcp_server server(context, port, bufferSizeKB);
 
 	std::thread t1([&]() {
 		try

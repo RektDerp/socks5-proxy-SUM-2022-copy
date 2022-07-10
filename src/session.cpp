@@ -1,11 +1,16 @@
 #include "session.h"
 #include "socks5_impl.h"
 
-session::session(ba::io_context& io_context):
+session::session(ba::io_context& io_context, size_t bufferSizeKB):
 	io_context_(io_context), 
 	client_socket_(io_context), server_socket_(io_context),
-	impl_(new socks5_impl(this))
-{}
+	impl_(new socks5_impl(this)),
+	client_buf_(),
+	server_buf_()
+{
+	client_buf_.resize(bufferSizeKB * 1024);
+	server_buf_.resize(bufferSizeKB * 1024);
+}
 
 session::~session()
 {
@@ -222,7 +227,7 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 	}
 }
 
-bool session::writeToSocket(ba::ip::tcp::socket& socket, barray& buffer, size_t len, bool isServer)
+bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
 	/*std::cout << "["

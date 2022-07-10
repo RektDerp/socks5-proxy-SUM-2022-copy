@@ -12,19 +12,18 @@
 #include "statWriter.h"
 #endif
 
-const int BUFFER_LEN = 100 * 1024;
-
-using barray = boost::array<unsigned char, BUFFER_LEN>;
 class socks5_impl;
+
 class session : public boost::enable_shared_from_this<session>
 {
 public:
 	typedef boost::shared_ptr<session> pointer;
-	static session::pointer create(ba::io_context& io_context)
+	static session::pointer create(ba::io_context& io_context,
+		size_t bufferSizeKB)
 	{	
-		return boost::make_shared<session>(io_context);
+		return pointer(new session(io_context, bufferSizeKB));
 	}
-	session(ba::io_context& io_context);
+	
 	~session();
 
 	ba::ip::tcp::socket& socket()
@@ -40,10 +39,12 @@ public:
 	unsigned short connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec);
 	void close();
 private:
+	session(ba::io_context& io_context, size_t bufferSizeKB);
+
 	void client_read();
 	void server_read();
 	
-	bool writeToSocket(ba::ip::tcp::socket& socket, barray& buffer, size_t len, bool isServer);
+	bool writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer);
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
 
@@ -55,8 +56,8 @@ private:
 	unsigned short      bind_port_ = 0;
 	long long id_ = 0;
 
-	barray client_buf_{};
-	barray server_buf_{};
+	bvec client_buf_;
+	bvec server_buf_;
 
 	socks5_impl* impl_;
 
