@@ -8,7 +8,7 @@ main: service.o
 	cp service.exe $(WINEPREFIX)/drive_c
 
 service.o :
-	$(CC) -c service.cpp -o service.o -L"Kernel32.dll" -L"Advapi32.dll"
+	$(CC) -c service.cpp -o service.o -lKernel32.dll -lAdvapi32.dll
 
 clean:
 	rm -f *.o *.exe

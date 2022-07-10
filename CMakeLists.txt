@@ -21,6 +21,7 @@ set(modules
 "statWriter.cpp"
 "sock5_impl.cpp"
 "stat_db_service.cpp"
+"sqlite3"
 )
 
 set(module_dependencies
@@ -31,6 +32,7 @@ set(module_dependencies
 ""
 "session"
 "sqlite3"
+""
 )
 
 ###############################################################################################################
@@ -42,10 +44,16 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "
   link_directories(${LINK_DIRECTORIES})
 
   list(TRANSFORM module_dependencies APPEND " ws2_32 wsock32" AT 2 3)
-  list(APPEND modules "ws2_32" "wsock32")
-  list(APPEND module_dependencies "" "")
+  list(APPEND modules "ws2_32" "wsock32" "-static-libgcc" "-static-libstdc++" "winpthread")
+  list(APPEND module_dependencies "" "" "" "" "")
 
-  add_compile_options("-static" "-lstdc++" "-lgcc")
+  #add_compile_options("-static" "-lstdc++" "-lgcc")
+  add_executable("service" "service/windows/main.cpp")
+  add_library("serviceobj" "service/windows/service.cpp")
+  target_link_libraries("service" "serviceobj")
+  target_link_libraries("service" "-LKernel32.dll")
+  target_link_libraries("service" "-LAdvapi32.dll")
+
 endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)

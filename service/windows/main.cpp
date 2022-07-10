@@ -6,7 +6,7 @@
 int main(int argc, char *argv[]) {
   try {
     ServiceWrapper::startFunc = [](std::string a, bool action) {
-      CreateProcess();
+      //CreateProcess();
     };
     ServiceWrapper::start("Socks5");
   } catch (std::runtime_error &e) {
