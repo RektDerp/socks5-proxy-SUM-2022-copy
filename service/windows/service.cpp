@@ -1,8 +1,10 @@
 #include "service.h"
 #include <boost/function.hpp>
+#include "processthreadsapi.h"
 #include "synchapi.h"
 #include <exception>
 #include <stdexcept>
+#include <string>
 #include "winnt.h"
 #include "winsvc.h"
 
@@ -10,8 +12,10 @@ SERVICE_STATUS ServiceWrapper::serviceStatus = {0};
 SERVICE_STATUS_HANDLE ServiceWrapper::serviceStatusHandle = NULL;
 HANDLE ServiceWrapper::stopEvent = 0;
 SERVICE_TABLE_ENTRY ServiceWrapper::serviceTable[] = {0};
+STARTUPINFO ServiceWrapper::serviceStartupInfo = {0};
+PROCESS_INFORMATION ServiceWrapper::serviceProcessInfo = {0};
 std::string ServiceWrapper::serviceName;
-std::function<void(std::string, bool)> ServiceWrapper::startFunc;
+std::string ServiceWrapper::executablePath;
 
 void ServiceWrapper::start(const std::string &_name) {
 
@@ -43,7 +47,27 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
       return;
     }
 
-    startFunc(serviceName, true);
+    /////////////
+
+    serviceStartupInfo.cb = sizeof(serviceStartupInfo);
+    if(!CreateProcess(
+      NULL,
+      (LPSTR)executablePath.c_str(),
+      NULL,
+      NULL,
+      FALSE,
+      0,
+      NULL,
+      NULL,
+      &serviceStartupInfo,
+      &serviceProcessInfo
+    )){
+      std::string errortext = "Failed to create process: ";
+      errortext.append(std::to_string(GetLastError()));
+      throw(std::runtime_error(errortext));
+    }
+
+    /////////////
 
     serviceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
     serviceStatus.dwCurrentState = SERVICE_RUNNING;
@@ -51,12 +75,26 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
       throw(std::runtime_error("SetServiceStatus failed"));
 
     while (true) {
-      WaitForSingleObject(stopEvent, INFINITE);
-      startFunc(serviceName, false);
-      serviceStatus.dwCurrentState = SERVICE_STOPPED;
-      if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
-        throw(std::runtime_error("SetServiceStatus failed"));
-      return;
+      if(WaitForSingleObject(stopEvent,10) != WAIT_TIMEOUT){
+        //stop process
+        TerminateProcess(serviceProcessInfo.hProcess, 0);
+        CloseHandle(serviceProcessInfo.hProcess);
+        CloseHandle(serviceProcessInfo.hThread);
+        serviceStatus.dwCurrentState = SERVICE_STOPPED;
+        serviceStatus.dwWin32ExitCode = 0;
+        if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
+          throw(std::runtime_error("SetServiceStatus failed"));
+        return;
+      }
+      if(WaitForSingleObject(serviceProcessInfo.hProcess, 10) != WAIT_TIMEOUT){
+        CloseHandle(serviceProcessInfo.hProcess);
+        CloseHandle(serviceProcessInfo.hThread);
+        serviceStatus.dwCurrentState = SERVICE_STOPPED;
+        serviceStatus.dwWin32ExitCode = -1;
+        if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
+          throw(std::runtime_error("SetServiceStatus failed"));
+        return;
+      }
     }
   }
 

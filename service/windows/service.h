@@ -5,13 +5,15 @@
 
 class ServiceWrapper {
  public:
-  static std::function<void(std::string, bool)> startFunc;
+  static std::string executablePath;
   static void start(const std::string &_name);
 private:
   static SERVICE_STATUS serviceStatus;
   static SERVICE_STATUS_HANDLE serviceStatusHandle;
   static HANDLE stopEvent;
   static SERVICE_TABLE_ENTRY serviceTable[2];
+  static STARTUPINFO serviceStartupInfo;
+  static PROCESS_INFORMATION serviceProcessInfo;
   static std::string serviceName;
   static void serviceMain(DWORD argc, LPTSTR *argv);
   static void serviceControlHandler(DWORD CtrlCode);

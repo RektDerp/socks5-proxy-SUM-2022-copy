@@ -49,20 +49,26 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "
   list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "wsock32" "-l:libwinpthread.dll.a")
   list(APPEND module_dependencies "" "" "" "" "")
 
+endif()
+
+if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+  list(REMOVE_AT module_dependencies 6)
+  list(INSERT module_dependencies 6 "sqlite3")
+
   add_compile_options("-static")
   add_executable("service" "service/windows/main.cpp")
   add_library("serviceobj" "service/windows/service.cpp")
   target_link_libraries("service" "serviceobj")
   target_link_libraries("service" "-LKernel32.dll")
   target_link_libraries("service" "-LAdvapi32.dll")
-
-endif()
-
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
-  list(REMOVE_AT module_dependencies 6)
-  list(INSERT module_dependencies 6 "sqlite3")
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
-  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+  target_link_libraries("service" "-static-libgcc")
+  target_link_libraries("service" "-static-libstdc++")
+  target_link_libraries("service" "ws2_32")
 endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)
