@@ -12,15 +12,24 @@ using namespace cppsecrets;
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
 	}
+const char defaultConfigPath [] = "config.txt";
 #else
     #define WININIT() {}
+const char defaultConfigPath [] = "/etc/socks5-config.txt";
 #endif
 
-int main()
+int main(int argc, char **argv)
 {
 	WININIT();
 	int port = 0;
 	int bufferSizeKB = 0;
+	if(argc < 2){
+		std::cout << "No config file specified, using default: " << defaultConfigPath << std::endl;
+		LogConfigReader::configFilePath = defaultConfigPath;
+	}
+	else{
+		LogConfigReader::configFilePath = argv[1];
+	}
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);

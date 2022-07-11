@@ -39,28 +39,12 @@ set(module_dependencies
 
 ###############################################################################################################
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-  message("Build for windows on unix")
-  include_directories(/usr/x86_64-w64-mingw32/include/)
-  set(LINK_DIRECTORIES /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
-  link_directories(${LINK_DIRECTORIES})
-
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+  add_compile_options("-static")
   list(TRANSFORM module_dependencies APPEND " ws2_32 wsock32" AT 2 3)
-  list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "wsock32" "-l:libwinpthread.dll.a")
+  list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "wsock32" "-l:libwinpthread-1.dll")
   list(APPEND module_dependencies "" "" "" "" "")
 
-endif()
-
-if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
-  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-  list(REMOVE_AT module_dependencies 6)
-  list(INSERT module_dependencies 6 "sqlite3")
-
-  add_compile_options("-static")
   add_executable("service" "service/windows/main.cpp")
   add_library("serviceobj" "service/windows/service.cpp")
   target_link_libraries("service" "serviceobj")
@@ -69,6 +53,19 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   target_link_libraries("service" "-static-libgcc")
   target_link_libraries("service" "-static-libstdc++")
   target_link_libraries("service" "ws2_32")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+  message("Build for windows on unix")
+  include_directories(/usr/x86_64-w64-mingw32/include/)
+  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
+  link_directories(${LINK_DIRECTORIES})
+
+endif()
+
+if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)

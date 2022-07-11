@@ -6,14 +6,16 @@
 using namespace std; // don't use this
 using namespace cppsecrets; // why do we need this namespace? rename?
 
+//Rekt_Derp was here
+
 #define NULL_PTR 0 // nullptr?
 
 LogConfigReader* LogConfigReader::m_pInstance = NULL_PTR;
 
-LogConfigReader::LogConfigReader()
+LogConfigReader::LogConfigReader(string configFile)
 {
     m_ConfigSettingMap.clear();
-    parseFile();
+    parseFile(configFile);
 }
 
 LogConfigReader::~LogConfigReader()
@@ -30,7 +32,7 @@ LogConfigReader* LogConfigReader::getInstance()
 
     if (NULL_PTR == m_pInstance)
     {
-        m_pInstance = new LogConfigReader;
+        m_pInstance = new LogConfigReader(configFilePath);
     }
     return m_pInstance;
 }
@@ -164,3 +166,5 @@ void LogConfigReader::dumpFileValues()
         cout << it->first << " = " << it->second << endl;
     }
 }
+
+std::string LogConfigReader::configFilePath;
