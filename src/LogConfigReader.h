@@ -25,13 +25,13 @@ namespace cppsecrets
         static LogConfigReader* m_pInstance;
 
     public:
-
+        static std::string configFilePath;
         // Public static method getInstance(). This function is
         // responsible for object creation.
         static LogConfigReader* getInstance();
 
         // Parse the config file.
-        bool parseFile(std::string fileName = "config.txt");
+        bool parseFile(std::string fileName);
 
         // Overloaded getValue() function.
         // Value of the tag in cofiguration file could be
@@ -49,7 +49,7 @@ namespace cppsecrets
 
         // Define constructor in the private section to make this
         // class as singleton.
-        LogConfigReader();
+        LogConfigReader(std::string configFile = "config.txt");
 
         // Define destructor in private section, so no one can delete 
         // the instance of this class.
