@@ -1,9 +1,11 @@
-log_level = DISABLE_LOG        #specifying the log level
+log_level = DISABLE_LOG		#specifying the log level
  
-log_type = NO_LOG			  #specifying the log type
+log_type = NO_LOG			#specifying the log type
 
-max_log_files = 3			  #specifying the maximum number of log files
+max_log_files = 3			#specifying the maximum number of log files
 
-log_size = 100000		      #specifying the size of a log file (in bytes)
+log_size = 100000			#specifying the size of a log file (in bytes)
 
-listen_port = 1080		      # port server is listening on
+listen_port = 1080			# port server is listening on
+
+buffer_size_kb = 100		# session read/write buffers size in KB (optimal - 100 KB)

@@ -1,16 +1,19 @@
 #include "server.h"
 
-tcp_server::tcp_server(ba::io_context& io_context, unsigned short port): 
+tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB): 
 	io_context_(io_context),
-	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port))
+	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
+	bufferSizeKB_(bufferSizeKB)
 {
+	std::cout << "Server starting on port " << port
+		<< " with buffer size " << bufferSizeKB << " KB." << std::endl;
 	start_accept();
 }
 
 void tcp_server::start_accept()
 {
 	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
-	session::pointer new_connection = session::create(io_context_);
+	session::pointer new_connection = session::create(io_context_, bufferSizeKB_);
 	/*{
 		std::ostringstream tmp;
 		tmp << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
@@ -25,7 +28,7 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 {
 	if (!error)
 	{
-		std::cout << "[server] client connected" << std::endl;
+		//std::cout << "[server] client connected" << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "[server] client connected" << std::endl;

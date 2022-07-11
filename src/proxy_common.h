@@ -1,6 +1,9 @@
 #ifndef _PROXY_COMMON_H
 #define _PROXY_COMMON_H
 
+#define STAT
+//#define STAT_CSV
+
 #include <iostream>
 #include <thread>
 #include <bitset>
@@ -11,7 +14,7 @@
 #include <memory>
 
 #include <boost/asio.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
