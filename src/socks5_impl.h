@@ -45,26 +45,47 @@ enum REP {
 	CONNECTION_REFUSED	= 0x05,
 	TTL_EXPIRED			= 0x06,
 	COMMAND_NOT_SUPP	= 0x07,
-	ADDR_TYP_NOT_SUPP	= 0x08
+	ADDR_TYPE_NOT_SUPP	= 0x08
 };
 
 class session;
 
 class socks5_impl {
 public:
-	socks5_impl(session* s) : session_(s) {}
+	socks5_impl(session* s) : _session(s) {}
 	~socks5_impl() = default;
 	bool init();
 	void write_stat(size_t bytes, bool isServer);
 	void close();
 private:
+	session* _session;
+	std::string _username;
+	long long id_ = 0;
+	unsigned char _atyp;
+	unsigned char _cmd;
+	std::string _dstAddress;
+	unsigned short _serverPort;
+	unsigned short _bindPort;
+
 	socks5_impl(const socks5_impl&) = delete;
 
+	bool checkVersion();
+	bool checkMethod();
 	bool auth();
 	bool checkError(bs::error_code& ec);
-	session* session_;
-	std::string username_;
-	long long id_ = 0;
+	void sendErrorResponse(REP responseCode);
+	std::string readAddress(unsigned char atyp);
+	bool readMethodRequest();
+	bool sendMethodResponse(METHOD method);
+	bool readCommandRequest();
+	bool sendCommandResponse(unsigned short bindPort);
+	bool createRecord();
+	bool connect(ba::ip::tcp::resolver::query query);
+
+	inline static METHOD getServerMethod()
+	{
+		return AUTH_FLAG ? USERNAME_PASSWORD : NO_AUTH_REQ;
+	}
 };
 
 #endif //_SOCKS5_IMPL_H_ 

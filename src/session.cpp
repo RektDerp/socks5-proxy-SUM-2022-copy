@@ -57,12 +57,13 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 	tcp::resolver resolver(io_context_);
 	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 	tcp::resolver::iterator end;
-	ec = boost::asio::error::host_not_found;
+	ec = ba::error::host_not_found;
 	while (ec && endpoint_iterator != end)
 	{
 		server_socket_.close(ec);
 		server_socket_.connect(*endpoint_iterator++, ec);
 	}
+	if (ec) return 0;
 	bind_port_ = server_socket_.local_endpoint().port();
 	//std::cout << "[session] server connected on local port " << bind_port_ << std::endl;
 	return bind_port_;
