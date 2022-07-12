@@ -7,6 +7,10 @@
 namespace proxy { namespace stat {
 	using namespace std;
 
+	void set_db_path(char * p){
+	    db_path = p;
+    }
+
 	void createDB()
 	{
 		sqlite3* DB;
@@ -197,6 +201,7 @@ namespace proxy { namespace stat {
 	{
 		int err;
 		sqlite3* db;
+		cout << "db_path " << db_path << endl;
 		err = sqlite3_open(db_path, &db);
 		if (err != SQLITE_OK)
 		{

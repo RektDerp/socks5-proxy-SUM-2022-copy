@@ -33,10 +33,11 @@ namespace proxy { namespace stat {
 	Session selectSession(long long session_id);
 	vector<Session> selectAll();
 	void readRow(Session& s, sqlite3_stmt* stmt);
+	void set_db_path(char * p);
 
 	namespace {
 		std::mutex mutex;
-		const char* db_path; // todo move to config?
+		char* db_path = R"(./sessions_stat.db)"; // todo move to config?
 		const string create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "

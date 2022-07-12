@@ -20,6 +20,9 @@ const char defaultConfigPath [] = "/etc/socks5-config.txt";
 
 int main(int argc, char **argv)
 {
+	#ifdef __linux__
+	    proxy::stat::set_db_path("/tmp/sessions_stat.db");
+    #endif
 	WININIT();
 	int port = 0;
 	int bufferSizeKB = 0;
@@ -33,12 +36,6 @@ int main(int argc, char **argv)
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
-#ifdef __linux__
-	proxy::stat::db_path = R"(/tmp/sessions_stat.db)";
-	std::cout << proxy::stat::db_path << " linux\n";
-#else
-	proxy::stat::db_path = R"(.\sessions_stat.db)";
-#endif
 #ifdef STAT
 	using namespace proxy::stat;
 	createDB();
