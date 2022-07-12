@@ -1,15 +1,26 @@
 #!/usr/bin/sh
+
+EXE=socks5-proxy
+
 if [ "$1" != "-r" ]
 then
-    cp -bf service/linux/socks5-proxy.service /usr/lib/systemd/system
-    cp -bf bin/main /usr/local/bin/service
+    cat > /usr/lib/systemd/system/socks5-proxy.service << EOM
+[Unit]
+Description=Socks 5 Proxy server
+[Service]
+ExecStart=/usr/local/bin/$EXE
+[Install]
+WantedBy=multi-user.target
+EOM
+
+    cp -bf bin/main /usr/local/bin/$EXE
     cp -bf config.txt /etc/socks5-config.txt
     chmod +x /usr/lib/systemd/system/socks5-proxy.service
-    chmod +x /usr/local/bin/service
+    chmod +x /usr/local/bin/$EXE
     systemctl daemon-reload
 else
     rm -f /usr/lib/systemd/system/socks5-proxy.service
-    rm -f /usr/local/bin/service
+    rm -f /usr/local/bin/$EXE
     rm -f /etc/socks5-config.txt
     systemctl daemon-reload
 fi

@@ -12,7 +12,8 @@ namespace proxy { namespace stat {
 		sqlite3* DB;
 		int err = sqlite3_open(db_path, &DB);
 		if (err != SQLITE_OK) {
-			cerr << "Error occured during creation of database\n";
+			cerr << "Error occured during creation of database: " << err << "\n";
+			cerr << db_path << "\n";
 		}
 		sqlite3_close(DB);
 	}

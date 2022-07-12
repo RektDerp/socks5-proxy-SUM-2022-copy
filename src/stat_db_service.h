@@ -36,7 +36,7 @@ namespace proxy { namespace stat {
 
 	namespace {
 		std::mutex mutex;
-		const char* db_path = R"(.\sessions_stat.db)"; // todo move to config?
+		const char* db_path; // todo move to config?
 		const string create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "

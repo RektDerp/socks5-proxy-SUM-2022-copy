@@ -33,6 +33,11 @@ int main(int argc, char **argv)
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
+#ifdef __linux__
+	proxy::stat::db_path = "/tmp/sessions_stat.db";
+#else
+	proxy::stat::db_path = R"(.\sessions_stat.db)";
+#endif
 #ifdef STAT
 	using namespace proxy::stat;
 	createDB();
