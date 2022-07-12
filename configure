@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 clean () {
-    rm -rf lib/*.a bin/* CMakeFiles CMakeCache.txt cmake_install.cmake Makefile *.db
+    rm -rf lib/*.a CMakeFiles CMakeCache.txt cmake_install.cmake Makefile *.db
 }
 
 case $1 in

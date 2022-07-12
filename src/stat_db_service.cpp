@@ -201,7 +201,6 @@ namespace proxy { namespace stat {
 	{
 		int err;
 		sqlite3* db;
-		cout << "db_path " << db_path << endl;
 		err = sqlite3_open(db_path, &db);
 		if (err != SQLITE_OK)
 		{

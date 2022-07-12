@@ -8,6 +8,8 @@ then
 [Unit]
 Description=Socks 5 Proxy server
 [Service]
+StandardInput=tty
+StandardOutput=tty
 ExecStart=/usr/local/bin/$EXE
 [Install]
 WantedBy=multi-user.target
