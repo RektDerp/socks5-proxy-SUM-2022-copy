@@ -195,15 +195,20 @@ namespace proxy { namespace stat {
 
 	vector<Session> selectAll()
 	{
+		int err;
 		sqlite3* db;
-		sqlite3_open(db_path, &db);
+		err = sqlite3_open(db_path, &db);
+		if (err != SQLITE_OK)
+		{
+			cerr << "Error opening " << db_path << ": " << err << endl;
+			return {};
+		}
 		sqlite3_stmt* stmt;
-		int err = sqlite3_prepare_v2(db,
-			select_all,
-			-1, &stmt, nullptr);
+		err = sqlite3_prepare_v2(db, select_all, -1, &stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
 			cerr << "Error during preparing selectAll stmt: " << err << endl;
+			sqlite3_close(db);
 			return {};
 		}
 		vector<Session> vec;
