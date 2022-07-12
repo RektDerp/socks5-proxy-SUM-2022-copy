@@ -34,7 +34,8 @@ int main(int argc, char **argv)
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
 #ifdef __linux__
-	proxy::stat::db_path = "/tmp/sessions_stat.db";
+	proxy::stat::db_path = R"(/tmp/sessions_stat.db)";
+	std::cout << proxy::stat::db_path << " linux\n";
 #else
 	proxy::stat::db_path = R"(.\sessions_stat.db)";
 #endif
