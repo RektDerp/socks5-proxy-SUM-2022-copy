@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 		std::string s;
 		std::getline(std::cin, s);
 
-
+		if(s.compare("quit"))break;
 
 		std::cout << "============================================================\n";
 		for (const Session& s : selectAll()) {
