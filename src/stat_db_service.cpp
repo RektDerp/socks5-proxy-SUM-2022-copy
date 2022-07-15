@@ -1,16 +1,20 @@
 #include "stat_db_service.h"
-
+#include "stat_handlers.h"
+#include "string_utils.h"
 #include <sqlite3.h>
 #include <stdio.h>
 #include <iostream>
 
 namespace proxy { namespace stat {
 	using namespace std;
+	using boost::format;
+	using boost::str;
+	using string_utils::concat;
 
 	db_service* db_service::_instance = nullptr;
 	mutex db_service::_mutex;
 
-	db_service& db_service::getInstance(const string& db_path)
+	db_service& db_service::getInstance(const string& db_path) throw(db_exception)
 	{
 		lock_guard<mutex> guard(_mutex);
 		if (_instance == nullptr)
@@ -20,53 +24,34 @@ namespace proxy { namespace stat {
 		return *_instance;
 	}
 
-	void db_service::createDB()
+	void db_service::createDB() throw(db_exception)
 	{
-		sqlite3* DB;
-		int err = sqlite3_open(_db_path.c_str(), &DB);
-		if (err != SQLITE_OK) {
-			cerr << "Error occured during creation of database: " << err << "\n";
-			cerr << _db_path << "\n";
-		}
-		sqlite3_close(DB);
+		db_connection db(_db_path);
 	}
 
-	void db_service::createTable()
+	void db_service::createTable() throw(db_exception)
 	{
-		sqlite3* DB;
+		db_connection DB(_db_path);
 		char* messageError;
-		try
-		{
-			int err = sqlite3_open(_db_path.c_str(), &DB);
-			err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
-			if (err != SQLITE_OK) {
-				cerr << "Error in createTable function." << endl;
-				sqlite3_free(messageError);
-			}
-			else
-				cout << "Table created Successfully" << endl;
+		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
+		if (err != SQLITE_OK) {
+			db_exception ex(concat("createTable: error during executing stmt: %1%", messageError));
+			sqlite3_free(messageError);
+			throw ex;
 		}
-		catch (const exception& e)
-		{
-			cerr << e.what();
-		}
-
-		sqlite3_close(DB);
+		else
+			cout << "Table created Successfully" << endl;
 	}
 
-	long long db_service::create(const session s)
+	long long db_service::create(const session s) throw(db_exception)
 	{
 		lock_guard<mutex> guard(_mutex);
-		sqlite3* db;
-		sqlite3_open(_db_path.c_str(), &db);
-		sqlite3_stmt* stmt;
-		int err = sqlite3_prepare_v2(db,
-			create_session,
-			-1, &stmt, nullptr);
+		db_connection db(_db_path);
+		db_stmt stmt;
+		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during preparing create stmt.\n";
-			return 0;
+			throw db_exception(concat("Create: error during preparing stmt: %1%", err));
 		}
 
 		err = sqlite3_bind_text(stmt, 1, s.user.c_str(), s.user.length(), SQLITE_STATIC);
@@ -76,152 +61,116 @@ namespace proxy { namespace stat {
 		err = sqlite3_bind_text(stmt, 5, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during binding create stmt.\n";
-			return 0;
+			throw db_exception(concat("Create: error during binding stmt: %1%", err));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			cerr << "Error during executing create stmt: " << err << endl;
-			return 0;
+			throw db_exception(concat("Create: error during executing stmt: %1%", err));
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
 		cout << "Created session with id " << id << endl;
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 		return id;
 	}
-
-	void db_service::update(long long session_id, size_t bytes, Dest dest)
+	
+	void db_service::update(long long session_id, size_t bytes, Dest dest) throw(db_exception)
 	{
 		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
-		if (s.id == 0) {
-			cerr << "No session with id " << session_id << endl;
-			return;
+		if (s.id == 0)
+		{
+			throw db_exception(concat("Update: no session with id: %1%", session_id));
 		}
 		long long newBytes;
-		sqlite3* db;
-		sqlite3_open(_db_path.c_str(), &db);
-		sqlite3_stmt* stmt;
+		db_connection db(_db_path);
+		db_stmt stmt;
 		int err;
 		if (dest == Dest::TO_CLIENT) {
 			newBytes = s.bytes_recv + bytes;
-			err = sqlite3_prepare_v2(db,
-				update_recv_bytes,
-				-1, &stmt, nullptr);
+			err = sqlite3_prepare_v2(db, update_recv_bytes, -1, stmt, nullptr);
 		}
 		else {
 			newBytes = s.bytes_sent + bytes;
-			err = sqlite3_prepare_v2(db,
-				update_sent_bytes,
-				-1, &stmt, nullptr);
+			err = sqlite3_prepare_v2(db, update_sent_bytes, -1, stmt, nullptr);
 		}
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during preparing update stmt.\n";
-			return;
+			throw db_exception(concat("Update: error during preparing stmt: %1%", err));
 		}
 		err = sqlite3_bind_int64(stmt, 1, newBytes);
 		err = sqlite3_bind_int64(stmt, 2, session_id);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during binding update stmt.\n";
-			return;
+			throw db_exception(concat("Update: error during binding stmt: %1%", err));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			cerr << "Error during executing update stmt.\n";
+			throw db_exception(concat("Update: error during executing stmt: %1%", err));
 		}
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return;
 	}
 
-	void db_service::close(long long session_id)
+	void db_service::close(long long session_id) throw(db_exception)
 	{
+		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
 		if (s.id == 0) {
-			cerr << "No session with id " << session_id << endl;
+			throw db_exception(concat("Close: no session with id: %1%", session_id));
 		}
-		sqlite3* db;
-		sqlite3_open(_db_path.c_str(), &db);
-		sqlite3_stmt* stmt;
-		int err = sqlite3_prepare_v2(db,
-			update_inactive,
-			-1, &stmt, nullptr);
+		db_connection db(_db_path);
+		db_stmt stmt;
+		int err = sqlite3_prepare_v2(db, update_inactive, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during preparing update close stmt.\n";
-			return;
+			throw db_exception(concat("Close: error during preparing stmt: %1%", err));
 		}
 		sqlite3_bind_int64(stmt, 1, s.id);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during binding update close stmt.\n";
-			return;
+			throw db_exception(concat("Close: error during binding stmt: %1%", err));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			cerr << "Error during executing update close stmt.\n";
+			throw db_exception(concat("Close: error during executing stmt: %1%", err));
 		}
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 	}
 
-	session db_service::selectSession(long long session_id)
+	session db_service::selectSession(long long session_id) throw(db_exception)
 	{
-		sqlite3* db;
-		sqlite3_open(_db_path.c_str(), &db);
-		sqlite3_stmt* stmt;
-		int err = sqlite3_prepare_v2(db,
-			select_id,
-			-1, &stmt, nullptr);
+		db_connection db(_db_path);
+		db_stmt stmt;
+		int err = sqlite3_prepare_v2(db, select_id, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during preparing select stmt.\n";
-			return {};
+			throw db_exception(concat("Select: error during preparing stmt: %1%", err));
 		}
 		sqlite3_bind_int64(stmt, 1, session_id);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error during binding select stmt.\n";
-			return {};
+			throw db_exception(concat("Select: error during binding stmt: %1%", err));
 		}
-		session s;
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
+			session s;
 			readRow(s, stmt);
+			return s;
 		}
 		else {
-			cerr << "id: " << session_id << 
-				" Error during executing select stmt: " << err << endl;
+			throw db_exception(concat("Select: error during executing stmt: %1%", err));
 		}
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return s;
 	}
 
-	vector<session> db_service::selectAll()
+	vector<session> db_service::selectAll() throw(db_exception)
 	{
 		int err;
-		sqlite3* db;
-		err = sqlite3_open(_db_path.c_str(), &db);
+		db_connection db(_db_path);
+		db_stmt stmt;
+		err = sqlite3_prepare_v2(db, select_all, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error opening " << _db_path << ": " << err << endl;
-			return {};
-		}
-		sqlite3_stmt* stmt;
-		err = sqlite3_prepare_v2(db, select_all, -1, &stmt, nullptr);
-		if (err != SQLITE_OK)
-		{
-			cerr << "Error during preparing selectAll stmt: " << err << endl;
-			sqlite3_close(db);
-			return {};
+			throw db_exception(concat("SelectAll: error during preparing stmt: %1%", err));
 		}
 		vector<session> vec;
 
@@ -234,9 +183,6 @@ namespace proxy { namespace stat {
 			readRow(s, stmt);
 			vec.push_back(s);
 		}
-		
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 		return vec;
 	}
 

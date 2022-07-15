@@ -4,7 +4,7 @@
 
 
 // todo: move to config
-// todo: store user/pass in db with password in encrypted
+// todo: store user/pass in config with password
 const bool AUTH_FLAG		= true;
 const std::string USER		= "user";
 const std::string PASSWORD	= "pass";
@@ -68,6 +68,7 @@ private:
 	unsigned short _bindPort;
 
 	socks5_impl(const socks5_impl&) = delete;
+	socks5_impl& operator=(const socks5_impl&) = delete;
 
 	bool checkVersion();
 	bool checkMethod();

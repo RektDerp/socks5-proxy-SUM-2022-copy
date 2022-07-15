@@ -4,6 +4,8 @@
 #define STAT
 //#define STAT_CSV
 
+#include "proxy_exceptions.h"
+
 #include <iostream>
 #include <thread>
 #include <bitset>
