@@ -38,8 +38,7 @@ int main(int argc, char **argv)
 	config->getValue("buffer_size_kb", bufferSizeKB);
 #ifdef STAT
 	using namespace proxy::stat;
-	createDB();
-	createTable();
+	db_service::getInstance(); // this initializes table
 #endif
 	ba::io_context context;
 	tcp_server server(context, port, bufferSizeKB);
@@ -69,7 +68,7 @@ int main(int argc, char **argv)
 		if(s.compare("quit"))break;
 
 		std::cout << "============================================================\n";
-		for (const Session& s : selectAll()) {
+		for (const proxy::stat::session& s : db_service::getInstance().selectAll()) {
 			std::cout << s.id << ","
 				<< s.user << ","
 				<< (s.is_active ? "active" : "inactive") << ","

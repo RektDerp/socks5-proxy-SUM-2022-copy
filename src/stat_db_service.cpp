@@ -7,28 +7,37 @@
 namespace proxy { namespace stat {
 	using namespace std;
 
-	void set_db_path(char * p){
-	    db_path = p;
-    }
+	db_service* db_service::_instance = nullptr;
+	mutex db_service::_mutex;
 
-	void createDB()
+	db_service& db_service::getInstance(const string& db_path)
+	{
+		lock_guard<mutex> guard(_mutex);
+		if (_instance == nullptr)
+		{
+			_instance = new db_service(db_path);
+		}
+		return *_instance;
+	}
+
+	void db_service::createDB()
 	{
 		sqlite3* DB;
-		int err = sqlite3_open(db_path, &DB);
+		int err = sqlite3_open(_db_path.c_str(), &DB);
 		if (err != SQLITE_OK) {
 			cerr << "Error occured during creation of database: " << err << "\n";
-			cerr << db_path << "\n";
+			cerr << _db_path << "\n";
 		}
 		sqlite3_close(DB);
 	}
 
-	void createTable()
+	void db_service::createTable()
 	{
 		sqlite3* DB;
 		char* messageError;
 		try
 		{
-			int err = sqlite3_open(db_path, &DB);
+			int err = sqlite3_open(_db_path.c_str(), &DB);
 			err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
 			if (err != SQLITE_OK) {
 				cerr << "Error in createTable function." << endl;
@@ -45,12 +54,11 @@ namespace proxy { namespace stat {
 		sqlite3_close(DB);
 	}
 
-	long long create(std::string username, std::string src_addr, std::string src_port,
-		std::string dst_addr, std::string dst_port)
+	long long db_service::create(const session s)
 	{
-		std::lock_guard<std::mutex> guard(mutex);
+		lock_guard<mutex> guard(_mutex);
 		sqlite3* db;
-		sqlite3_open(db_path, &db);
+		sqlite3_open(_db_path.c_str(), &db);
 		sqlite3_stmt* stmt;
 		int err = sqlite3_prepare_v2(db,
 			create_session,
@@ -61,11 +69,11 @@ namespace proxy { namespace stat {
 			return 0;
 		}
 
-		err = sqlite3_bind_text(stmt, 1, username.c_str(), username.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 2, src_addr.c_str(), src_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 3, src_port.c_str(), src_port.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 4, dst_addr.c_str(), dst_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 5, dst_port.c_str(), dst_port.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, 1, s.user.c_str(), s.user.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, 2, s.src_addr.c_str(), s.src_addr.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, 3, s.src_port.c_str(), s.src_port.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, 4, s.dst_addr.c_str(), s.dst_addr.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, 5, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
 			cerr << "Error during binding create stmt.\n";
@@ -85,17 +93,17 @@ namespace proxy { namespace stat {
 		return id;
 	}
 
-	void update(long long session_id, size_t bytes, Dest dest)
+	void db_service::update(long long session_id, size_t bytes, Dest dest)
 	{
-		std::lock_guard<std::mutex> guard(mutex);
-		Session s = selectSession(session_id);
+		lock_guard<mutex> guard(_mutex);
+		session s = selectSession(session_id);
 		if (s.id == 0) {
-			cerr << "No session with id " << session_id << std::endl;
+			cerr << "No session with id " << session_id << endl;
 			return;
 		}
 		long long newBytes;
 		sqlite3* db;
-		sqlite3_open(db_path, &db);
+		sqlite3_open(_db_path.c_str(), &db);
 		sqlite3_stmt* stmt;
 		int err;
 		if (dest == Dest::TO_CLIENT) {
@@ -132,14 +140,14 @@ namespace proxy { namespace stat {
 		return;
 	}
 
-	void close(long long session_id)
+	void db_service::close(long long session_id)
 	{
-		Session s = selectSession(session_id);
+		session s = selectSession(session_id);
 		if (s.id == 0) {
-			cerr << "No session with id " << session_id << std::endl;
+			cerr << "No session with id " << session_id << endl;
 		}
 		sqlite3* db;
-		sqlite3_open(db_path, &db);
+		sqlite3_open(_db_path.c_str(), &db);
 		sqlite3_stmt* stmt;
 		int err = sqlite3_prepare_v2(db,
 			update_inactive,
@@ -164,10 +172,10 @@ namespace proxy { namespace stat {
 		sqlite3_close(db);
 	}
 
-	Session selectSession(long long session_id)
+	session db_service::selectSession(long long session_id)
 	{
 		sqlite3* db;
-		sqlite3_open(db_path, &db);
+		sqlite3_open(_db_path.c_str(), &db);
 		sqlite3_stmt* stmt;
 		int err = sqlite3_prepare_v2(db,
 			select_id,
@@ -183,7 +191,7 @@ namespace proxy { namespace stat {
 			cerr << "Error during binding select stmt.\n";
 			return {};
 		}
-		Session s;
+		session s;
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			readRow(s, stmt);
@@ -197,14 +205,14 @@ namespace proxy { namespace stat {
 		return s;
 	}
 
-	vector<Session> selectAll()
+	vector<session> db_service::selectAll()
 	{
 		int err;
 		sqlite3* db;
-		err = sqlite3_open(db_path, &db);
+		err = sqlite3_open(_db_path.c_str(), &db);
 		if (err != SQLITE_OK)
 		{
-			cerr << "Error opening " << db_path << ": " << err << endl;
+			cerr << "Error opening " << _db_path << ": " << err << endl;
 			return {};
 		}
 		sqlite3_stmt* stmt;
@@ -215,14 +223,14 @@ namespace proxy { namespace stat {
 			sqlite3_close(db);
 			return {};
 		}
-		vector<Session> vec;
+		vector<session> vec;
 
 		for (;;) {
 			err = sqlite3_step(stmt);
 			if (err != SQLITE_ROW)
 				break;
 
-			Session s;
+			session s;
 			readRow(s, stmt);
 			vec.push_back(s);
 		}
@@ -232,7 +240,7 @@ namespace proxy { namespace stat {
 		return vec;
 	}
 
-	void readRow(Session& s, sqlite3_stmt* stmt)
+	void db_service::readRow(session& s, sqlite3_stmt* stmt)
 	{
 		s.id = sqlite3_column_int(stmt, 0);
 		const char* user = (const char*) sqlite3_column_text(stmt, 1);

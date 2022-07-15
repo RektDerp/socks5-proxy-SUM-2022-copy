@@ -6,13 +6,14 @@ struct sqlite3_stmt;
 namespace proxy { namespace stat {
 	using std::string;
 	using std::vector;
+
 	enum Dest
 	{
 		TO_SERVER,
 		TO_CLIENT
 	};
 
-	struct Session {
+	struct session {
 		long long id;
 		string user;
 		char is_active;
@@ -24,20 +25,38 @@ namespace proxy { namespace stat {
 		long long bytes_recv;
 	};
 
-	void createDB();
-	void createTable();
-	long long create(std::string username, std::string src_add, std::string src_port,
-		std::string dst_add, std::string dst_port);
-	void update(long long session_id, size_t bytes, Dest dest);
-	void close(long long session_id);
-	Session selectSession(long long session_id);
-	vector<Session> selectAll();
-	void readRow(Session& s, sqlite3_stmt* stmt);
-	void set_db_path(char * p);
+	class db_service {
+	private:
+		static db_service* _instance;
+		static std::mutex _mutex;
+	public:
+		static db_service& getInstance(const string& db_path = R"(./sessions_stat.db)");
+
+		~db_service() = default;
+		void createDB();
+		void createTable();
+		long long create(const session s);
+		void update(long long session_id, size_t bytes, Dest dest);
+		void close(long long session_id);
+		session selectSession(long long session_id);
+		vector<session> selectAll();
+	private:
+		const string _db_path; // todo move to config?
+
+		db_service(const std::string& db_path) :
+			_db_path(db_path)
+		{
+			createDB();
+			createTable();
+		}
+
+		void readRow(session& s, sqlite3_stmt* stmt);
+
+		db_service(const db_service&) = delete;
+		db_service& operator=(const db_service&) = delete;
+	};
 
 	namespace {
-		std::mutex mutex;
-		char* db_path = R"(./sessions_stat.db)"; // todo move to config?
 		const string create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "

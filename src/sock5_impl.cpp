@@ -120,7 +120,7 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 	}
 
 	using namespace proxy::stat;
-	update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
+	db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 #endif
 }
 
@@ -128,7 +128,7 @@ void socks5_impl::close()
 {
 #ifdef STAT
 	if (id_ != 0) {
-		proxy::stat::close(id_);
+		proxy::stat::db_service::getInstance().close(id_);
 		id_ = 0;
 	}
 #endif
@@ -270,11 +270,15 @@ bool socks5_impl::createRecord()
 {
 #ifdef STAT
 	using namespace proxy::stat;
-	id_ = create(_username,
-		_session->socket().remote_endpoint().address().to_string(),
-		std::to_string(_session->socket().remote_endpoint().port()),
-		_dstAddress,
-		std::to_string(_serverPort));
+
+	proxy::stat::session s;
+	s.user = _username;
+	s.src_addr = _session->socket().remote_endpoint().address().to_string();
+	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
+	s.dst_addr = _dstAddress;
+	s.dst_port = std::to_string(_serverPort);
+
+	id_ = db_service::getInstance().create(s);
 
 	if (id_ == 0) {
 		std::cerr << "Database record was not created for session." << std::endl;
