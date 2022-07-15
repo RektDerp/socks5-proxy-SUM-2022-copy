@@ -39,11 +39,23 @@ set(module_dependencies
 
 ###############################################################################################################
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+  message("Build for windows on unix")
+  include_directories(/usr/x86_64-w64-mingw32/include/)
+  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
+  link_directories(${LINK_DIRECTORIES})
+
+endif()
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
   add_compile_options("-static")
   list(TRANSFORM module_dependencies APPEND " ws2_32 wsock32" AT 2 3)
-  list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "wsock32" "-l:libwinpthread-1.dll")
-  list(APPEND module_dependencies "" "" "" "" "")
+  list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "libwinpthread-1")
+  list(APPEND module_dependencies "" "" "" "")
+
+
 
   add_executable("service" "service/windows/main.cpp")
   add_library("serviceobj" "service/windows/service.cpp")
@@ -55,17 +67,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   target_link_libraries("service" "ws2_32")
 endif()
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-  message("Build for windows on unix")
-  include_directories(/usr/x86_64-w64-mingw32/include/)
-  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
-  link_directories(${LINK_DIRECTORIES})
-
-endif()
-
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
-  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
+
 endif()
 
 add_executable(${executable} ${sourcedir}/${executable}.cpp)
