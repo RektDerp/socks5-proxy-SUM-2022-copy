@@ -48,6 +48,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "
 endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+  set(LINK_DIRECTORIES ${libdir}/dll)
+  link_directories(${LINK_DIRECTORIES})
   SET(CMAKE_FIND_LIBRARY_PREFIXES "")
   SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
   add_compile_options("-static")
