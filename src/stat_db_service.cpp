@@ -31,7 +31,7 @@ namespace proxy { namespace stat {
 	{
 		db_connection DB(_db_path);
 		char* messageError;
-		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);;
+		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
 		if (err != SQLITE_OK) {
 			db_exception ex(concat("createTable: error during executing stmt: %1%", messageError));
 			sqlite3_free(messageError);
