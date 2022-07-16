@@ -219,11 +219,11 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t le
 		<< bind_port_
 		<< "] " << "Sending " << len << " bytes to " << target << std::endl;*/
 	{
-		/*std::ostringstream tmp;
+		std::ostringstream tmp;
 		tmp << "["
 			<< bind_port_
-			<< "] " << "Sending " << len << " bytes to " << target << std::endl;*/
-		//CPlusPlusLogging::LOG_TRACE(tmp);
+			<< "] " << "Sending " << len << " bytes to " << target << std::endl;
+		CPlusPlusLogging::LOG_TRACE(tmp);
 	}
 	bs::error_code ec;
 	ba::write(socket, ba::buffer(buffer, len), ec);
@@ -231,13 +231,13 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t le
 		std::cerr << "["
 			<< bind_port_
 			<< "] " << ec.what() << std::endl;
-		/*{
+		{
 			std::ostringstream tmp;
 			tmp << "["
 				<< bind_port_
 				<< "] " << ec.what() << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
-		}*/
+		}
 		return false;
 	}
 	/*{

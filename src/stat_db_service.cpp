@@ -2,8 +2,6 @@
 #include "stat_handlers.h"
 #include "string_utils.h"
 #include <sqlite3.h>
-#include <stdio.h>
-#include <iostream>
 
 namespace proxy { namespace stat {
 	using namespace std;
@@ -76,7 +74,7 @@ namespace proxy { namespace stat {
 		return id;
 	}
 	
-	void db_service::update(long long session_id, size_t bytes, Dest dest) throw(db_exception)
+	void db_service::update(long long session_id, int bytes, Dest dest) throw(db_exception)
 	{
 		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
@@ -100,12 +98,8 @@ namespace proxy { namespace stat {
 		{
 			throw db_exception(concat("Update: error during preparing stmt: %1%", err));
 		}
-		err = sqlite3_bind_int64(stmt, 1, newBytes);
-		err = sqlite3_bind_int64(stmt, 2, session_id);
-		if (err != SQLITE_OK)
-		{
-			throw db_exception(concat("Update: error during binding stmt: %1%", err));
-		}
+		sqlite3_bind_int64(stmt, 1, newBytes);
+		sqlite3_bind_int64(stmt, 2, session_id);
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
@@ -190,8 +184,9 @@ namespace proxy { namespace stat {
 
 	void db_service::readRow(session& s, sqlite3_stmt* stmt)
 	{
-		s.id = sqlite3_column_int(stmt, 0);
-		const char* user = (const char*) sqlite3_column_text(stmt, 1);
+		int index = 0;
+		s.id = sqlite3_column_int(stmt, index++);
+		const char* user = (const char*) sqlite3_column_text(stmt, index++);
 		if (user == nullptr)
 		{
 			s.user = "[NO AUTH]";
@@ -199,16 +194,17 @@ namespace proxy { namespace stat {
 		else {
 			s.user = string(user, strlen(user));
 		}
-		s.is_active = sqlite3_column_int(stmt, 2);
-		const char* src_addr = (const char*) sqlite3_column_text(stmt, 3);
-		const char* src_port = (const char*) sqlite3_column_text(stmt, 4);
-		const char* dst_addr = (const char*) sqlite3_column_text(stmt, 5);
-		const char* dst_port = (const char*) sqlite3_column_text(stmt, 6);
+		s.is_active = sqlite3_column_int(stmt, index++);
+		s.type = (const char*) sqlite3_column_text(stmt, index++);
+		const char* src_addr = (const char*) sqlite3_column_text(stmt, index++);
+		const char* src_port = (const char*) sqlite3_column_text(stmt, index++);
+		const char* dst_addr = (const char*) sqlite3_column_text(stmt, index++);
+		const char* dst_port = (const char*) sqlite3_column_text(stmt, index++);
 		if (src_addr != nullptr) s.src_addr = string(src_addr, strlen(src_addr));
 		if (src_port != nullptr) s.src_port = string(src_port, strlen(src_port));
 		if (dst_addr != nullptr) s.dst_addr = string(dst_addr, strlen(dst_addr));
 		if (dst_port != nullptr) s.dst_port = string(dst_port, strlen(dst_port));
-		s.bytes_sent = sqlite3_column_int(stmt, 7);
-		s.bytes_recv = sqlite3_column_int(stmt, 8);
+		s.bytes_sent = sqlite3_column_int(stmt, index++);
+		s.bytes_recv = sqlite3_column_int(stmt, index++);
 	}
 }}

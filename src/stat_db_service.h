@@ -39,7 +39,7 @@ namespace proxy { namespace stat {
 		void createDB() throw(db_exception);
 		void createTable() throw(db_exception);
 		long long create(const session s) throw(db_exception);
-		void update(long long session_id, size_t bytes, Dest dest) throw(db_exception);
+		void update(long long session_id, int bytes, Dest dest) throw(db_exception);
 		void close(long long session_id) throw(db_exception);
 		session selectSession(long long session_id) throw(db_exception);
 		vector<session> selectAll() throw(db_exception);

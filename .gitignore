@@ -48,7 +48,6 @@ src/CMakeFiles/
 *.log
 *.tar.gz
 *.gz
-*.log
 
 *.csv
 
