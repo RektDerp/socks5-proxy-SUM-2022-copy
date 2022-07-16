@@ -3,8 +3,6 @@
 
 #define STAT
 
-#include "proxy_exceptions.h"
-
 #include <iostream>
 #include <thread>
 #include <bitset>

@@ -1,6 +1,7 @@
 #ifndef _STAT_DB_SERVICE_H_
 #define _STAT_DB_SERVICE_H_
 #include "proxy_common.h"
+#include "proxy_exceptions.h"
 
 struct sqlite3_stmt;
 class db_exception;

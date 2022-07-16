@@ -1,6 +1,7 @@
 #ifndef _STAT_HANDLERS_H_
 #define _STAT_HANDLERS_H_
 #include "proxy_common.h"
+#include "proxy_exceptions.h"
 #include "string_utils.h"
 #include <sqlite3.h>
 
