@@ -20,7 +20,6 @@ set(modules
 "Logger.cpp"
 "session.cpp"
 "server.cpp"
-"statWriter.cpp"
 "sock5_impl.cpp"
 "stat_db_service.cpp"
 "sqlite3"
@@ -29,9 +28,8 @@ set(modules
 set(module_dependencies
 ""
 "LogConfigReader"
-"statWriter Logger sock5_impl"
+"Logger sock5_impl"
 "session"
-""
 "session"
 "sqlite3"
 ""
