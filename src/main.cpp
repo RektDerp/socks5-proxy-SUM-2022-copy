@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
 	
 	std::thread thread([&] {
-			context.run();
+		context.run();
 		});
 	thread.join();
 
