@@ -4,7 +4,7 @@
 #include "proxy_exceptions.h"
 
 struct sqlite3_stmt;
-class db_exception;
+
 namespace proxy { namespace stat {
 	using std::string;
 	using std::vector;
