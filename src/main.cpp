@@ -19,26 +19,17 @@ const char defaultConfigPath [] = "config.txt";
 const char defaultConfigPath [] = "/etc/socks5-config.txt";
 #endif
 
+void initDb();
+
 int main(int argc, char **argv)
 {
-	try{
-#ifdef STAT
-	using namespace proxy::stat;
-#ifdef __linux__
-	db_service::getInstance("/tmp/sessions_stat.db");
-#else 
-	db_service::getInstance(); // this initializes table
-#endif // __linux__
-#endif // STAT
-	}
-	catch(std::runtime_error &e){
-		std::cerr << "Exception in db_service::getInstance(): " << e.what() << std::endl;
-	}
 	WININIT();
+	initDb();
+	// default server parameters
 	int port = 1080;
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
-	if(argc < 2){
+	if(argc < 2) {
 		std::cout << "No config file specified, using default: " << defaultConfigPath << std::endl;
 		LogConfigReader::configFilePath = defaultConfigPath;
 	}
@@ -51,20 +42,25 @@ int main(int argc, char **argv)
 	config->getValue("max_sessions", maxSessions);
 
 	ba::io_context context;
+	
 	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
-
-	try
-	{
+	
+	std::thread thread([&] {
 		context.run();
-	}
-	catch (std::exception& er)
-	{
-		{
-			std::ostringstream tmp;
-			tmp << "[main] " << er.what() << std::endl;
-			CPlusPlusLogging::LOG_ERROR(tmp);
-		}
-		std::cerr << "[main] " << er.what() << std::endl;
-	}
+		});
+	thread.join();
+
 	return 0;
+}
+
+void initDb()
+{
+#ifdef STAT
+	using namespace proxy::stat;
+#ifdef __linux__
+	db_service::getInstance("/tmp/sessions_stat.db");
+#else 
+	db_service::getInstance(); // this initializes table
+#endif // __linux__
+#endif // STAT
 }
