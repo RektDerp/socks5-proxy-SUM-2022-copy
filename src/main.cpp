@@ -1,5 +1,6 @@
 #include "server.h"
 #include "LogConfigReader.h"
+#include <stdexcept>
 #ifdef STAT
 #include "stat_db_service.h"
 #endif
@@ -20,6 +21,7 @@ const char defaultConfigPath [] = "/etc/socks5-config.txt";
 
 int main(int argc, char **argv)
 {
+	try{
 #ifdef STAT
 	using namespace proxy::stat;
 #ifdef __linux__
@@ -28,7 +30,10 @@ int main(int argc, char **argv)
 	db_service::getInstance(); // this initializes table
 #endif // __linux__
 #endif // STAT
-		
+	}
+	catch(std::runtime_error &e){
+		std::cerr << "Exception in db_service::getInstance(): " << e.what() << std::endl;
+	}
 	WININIT();
 	int port = 0;
 	int bufferSizeKB = 0;

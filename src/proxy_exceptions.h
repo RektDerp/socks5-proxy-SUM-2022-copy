@@ -2,11 +2,14 @@
 #define _PROXY_EXCEPTIONS_H_
 
 #include <string>
+#include <exception>
+#include <stdexcept>
+#include <string>
 
-class proxy_exception : public std::exception {
+class proxy_exception : public std::runtime_error {
 public:
 	proxy_exception() = default;
-	proxy_exception(const std::string& msg) : std::exception(msg.c_str())
+	proxy_exception(const std::string& msg) : std::runtime_error(msg)
 	{}
 	virtual ~proxy_exception() = default;
 };
