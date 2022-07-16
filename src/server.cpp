@@ -6,7 +6,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t b
 	io_context_(io_context),
 	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
 	bufferSizeKB_(bufferSizeKB),
-	_pool(100),
+	_pool(std::thread::hardware_concurrency() * 2),
 	_sessions(0),
 	_maxSessions(maxSessions)
 {
@@ -49,7 +49,7 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}*/
 		++_sessions;
-		ba::post(_pool, [new_connection]() { new_connection->start(); });
+		ba::post(_pool, [new_connection] { new_connection->start(); });
 	}
 	start_accept();
 }
