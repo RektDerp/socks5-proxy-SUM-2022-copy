@@ -5,7 +5,7 @@
 
 // todo: move to config
 // todo: store user/pass in config with password
-const bool AUTH_FLAG		= true;
+const bool AUTH_FLAG		= false;
 const std::string USER		= "user";
 const std::string PASSWORD	= "pass";
 

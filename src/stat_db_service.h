@@ -19,6 +19,7 @@ namespace proxy { namespace stat {
 		long long id;
 		string user;
 		char is_active;
+		string type;
 		string src_addr;
 		string src_port;
 		string dst_addr;
@@ -63,6 +64,7 @@ namespace proxy { namespace stat {
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "
 			"is_active	INTEGER DEFAULT(1), "
+			"type		TEXT, "
 			"src_addr	TEXT NOT NULL, "
 			"src_port	VARCHAR(5) NOT NULL, "
 			"dst_addr	TEXT NOT NULL, "
@@ -71,8 +73,8 @@ namespace proxy { namespace stat {
 			"bytes_recv INTEGER DEFAULT(0));";
 
 		const char* create_session = "INSERT INTO SESSIONS "
-			"(user, src_addr, src_port, dst_addr, dst_port)"
-			" VALUES (?, ?, ?, ?, ?)";
+			"(user, type, src_addr, src_port, dst_addr, dst_port)"
+			" VALUES (?, ?, ?, ?, ?, ?)";
 
 		const char* update_sent_bytes = "UPDATE sessions SET bytes_sent = ? WHERE id = ?";
 		const char* update_recv_bytes = "UPDATE sessions SET bytes_recv = ? WHERE id = ?";

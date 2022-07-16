@@ -123,8 +123,8 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 	try {
 		db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 	}
-	catch (const db_exception& ignored) {
-		// todo: check if we need to do something here
+	catch (const db_exception& er) {
+		std::cerr << er.what() << std::endl;
 	}
 #endif
 }
@@ -137,8 +137,8 @@ void socks5_impl::close()
 		try {
 			proxy::stat::db_service::getInstance().close(id_);
 		}
-		catch (const db_exception& ignored) {
-			// todo: check if we need to do something here
+		catch (const db_exception& er) {
+			std::cerr << er.what() << std::endl;
 		}
 		id_ = 0;
 	}
@@ -284,6 +284,7 @@ bool socks5_impl::createRecord()
 
 	proxy::stat::session s;
 	s.user = _username;
+	s.type = std::to_string(_cmd);
 	s.src_addr = _session->socket().remote_endpoint().address().to_string();
 	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
 	s.dst_addr = _dstAddress;

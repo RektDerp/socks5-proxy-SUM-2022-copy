@@ -21,7 +21,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t b
 
 void tcp_server::start_accept()
 {
-	while (_sessions == _maxSessions) {
+	while (_maxSessions > 0 && _sessions == _maxSessions) {
 		std::this_thread::yield();
 	}
 

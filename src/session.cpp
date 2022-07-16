@@ -228,9 +228,9 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t le
 	bs::error_code ec;
 	ba::write(socket, ba::buffer(buffer, len), ec);
 	if (ec) {
-		/*std::cerr << "["
+		std::cerr << "["
 			<< bind_port_
-			<< "] " << ec.what() << std::endl;*/
+			<< "] " << ec.what() << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "["

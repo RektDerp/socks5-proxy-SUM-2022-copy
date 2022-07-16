@@ -54,11 +54,13 @@ namespace proxy { namespace stat {
 			throw db_exception(concat("Create: error during preparing stmt: %1%", err));
 		}
 
-		err = sqlite3_bind_text(stmt, 1, s.user.c_str(), s.user.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 2, s.src_addr.c_str(), s.src_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 3, s.src_port.c_str(), s.src_port.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 4, s.dst_addr.c_str(), s.dst_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, 5, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
+		int index = 0;
+		err = sqlite3_bind_text(stmt, ++index, s.user.c_str(), s.user.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.type.c_str(), s.type.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.src_addr.c_str(), s.src_addr.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.src_port.c_str(), s.src_port.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.dst_addr.c_str(), s.dst_addr.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
 			throw db_exception(concat("Create: error during binding stmt: %1%", err));
