@@ -3,7 +3,8 @@
 tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB): 
 	io_context_(io_context),
 	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
-	bufferSizeKB_(bufferSizeKB)
+	bufferSizeKB_(bufferSizeKB),
+	_pool(100)
 {
 	std::cout << "Server starting on port " << port
 		<< " with buffer size " << bufferSizeKB << " KB." << std::endl;
@@ -34,8 +35,7 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 			tmp << "[server] client connected" << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}*/
-		std::thread newThread(&session::start, new_connection);
-		newThread.detach();
+		ba::post(_pool, [new_connection]() { new_connection->start(); });
 	}
 
 	start_accept();

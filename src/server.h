@@ -4,6 +4,7 @@
 #include "proxy_common.h"
 #include "session.h"
 
+
 class tcp_server
 {
 public:
@@ -14,8 +15,8 @@ private:
 
 	ba::io_context& io_context_;
 	ba::ip::tcp::acceptor acceptor_;
-
 	const size_t bufferSizeKB_;
+	ba::thread_pool _pool;
 };
 
 #endif // _SERVER_H_
