@@ -223,16 +223,6 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t le
 		tmp << "["
 			<< bind_port_
 			<< "] " << "Sending " << len << " bytes to " << target << std::endl;*/
-#ifdef STAT_CSV
-		if (isServer)
-		{
-			log_stat(server_socket_.remote_endpoint(), client_socket_.remote_endpoint(), len, TO_SERVER);
-		}
-		else
-		{			
-			log_stat(server_socket_.remote_endpoint(), client_socket_.remote_endpoint(), len, TO_CLIENT);
-		}
-#endif
 		//CPlusPlusLogging::LOG_TRACE(tmp);
 	}
 	bs::error_code ec;

@@ -9,10 +9,6 @@
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
 
-#ifdef STAT_CSV
-#include "statWriter.h"
-#endif
-
 class socks5_impl;
 class tcp_server;
 

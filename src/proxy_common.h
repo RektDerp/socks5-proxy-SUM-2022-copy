@@ -2,7 +2,6 @@
 #define _PROXY_COMMON_H
 
 #define STAT
-//#define STAT_CSV
 
 #include "proxy_exceptions.h"
 
