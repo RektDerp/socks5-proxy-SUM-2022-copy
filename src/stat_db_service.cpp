@@ -31,7 +31,7 @@ namespace proxy { namespace stat {
 	{
 		db_connection DB(_db_path);
 		char* messageError;
-		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
+		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);;
 		if (err != SQLITE_OK) {
 			db_exception ex(concat("createTable: error during executing stmt: %1%", messageError));
 			sqlite3_free(messageError);
@@ -43,7 +43,6 @@ namespace proxy { namespace stat {
 
 	long long db_service::create(const session s) throw(db_exception)
 	{
-		lock_guard<mutex> guard(_mutex);
 		db_connection db(_db_path);
 		db_stmt stmt;
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
@@ -63,12 +62,14 @@ namespace proxy { namespace stat {
 		{
 			throw db_exception(concat("Create: error during binding stmt: %1%", err));
 		}
-		err = sqlite3_step(stmt);
+		{
+			lock_guard<mutex> guard(_mutex);
+			err = sqlite3_step(stmt);
+		}
 		if (err != SQLITE_DONE)
 		{
 			throw db_exception(concat("Create: error during executing stmt: %1%", err));
 		}
-
 		long long id = sqlite3_last_insert_rowid(db);
 		cout << "Created session with id " << id << endl;
 		return id;
@@ -76,7 +77,6 @@ namespace proxy { namespace stat {
 	
 	void db_service::update(long long session_id, int bytes, Dest dest) throw(db_exception)
 	{
-		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
 		if (s.id == 0)
 		{
@@ -100,7 +100,10 @@ namespace proxy { namespace stat {
 		}
 		sqlite3_bind_int64(stmt, 1, newBytes);
 		sqlite3_bind_int64(stmt, 2, session_id);
-		err = sqlite3_step(stmt);
+		{
+			lock_guard<mutex> guard(_mutex);
+			err = sqlite3_step(stmt);
+		}
 		if (err != SQLITE_DONE)
 		{
 			throw db_exception(concat("Update: error during executing stmt: %1%", err));
@@ -109,7 +112,6 @@ namespace proxy { namespace stat {
 
 	void db_service::close(long long session_id) throw(db_exception)
 	{
-		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
 		if (s.id == 0) {
 			throw db_exception(concat("Close: no session with id: %1%", session_id));
@@ -126,7 +128,10 @@ namespace proxy { namespace stat {
 		{
 			throw db_exception(concat("Close: error during binding stmt: %1%", err));
 		}
-		err = sqlite3_step(stmt);
+		{
+			lock_guard<mutex> guard(_mutex);
+			err = sqlite3_step(stmt);
+		}
 		if (err != SQLITE_DONE)
 		{
 			throw db_exception(concat("Close: error during executing stmt: %1%", err));
@@ -147,6 +152,7 @@ namespace proxy { namespace stat {
 		{
 			throw db_exception(concat("Select: error during binding stmt: %1%", err));
 		}
+
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			session s;
