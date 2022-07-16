@@ -30,8 +30,9 @@ int main(int argc, char **argv)
 #endif // STAT
 		
 	WININIT();
-	int port = 0;
-	int bufferSizeKB = 0;
+	int port = 1080;
+	int bufferSizeKB = 100;
+	int maxSessions = 10000;
 	if(argc < 2){
 		std::cout << "No config file specified, using default: " << defaultConfigPath << std::endl;
 		LogConfigReader::configFilePath = defaultConfigPath;
@@ -42,8 +43,10 @@ int main(int argc, char **argv)
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
+	config->getValue("max_sessions", maxSessions);
+
 	ba::io_context context;
-	tcp_server server(context, port, bufferSizeKB);
+	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
 
 	try
 	{

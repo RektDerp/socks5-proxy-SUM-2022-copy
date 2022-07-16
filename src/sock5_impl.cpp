@@ -131,6 +131,7 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 
 void socks5_impl::close()
 {
+	std::cout << "Closed session " << id_ << std::endl;
 #ifdef STAT
 	if (id_ != 0) {
 		try {

@@ -1,8 +1,9 @@
-#ifndef _SESSION_H
-#define _SESSION_H
+#ifndef _SESSION_H_
+#define _SESSION_H_
 
 #include "proxy_common.h"
 #include "Logger.h"
+
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/array.hpp>
@@ -13,15 +14,15 @@
 #endif
 
 class socks5_impl;
+class tcp_server;
 
 class session : public boost::enable_shared_from_this<session>
 {
 public:
 	typedef boost::shared_ptr<session> pointer;
-	static session::pointer create(ba::io_context& io_context,
-		size_t bufferSizeKB)
+	static session::pointer create(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB)
 	{	
-		return pointer(new session(io_context, bufferSizeKB));
+		return pointer(new session(server, io_context, bufferSizeKB));
 	}
 	
 	~session();
@@ -39,7 +40,7 @@ public:
 	unsigned short connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec);
 	void close();
 private:
-	session(ba::io_context& io_context, size_t bufferSizeKB);
+	session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB);
 
 	void client_read();
 	void server_read();
@@ -48,13 +49,13 @@ private:
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
 
+	tcp_server* _server;
 	ba::io_context& io_context_;
 
 	ba::ip::tcp::socket client_socket_;
 	ba::ip::tcp::socket server_socket_;
 
-	unsigned short      bind_port_ = 0;
-	long long id_ = 0;
+	unsigned short bind_port_ = 0;
 
 	bvec client_buf_;
 	bvec server_buf_;
@@ -64,4 +65,4 @@ private:
 	std::stringstream logString;
 };
 
-#endif // _SESSION_H
+#endif // _SESSION_H_

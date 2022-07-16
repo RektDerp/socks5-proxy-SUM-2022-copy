@@ -1,20 +1,33 @@
 #include "server.h"
+#include <thread>
 
-tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB): 
+tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB,
+	int maxSessions): 
 	io_context_(io_context),
 	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
 	bufferSizeKB_(bufferSizeKB),
-	_pool(100)
+	_pool(100),
+	_sessions(0),
+	_maxSessions(maxSessions)
 {
-	std::cout << "Server starting on port " << port
-		<< " with buffer size " << bufferSizeKB << " KB." << std::endl;
+	std::cout << "[server] =============================================\n"
+		<< "[server] Staring proxy server with given parameters:\n"
+		<< "[server] port: " << port << std::endl
+		<< "[server] buffer size (per connection): " << bufferSizeKB << " KB" << std::endl
+		<< "[server] max sessions: " << maxSessions
+		<< "\n[server] =============================================\n";
 	start_accept();
 }
 
 void tcp_server::start_accept()
 {
+	while (_sessions == _maxSessions) {
+		std::this_thread::yield();
+	}
+
+	std::cout << "[server] Current connections: " << _sessions << std::endl;
 	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
-	session::pointer new_connection = session::create(io_context_, bufferSizeKB_);
+	session::pointer new_connection = session::create(this, io_context_, bufferSizeKB_);
 	/*{
 		std::ostringstream tmp;
 		tmp << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
@@ -35,8 +48,8 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 			tmp << "[server] client connected" << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}*/
+		++_sessions;
 		ba::post(_pool, [new_connection]() { new_connection->start(); });
 	}
-
 	start_accept();
 }

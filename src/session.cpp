@@ -1,7 +1,9 @@
 #include "session.h"
+#include "server.h"
 #include "socks5_impl.h"
 
-session::session(ba::io_context& io_context, size_t bufferSizeKB):
+session::session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB):
+	_server(server),
 	io_context_(io_context), 
 	client_socket_(io_context), server_socket_(io_context),
 	impl_(new socks5_impl(this)),
@@ -21,13 +23,10 @@ session::~session()
 void session::start()
 {
 	if (impl_->init()) {
-		//std::cout << "[session] Starting session...\n";
+		std::cout << "[" << bind_port_ << "] Starting session...\n";
 
 		client_read();
 		server_read();
-	}
-	else {
-		close();
 	}
 }
 
@@ -78,7 +77,6 @@ void session::client_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		close();
 		/*std::cout << "["
 			<< bind_port_
 			<< "] " << " Stopped reading - client socket is closed."
@@ -103,7 +101,6 @@ void session::server_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		close();
 		/*std::cout << "["
 			<< bind_port_
 			<< "] Stopped reading - server socket is closed."
@@ -123,21 +120,20 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		//std::cout << "[" << bind_port_ << "] Client EOF." << std::endl;
+		std::cout << "[" << bind_port_ << "] Client EOF." << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "[" << bind_port_ << "] Client EOF." << std::endl;
 			CPlusPlusLogging::LOG_ERROR(tmp);
 		}*/
-		close();
 		return;
 	}
 	else if (error.value() > 0)
 	{
-		/*std::cout << "["
+		std::cout << "["
 			<< bind_port_
 			<< "] " << "error occured while reading client: "
-			<< error.what() << std::endl;*/
+			<< error.what() << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "["
@@ -146,9 +142,8 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 				<< error.what() << std::endl;;
 			CPlusPlusLogging::LOG_ERROR(tmp);
 		}*/
-		close();
 		return;
-	} 
+	}
 	
 	if (bytes_transferred > 0)
 	{
@@ -156,12 +151,8 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 		{
 			client_read();
 		}
-		else {
-			close();
-		}
 	}
 	else {
-		close();
 		/*std::cout << bind_port_
 			<< "no bytes transferred, closing connection...\n";*/
 		/*{
@@ -177,21 +168,20 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		/*std::cout << "[" << bind_port_ << "] Server EOF." << std::endl;*/
+		std::cout << "[" << bind_port_ << "] Server EOF." << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "[" << bind_port_ << "] Server EOF." << std::endl;
 			CPlusPlusLogging::LOG_TRACE(tmp);
 		}*/
-		close();
 		return;
 	}
 	else if (error.value() > 0)
 	{
-		/*std::cout << "["
+		std::cout << "["
 			<< bind_port_
 			<< "] " << "error occured while reading server: "
-			<< error.what() << std::endl;*/
+			<< error.what() << std::endl;
 		/*{
 			std::ostringstream tmp;
 			tmp << "["
@@ -200,7 +190,6 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 				<< error.what() << std::endl;
 			CPlusPlusLogging::LOG_ERROR(tmp);
 		}*/
-		close();
 		return;
 	}
 
@@ -210,13 +199,8 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 		{
 			server_read();
 		}
-		else
-		{
-			close();
-		}
 	}
 	else {
-		close();
 		/*std::cout << "[" << bind_port_
 			<< "] no bytes transferred...\n";*/
 		/*{
@@ -306,4 +290,5 @@ void session::close()
 		}*/
 	}
 	impl_->close();
+	_server->_sessions--;
 }
