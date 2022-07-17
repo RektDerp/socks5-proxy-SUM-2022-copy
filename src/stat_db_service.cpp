@@ -2,11 +2,10 @@
 #include "stat_handlers.h"
 #include "string_utils.h"
 #include <sqlite3.h>
+#include <iostream>
 
 namespace proxy { namespace stat {
 	using namespace std;
-	using boost::format;
-	using boost::str;
 	using string_utils::concat;
 
 	db_service* db_service::_instance = nullptr;
@@ -33,7 +32,7 @@ namespace proxy { namespace stat {
 		char* messageError;
 		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
 		if (err != SQLITE_OK) {
-			db_exception ex(concat("createTable: error during executing stmt: %1%", messageError));
+			db_exception ex(concat("createTable: error during executing stmt: ", messageError));
 			sqlite3_free(messageError);
 			throw ex;
 		}
@@ -49,7 +48,7 @@ namespace proxy { namespace stat {
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Create: error during preparing stmt: %1%", err));
+			throw db_exception(concat("Create: error during preparing stmt: ", err));
 		}
 
 		int index = 0;
@@ -61,12 +60,12 @@ namespace proxy { namespace stat {
 		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Create: error during binding stmt: %1%", err));
+			throw db_exception(concat("Create: error during binding stmt: ", err));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Create: error during executing stmt: %1%", err));
+			throw db_exception(concat("Create: error during executing stmt: ", err));
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
@@ -80,7 +79,7 @@ namespace proxy { namespace stat {
 		session s = selectSession(session_id);
 		if (s.id == 0)
 		{
-			throw db_exception(concat("Update: no session with id: %1%", session_id));
+			throw db_exception(concat("Update: no session with id: ", session_id));
 		}
 		long long newBytes;
 		db_connection db(_db_path);
@@ -96,14 +95,14 @@ namespace proxy { namespace stat {
 		}
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Update: error during preparing stmt: %1%", err));
+			throw db_exception(concat("Update: error during preparing stmt: ", err));
 		}
 		sqlite3_bind_int64(stmt, 1, newBytes);
 		sqlite3_bind_int64(stmt, 2, session_id);
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Update: error during executing stmt: %1%", err));
+			throw db_exception(concat("Update: error during executing stmt: ", err));
 		}
 	}
 
@@ -112,24 +111,24 @@ namespace proxy { namespace stat {
 		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
 		if (s.id == 0) {
-			throw db_exception(concat("Close: no session with id: %1%", session_id));
+			throw db_exception(concat("Close: no session with id: ", session_id));
 		}
 		db_connection db(_db_path);
 		db_stmt stmt;
 		int err = sqlite3_prepare_v2(db, update_inactive, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Close: error during preparing stmt: %1%", err));
+			throw db_exception(concat("Close: error during preparing stmt: ", err));
 		}
 		sqlite3_bind_int64(stmt, 1, s.id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Close: error during binding stmt: %1%", err));
+			throw db_exception(concat("Close: error during binding stmt: ", err));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Close: error during executing stmt: %1%", err));
+			throw db_exception(concat("Close: error during executing stmt: ", err));
 		}
 	}
 
@@ -140,12 +139,12 @@ namespace proxy { namespace stat {
 		int err = sqlite3_prepare_v2(db, select_id, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Select: error during preparing stmt: %1%", err));
+			throw db_exception(concat("Select: error during preparing stmt: ", err));
 		}
 		sqlite3_bind_int64(stmt, 1, session_id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Select: error during binding stmt: %1%", err));
+			throw db_exception(concat("Select: error during binding stmt: ", err));
 		}
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
@@ -154,7 +153,7 @@ namespace proxy { namespace stat {
 			return s;
 		}
 		else {
-			throw db_exception(concat("Select: error during executing stmt: %1%", err));
+			throw db_exception(concat("Select: error during executing stmt: ", err));
 		}
 	}
 
@@ -166,7 +165,7 @@ namespace proxy { namespace stat {
 		err = sqlite3_prepare_v2(db, select_all, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("SelectAll: error during preparing stmt: %1%", err));
+			throw db_exception(concat("SelectAll: error during preparing stmt: ", err));
 		}
 		vector<session> vec;
 

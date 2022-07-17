@@ -11,7 +11,7 @@ namespace proxy { namespace stat {
 		int err = sqlite3_open(path.c_str(), &_con);
 		if (err != SQLITE_OK) {
 			throw db_exception(
-				concat("Error during opening connection: %1%", err)
+				concat("Error during opening connection: ", err)
 			);
 		}
 	}

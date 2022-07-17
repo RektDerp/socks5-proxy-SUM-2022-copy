@@ -1,14 +1,13 @@
 #ifndef _STRING_UTILS_H_
 #define _STRING_UTILS_H_
 
-#include "proxy_common.h"
-#include "boost/format.hpp"
 #include <sstream>
+#include <vector>
+
+using bvec = std::vector<unsigned char>;
 
 namespace string_utils {
 	using std::string;
-	using boost::format;
-	using boost::str;
 
 	inline string to_string(const bvec& vec)
 	{
@@ -32,7 +31,9 @@ namespace string_utils {
 	template<class T>
 	inline string concat(const char* s, T i)
 	{
-		return str(format(s) % i);
+		std::stringstream ss;
+		ss << s << i;
+		return ss.str();
 	}
 
 }
