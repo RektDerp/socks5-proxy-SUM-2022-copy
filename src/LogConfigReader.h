@@ -5,21 +5,19 @@
 #include <iostream>
 #include <map>
 #include <string>
-
+#include <fstream>
 // Define namespace for this class. so that anyonelo
 // can easily integrate it. The class name is vary generic
 // so the chance to collapse the class name is high.
 // So need to define the class inside the namespace.
 
-namespace cppsecrets
-{
-    
     class LogConfigReader
     {
     private:
 
         // Define the map to store data from the config file
         std::map<std::string, std::string> m_ConfigSettingMap;
+        std::map<std::string, std::string> m_UsersData;
 
         // Static pointer instance to make this class singleton.
         static LogConfigReader* m_pInstance;
@@ -38,13 +36,17 @@ namespace cppsecrets
         // string or integer. So the caller need to take care this.
         // Caller need to call appropiate function based on the
         // data type of the value of the tag.
-
+            
+        bool getValue(std::string tag, bool& value);
         bool getValue(std::string tag, int& value);
         bool getValue(std::string tag, std::string& value);
 
+        bool hasUser(const std::string& const tag, const std::string& const value);
+        //bool getPassword(std::string tag, std::string& value);
+
         // Function dumpFileValues is for only debug purpose
         void dumpFileValues();
-
+        void dumpUsersValues();
     private:
 
         // Define constructor in the private section to make this
@@ -69,8 +71,9 @@ namespace cppsecrets
         std::string reduce(const std::string& str,
             const std::string& fill = " ",
             const std::string& whitespace = " \t");
+
+        bool fillUsers(std::ifstream &inputFile);
     };
 
-} //End of namespace
 
 #endif // End of _CONFIG_READER_H_

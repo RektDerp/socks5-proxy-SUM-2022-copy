@@ -1,13 +1,14 @@
 #ifndef _SOCKS5_IMPL_H_ 
 #define _SOCKS5_IMPL_H_ 
 #include "proxy_common.h"
-
+#include "LogConfigReader.h"
 
 // todo: move to config
 // todo: store user/pass in config with password
-const bool AUTH_FLAG		= false;
-const std::string USER		= "user";
-const std::string PASSWORD	= "pass";
+bool AUTH_FLAG = false;
+
+//const std::string USER		= "user";
+//const std::string PASSWORD	= "pass";
 
 const unsigned char SOCKS_VER	= 0x05;
 const unsigned char AUTH_VER	= 0x01;
@@ -52,7 +53,10 @@ class session;
 
 class socks5_impl {
 public:
-	socks5_impl(session* s) : _session(s) {}
+	socks5_impl(session* s) : _session(s) 
+	{
+		LogConfigReader::getInstance()->getValue("Auth", AUTH_FLAG);
+	}
 	~socks5_impl() = default;
 	bool init();
 	void write_stat(size_t bytes, bool isServer);
