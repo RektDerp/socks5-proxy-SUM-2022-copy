@@ -12,7 +12,7 @@ namespace proxy { namespace stat {
 	db_service* db_service::_instance = nullptr;
 	mutex db_service::_mutex;
 
-	db_service& db_service::getInstance(const string& db_path) throw(db_exception)
+	db_service& db_service::getInstance(const string& db_path)
 	{
 		lock_guard<mutex> guard(_mutex);
 		if (_instance == nullptr)
@@ -22,12 +22,12 @@ namespace proxy { namespace stat {
 		return *_instance;
 	}
 
-	void db_service::createDB() throw(db_exception)
+	void db_service::createDB()
 	{
 		db_connection db(_db_path);
 	}
 
-	void db_service::createTable() throw(db_exception)
+	void db_service::createTable()
 	{
 		db_connection DB(_db_path);
 		char* messageError;
@@ -41,7 +41,7 @@ namespace proxy { namespace stat {
 			cout << "Table created Successfully" << endl;
 	}
 
-	long long db_service::create(const session s) throw(db_exception)
+	long long db_service::create(const session s)
 	{
 		lock_guard<mutex> guard(_mutex);
 		db_connection db(_db_path);
@@ -74,7 +74,7 @@ namespace proxy { namespace stat {
 		return id;
 	}
 	
-	void db_service::update(long long session_id, int bytes, Dest dest) throw(db_exception)
+	void db_service::update(long long session_id, int bytes, Dest dest)
 	{
 		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
@@ -107,7 +107,7 @@ namespace proxy { namespace stat {
 		}
 	}
 
-	void db_service::close(long long session_id) throw(db_exception)
+	void db_service::close(long long session_id)
 	{
 		lock_guard<mutex> guard(_mutex);
 		session s = selectSession(session_id);
@@ -133,7 +133,7 @@ namespace proxy { namespace stat {
 		}
 	}
 
-	session db_service::selectSession(long long session_id) throw(db_exception)
+	session db_service::selectSession(long long session_id)
 	{
 		db_connection db(_db_path);
 		db_stmt stmt;
@@ -158,7 +158,7 @@ namespace proxy { namespace stat {
 		}
 	}
 
-	vector<session> db_service::selectAll() throw(db_exception)
+	vector<session> db_service::selectAll()
 	{
 		int err;
 		db_connection db(_db_path);

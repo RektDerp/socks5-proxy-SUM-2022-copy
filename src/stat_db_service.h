@@ -1,7 +1,10 @@
 #ifndef _STAT_DB_SERVICE_H_
 #define _STAT_DB_SERVICE_H_
-#include "proxy_common.h"
+
 #include "proxy_exceptions.h"
+#include <string>
+#include <vector>
+#include <mutex>
 
 struct sqlite3_stmt;
 
@@ -33,20 +36,20 @@ namespace proxy { namespace stat {
 		static db_service* _instance;
 		static std::mutex _mutex;
 	public:
-		static db_service& getInstance(const string& db_path = R"(./sessions_stat.db)") throw(db_exception);
+		static db_service& getInstance(const string& db_path = R"(./sessions_stat.db)");
 
 		~db_service() = default;
-		void createDB() throw(db_exception);
-		void createTable() throw(db_exception);
-		long long create(const session s) throw(db_exception);
-		void update(long long session_id, int bytes, Dest dest) throw(db_exception);
-		void close(long long session_id) throw(db_exception);
-		session selectSession(long long session_id) throw(db_exception);
-		vector<session> selectAll() throw(db_exception);
+		void createDB();
+		void createTable();
+		long long create(const session s);
+		void update(long long session_id, int bytes, Dest dest);
+		void close(long long session_id);
+		session selectSession(long long session_id);
+		vector<session> selectAll();
 	private:
 		const string _db_path; // todo move to config?
 
-		db_service(const std::string& db_path) throw(db_exception) :
+		db_service(const std::string& db_path) :
 			_db_path(db_path)
 		{
 			createDB();

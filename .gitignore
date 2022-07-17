@@ -54,3 +54,6 @@ src/CMakeFiles/
 *.config
 /packages
 *.db*
+
+# Qt
+/build*
