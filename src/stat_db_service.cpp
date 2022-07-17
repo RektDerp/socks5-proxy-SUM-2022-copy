@@ -3,6 +3,7 @@
 #include "string_utils.h"
 #include <sqlite3.h>
 #include <iostream>
+#include <string.h>
 
 namespace proxy { namespace stat {
 	using namespace std;
