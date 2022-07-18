@@ -27,13 +27,11 @@ bool socks5_impl::init()
 	}
 	else if (_cmd == CMD::BIND)
 	{
-		// todo to be implemented
 		sendErrorResponse(COMMAND_NOT_SUPP);
 		return false;
 	}
 	else if (_cmd == CMD::UDP_ASSOCIATE)
 	{
-		// todo to be implemented
 		sendErrorResponse(COMMAND_NOT_SUPP);
 		return false;
 	}
@@ -194,7 +192,7 @@ bool socks5_impl::checkVersion()
 
 	if (ver != SOCKS_VER)
 	{
-		std::cerr << "Invalid version" << std::endl;
+		std::cerr << "Invalid version: " << (int) ver << std::endl;
 		return false;
 	}
 	return true;
