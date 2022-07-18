@@ -1,35 +1,32 @@
 import QtQuick
-//import TableModel 0.1
 import QtQuick.Controls
 import QtQuick.Layouts
+import TableModel 0.1
 
 Window {
-    width: 1020
-    height: 480
+    width: 1020; height: 480
     visible: true
     title: qsTr("Proxy Statistics")
 
     ColumnLayout {
-        Button {
-            text: qsTr("Update table")
-            onClicked: myModel.update()
-        }
-
         TableView {
-            width: 1020
-            height: 400
-            columnSpacing: 1
-            rowSpacing: 1
+            id: tableView
+            width: 1020; height: 400
+            columnSpacing: 4; rowSpacing: 4
             clip: true
             ScrollIndicator.horizontal: ScrollIndicator { }
             ScrollIndicator.vertical: ScrollIndicator { }
-            model: myModel
+            model: TableModel { }
+            //sortIndicatorVisible: true
+            //onSortIndicatorColumnChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
+            //onSortIndicatorOrderChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
+
             delegate: Rectangle {
                 implicitWidth: cellData.width + 20
                 implicitHeight: cellData.height + 20
-                border.color: "black"
-                border.width: 2
-                color: heading ? "green" : "white"
+                border.color: heading ? "black" : "white"
+                border.width: 1
+                color: heading ? "green" : "#EEE"
 
                 Text {
                     id: cellData

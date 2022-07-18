@@ -1,33 +1,36 @@
 #include "tablemodel.h"
+#include "qcoreevent.h"
 #include <QSqlQuery>
-#include<QDebug>
+#include <QDebug>
 
 TableModel::TableModel(QObject *parent)
     : QAbstractTableModel{parent}
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../sessions_stat.db");
-    table.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
+    _db = QSqlDatabase::addDatabase("QSQLITE");
+    _db.setDatabaseName("../sessions_stat.db");
+    _table.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
                   "dst_endpoint", "bytes_sent", "bytes_recv"});
-    if (!db.open()) {
+    if (!_db.open()) {
         qDebug() << "there was an error during opening db";
     }
+
+    _timerId = startTimer(5000);
     update();
 }
 
 TableModel::~TableModel()
 {
-    db.close();
+    _db.close();
 }
 
 int TableModel::rowCount(const QModelIndex &) const
 {
-    return table.size();
+    return _table.size();
 }
 
 int TableModel::columnCount(const QModelIndex &) const
 {
-    return table.at(0).size();
+    return _table.at(0).size();
 }
 
 QVariant TableModel::data(const QModelIndex &index, int role) const
@@ -35,7 +38,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
     switch(role) {
     case TableDataRole:
     {
-        return table.at(index.row()).at(index.column());
+        return _table.at(index.row()).at(index.column());
     }
     case HeadingRole:
     {
@@ -56,12 +59,20 @@ QHash<int, QByteArray> TableModel::roleNames() const
     return roles;
 }
 
+void TableModel::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == _timerId) {
+        qDebug("update");
+        update();
+    }
+}
+
 void TableModel::update()
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    table.resize(1);
-    QSqlQuery query(db);
-    query.exec("SELECT * from sessions ORDER BY id DESC");
+    beginResetModel();
+    _table.resize(1);
+    QSqlQuery query(_db);
+    query.exec("SELECT * from sessions ORDER BY update_date DESC");
     while (query.next()) {
         QVector<QString> row;
         int i = 0;
@@ -85,7 +96,13 @@ void TableModel::update()
         row.append(bytes_sent);
         row.append(bytes_recv);
 
-        table.append(row);
+        _table.append(row);
     }
-    endInsertRows();
+    endResetModel();
 }
+
+//void TableModel::sort(int column, Qt::SortOrder order)
+//{
+//    qDebug("Sorting by column %d", column);
+//    QSortFilterProxyModel::sort(column, order);
+//}

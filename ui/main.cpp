@@ -7,11 +7,11 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    //qmlRegisterType<TableModel>("TableModel", 0, 1, "TableModel");
+    qmlRegisterType<TableModel>("TableModel", 0, 1, "TableModel");
 
     QQmlApplicationEngine engine;
     TableModel model;
-    engine.rootContext()->setContextProperty("myModel", &model);
+    //engine.rootContext()->setContextProperty("myModel", &model);
 
     const QUrl url(u"qrc:/ui/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
