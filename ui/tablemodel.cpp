@@ -14,7 +14,7 @@ TableModel::TableModel(QObject *parent)
         qDebug() << "there was an error during opening db";
     }
 
-    _timerId = startTimer(5000);
+    _timerId = startTimer(1000);
     update();
 }
 
