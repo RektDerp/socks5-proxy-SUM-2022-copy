@@ -83,7 +83,7 @@ bool socks5_impl::auth()
 	_username = string_utils::to_string(uname);
 	std::string passString = string_utils::to_string(passwd);
 
-	bool success = USER == _username && PASSWORD == passString;
+	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
