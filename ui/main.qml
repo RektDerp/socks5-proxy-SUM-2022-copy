@@ -25,15 +25,16 @@ Window {
             ScrollIndicator.vertical: ScrollIndicator { }
             model: myModel
             delegate: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 20
+                implicitWidth: cellData.width + 20
+                implicitHeight: cellData.height + 20
                 border.color: "black"
                 border.width: 2
                 color: heading ? "green" : "white"
 
                 Text {
+                    id: cellData
                     text: tabledata
-                    font.pointSize: 10
+                    font.pointSize: 12
                     anchors.centerIn: parent
                 }
             }

@@ -7,8 +7,8 @@ TableModel::TableModel(QObject *parent)
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("../sessions_stat.db");
-    table.append({"id", "user", "is_active", "type", "src_addr",
-                  "src_port", "dst_addr", "dst_port", "bytes_sent", "bytes_recv"});
+    table.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
+                  "dst_endpoint", "bytes_sent", "bytes_recv"});
     if (!db.open()) {
         qDebug() << "there was an error during opening db";
     }
@@ -62,12 +62,28 @@ void TableModel::update()
     QSqlQuery query(db);
     query.exec("SELECT * from sessions ORDER BY id DESC");
     while (query.next()) {
-        int index = 0;
         QVector<QString> row;
-        for (int i = 0; i < 10; i++) {
-            QString value = query.value(index++).toString();
-            row.append(value);
-        }
+        int i = 0;
+        /*QString id = */query.value(i++).toString();
+        QString user = query.value(i++).toString();
+        QString create_date = query.value(i++).toString();
+        QString update_date = query.value(i++).toString();
+        QString is_active = query.value(i++).toString();
+        QString src_addr = query.value(i++).toString();
+        QString src_port = query.value(i++).toString();
+        QString dst_addr = query.value(i++).toString();
+        QString dst_port = query.value(i++).toString();
+        QString bytes_sent = query.value(i++).toString();
+        QString bytes_recv = query.value(i++).toString();
+        row.append(user);
+        row.append(create_date);
+        row.append(update_date);
+        row.append(is_active);
+        row.append(src_addr + ":" + src_port);
+        row.append(dst_addr + ":" + dst_port);
+        row.append(bytes_sent);
+        row.append(bytes_recv);
+
         table.append(row);
     }
     endInsertRows();

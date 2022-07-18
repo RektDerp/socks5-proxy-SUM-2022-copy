@@ -54,7 +54,6 @@ namespace proxy { namespace stat {
 
 		int index = 0;
 		err = sqlite3_bind_text(stmt, ++index, s.user.c_str(), s.user.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.type.c_str(), s.type.length(), SQLITE_STATIC);
 		err = sqlite3_bind_text(stmt, ++index, s.src_addr.c_str(), s.src_addr.length(), SQLITE_STATIC);
 		err = sqlite3_bind_text(stmt, ++index, s.src_port.c_str(), s.src_port.length(), SQLITE_STATIC);
 		err = sqlite3_bind_text(stmt, ++index, s.dst_addr.c_str(), s.dst_addr.length(), SQLITE_STATIC);
@@ -194,12 +193,15 @@ namespace proxy { namespace stat {
 		else {
 			s.user = string(user, strlen(user));
 		}
+		const char* create_date = (const char*)sqlite3_column_text(stmt, index++);
+		const char* update_date = (const char*)sqlite3_column_text(stmt, index++);
 		s.is_active = sqlite3_column_int(stmt, index++);
-		s.type = (const char*) sqlite3_column_text(stmt, index++);
 		const char* src_addr = (const char*) sqlite3_column_text(stmt, index++);
 		const char* src_port = (const char*) sqlite3_column_text(stmt, index++);
 		const char* dst_addr = (const char*) sqlite3_column_text(stmt, index++);
 		const char* dst_port = (const char*) sqlite3_column_text(stmt, index++);
+		if (create_date != nullptr) s.create_date = string(create_date, strlen(create_date));
+		if (update_date != nullptr) s.update_date = string(update_date, strlen(update_date));
 		if (src_addr != nullptr) s.src_addr = string(src_addr, strlen(src_addr));
 		if (src_port != nullptr) s.src_port = string(src_port, strlen(src_port));
 		if (dst_addr != nullptr) s.dst_addr = string(dst_addr, strlen(dst_addr));

@@ -285,7 +285,6 @@ bool socks5_impl::createRecord()
 
 	proxy::stat::session s;
 	s.user = _username;
-	s.type = std::to_string(_cmd);
 	s.src_addr = _session->socket().remote_endpoint().address().to_string();
 	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
 	s.dst_addr = _dstAddress;

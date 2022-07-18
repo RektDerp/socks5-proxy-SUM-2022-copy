@@ -21,8 +21,9 @@ namespace proxy { namespace stat {
 	struct session {
 		long long id;
 		string user;
+		string create_date;
+		string update_date;
 		char is_active;
-		string type;
 		string src_addr;
 		string src_port;
 		string dst_addr;
@@ -66,8 +67,9 @@ namespace proxy { namespace stat {
 		const string create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "
+			"create_date TEXT DEFAULT(datetime()), "
+			"update_date TEXT DEFAULT(datetime()), "
 			"is_active	INTEGER DEFAULT(1), "
-			"type		TEXT, "
 			"src_addr	TEXT NOT NULL, "
 			"src_port	VARCHAR(5) NOT NULL, "
 			"dst_addr	TEXT NOT NULL, "
@@ -76,12 +78,12 @@ namespace proxy { namespace stat {
 			"bytes_recv INTEGER DEFAULT(0));";
 
 		const char* create_session = "INSERT INTO SESSIONS "
-			"(user, type, src_addr, src_port, dst_addr, dst_port)"
-			" VALUES (?, ?, ?, ?, ?, ?)";
+			"(user, src_addr, src_port, dst_addr, dst_port)"
+			" VALUES (?, ?, ?, ?, ?)";
 
-		const char* update_sent_bytes = "UPDATE sessions SET bytes_sent = ? WHERE id = ?";
-		const char* update_recv_bytes = "UPDATE sessions SET bytes_recv = ? WHERE id = ?";
-		const char* update_inactive   = "UPDATE sessions SET is_active = 0 WHERE id = ?";
+		const char* update_sent_bytes = "UPDATE sessions SET update_date = datetime(), bytes_sent = ? WHERE id = ?";
+		const char* update_recv_bytes = "UPDATE sessions SET update_date = datetime(), bytes_recv = ? WHERE id = ?";
+		const char* update_inactive   = "UPDATE sessions SET update_date = datetime(), is_active = 0 WHERE id = ?";
 		const char* select_all = "SELECT * FROM sessions";
 		const char* select_id = "SELECT * FROM sessions WHERE id = ?";
 	}
