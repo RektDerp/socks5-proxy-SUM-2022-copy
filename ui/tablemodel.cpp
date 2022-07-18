@@ -12,6 +12,7 @@ TableModel::TableModel(QObject *parent)
     if (!db.open()) {
         qDebug() << "there was an error during opening db";
     }
+    update();
 }
 
 TableModel::~TableModel()
