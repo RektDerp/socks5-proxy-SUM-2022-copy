@@ -70,7 +70,7 @@ bool LogConfigReader::getValue(std::string tag, std::string& value)
     }
     return false;
 }
-bool LogConfigReader::hasUser(const std::string& const tag,const std::string& const value)
+bool LogConfigReader::hasUser(const std::string& tag, const std::string& value)
 {
     map<string, string>::iterator it;
     it = m_UsersData.find(tag);

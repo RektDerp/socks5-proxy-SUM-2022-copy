@@ -12,8 +12,9 @@ bool socks5_impl::init()
 	if (!readMethodRequest())
 		return false;
 	
-	if (AUTH_FLAG && !auth())
+	if (_authFlag && !auth())
 		return false;
+		
 
 	if (!readCommandRequest())
 		return false;
@@ -84,6 +85,8 @@ bool socks5_impl::auth()
 	std::string passString = string_utils::to_string(passwd);
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
+	if (!success)
+		std::cerr << "Wrong credentials: " << _username << ":" << passString << std::endl;
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);

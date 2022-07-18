@@ -41,7 +41,7 @@
         bool getValue(std::string tag, int& value);
         bool getValue(std::string tag, std::string& value);
 
-        bool hasUser(const std::string& const tag, const std::string& const value);
+        bool hasUser(const std::string& tag, const std::string& value);
         //bool getPassword(std::string tag, std::string& value);
 
         // Function dumpFileValues is for only debug purpose

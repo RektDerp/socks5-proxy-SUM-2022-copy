@@ -10,7 +10,6 @@
 
 using namespace std;
 using namespace CPlusPlusLogging;
-using namespace cppsecrets;
 
 Logger* Logger::m_Instance = 0;
 

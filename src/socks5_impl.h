@@ -3,13 +3,6 @@
 #include "proxy_common.h"
 #include "LogConfigReader.h"
 
-// todo: move to config
-// todo: store user/pass in config with password
-bool AUTH_FLAG = false;
-
-//const std::string USER		= "user";
-//const std::string PASSWORD	= "pass";
-
 const unsigned char SOCKS_VER	= 0x05;
 const unsigned char AUTH_VER	= 0x01;
 const unsigned char RSV			= 0x00;
@@ -53,9 +46,9 @@ class session;
 
 class socks5_impl {
 public:
-	socks5_impl(session* s) : _session(s) 
+	socks5_impl(session* s) : _session(s), _authFlag(false)
 	{
-		LogConfigReader::getInstance()->getValue("Auth", AUTH_FLAG);
+		LogConfigReader::getInstance()->getValue("Auth", _authFlag);
 	}
 	~socks5_impl() = default;
 	bool init();
@@ -70,6 +63,7 @@ private:
 	std::string _dstAddress;
 	unsigned short _serverPort;
 	unsigned short _bindPort;
+	bool _authFlag;
 
 	socks5_impl(const socks5_impl&) = delete;
 	socks5_impl& operator=(const socks5_impl&) = delete;
@@ -87,9 +81,9 @@ private:
 	bool createRecord();
 	bool connect(ba::ip::tcp::resolver::query query);
 
-	inline static METHOD getServerMethod()
+	inline METHOD getServerMethod()
 	{
-		return AUTH_FLAG ? USERNAME_PASSWORD : NO_AUTH_REQ;
+		return _authFlag ? USERNAME_PASSWORD : NO_AUTH_REQ;
 	}
 };
 

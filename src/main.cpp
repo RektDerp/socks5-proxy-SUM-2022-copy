@@ -6,7 +6,6 @@
 #endif
 #include <thread>
 
-using namespace cppsecrets;
 #ifdef _WIN32
     #include <windows.h>
     #define WININIT() {\
