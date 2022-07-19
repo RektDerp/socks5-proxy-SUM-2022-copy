@@ -9,6 +9,7 @@ ApplicationWindow {
     width: 750; height: 480; visible: true
 
     header: ToolBar {
+        width: parent.width
         RowLayout {
             anchors.fill: parent
             Switch {
@@ -29,6 +30,11 @@ ApplicationWindow {
             Item {
                 Layout.fillWidth: true
             }
+            TextField {
+                id: tfFilter
+                implicitWidth: parent.width / 4
+                onTextEdited: table.contentY = 0
+            }
         }
     }
 
@@ -47,6 +53,7 @@ ApplicationWindow {
                 SortableColumnHeading {
                     width: table.model.columnWidth(index); height: parent.height
                     text: table.model.sessionModel.headerData(index, Qt.Horizontal)
+                    initialSortOrder: table.model.initialSortOrder(index)
                     onSorting: {
                         for (var i = 0; i < repeater.model; ++i) {
                             if (i != index)
@@ -58,40 +65,8 @@ ApplicationWindow {
             }
         }
 
-        TableView {
+        SessionTableView {
             id: table
-            anchors.fill: parent
-            anchors.topMargin: header.height
-            columnSpacing: 4; rowSpacing: 4
-            model: SortFilterSessionModel { }
-
-            Timer {
-                interval: sbUpdate.value * 1000
-                repeat: true
-                running: cbUpdate.checked
-                onTriggered: table.model.sessionModel.update()
-            }
-
-            columnWidthProvider: function(column) {
-                return model.columnWidth(column);
-            }
-
-            delegate: Rectangle {
-                implicitHeight: cellData.height + 5
-                color: "#EEE"
-
-                Text {
-                    id: cellData
-                    width: parent.width
-                    text: model.display
-                    elide: Text.ElideRight
-                    anchors.centerIn: parent
-                    font.preferShaping: false
-                }
-            }
-
-            ScrollBar.horizontal: ScrollBar { }
-            ScrollBar.vertical: ScrollBar { }
         }
     }
 }

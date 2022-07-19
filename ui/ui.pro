@@ -21,5 +21,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
 	DBService.h \
+	session.h \
 	sessionmodel.h \
 	sortfiltersessionmodel.h

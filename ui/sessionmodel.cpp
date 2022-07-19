@@ -1,4 +1,5 @@
 #include "sessionmodel.h"
+#include "session.h"
 #include "qcoreevent.h"
 #include "qwindowdefs.h"
 #include <QSqlQuery>
@@ -12,6 +13,9 @@ SessionModel::SessionModel(QObject *parent)
 {
     _header.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
                     "dst_endpoint", "bytes_sent", "bytes_recv"});
+    _roleNames = QAbstractTableModel::roleNames();
+    _roleNames.insert(int(Role::Sort), QByteArray("sort"));
+
     _columnWidths.resize(_header.size());
     _db = QSqlDatabase::addDatabase("QSQLITE");
     _db.setDatabaseName("../sessions_stat.db");
@@ -34,17 +38,33 @@ int SessionModel::rowCount(const QModelIndex &) const
 
 int SessionModel::columnCount(const QModelIndex &) const
 {
-    return _table.at(0).size();
+    return F_BYTES_RECV + 1;
 }
 
-QVariant SessionModel::data(const QModelIndex &index, int /*role*/) const
+QVariant SessionModel::data(const QModelIndex &index, int role) const
 {
-    return _table.at(index.row()).at(index.column());
+    fields field = fields(index.column());
+    switch (role) {
+    case Qt::DisplayRole: {
+        if (field >= F_BYTES_SENT) {
+            return _table[index.row()][field].toInt();
+        }
+        return _table[index.row()][field];
+    }
+    case Qt::InitialSortOrderRole: {
+        if (field >= F_BYTES_SENT) {
+            return Qt::DescendingOrder;
+        }
+        return Qt::AscendingOrder;
+    }
+    default:
+        return QVariant();
+    }
 }
 
 QHash<int, QByteArray> SessionModel::roleNames() const
 {
-    return { {Qt::DisplayRole, "display"} };
+    return _roleNames;
 }
 
 QVariant SessionModel::headerData(int id, Qt::Orientation orientation, int role) const
@@ -87,7 +107,7 @@ void SessionModel::update()
     _columnWidths.clear();
     _columnWidths.resize(_header.size());
     QSqlQuery query(_db);
-    query.exec("SELECT * from sessions ORDER BY update_date DESC");
+    query.exec("SELECT * from sessions");
     while (query.next()) {
         QVector<QString> row;
         int i = 0;

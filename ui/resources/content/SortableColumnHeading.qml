@@ -6,6 +6,7 @@ Rectangle {
     border.color : "black"
     border.width: 1
     property alias text: label.text
+    property int initialSortOrder: Qt.AscendingOrder
     signal sorting
 
     function stopSorting() {
@@ -34,7 +35,10 @@ Rectangle {
     }
 
     function nextState() {
-        if (state == "up") {
+        if (state == "") {
+            state = (initialSortOrder == Qt.DescendingOrder ? "down" : "up")
+        }
+        else if (state == "up") {
             state = "down"
         } else {
             state = "up"

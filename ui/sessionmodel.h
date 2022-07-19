@@ -1,10 +1,10 @@
 #ifndef SESSIONMODEL_H
 #define SESSIONMODEL_H
 
-#include <qqml.h>
 #include <QAbstractTableModel>
 #include <QSqlDatabase>
-#include <QSortFilterProxyModel>
+
+class QFont;
 
 class SessionModel : public QAbstractTableModel
 {
@@ -12,6 +12,11 @@ class SessionModel : public QAbstractTableModel
     Q_DISABLE_COPY(SessionModel)
 
 public:
+    enum class Role {
+        Sort = Qt::UserRole,
+    };
+    Q_ENUM(Role)
+
     explicit SessionModel(QObject* parent = nullptr);
     ~SessionModel();
 
@@ -34,6 +39,7 @@ private:
     QVector<QString> _header;
     QVector<int> _columnWidths;
     QSqlDatabase _db;
+    QHash<int, QByteArray> _roleNames;
 };
 
 #endif // SESSIONMODEL_H
