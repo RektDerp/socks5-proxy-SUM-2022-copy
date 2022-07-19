@@ -2,25 +2,20 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
 
-// C++ Header File(s)
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 
 #ifdef _WIN32
-// Win Socket Header File(s)
 #include <windows.h>
 #include <process.h>
 #else
-// POSIX Socket Header File(s)
 #include <errno.h>
 #include <pthread.h>
 #endif
 
-namespace CPlusPlusLogging
-{
-    // Direct Interface for logging into log file or console using MACRO(s)
+#define LOG_CONSOLE(x)    Logger::getInstance()->console(x)
 #define LOG_ERROR(x)    Logger::getInstance()->error(x)
 #define LOG_ALARM(x)	   Logger::getInstance()->alarm(x)
 #define LOG_ALWAYS(x)	Logger::getInstance()->always(x)
@@ -29,10 +24,8 @@ namespace CPlusPlusLogging
 #define LOG_TRACE(x)    Logger::getInstance()->trace(x)
 #define LOG_DEBUG(x)    Logger::getInstance()->debug(x)
 
-// Default value for maximum number of log files 
 #define MAX_LOG_FILES 100
 
-// enum for LOG_LEVEL
     typedef enum LOG_LEVEL
     {
         ENABLE_LOG = 1,
@@ -43,7 +36,6 @@ namespace CPlusPlusLogging
         DISABLE_LOG = 6
     } LogLevel;
 
-    // enum for LOG_TYPE
     typedef enum LOG_TYPE
     {
         NO_LOG = 1,
@@ -57,65 +49,52 @@ namespace CPlusPlusLogging
     public:
         static Logger* getInstance() throw ();
 
-        // Interface for Error Log 
+        void console(const char* text) throw();
+        void console(std::string& text) throw();
+        void console(std::ostringstream& stream) throw();
+
         void error(const char* text) throw();
         void error(std::string& text) throw();
         void error(std::ostringstream& stream) throw();
 
-        // Interface for Alarm Log 
         void alarm(const char* text) throw();
         void alarm(std::string& text) throw();
         void alarm(std::ostringstream& stream) throw();
 
-        // Interface for Always Log 
         void always(const char* text) throw();
         void always(std::string& text) throw();
         void always(std::ostringstream& stream) throw();
 
-        // Interface for Buffer Log 
         void buffer(const char* text) throw();
         void buffer(std::string& text) throw();
         void buffer(std::ostringstream& stream) throw();
 
-        // Interface for Info Log 
         void info(const char* text) throw();
         void info(std::string& text) throw();
         void info(std::ostringstream& stream) throw();
 
-        // Interface for Trace log 
         void trace(const char* text) throw();
         void trace(std::string& text) throw();
         void trace(std::ostringstream& stream) throw();
 
-        // Interface for Debug log 
         void debug(const char* text) throw();
         void debug(std::string& text) throw();
         void debug(std::ostringstream& stream) throw();
 
-        // Error and Alarm log must be always enable
-        // Hence, there is no interfce to control error and alarm logs
-
-        // Interfaces to control log levels
         void updateLogLevel(LogLevel logLevel);
-        void enaleLog();  // Enable all log levels
-        void disableLog(); // Disable all log levels, except error and alarm
+        void enaleLog(); 
+        void disableLog();
 
-        // Interfaces to control log Types
         void updateLogType(LogType logType);
         void enableConsoleLogging();
         void enableFileLogging();
         void enableALLLogging();
-        // Interfaces to control roll over mechanism
-        //void updateMaxLogFiles(const size_t maxFiles);
-        //void updateLogSize(const size_t size);
 
 
     protected:
         Logger();
         ~Logger();
 
-        // Wrapper function for lock/unlock
-        // For Extensible feature, lock and unlock should be in protected
         void lock();
         void unlock();
 
@@ -126,11 +105,9 @@ namespace CPlusPlusLogging
         void logOnConsole(std::string& data);
         Logger(const Logger& obj) {}
         void operator=(const Logger& obj) {}
-        //void rollLogFiles();
         void configure();
 
     private:
-        //todo read about crear static fields
         static Logger* m_Instance;
         std::ofstream           m_File;
 
@@ -144,18 +121,12 @@ namespace CPlusPlusLogging
         LogLevel                m_LogLevel;
         LogType                 m_LogType;
 
-        unsigned int		 logSize; // Size of a log file in bytes
-        unsigned int		 maxLogFiles; // Maximum number of log files
-        unsigned int		 logFilesCount; // Count of existing log files 
+        unsigned int		 logSize;
+        unsigned int		 maxLogFiles; 
+        unsigned int		 logFilesCount;
 
         time_t startLog = time(0);
         tm* deley = localtime(&startLog);
     };
 
-} // End of namespace
-
-#endif // End of _LOGGER_H_
-
-//TODO add a hashtable and a queue, when outputting a log of the INFO type, dst ip/port and bnd ip/port and the number of bytes are transmitted
-// if it finds a match in the table, then it adds the number of bytes and after 5 seconds this queue goes in order and is output to the file
-// or I'll try to change it a bit to csv format tomorrow
+#endif 

@@ -4,16 +4,13 @@
 #include <chrono>
 #include <cstring>
 
-// Code Specific Header Files(s)
 #include "Logger.h"
 #include "LogConfigReader.h"
 
 using namespace std;
-using namespace CPlusPlusLogging;
 
 Logger* Logger::m_Instance = 0;
 
-// Log file name. File name should be change from here only
 const string logFileName = "MyLogFile.log";
 
 Logger::Logger()
@@ -21,7 +18,6 @@ Logger::Logger()
     m_File.open(logFileName.c_str(), ios::out | ios::app);
     configure();
     logFilesCount = 1;
-    //deley->tm_hour += LOG_ROLL_OVER_DELEY;
 
     // Initialize mutex
 #ifdef _WIN32
@@ -67,6 +63,25 @@ Logger* Logger::getInstance() throw ()
     return m_Instance;
 }
 
+void Logger::console(const char* text) throw()
+{
+    if ((m_LogType == CONSOLE || m_LogType == ALL_LOG) && m_LogLevel)
+    {
+        cout << text << endl;
+    }
+}
+
+void Logger::console(std::string& text) throw()
+{
+    console(text.data());
+}
+
+void Logger::console(std::ostringstream& stream) throw()
+{
+    string text = stream.str();
+    console(text.data());
+}
+
 void Logger::lock()
 {
 #ifdef _WIN32
@@ -89,14 +104,6 @@ void Logger::logIntoFile(std::string& data)
 {
     unsigned long pos = m_File.tellp();
 
-    /*if (time(0) >= mktime(deley) || pos + data.size() > logSize)
-    {
-        rollLogFiles();
-        startLog = time(0);
-        deley = localtime(&startLog);
-        deley->tm_hour += LOG_ROLL_OVER_DELEY;
-    }*/
-
     lock();
     m_File << getCurrentTime() << "  " << data << endl;
     unlock();
@@ -104,7 +111,7 @@ void Logger::logIntoFile(std::string& data)
 
 void Logger::logOnConsole(std::string& data)
 {
-   // lock();
+    //lock();
     cout << data << endl;
     //unlock();
 }
@@ -112,27 +119,20 @@ void Logger::logOnConsole(std::string& data)
 string Logger::getCurrentTime()
 {
     string currTime;
-    //Current date/time based on current time
     time_t now = time(0);
-    // Convert current time to string
     char buffer[80];
     strncpy(buffer, std::ctime(&now), 26);
     currTime.assign(buffer);
 
-    //ctime_s(buffer, 80, &now);
-    // Last charactor of currentTime is "\n", so remove it
     string currentTime = currTime.substr(0, currTime.size() - 1);
     return currentTime;
 }
 
-// Interface for Error Log
 void Logger::error(const char* text) throw()
 {
     string data;
     data.append("[ERROR]: ");
     data.append(text);
-
-    // ERROR must be capture
     if (m_LogType == FILE_LOG && m_LogLevel)
     {
         logIntoFile(data);
@@ -159,14 +159,12 @@ void Logger::error(std::ostringstream& stream) throw()
     error(text.data());
 }
 
-// Interface for Alarm Log 
 void Logger::alarm(const char* text) throw()
 {
     string data;
     data.append("[ALARM]: ");
     data.append(text);
 
-    // ALARM must be capture
     if (m_LogType == FILE_LOG && m_LogLevel)
     {
         logIntoFile(data);
@@ -193,14 +191,12 @@ void Logger::alarm(std::ostringstream& stream) throw()
     alarm(text.data());
 }
 
-// Interface for Always Log 
 void Logger::always(const char* text) throw()
 {
     string data;
     data.append("[ALWAYS]: ");
     data.append(text);
 
-    // No check for ALWAYS logs
     if (m_LogType == FILE_LOG && m_LogLevel)
     {
         logIntoFile(data);
@@ -227,11 +223,8 @@ void Logger::always(std::ostringstream& stream) throw()
     always(text.data());
 }
 
-// Interface for Buffer Log 
 void Logger::buffer(const char* text) throw()
 {
-    // Buffer is the special case. So don't add log level
-    // and timestamp in the buffer message. Just log the raw bytes.
     if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_BUFFER))
     {
         lock();
@@ -262,7 +255,6 @@ void Logger::buffer(std::ostringstream& stream) throw()
     buffer(text.data());
 }
 
-// Interface for Info Log
 void Logger::info(const char* text) throw()
 {
     string data;
@@ -295,7 +287,6 @@ void Logger::info(std::ostringstream& stream) throw()
     info(text.data());
 }
 
-// Interface for Trace Log
 void Logger::trace(const char* text) throw()
 {
     string data;
@@ -328,7 +319,6 @@ void Logger::trace(std::ostringstream& stream) throw()
     trace(text.data());
 }
 
-// Interface for Debug Log
 void Logger::debug(const char* text) throw()
 {
     string data;
@@ -343,7 +333,7 @@ void Logger::debug(const char* text) throw()
     {
         logOnConsole(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG))
+    else if ((m_LogType == ALL_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG))
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -361,25 +351,21 @@ void Logger::debug(std::ostringstream& stream) throw()
     debug(text.data());
 }
 
-// Interfaces to control log levels
 void Logger::updateLogLevel(LogLevel logLevel)
 {
     m_LogLevel = logLevel;
 }
 
-// Enable all log levels
 void Logger::enaleLog()
 {
     m_LogLevel = ENABLE_LOG;
 }
 
-// Disable all log levels, except error and alarm
 void Logger::disableLog()
 {
     m_LogLevel = DISABLE_LOG;
 }
 
-// Interfaces to control log Types
 void Logger::updateLogType(LogType logType)
 {
     m_LogType = logType;
@@ -398,70 +384,7 @@ void Logger::enableALLLogging()
 {
     m_LogType = ALL_LOG;
 }
-//// Interfaces to control roll over mechanism
-//void Logger::updateMaxLogFiles(const size_t maxFiles)
-//{
-//    if (maxFiles > 0)
-//        maxLogFiles = maxFiles;
-//
-//    else
-//        maxLogFiles = MAX_LOG_FILES;
-//
-//}
 
-//void Logger::updateLogSize(const size_t size)
-//{
-//    if (size > 0)
-//        logSize = size;
-//
-//    else
-//        logSize = LOG_FILE_SIZE;
-//}
-
-// Handle roll over mechanism
-//void Logger::rollLogFiles()
-//{
-//    m_File.close();
-//
-//    if (maxLogFiles > 1)
-//    {
-//        string logFile = logFileName.substr(0, logFileName.length() - 4); // removing ".log" from file name
-//
-//        // To check if the maximum files have reached
-//        if (logFilesCount >= maxLogFiles)
-//        {
-//            string deleteFileName = logFile + "_" + to_string(maxLogFiles - 1) + ".tar.gz";
-//            remove(deleteFileName.c_str());
-//
-//            logFilesCount--;
-//        }
-//
-//        // Renaming the files 
-//        for (int i = logFilesCount; i >= 2; --i)
-//        {
-//            string oldLogFileName = logFile + "_" + to_string(i - 1) + ".tar.gz";
-//            string newLogFileName = logFile + "_" + to_string(i) + ".tar.gz";
-//
-//            rename(oldLogFileName.c_str(), newLogFileName.c_str());
-//        }
-//
-//        string cmd = "tar -cf " + logFile + "_1.tar.gz " + logFileName;
-//
-//        system(cmd.c_str()); // creating tar file
-//    }
-//
-//    remove(logFileName.c_str());
-//
-//    m_File.open(logFileName.c_str(), ios::out | ios::app);
-//
-//    if (logFilesCount < maxLogFiles)
-//    {
-//        logFilesCount++;
-//    }
-//} 
-
-// For configuration
-// Note: The function sets the default parameters if any paramter is incorrect or missing  
 void Logger::configure()
 {
     LogConfigReader* config = LogConfigReader::getInstance();
@@ -472,7 +395,6 @@ void Logger::configure()
     string logLevel_str;
     string logType_str;
 
-    // Configuring the log level
     if (config->getValue("log_level", logLevel_str))
     {
         if (logLevel_str == "ENABLE_LOG" || logLevel_str == "1")
@@ -500,8 +422,6 @@ void Logger::configure()
     else
         logLevel = LOG_LEVEL_TRACE;
 
-
-    // Configuring the log type
     if (config->getValue("log_type", logType_str))
     {
         if (logType_str == "NO_LOG" || logType_str == "1")
@@ -517,8 +437,6 @@ void Logger::configure()
     else
         logType = ALL_LOG;
 
-
-    // Setting the parameters
     m_LogLevel = logLevel;
     m_LogType = logType;
 
