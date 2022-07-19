@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 import SortFilterSessionModel 0.1
-import "../content"
 
 TableView {
     id: table

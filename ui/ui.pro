@@ -24,3 +24,7 @@ HEADERS += \
 	session.h \
 	sessionmodel.h \
 	sortfiltersessionmodel.h
+
+DISTFILES += \
+	resources/content/CalendarSpoiler.qml \
+	resources/content/DatePicker.qml
