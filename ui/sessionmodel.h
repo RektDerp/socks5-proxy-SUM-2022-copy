@@ -27,17 +27,13 @@ public:
                         int role = Qt::DisplayRole) const override;
 
     Q_INVOKABLE int columnWidth(int c, const QFont *font = nullptr);
-
-protected:
-    void timerEvent(QTimerEvent* event) override;
-    void update();
+    Q_INVOKABLE void update();
 
 private:
     QVector<QVector<QString>> _table;
     QVector<QString> _header;
     QVector<int> _columnWidths;
     QSqlDatabase _db;
-    int _timerId;
 };
 
 #endif // SESSIONMODEL_H

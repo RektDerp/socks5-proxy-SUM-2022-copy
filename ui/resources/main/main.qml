@@ -4,10 +4,33 @@ import QtQuick.Layouts
 import SortFilterSessionModel 0.1
 import "../content"
 
-Window {
-    width: 1020; height: 480
-    visible: true
+ApplicationWindow {
     title: qsTr("Proxy Statistics")
+    width: 750; height: 480; visible: true
+
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+            Switch {
+                id: cbUpdate
+                checked: true
+                text: qsTr("Update every")
+            }
+            SpinBox {
+                id: sbUpdate
+                from: 1
+                to: 60
+                value: 2
+                enabled: cbUpdate.checked
+            }
+            Label {
+                text: "sec"
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -41,6 +64,13 @@ Window {
             anchors.topMargin: header.height
             columnSpacing: 4; rowSpacing: 4
             model: SortFilterSessionModel { }
+
+            Timer {
+                interval: sbUpdate.value * 1000
+                repeat: true
+                running: cbUpdate.checked
+                onTriggered: table.model.sessionModel.update()
+            }
 
             columnWidthProvider: function(column) {
                 return model.columnWidth(column);

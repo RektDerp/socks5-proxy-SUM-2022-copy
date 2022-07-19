@@ -19,7 +19,6 @@ SessionModel::SessionModel(QObject *parent)
         qDebug() << "there was an error during opening db";
     }
 
-    _timerId = startTimer(1000);
     update();
 }
 
@@ -79,13 +78,6 @@ int SessionModel::columnWidth(int c, const QFont *font)
     }
 
     return _columnWidths[c];
-}
-
-void SessionModel::timerEvent(QTimerEvent *event)
-{
-    if (event->timerId() == _timerId) {
-        update();
-    }
 }
 
 void SessionModel::update()
