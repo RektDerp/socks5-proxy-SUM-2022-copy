@@ -24,15 +24,18 @@ void tcp_server::start_accept()
 	while (_maxSessions > 0 && _sessions == _maxSessions) {
 		std::this_thread::yield();
 	}
-
-	std::cout << "[server] Current connections: " << _sessions << std::endl;
-	std::cout << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
+	{
+		std::ostringstream tmp;
+		tmp << "[server] Current connections: " << _sessions << std::endl
+			<< "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
+		LOG_TRACE(tmp);
+	}
 	session::pointer new_connection = session::create(this, io_context_, bufferSizeKB_);
-	/*{
+	{
 		std::ostringstream tmp;
 		tmp << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
-		CPlusPlusLogging::LOG_TRACE(tmp);
-	}*/
+		LOG_TRACE(tmp);
+	}
 	acceptor_.async_accept(new_connection->socket(),
 		boost::bind(&tcp_server::handle_accept, this, new_connection,
 			boost::asio::placeholders::error));
@@ -42,12 +45,11 @@ void tcp_server::handle_accept(session::pointer new_connection, const boost::sys
 {
 	if (!error)
 	{
-		//std::cout << "[server] client connected" << std::endl;
-		/*{
+		{
 			std::ostringstream tmp;
 			tmp << "[server] client connected" << std::endl;
-			CPlusPlusLogging::LOG_TRACE(tmp);
-		}*/
+			LOG_TRACE(tmp);
+		}
 		++_sessions;
 		ba::post(_pool, [new_connection] { new_connection->start(); });
 	}

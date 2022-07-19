@@ -4,11 +4,7 @@
 
 using namespace std; // don't use this
 
-//Rekt_Derp was here
-
-#define NULL_PTR 0 // nullptr?
-
-LogConfigReader* LogConfigReader::m_pInstance = NULL_PTR;
+LogConfigReader* LogConfigReader::m_pInstance = nullptr;
 std::string LogConfigReader::configFilePath;
 
 LogConfigReader::LogConfigReader(string configFile)
@@ -24,12 +20,7 @@ LogConfigReader::~LogConfigReader()
 
 LogConfigReader* LogConfigReader::getInstance()
 {
-    // No need to use double re-check lock mechanism here
-    // because this getInstance() will call at the time of
-    // initialization only and mostly, at the time of
-    // initialization, there will be only one thread.
-
-    if (NULL_PTR == m_pInstance)
+    if (nullptr == m_pInstance)
     {
         m_pInstance = new LogConfigReader(configFilePath);
     }
@@ -85,7 +76,6 @@ bool LogConfigReader::parseFile(string fileName)
 {
     ifstream inputFile;
     inputFile.open(fileName.c_str());
-    //inputFile.open("config.txt");
     string delimeter = "=";
     int initPos = 0;
 
@@ -99,11 +89,9 @@ bool LogConfigReader::parseFile(string fileName)
     string line;
     while (getline(inputFile, line))
     {
-        // Remove comment Lines
-        size_t found = line.find_first_of('#');  // what if there is no comment?
+        size_t found = line.find_first_of('#'); 
         string configData = line.substr(0, found);
 
-        // Remove ^M from configData
         configData.erase(std::remove(configData.begin(), configData.end(), '\r'), configData.end());
 
         if (configData.empty())
@@ -126,18 +114,10 @@ bool LogConfigReader::parseFile(string fileName)
             value = configData.substr(length + 1);
         }
 
-        // Trim white spaces
         tag = reduce(tag);
         value = reduce(value);
-        //std::cout << "//" << tag << "//" << "   "<< "//"  << value << "//" << std::endl;
         if (tag.empty() || value.empty())
             continue;
-
-        // Check if any of the tags is repeated more than one times
-        // it needs to pick the latest one instead of the old one.
-
-        // Search, if the tag is already present or not
-        // If it is already present, then delete an existing one
 
         std::map<std::string, std::string>::iterator itr = m_ConfigSettingMap.find(tag);
         if (itr != m_ConfigSettingMap.end())
@@ -151,13 +131,6 @@ bool LogConfigReader::parseFile(string fileName)
 }
 bool LogConfigReader::fillUsers(ifstream &inputFile)
 {
-    //int authFlag = 0;
-    //if (!getValue("Auth", authFlag) || authFlag == 0)
-    //{
-    //    return false;
-    //}
-
-    //inputFile.open(fileName.c_str());
     string delimeter = ":";
     int initPos = 0;
 
@@ -170,11 +143,9 @@ bool LogConfigReader::fillUsers(ifstream &inputFile)
             work = false;
             continue;
         }
-        // Remove comment Lines
         size_t found1 = line1.find_first_of('#');
         string configData1 = line1.substr(0, found1);
 
-        // Remove ^M from configData
         configData1.erase(std::remove(configData1.begin(), configData1.end(), '\r'), configData1.end());
         
         if (configData1.empty())
@@ -191,11 +162,8 @@ bool LogConfigReader::fillUsers(ifstream &inputFile)
             value1 = configData1.substr(length1 + 1);
         }
 
-        // Trim white spaces
         tag1 = reduce(tag1);
         value1 = reduce(value1);
-
-        //std::cout << "//" << tag << "//" << "   " << "//" << value << "//" << std::endl;
 
         if (tag1.empty() || value1.empty())
             continue;
@@ -207,11 +175,9 @@ bool LogConfigReader::fillUsers(ifstream &inputFile)
             work = false;
             continue;
         }
-        // Remove comment Lines
         size_t found2 = line2.find_first_of('#');
         string configData2 = line2.substr(0, found2);
 
-        // Remove ^M from configData
         configData2.erase(std::remove(configData2.begin(), configData2.end(), '\r'), configData2.end());
 
         if (configData2.empty())
@@ -229,7 +195,6 @@ bool LogConfigReader::fillUsers(ifstream &inputFile)
             value2 = configData2.substr(length2 + 1);
         }
 
-        // Trim white spaces
         tag2 = reduce(tag2);
         value2 = reduce(value2);
         if (tag2.empty() || value2.empty())
@@ -261,10 +226,8 @@ std::string LogConfigReader::reduce(const std::string& str,
     const std::string& fill,
     const std::string& whitespace)
 {
-    // trim first
     string result = trim(str, whitespace);
 
-    // replace sub ranges
     size_t beginSpace = result.find_first_of(whitespace);
     while (beginSpace != std::string::npos)
     {

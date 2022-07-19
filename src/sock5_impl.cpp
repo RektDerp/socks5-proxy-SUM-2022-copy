@@ -101,12 +101,11 @@ bool socks5_impl::checkError(bs::error_code& ec)
 {
 	if (ec)
 	{
-		/*{
+		{
 			std::ostringstream tmp;
 			tmp << ec.what() << std::endl;
-			CPlusPlusLogging::LOG_ERROR(tmp);
-		}*/
-		std::cerr << ec.what() << std::endl;
+			LOG_ERROR(tmp);
+		}
 		return true;
 	}
 	return false;
@@ -125,7 +124,11 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 		db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 	}
 	catch (const db_exception& er) {
-		std::cerr << er.what() << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << er.what() << std::endl;
+			LOG_ERROR(tmp);
+		}
 	}
 #endif
 }
@@ -139,7 +142,11 @@ void socks5_impl::close()
 			proxy::stat::db_service::getInstance().close(id_);
 		}
 		catch (const db_exception& er) {
-			std::cerr << er.what() << std::endl;
+			{
+				std::ostringstream tmp;
+				tmp << er.what() << std::endl;
+				LOG_ERROR(tmp);
+			}
 		}
 		id_ = 0;
 	}
@@ -195,7 +202,11 @@ bool socks5_impl::checkVersion()
 
 	if (ver != SOCKS_VER)
 	{
-		std::cerr << "Invalid version: " << (int) ver << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "Invalid version: " << (int)ver << std::endl;
+			LOG_ERROR(tmp);
+		}
 		return false;
 	}
 	return true;
@@ -294,8 +305,12 @@ bool socks5_impl::createRecord()
 		id_ = db_service::getInstance().create(s);
 	}
 	catch (const db_exception& ex) {
-		std::cerr << "Database record was not created for session." << std::endl;
-		std::cerr << ex.what() << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "Database record was not created for session." << std::endl
+				<< ex.what() << std::endl;
+			LOG_ERROR(tmp);
+		}
 		return false;
 	}
 #endif
@@ -316,16 +331,18 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 	response.push_back(RSV);
 	response.push_back(_atyp);
 	if (_atyp == IPV4) {
-		// todo do we need to resolve server address?
 		response.push_back(0);
 		response.push_back(0);
 		response.push_back(0);
 		response.push_back(0);
 	}
 	else if (_atyp == IPV6) {
-		std::cerr << "IPV6 is not suppored" << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "IPV6 is not suppored" << std::endl;
+			LOG_ERROR(tmp);
+		}
 		return false;
-		// todo
 	}
 	response.push_back((bindPort & 0xFF) >> 8);
 	response.push_back(bindPort & 0x00FF);
