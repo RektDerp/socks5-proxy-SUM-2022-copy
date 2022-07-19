@@ -11,11 +11,6 @@ class TableModel : public QAbstractTableModel
     Q_OBJECT
     Q_DISABLE_COPY(TableModel)
 
-    enum TableRoles {
-        TableDataRole = Qt::UserRole + 1,
-        HeadingRole
-    };
-
 public:
     explicit TableModel(QObject* parent = nullptr);
     ~TableModel();
@@ -24,9 +19,14 @@ public:
 
     int columnCount(const QModelIndex & = QModelIndex()) const override;
 
-    QVariant data(const QModelIndex &index, int role) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     QHash<int, QByteArray> roleNames() const override;
+
+    QVariant headerData(int id, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
+    Q_INVOKABLE int columnWidth(int c, const QFont *font = nullptr);
 
 //    Q_INVOKABLE virtual void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override
 //    {
@@ -39,6 +39,8 @@ protected:
 
 private:
     QVector<QVector<QString>> _table;
+    QVector<QString> _header;
+    QVector<int> _columnWidths;
     QSqlDatabase _db;
     int _timerId;
 };

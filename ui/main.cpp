@@ -2,13 +2,14 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "tablemodel.h"
+#include <QFont>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<TableModel>("TableModel", 0, 1, "TableModel");
-
+    qRegisterMetaType<QFont*>("const QFont*");
     QQmlApplicationEngine engine;
     TableModel model;
     //engine.rootContext()->setContextProperty("myModel", &model);

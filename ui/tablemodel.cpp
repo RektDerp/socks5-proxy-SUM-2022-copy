@@ -1,15 +1,20 @@
 #include "tablemodel.h"
 #include "qcoreevent.h"
+#include "qwindowdefs.h"
 #include <QSqlQuery>
 #include <QDebug>
+#include <qguiapplication.h>
+#include <QFont>
+#include <QFontMetrics>
 
 TableModel::TableModel(QObject *parent)
     : QAbstractTableModel{parent}
 {
+    _header.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
+                    "dst_endpoint", "bytes_sent", "bytes_recv"});
+    _columnWidths.resize(_header.size());
     _db = QSqlDatabase::addDatabase("QSQLITE");
     _db.setDatabaseName("../sessions_stat.db");
-    _table.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
-                  "dst_endpoint", "bytes_sent", "bytes_recv"});
     if (!_db.open()) {
         qDebug() << "there was an error during opening db";
     }
@@ -33,36 +38,49 @@ int TableModel::columnCount(const QModelIndex &) const
     return _table.at(0).size();
 }
 
-QVariant TableModel::data(const QModelIndex &index, int role) const
+QVariant TableModel::data(const QModelIndex &index, int /*role*/) const
 {
-    switch(role) {
-    case TableDataRole:
-    {
-        return _table.at(index.row()).at(index.column());
-    }
-    case HeadingRole:
-    {
-        return index.row() == 0;
-    }
-    default:
-        break;
-    }
-
-    return QVariant();
+    return _table.at(index.row()).at(index.column());
 }
 
 QHash<int, QByteArray> TableModel::roleNames() const
 {
-    QHash<int, QByteArray> roles;
-    roles[TableDataRole] = "tabledata";
-    roles[HeadingRole] = "heading";
-    return roles;
+    return { {Qt::DisplayRole, "display"} };
+}
+
+QVariant TableModel::headerData(int id, Qt::Orientation orientation, int role) const
+{
+    if (role != Qt::DisplayRole)
+        return QVariant();
+
+    if (orientation == Qt::Horizontal) {
+        if (id > _header.size() || id < 0)
+            return QVariant();
+        return _header[id];
+    } else {
+        return QString();
+    }
+}
+
+int TableModel::columnWidth(int c, const QFont *font)
+{
+    if (!_columnWidths[c]) {
+        QFontMetrics defaultFontMetrics = QFontMetrics(QGuiApplication::font());
+        QFontMetrics fm = (font ? QFontMetrics(*font) : defaultFontMetrics);
+        int ret = fm.horizontalAdvance(headerData(c, Qt::Horizontal).toString()) + 10;
+
+        for (int r = 0; r < _table.size(); r++) {
+            ret = qMax(ret, fm.horizontalAdvance(_table[r][c]));
+        }
+        _columnWidths[c] = ret + 10;
+    }
+
+    return _columnWidths[c];
 }
 
 void TableModel::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == _timerId) {
-        qDebug("update");
         update();
     }
 }
@@ -70,7 +88,9 @@ void TableModel::timerEvent(QTimerEvent *event)
 void TableModel::update()
 {
     beginResetModel();
-    _table.resize(1);
+    _table.clear();
+    _columnWidths.clear();
+    _columnWidths.resize(_header.size());
     QSqlQuery query(_db);
     query.exec("SELECT * from sessions ORDER BY update_date DESC");
     while (query.next()) {

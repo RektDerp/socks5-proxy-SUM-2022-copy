@@ -8,34 +8,66 @@ Window {
     visible: true
     title: qsTr("Proxy Statistics")
 
-    ColumnLayout {
+    Rectangle {
+        anchors.fill: parent
+        Row {
+            id: header
+            width: table.contentWidth
+            height: 40
+            x: -table.contentX
+            z: 1
+            spacing: 4
+            Repeater {
+                model: table.model.columnCount()
+                Rectangle {
+                    width: table.model.columnWidth(index); height: parent.height
+                    color: "green"
+                    border.color : "black"
+                    border.width: 1
+
+                    Text {
+                        id: headerText
+                        anchors.verticalCenter: parent.verticalCenter
+                        x: 4
+                        width: parent.width
+                        text: table.model.headerData(index, Qt.Horizontal)
+                    }
+                }
+            }
+        }
+
         TableView {
-            id: tableView
-            width: 1020; height: 400
+            id: table
+            anchors.fill: parent
+            anchors.topMargin: header.height
             columnSpacing: 4; rowSpacing: 4
-            clip: true
-            ScrollIndicator.horizontal: ScrollIndicator { }
-            ScrollIndicator.vertical: ScrollIndicator { }
             model: TableModel { }
+            //clip: true
+            //ScrollIndicator.horizontal: ScrollIndicator { }
+            ScrollIndicator.vertical: ScrollIndicator { }
+
+            columnWidthProvider: function(column) {
+                return model.columnWidth(column, Qt.font({family: "Arial", pixelSize: 20}));
+            }
+
             //sortIndicatorVisible: true
             //onSortIndicatorColumnChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
             //onSortIndicatorOrderChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
 
             delegate: Rectangle {
-                implicitWidth: cellData.width + 20
-                implicitHeight: cellData.height + 20
-                border.color: heading ? "black" : "white"
-                border.width: 1
-                color: heading ? "green" : "#EEE"
+                //implicitWidth: cellData.width + 20
+                implicitHeight: cellData.height + 5
+                color: "#EEE"
 
                 Text {
                     id: cellData
-                    text: tabledata
-                    font.pointSize: 12
+                    width: parent.width
+                    text: model.display
+                    elide: Text.ElideRight
                     anchors.centerIn: parent
+                    font.preferShaping: false
                 }
             }
         }
-
     }
 }
