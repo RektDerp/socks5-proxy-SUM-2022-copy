@@ -17,7 +17,6 @@ public:
         return &_sessionModel;
     }
     Q_INVOKABLE void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     Q_INVOKABLE int columnWidth(int c, const QFont* font = nullptr);
 
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const override;

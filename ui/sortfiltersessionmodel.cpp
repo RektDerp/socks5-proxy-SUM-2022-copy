@@ -11,11 +11,6 @@ void SortFilterSessionModel::sort(int column, Qt::SortOrder order)
     QSortFilterProxyModel::sort(column, order);
 }
 
-int SortFilterSessionModel::columnCount(const QModelIndex&) const
-{
-    return _sessionModel.columnCount();
-}
-
 int SortFilterSessionModel::columnWidth(int c, const QFont *font)
 {
     return _sessionModel.columnWidth(c, font);
