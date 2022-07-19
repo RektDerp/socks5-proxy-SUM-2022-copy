@@ -31,7 +31,8 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
             TextField {
-                id: tfFilter
+                id: userFilter
+                placeholderText : qsTr("User filter")
                 implicitWidth: parent.width / 4
                 onTextEdited: table.contentY = 0
             }
@@ -51,6 +52,7 @@ ApplicationWindow {
                 id: repeater
                 model: table.model.columnCount()
                 SortableColumnHeading {
+                    id: heading
                     width: table.model.columnWidth(index); height: parent.height
                     text: table.model.sessionModel.headerData(index, Qt.Horizontal)
                     initialSortOrder: table.model.initialSortOrder(index)
@@ -67,6 +69,12 @@ ApplicationWindow {
 
         SessionTableView {
             id: table
+            anchors.fill: parent
+            anchors.topMargin: header.height
+            updateInterval: sbUpdate.value * 1000
+            updateEnabled: cbUpdate.checked
+            filterText: userFilter.text
+            columnWidthProvider: function(column) { return repeater.itemAt(column).width }
         }
     }
 }

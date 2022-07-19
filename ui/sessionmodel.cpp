@@ -46,10 +46,21 @@ QVariant SessionModel::data(const QModelIndex &index, int role) const
     fields field = fields(index.column());
     switch (role) {
     case Qt::DisplayRole: {
-        if (field >= F_BYTES_SENT) {
-            return _table[index.row()][field].toInt();
+        QVariant ret = _table[index.row()][field];
+        switch (field) {
+        case F_USER:
+        case F_IS_ACTIVE:
+        case F_SRC_ENDPOINT:
+        case F_DST_ENDPOINT:
+        case F_CREATE_DATE:
+        case F_UPDATE_DATE:
+            return ret;
+        case F_BYTES_SENT:
+        case F_BYTES_RECV:
+            return ret.toInt();
+        default:
+            return QVariant();
         }
-        return _table[index.row()][field];
     }
     case Qt::InitialSortOrderRole: {
         if (field >= F_BYTES_SENT) {

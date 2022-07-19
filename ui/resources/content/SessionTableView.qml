@@ -5,22 +5,17 @@ import SortFilterSessionModel 0.1
 import "../content"
 
 TableView {
-    anchors.fill: parent
-    anchors.topMargin: header.height
+    id: table
+    property alias updateInterval: timer.interval
+    property alias updateEnabled: timer.running
+    property alias filterText: tableModel.filterText
     columnSpacing: 4; rowSpacing: 4
-    model: SortFilterSessionModel {
-        filterText: tfFilter.text
-    }
+    model: SortFilterSessionModel { id: tableModel }
 
     Timer {
-        interval: sbUpdate.value * 1000
+        id: timer
         repeat: true
-        running: cbUpdate.checked
-        onTriggered: table.model.sessionModel.update()
-    }
-
-    columnWidthProvider: function(column) {
-        return model.columnWidth(column);
+        onTriggered: tableModel.sessionModel.update()
     }
 
     delegate: Rectangle {
