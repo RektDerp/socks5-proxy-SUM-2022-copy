@@ -2,10 +2,10 @@ QT += quick sql core gui
 
 SOURCES += \
         main.cpp \
-	tablemodel.cpp
+	sessionmodel.cpp \
+	sortfiltersessionmodel.cpp
 
-resources.files = main.qml 
-resources.prefix = /$${TARGET}
+resources.prefix = /$${TARGET}/resources
 RESOURCES += resources
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -21,4 +21,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
 	DBService.h \
-	tablemodel.h
+	sessionmodel.h \
+	sortfiltersessionmodel.h

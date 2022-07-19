@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import TableModel 0.1
+import SortFilterSessionModel 0.1
+import "../content"
 
 Window {
     width: 1020; height: 480
@@ -18,19 +19,17 @@ Window {
             z: 1
             spacing: 4
             Repeater {
+                id: repeater
                 model: table.model.columnCount()
-                Rectangle {
+                SortableColumnHeading {
                     width: table.model.columnWidth(index); height: parent.height
-                    color: "green"
-                    border.color : "black"
-                    border.width: 1
-
-                    Text {
-                        id: headerText
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: 4
-                        width: parent.width
-                        text: table.model.headerData(index, Qt.Horizontal)
+                    text: table.model.sessionModel.headerData(index, Qt.Horizontal)
+                    onSorting: {
+                        for (var i = 0; i < repeater.model; ++i) {
+                            if (i != index)
+                                repeater.itemAt(i).stopSorting()
+                            table.model.sort(index, state == "up" ? Qt.AscendingOrder : Qt.DescendingOrder)
+                        }
                     }
                 }
             }
@@ -41,21 +40,13 @@ Window {
             anchors.fill: parent
             anchors.topMargin: header.height
             columnSpacing: 4; rowSpacing: 4
-            model: TableModel { }
-            //clip: true
-            //ScrollIndicator.horizontal: ScrollIndicator { }
-            ScrollIndicator.vertical: ScrollIndicator { }
+            model: SortFilterSessionModel { }
 
             columnWidthProvider: function(column) {
-                return model.columnWidth(column, Qt.font({family: "Arial", pixelSize: 20}));
+                return model.columnWidth(column);
             }
 
-            //sortIndicatorVisible: true
-            //onSortIndicatorColumnChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
-            //onSortIndicatorOrderChanged: myModel.sort(sortIndicatorColumn, sortIndicatorOrder)
-
             delegate: Rectangle {
-                //implicitWidth: cellData.width + 20
                 implicitHeight: cellData.height + 5
                 color: "#EEE"
 
@@ -68,6 +59,9 @@ Window {
                     font.preferShaping: false
                 }
             }
+
+            ScrollBar.horizontal: ScrollBar { }
+            ScrollBar.vertical: ScrollBar { }
         }
     }
 }

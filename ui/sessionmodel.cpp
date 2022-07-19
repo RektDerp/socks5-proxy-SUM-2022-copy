@@ -1,4 +1,4 @@
-#include "tablemodel.h"
+#include "sessionmodel.h"
 #include "qcoreevent.h"
 #include "qwindowdefs.h"
 #include <QSqlQuery>
@@ -7,7 +7,7 @@
 #include <QFont>
 #include <QFontMetrics>
 
-TableModel::TableModel(QObject *parent)
+SessionModel::SessionModel(QObject *parent)
     : QAbstractTableModel{parent}
 {
     _header.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
@@ -23,32 +23,32 @@ TableModel::TableModel(QObject *parent)
     update();
 }
 
-TableModel::~TableModel()
+SessionModel::~SessionModel()
 {
     _db.close();
 }
 
-int TableModel::rowCount(const QModelIndex &) const
+int SessionModel::rowCount(const QModelIndex &) const
 {
     return _table.size();
 }
 
-int TableModel::columnCount(const QModelIndex &) const
+int SessionModel::columnCount(const QModelIndex &) const
 {
     return _table.at(0).size();
 }
 
-QVariant TableModel::data(const QModelIndex &index, int /*role*/) const
+QVariant SessionModel::data(const QModelIndex &index, int /*role*/) const
 {
     return _table.at(index.row()).at(index.column());
 }
 
-QHash<int, QByteArray> TableModel::roleNames() const
+QHash<int, QByteArray> SessionModel::roleNames() const
 {
     return { {Qt::DisplayRole, "display"} };
 }
 
-QVariant TableModel::headerData(int id, Qt::Orientation orientation, int role) const
+QVariant SessionModel::headerData(int id, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();
@@ -62,12 +62,15 @@ QVariant TableModel::headerData(int id, Qt::Orientation orientation, int role) c
     }
 }
 
-int TableModel::columnWidth(int c, const QFont *font)
+int SessionModel::columnWidth(int c, const QFont *font)
 {
+    if (c < 0 || c >= _columnWidths.size()) {
+        return 0;
+    }
     if (!_columnWidths[c]) {
         QFontMetrics defaultFontMetrics = QFontMetrics(QGuiApplication::font());
         QFontMetrics fm = (font ? QFontMetrics(*font) : defaultFontMetrics);
-        int ret = fm.horizontalAdvance(headerData(c, Qt::Horizontal).toString()) + 10;
+        int ret = fm.horizontalAdvance(headerData(c, Qt::Horizontal).toString()) + 8;
 
         for (int r = 0; r < _table.size(); r++) {
             ret = qMax(ret, fm.horizontalAdvance(_table[r][c]));
@@ -78,14 +81,14 @@ int TableModel::columnWidth(int c, const QFont *font)
     return _columnWidths[c];
 }
 
-void TableModel::timerEvent(QTimerEvent *event)
+void SessionModel::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == _timerId) {
         update();
     }
 }
 
-void TableModel::update()
+void SessionModel::update()
 {
     beginResetModel();
     _table.clear();
@@ -120,9 +123,3 @@ void TableModel::update()
     }
     endResetModel();
 }
-
-//void TableModel::sort(int column, Qt::SortOrder order)
-//{
-//    qDebug("Sorting by column %d", column);
-//    QSortFilterProxyModel::sort(column, order);
-//}
