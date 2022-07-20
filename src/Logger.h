@@ -23,16 +23,15 @@
 #define LOG_TRACE(x)    Logger::getInstance()->trace(x)
 #define LOG_DEBUG(x)    Logger::getInstance()->debug(x)
 
-#define MAX_LOG_FILES 100
-
     typedef enum LOG_LEVEL
     {
+        DISABLE_LOG = 0,  
         ENABLE_LOG = 1,
         LOG_LEVEL_INFO = 2,
         LOG_LEVEL_BUFFER = 3,
         LOG_LEVEL_TRACE = 4,
         LOG_LEVEL_DEBUG = 5,
-        DISABLE_LOG = 6
+        
     } LogLevel;
 
     typedef enum LOG_TYPE
@@ -49,35 +48,35 @@
         static Logger* getInstance() throw ();
 
         void console(const char* text) throw();
-        void console(const std::string& text) throw();
+        void console(std::string& text) throw();
         void console(std::ostringstream& stream) throw();
 
         void error(const char* text) throw();
-        void error(const std::string& text) throw();
+        void error(std::string& text) throw();
         void error(std::ostringstream& stream) throw();
 
         void alarm(const char* text) throw();
-        void alarm(const std::string& text) throw();
+        void alarm(std::string& text) throw();
         void alarm(std::ostringstream& stream) throw();
 
         void always(const char* text) throw();
-        void always(const std::string& text) throw();
+        void always(std::string& text) throw();
         void always(std::ostringstream& stream) throw();
 
         void buffer(const char* text) throw();
-        void buffer(const std::string& text) throw();
+        void buffer(std::string& text) throw();
         void buffer(std::ostringstream& stream) throw();
 
         void info(const char* text) throw();
-        void info(const std::string& text) throw();
+        void info(std::string& text) throw();
         void info(std::ostringstream& stream) throw();
 
         void trace(const char* text) throw();
-        void trace(const std::string& text) throw();
+        void trace(std::string& text) throw();
         void trace(std::ostringstream& stream) throw();
 
         void debug(const char* text) throw();
-        void debug(const std::string& text) throw();
+        void debug(std::string& text) throw();
         void debug(std::ostringstream& stream) throw();
 
         void updateLogLevel(LogLevel logLevel);
@@ -120,12 +119,34 @@
         LogLevel                m_LogLevel;
         LogType                 m_LogType;
 
-        unsigned int		 logSize;
-        unsigned int		 maxLogFiles; 
-        unsigned int		 logFilesCount;
 
-        time_t startLog = time(0);
-        tm* deley = localtime(&startLog);
+    };
+    struct BUFF {
+        std::ostringstream ss;
+        std::string type;
+        BUFF() = delete;
+        BUFF(const std::string& type);
+        BUFF(std::string&& type);
+        BUFF(const BUFF&) = delete;
+        BUFF& operator=(const BUFF&) = delete;
+        BUFF& operator=(BUFF&&) = delete;
+        BUFF(BUFF&& buf);
+        template <typename T>
+        BUFF& operator<<(T&& message)
+        {
+            ss << std::forward<T>(message);
+            return *this;
+        }
+        ~BUFF();
     };
 
-#endif 
+    template <typename T>
+    BUFF operator<<(Logger& simpleLogger, T&& message);
+
+    BUFF log(const std::string& type);
+    BUFF log(std::string&& type);
+
+    
+#endif
+
+    

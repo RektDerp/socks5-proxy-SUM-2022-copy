@@ -78,11 +78,9 @@ bool LogConfigReader::parseFile(string fileName)
     inputFile.open(fileName.c_str());
     string delimeter = "=";
     int initPos = 0;
-
     if (inputFile.fail())
     {
-        cout << "Unable to find file: " << fileName << endl;
-
+        cout << "Unable to find defaultConfig file" << endl;
         return false;
     }
 

@@ -17,7 +17,6 @@ Logger::Logger()
 {
     m_File.open(logFileName.c_str(), ios::out | ios::app);
     configure();
-    logFilesCount = 1;
 
     // Initialize mutex
 #ifdef _WIN32
@@ -42,10 +41,6 @@ Logger::Logger()
 Logger::~Logger()
 {
     m_File.close();
-    if (deley != NULL)
-    {
-        delete deley;
-    }
 #ifdef _WIN32
     DeleteCriticalSection(&m_Mutex);
 #else
@@ -102,8 +97,6 @@ void Logger::unlock()
 
 void Logger::logIntoFile(std::string& data)
 {
-    unsigned long pos = m_File.tellp();
-
     lock();
     m_File << getCurrentTime() << "  " << data << endl;
     unlock();
@@ -225,17 +218,17 @@ void Logger::always(std::ostringstream& stream) throw()
 
 void Logger::buffer(const char* text) throw()
 {
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_BUFFER))
+    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
     {
         lock();
         m_File << text << endl;
         unlock();
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_BUFFER))
+    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
     {
         cout << text << endl;
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_BUFFER))
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
     {
         lock();
         m_File << text << endl;
@@ -261,15 +254,15 @@ void Logger::info(const char* text) throw()
     data.append("[INFO]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_INFO))
+    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_INFO))
+    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
     {
         logOnConsole(data);
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_INFO))
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -293,15 +286,15 @@ void Logger::trace(const char* text) throw()
     data.append("[TRACE]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_TRACE))
+    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_TRACE))
+    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
     {
         logOnConsole(data);
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_TRACE))
+    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -325,15 +318,15 @@ void Logger::debug(const char* text) throw()
     data.append("[DEBUG]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG))
+    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG))
+    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
     {
         logOnConsole(data);
     }
-    else if ((m_LogType == ALL_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG))
+    else if ((m_LogType == ALL_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -388,7 +381,6 @@ void Logger::enableALLLogging()
 void Logger::configure()
 {
     LogConfigReader* config = LogConfigReader::getInstance();
-
     LogLevel logLevel;
     LogType logType;
 
@@ -430,15 +422,83 @@ void Logger::configure()
             logType = CONSOLE;
         else if (logType_str == "FILE_LOG" || logType_str == "3")
             logType = FILE_LOG;
-        else
+        else if (logType_str == "ALL_LOG" || logType_str == "4")
             logType = ALL_LOG;
+        else
+            logType = CONSOLE;
     }
     else
-        logType = ALL_LOG;
+        logType = CONSOLE;
 
     m_LogLevel = logLevel;
     m_LogType = logType;
-
 }
 
+/////////////////////////////
 
+
+
+BUFF log(const std::string& type)
+{
+    return BUFF(type);
+}
+
+BUFF log(std::string&& type)
+{
+    return BUFF(std::move(type));
+}
+
+template <typename T>
+BUFF operator<<(Logger& simpleLogger, T&& message)
+{
+    BUFF buf;
+    buf.ss << std::forward<T>(message);
+    return buf;
+}
+
+BUFF::BUFF(const std::string& type) : type(type)
+{
+}
+BUFF::BUFF(std::string&& type) : type(std::move(type))
+{
+}
+
+BUFF::BUFF(BUFF&& buf) : ss(move(buf.ss))
+{
+}
+
+BUFF::~BUFF()
+{
+    if (type == "console")
+    {
+        Logger::getInstance()->console(ss);
+    }
+    else if (type == "error")
+    {
+        Logger::getInstance()->error(ss);
+    }
+    else if (type == "alarm")
+    {
+        Logger::getInstance()->alarm(ss);
+    }
+    else if (type == "always")
+    {
+        Logger::getInstance()->always(ss);
+    }
+    else if (type == "buffer")
+    {
+        Logger::getInstance()->buffer(ss);
+    }
+    else if (type == "info")
+    {
+        Logger::getInstance()->info(ss);
+    }
+    else if (type == "trace")
+    {
+        Logger::getInstance()->trace(ss);
+    }
+    else if (type == "debug")
+    {
+        Logger::getInstance()->debug(ss);
+    }
+}

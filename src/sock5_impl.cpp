@@ -86,11 +86,11 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-	{
-		std::ostringstream tmp;
-		tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
-		LOG_ERROR(tmp);
-	}
+		{
+			std::ostringstream tmp;
+			tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
+			LOG_ERROR(tmp);
+		}
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
@@ -235,19 +235,7 @@ bool socks5_impl::checkMethod()
 	_session->readBytes(methods, ec);
 	if (checkError(ec))
 		return false;
-
-	if (std::find(methods.begin(), methods.end(), getServerMethod()) == methods.end()) {
-		std::ostringstream tmp;
-		tmp << "No method acceptable: ";
-		for (auto it = methods.begin(); it != methods.end(); it++) {
-			tmp << (int)*it << " ";
-		}
-		tmp << "Acceptable method is: " << (int) getServerMethod() << std::endl;
-		LOG_ERROR(tmp);
-		return false;
-	}
-
-	return true;
+	return std::find(methods.begin(), methods.end(), getServerMethod()) != methods.end();
 }
 
 bool socks5_impl::sendMethodResponse(METHOD method)
