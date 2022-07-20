@@ -86,7 +86,11 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-		std::cerr << "Wrong credentials: " << _username << ":" << passString << std::endl;
+		{
+			std::ostringstream tmp;
+			tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
+			LOG_ERROR(tmp);
+		}
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
@@ -115,7 +119,11 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 {
 #ifdef STAT
 	if (id_ == 0) {
-		std::cerr << "id is 0\n";
+		{
+			std::ostringstream tmp;
+			tmp << "id is 0\n";
+			LOG_ERROR(tmp);
+		}
 		return;
 	}
 
@@ -135,7 +143,11 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 
 void socks5_impl::close()
 {
-	std::cout << "Closed session " << id_ << std::endl;
+	{
+		std::ostringstream tmp;
+		tmp << "Closed session " << id_ << std::endl;
+		LOG_TRACE(tmp);
+	}
 #ifdef STAT
 	if (id_ != 0) {
 		try {
