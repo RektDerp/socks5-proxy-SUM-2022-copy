@@ -81,7 +81,7 @@ bool LogConfigReader::parseFile(string fileName)
 
     if (inputFile.fail())
     {
-        cout << "Unable to find defaultConfig file" << endl;
+        cout << "Unable to find file: " << fileName << endl;
 
         return false;
     }

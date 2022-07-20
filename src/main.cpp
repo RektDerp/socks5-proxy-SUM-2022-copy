@@ -23,17 +23,22 @@ void initDb();
 int main(int argc, char **argv)
 {
 	WININIT();
+	LogConfigReader::configFilePath = defaultConfigPath;
+	std::cout << LogConfigReader::configFilePath << std::endl;
+	LogConfigReader* config = LogConfigReader::getInstance();
+
 	initDb();
 	// default server parameters
 	int port = 1080;
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
-	LogConfigReader::configFilePath = defaultConfigPath;
-	LogConfigReader* config = LogConfigReader::getInstance();
+	
+	
+	
+	config->dumpFileValues();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
 	config->getValue("max_sessions", maxSessions);
-
 	ba::io_context context;
 	
 	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);

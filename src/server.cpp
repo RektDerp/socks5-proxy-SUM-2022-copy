@@ -17,7 +17,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t b
 		<< "[server] buffer size (per connection): " << bufferSizeKB << " KB" << std::endl
 		<< "[server] max sessions: " << maxSessions
 		<< "\n[server] =============================================\n";
-	LOG_INFO(tmp);
+	LOG_TRACE(tmp);
 	start_accept();
 }
 
@@ -33,11 +33,6 @@ void tcp_server::start_accept()
 		LOG_TRACE(tmp);
 	}
 	session::pointer new_connection = session::create(this, io_context_, bufferSizeKB_);
-	{
-		std::ostringstream tmp;
-		tmp << "[server] waiting for new client... " << acceptor_.local_endpoint() << std::endl;
-		LOG_TRACE(tmp);
-	}
 	acceptor_.async_accept(new_connection->socket(),
 		boost::bind(&tcp_server::handle_accept, this, new_connection,
 			boost::asio::placeholders::error));
