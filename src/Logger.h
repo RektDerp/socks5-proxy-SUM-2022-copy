@@ -48,35 +48,35 @@
         static Logger* getInstance() throw ();
 
         void console(const char* text) throw();
-        void console(std::string& text) throw();
+        void console(const std::string& text) throw();
         void console(std::ostringstream& stream) throw();
 
         void error(const char* text) throw();
-        void error(std::string& text) throw();
+        void error(const std::string& text) throw();
         void error(std::ostringstream& stream) throw();
 
         void alarm(const char* text) throw();
-        void alarm(std::string& text) throw();
+        void alarm(const std::string& text) throw();
         void alarm(std::ostringstream& stream) throw();
 
         void always(const char* text) throw();
-        void always(std::string& text) throw();
+        void always(const std::string& text) throw();
         void always(std::ostringstream& stream) throw();
 
         void buffer(const char* text) throw();
-        void buffer(std::string& text) throw();
+        void buffer(const std::string& text) throw();
         void buffer(std::ostringstream& stream) throw();
 
         void info(const char* text) throw();
-        void info(std::string& text) throw();
+        void info(const std::string& text) throw();
         void info(std::ostringstream& stream) throw();
 
         void trace(const char* text) throw();
-        void trace(std::string& text) throw();
+        void trace(const std::string& text) throw();
         void trace(std::ostringstream& stream) throw();
 
         void debug(const char* text) throw();
-        void debug(std::string& text) throw();
+        void debug(const std::string& text) throw();
         void debug(std::ostringstream& stream) throw();
 
         void updateLogLevel(LogLevel logLevel);
