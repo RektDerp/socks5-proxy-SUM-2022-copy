@@ -235,7 +235,19 @@ bool socks5_impl::checkMethod()
 	_session->readBytes(methods, ec);
 	if (checkError(ec))
 		return false;
-	return std::find(methods.begin(), methods.end(), getServerMethod()) != methods.end();
+
+	if (std::find(methods.begin(), methods.end(), getServerMethod()) == methods.end()) {
+		std::ostringstream tmp;
+		tmp << "No method acceptable: ";
+		for (auto it = methods.begin(); it != methods.end(); it++) {
+			tmp << (int)*it << " ";
+		}
+		tmp << "Acceptable method is: " << (int) getServerMethod() << std::endl;
+		LOG_ERROR(tmp);
+		return false;
+	}
+
+	return true;
 }
 
 bool socks5_impl::sendMethodResponse(METHOD method)

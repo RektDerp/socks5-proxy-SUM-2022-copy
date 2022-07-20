@@ -33,8 +33,6 @@ int main(int argc, char **argv)
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
 	
-	
-	
 	config->dumpFileValues();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
