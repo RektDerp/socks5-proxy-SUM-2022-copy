@@ -412,15 +412,14 @@ void Logger::configure()
         else if (logLevel_str == "LOG_LEVEL_DEBUG" || logLevel_str == "5")
             logLevel = LOG_LEVEL_DEBUG;
 
-        else if (logLevel_str == "DISABLE_LOG" || logLevel_str == "6")
+        else if (logLevel_str == "DISABLE_LOG" || logLevel_str == "0")
             logLevel = DISABLE_LOG;
 
         else
-            logLevel = LOG_LEVEL_TRACE;
+            logLevel = ENABLE_LOG;
     }
-
     else
-        logLevel = LOG_LEVEL_TRACE;
+        logLevel = ENABLE_LOG;
 
     if (config->getValue("log_type", logType_str))
     {
@@ -441,3 +440,5 @@ void Logger::configure()
     m_LogType = logType;
 
 }
+
+
