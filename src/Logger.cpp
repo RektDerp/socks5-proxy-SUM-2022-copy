@@ -71,7 +71,7 @@ void Logger::console(const char* text) throw()
     }
 }
 
-void Logger::console(std::string& text) throw()
+void Logger::console(const std::string& text) throw()
 {
     console(text.data());
 }
@@ -148,7 +148,7 @@ void Logger::error(const char* text) throw()
     }
 }
 
-void Logger::error(std::string& text) throw()
+void Logger::error(const std::string& text) throw()
 {
     error(text.data());
 }
@@ -180,7 +180,7 @@ void Logger::alarm(const char* text) throw()
     }
 }
 
-void Logger::alarm(std::string& text) throw()
+void Logger::alarm(const std::string& text) throw()
 {
     alarm(text.data());
 }
@@ -212,7 +212,7 @@ void Logger::always(const char* text) throw()
     }
 }
 
-void Logger::always(std::string& text) throw()
+void Logger::always(const std::string& text) throw()
 {
     always(text.data());
 }
@@ -244,7 +244,7 @@ void Logger::buffer(const char* text) throw()
     }
 }
 
-void Logger::buffer(std::string& text) throw()
+void Logger::buffer(const std::string& text) throw()
 {
     buffer(text.data());
 }
@@ -276,7 +276,7 @@ void Logger::info(const char* text) throw()
     }
 }
 
-void Logger::info(std::string& text) throw()
+void Logger::info(const std::string& text) throw()
 {
     info(text.data());
 }
@@ -308,7 +308,7 @@ void Logger::trace(const char* text) throw()
     }
 }
 
-void Logger::trace(std::string& text) throw()
+void Logger::trace(const std::string& text) throw()
 {
     trace(text.data());
 }
@@ -340,7 +340,7 @@ void Logger::debug(const char* text) throw()
     }
 }
 
-void Logger::debug(std::string& text) throw()
+void Logger::debug(const std::string& text) throw()
 {
     debug(text.data());
 }
