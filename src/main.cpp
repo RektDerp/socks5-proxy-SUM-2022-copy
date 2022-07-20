@@ -28,13 +28,7 @@ int main(int argc, char **argv)
 	int port = 1080;
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
-	if(argc < 2) {
-		std::cout << "No config file specified, using default: " << defaultConfigPath << std::endl;
-		LogConfigReader::configFilePath = defaultConfigPath;
-	}
-	else{
-		LogConfigReader::configFilePath = argv[1];
-	}
+	LogConfigReader::configFilePath = defaultConfigPath;
 	LogConfigReader* config = LogConfigReader::getInstance();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);

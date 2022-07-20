@@ -86,11 +86,11 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-		{
-			std::ostringstream tmp;
-			tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
-			LOG_ERROR(tmp);
-		}
+	{
+		std::ostringstream tmp;
+		tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
+		LOG_ERROR(tmp);
+	}
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);

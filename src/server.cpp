@@ -10,12 +10,14 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t b
 	_sessions(0),
 	_maxSessions(maxSessions)
 {
-	std::cout << "[server] =============================================\n"
+	std::ostringstream tmp;
+	tmp << "[server] =============================================\n"
 		<< "[server] Staring proxy server with given parameters:\n"
 		<< "[server] port: " << port << std::endl
 		<< "[server] buffer size (per connection): " << bufferSizeKB << " KB" << std::endl
 		<< "[server] max sessions: " << maxSessions
 		<< "\n[server] =============================================\n";
+	LOG_INFO(tmp);
 	start_accept();
 }
 
