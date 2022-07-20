@@ -1,6 +1,7 @@
 #include "stat_db_service.h"
 #include "stat_handlers.h"
 #include "string_utils.h"
+#include "Logger.h"
 #include <sqlite3.h>
 #include <iostream>
 #include <string.h>
@@ -25,6 +26,9 @@ namespace proxy { namespace stat {
 	void db_service::createDB()
 	{
 		db_connection db(_db_path);
+		std::ostringstream tmp;
+		tmp << "Database created Successfully" << endl;
+		LOG_TRACE(tmp);
 	}
 
 	void db_service::createTable()
@@ -37,8 +41,11 @@ namespace proxy { namespace stat {
 			sqlite3_free(messageError);
 			throw ex;
 		}
-		else
-			cout << "Table created Successfully" << endl;
+		else {
+			std::ostringstream tmp;
+			tmp << "Table created Successfully" << endl;
+			LOG_TRACE(tmp);
+		}
 	}
 
 	long long db_service::create(const session s)
@@ -69,7 +76,9 @@ namespace proxy { namespace stat {
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
-		cout << "Created session with id " << id << endl;
+		std::ostringstream tmp;
+		tmp << "Created session with id " << endl;
+		LOG_TRACE(tmp);
 		return id;
 	}
 	
