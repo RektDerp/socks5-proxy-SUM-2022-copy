@@ -4,12 +4,13 @@
 #include "sessionmodel.h"
 #include <QSortFilterProxyModel>
 #include <QObject>
+#include <QDate>
 
 class SortFilterSessionModel : public QSortFilterProxyModel
 {
     Q_OBJECT
     Q_PROPERTY(SessionModel* sessionModel READ sessionModel CONSTANT)
-    Q_PROPERTY(QString filterText READ filterText WRITE setFilterText NOTIFY filterTextChanged)
+    Q_PROPERTY(QString userFilter READ userFilter WRITE setUserFilter CONSTANT)
     Q_CLASSINFO("DefaultProperty", "data")
 public:
     explicit SortFilterSessionModel(QObject *parent = nullptr);
@@ -17,10 +18,7 @@ public:
     SessionModel* sessionModel() {
         return &_sessionModel;
     }
-    QString filterText() {
-        return _filterText;
-    }
-    void setFilterText(QString filterText);
+
     Q_INVOKABLE void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
     Q_INVOKABLE int columnWidth(int c, const QFont* font = nullptr);
     Q_INVOKABLE int tableWidth(const QFont* font = nullptr);
@@ -28,11 +26,19 @@ public:
 
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const override;
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const override;
-signals:
-    void filterTextChanged(QString filterText);
+
+    // filters
+    void setUserFilter(QString filterText);
+    QString userFilter() {
+        return _userFilter;
+    }
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const  override;
 private:
     SessionModel _sessionModel;
-    QString _filterText;
+    // filters
+    QString _userFilter;
+    QDate _createDateFilter;
 };
 
 #endif // _SORT_FILTER_SESSION_MODEL_H_

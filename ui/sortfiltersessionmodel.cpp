@@ -7,16 +7,6 @@ SortFilterSessionModel::SortFilterSessionModel(QObject *parent)
     setSourceModel(&_sessionModel);
 }
 
-void SortFilterSessionModel::setFilterText(QString filterText)
-{
-    if (_filterText == filterText) {
-        return;
-    }
-    _filterText = filterText;
-    setFilterRegularExpression(filterText);
-    emit filterTextChanged(_filterText);
-}
-
 void SortFilterSessionModel::sort(int column, Qt::SortOrder order)
 {
     QSortFilterProxyModel::sort(column, order);
@@ -47,4 +37,19 @@ QModelIndex SortFilterSessionModel::mapFromSource(const QModelIndex &sourceIndex
 QModelIndex SortFilterSessionModel::mapToSource(const QModelIndex &proxyIndex) const
 {
     return QSortFilterProxyModel::mapToSource(proxyIndex);
+}
+
+void SortFilterSessionModel::setUserFilter(QString filterText)
+{
+    if (_userFilter == filterText) {
+        return;
+    }
+    _userFilter = filterText;
+    invalidateFilter();
+}
+
+bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const {
+    QModelIndex userIndex = sourceModel()->index(sourceRow, 0, sourceParent);
+    QString username = sourceModel()->data(userIndex).toString();
+    return username.contains(_userFilter);
 }

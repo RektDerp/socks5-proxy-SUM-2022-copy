@@ -6,7 +6,7 @@ TableView {
     id: table
     property alias updateInterval: timer.interval
     property alias updateEnabled: timer.running
-    property alias filterText: tableModel.filterText
+    property alias userFilter: tableModel.userFilter
     columnSpacing: 4; rowSpacing: 4
     model: SortFilterSessionModel { id: tableModel }
 

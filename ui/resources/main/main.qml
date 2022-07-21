@@ -73,7 +73,7 @@ Window {
             anchors.topMargin: header.height
             updateInterval: sbUpdate.value * 1000
             updateEnabled: cbUpdate.checked
-            filterText: userFilter.text
+            userFilter: userFilter.text
             columnWidthProvider: function(column) { return repeater.itemAt(column).width }
         }
 
@@ -95,7 +95,6 @@ Window {
                         id: userFilter
                         placeholderText : qsTr("User")
                         width: adaptiveColumnWidth(0)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
 
@@ -104,7 +103,6 @@ Window {
                         defaultText: "Create date"
                         width: adaptiveColumnWidth(1)
                         implicitHeight: 20
-                        //onTextEdited: table.contentY = 0 todo
                     }
 
                     CalendarSpoiler {
@@ -112,7 +110,6 @@ Window {
                         defaultText: "Update date"
                         width: adaptiveColumnWidth(2)
                         implicitHeight: 20
-                        //onTextEdited: table.contentY = 0 todo
                     }
 
                     TextField {
