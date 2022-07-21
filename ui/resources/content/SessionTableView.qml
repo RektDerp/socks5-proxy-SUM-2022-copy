@@ -11,9 +11,19 @@ TableView {
     property alias updateDateFilter: tableModel.updateDateFilter
     property alias fromDateFilter: tableModel.fromDateFilter
     property alias toDateFilter: tableModel.toDateFilter
+    property alias isActiveFilter: tableModel.isActiveFilter
+    property alias srcEndpointFilter: tableModel.srcEndpointFilter
+    property alias dstEndpointFilter: tableModel.dstEndpointFilter
+    property alias bytesSentFilter: tableModel.bytesSentFilter
+    property alias bytesRecvFilter: tableModel.bytesRecvFilter
 
     columnSpacing: 4; rowSpacing: 4
-    model: SortFilterSessionModel { id: tableModel }
+    model: SortFilterSessionModel {
+        id: tableModel
+        onFilterChanged: {
+            table.contentY = 0
+        }
+    }
 
     Timer {
         id: timer

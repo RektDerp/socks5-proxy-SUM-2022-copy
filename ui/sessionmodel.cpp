@@ -62,12 +62,6 @@ QVariant SessionModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
-    case Qt::InitialSortOrderRole: {
-        if (field >= F_BYTES_SENT) {
-            return Qt::DescendingOrder;
-        }
-        return Qt::AscendingOrder;
-    }
     default:
         return QVariant();
     }

@@ -56,6 +56,7 @@ Window {
                     text: table.model.sessionModel.headerData(index, Qt.Horizontal)
                     initialSortOrder: table.model.initialSortOrder(index)
                     onSorting: {
+                        table.contentY = 0
                         for (var i = 0; i < repeater.model; ++i) {
                             if (i != index)
                                 repeater.itemAt(i).stopSorting()
@@ -110,7 +111,6 @@ Window {
                         onDateChanged: {
                             table.createDateFilter = selectedDate
                         }
-
                         onClear: {
                             table.createDateFilter = new Date(0,0,0)
                         }
@@ -137,6 +137,9 @@ Window {
                         width: adaptiveColumnWidth(3)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
+                        onTextChanged: {
+                            table.isActiveFilter = text
+                        }
                     }
 
                     TextField {
@@ -145,6 +148,9 @@ Window {
                         width: adaptiveColumnWidth(4)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
+                        onTextChanged: {
+                            table.srcEndpointFilter = text
+                        }
                     }
 
                     TextField {
@@ -153,6 +159,9 @@ Window {
                         width: adaptiveColumnWidth(5)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
+                        onTextChanged: {
+                            table.dstEndpointFilter = text
+                        }
                     }
 
                     TextField {
@@ -161,6 +170,9 @@ Window {
                         width: adaptiveColumnWidth(6)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
+                        onTextChanged: {
+                            table.bytesSentFilter = text.length > 0 ? text : "-1"
+                        }
                     }
                     TextField {
                         id: receivedFilter
@@ -168,6 +180,9 @@ Window {
                         width: adaptiveColumnWidth(7)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
+                        onTextChanged: {
+                            table.bytesRecvFilter = text.length > 0 ? text : "-1"
+                        }
                     }
                 }
 

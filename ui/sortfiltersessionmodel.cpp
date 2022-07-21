@@ -2,7 +2,9 @@
 #include "session.h"
 
 SortFilterSessionModel::SortFilterSessionModel(QObject *parent)
-    : QSortFilterProxyModel{parent}
+    : QSortFilterProxyModel{parent},
+      _bytesSentFilter(-1),
+      _bytesRecvFilter(-1)
 {
     setSourceModel(&_sessionModel);
 }
@@ -24,9 +26,14 @@ int SortFilterSessionModel::tableWidth(const QFont *font)
 
 Qt::SortOrder SortFilterSessionModel::initialSortOrder(int column) const
 {
-    if (column >= F_BYTES_SENT)
+    switch (column) {
+    case F_USER:
+    case F_SRC_ENDPOINT:
+    case F_DST_ENDPOINT:
+        return Qt::AscendingOrder;
+    default:
         return Qt::DescendingOrder;
-    return Qt::AscendingOrder;
+    }
 }
 
 QModelIndex SortFilterSessionModel::mapFromSource(const QModelIndex &sourceIndex) const
@@ -46,6 +53,7 @@ void SortFilterSessionModel::setUserFilter(QString filterText)
     }
     _userFilter = filterText;
     invalidateFilter();
+    emit filterChanged();
 }
 
 void SortFilterSessionModel::setCreateDateFilter(QDate createDate)
@@ -58,6 +66,7 @@ void SortFilterSessionModel::setCreateDateFilter(QDate createDate)
     }
     _createDateFilter = createDate;
     invalidateFilter();
+    emit filterChanged();
 }
 
 void SortFilterSessionModel::setUpdateDateFilter(QDate updateDate)
@@ -70,6 +79,7 @@ void SortFilterSessionModel::setUpdateDateFilter(QDate updateDate)
     }
     _updateDateFilter = updateDate;
     invalidateFilter();
+    emit filterChanged();
 }
 
 void SortFilterSessionModel::setFromDateFilter(QDate fromDate)
@@ -82,6 +92,7 @@ void SortFilterSessionModel::setFromDateFilter(QDate fromDate)
     }
     _fromDateFilter = fromDate;
     invalidateFilter();
+    emit filterChanged();
 }
 
 void SortFilterSessionModel::setToDateFilter(QDate toDate)
@@ -94,6 +105,57 @@ void SortFilterSessionModel::setToDateFilter(QDate toDate)
     }
     _toDateFilter = toDate;
     invalidateFilter();
+    emit filterChanged();
+}
+
+void SortFilterSessionModel::setIsActiveFilter(QString isActive)
+{
+    if (_isActiveFilter == isActive) {
+        return;
+    }
+    _isActiveFilter = isActive;
+    invalidateFilter();
+    emit filterChanged();
+}
+
+void SortFilterSessionModel::setSrcEndpointFilter(QString srcEndpoint)
+{
+    if (_srcEndpointFilter == srcEndpoint) {
+        return;
+    }
+    _srcEndpointFilter = srcEndpoint;
+    invalidateFilter();
+    emit filterChanged();
+}
+
+void SortFilterSessionModel::setDstEndpointFilter(QString dstEndpoint)
+{
+    if (_dstEndpointFilter == dstEndpoint) {
+        return;
+    }
+    _dstEndpointFilter = dstEndpoint;
+    invalidateFilter();
+    emit filterChanged();
+}
+
+void SortFilterSessionModel::setBytesSentFilter(int bytesSent)
+{
+    if (_bytesSentFilter == bytesSent) {
+        return;
+    }
+    _bytesSentFilter = bytesSent;
+    invalidateFilter();
+    emit filterChanged();
+}
+
+void SortFilterSessionModel::setBytesRecvFilter(int bytesRecv)
+{
+    if (_bytesRecvFilter == bytesRecv) {
+        return;
+    }
+    _bytesRecvFilter = bytesRecv;
+    invalidateFilter();
+    emit filterChanged();
 }
 
 bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const {
@@ -104,10 +166,24 @@ bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& 
     QDate createDate = sourceModel()->data(createDateIndex).toDate();
     QModelIndex updateDateIndex = sourceModel()->index(sourceRow, index++, sourceParent);
     QDate updateDate = sourceModel()->data(updateDateIndex).toDate();
+    QModelIndex isActiveIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    QString isActive = sourceModel()->data(isActiveIndex).toString();
+    QModelIndex srcEndpointIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    QString srcEndpoint = sourceModel()->data(srcEndpointIndex).toString();
+    QModelIndex dstEndpointIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    QString dstEndpoint = sourceModel()->data(dstEndpointIndex).toString();
+    QModelIndex bytesSentIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    int bytesSent = sourceModel()->data(bytesSentIndex).toInt();
+    QModelIndex bytesRecvIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    int bytesRecv = sourceModel()->data(bytesRecvIndex).toInt();
     return username.contains(_userFilter)
             && (!_createDateFilter.isValid() || createDate == _createDateFilter)
             && (!_updateDateFilter.isValid() || updateDate == _updateDateFilter)
             && (!_fromDateFilter.isValid()   || updateDate >= _fromDateFilter)
-            && (!_toDateFilter.isValid()   || updateDate <= _toDateFilter);
-
+            && (!_toDateFilter.isValid()   || updateDate <= _toDateFilter)
+            && isActive.contains(_isActiveFilter)
+            && srcEndpoint.contains(_srcEndpointFilter)
+            && dstEndpoint.contains(_dstEndpointFilter)
+            && (_bytesSentFilter == -1 || bytesSent == _bytesSentFilter)
+            && (_bytesRecvFilter == -1 || bytesRecv == _bytesRecvFilter);
 }
