@@ -137,6 +137,11 @@
             ss << std::forward<T>(message);
             return *this;
         }
+        BUFF& operator<<(std::ostream& (*os)(std::ostream&))
+        {
+            ss << os;
+            return *this;
+        }
         ~BUFF();
     };
 
