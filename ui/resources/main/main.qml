@@ -4,80 +4,77 @@ import QtQuick.Layouts
 import SortFilterSessionModel 0.1
 import "../content"
 
-ApplicationWindow {
+Window {
+    id: window
     title: qsTr("Proxy Statistics")
-    width: 750; height: 480; visible: true
+    width: table.model.tableWidth() + scrollBarWidth + 2 * sideMargin + 4 * (table.model.columnCount() - 1);
+    height: 480; visible: true
     property int sideMargin: 10
-    color: "white"
-    ColumnLayout {
+    property int scrollBarWidth: 20
+
+    Column {
         anchors.fill: parent
         anchors.leftMargin: sideMargin
         anchors.rightMargin: sideMargin
         spacing: sideMargin
 
-
-        Rectangle {
-            Layout.preferredHeight: 30
-            width: parent.width
-
-            RowLayout {
-                Switch {
-                    id: cbUpdate
-                    checked: true
-                    text: qsTr("Update every")
-                }
-                SpinBox {
-                    id: sbUpdate
-                    from: 1
-                    to: 60
-                    value: 2
-                    enabled: cbUpdate.checked
-                }
-                Label {
-                    text: "sec"
-                }
+        RowLayout {
+            height: 30
+            Switch {
+                id: cbUpdate
+                checked: true
+                text: qsTr("Update every")
+            }
+            SpinBox {
+                id: sbUpdate
+                from: 1
+                to: 60
+                value: 2
+                enabled: cbUpdate.checked
+            }
+            Label {
+                text: "sec"
             }
         }
 
-        Rectangle {
-            Layout.preferredHeight: parent.height - 230
-            width: parent.width
 
-            Row {
-                id: header
-                width: table.contentWidth
-                height: 25
-                x: -table.contentX
-                z: 1
-                spacing: 4
-                Repeater {
-                    id: repeater
-                    model: table.model.columnCount()
-                    SortableColumnHeading {
-                        id: heading
-                        width: table.model.columnWidth(index); height: parent.height
-                        text: table.model.sessionModel.headerData(index, Qt.Horizontal)
-                        initialSortOrder: table.model.initialSortOrder(index)
-                        onSorting: {
-                            for (var i = 0; i < repeater.model; ++i) {
-                                if (i != index)
-                                    repeater.itemAt(i).stopSorting()
-                                table.model.sort(index, state == "up" ? Qt.AscendingOrder : Qt.DescendingOrder)
-                            }
+        Row {
+            id: header
+            width: parent.width - scrollBarWidth - 2 * sideMargin
+            height: 25
+            x: -table.contentX
+            z: 1
+            spacing: 4
+
+            Repeater {
+                id: repeater
+                model: table.model.columnCount()
+                SortableColumnHeading {
+                    id: heading
+                    width: adaptiveColumnWidth(index)
+                    height: parent.height
+                    text: table.model.sessionModel.headerData(index, Qt.Horizontal)
+                    initialSortOrder: table.model.initialSortOrder(index)
+                    onSorting: {
+                        for (var i = 0; i < repeater.model; ++i) {
+                            if (i != index)
+                                repeater.itemAt(i).stopSorting()
+                            table.model.sort(index, state == "up" ? Qt.AscendingOrder : Qt.DescendingOrder)
                         }
                     }
                 }
             }
+        }
 
-            SessionTableView {
-                id: table
-                anchors.fill: parent
-                anchors.topMargin: header.height
-                updateInterval: sbUpdate.value * 1000
-                updateEnabled: cbUpdate.checked
-                filterText: userFilter.text
-                columnWidthProvider: function(column) { return repeater.itemAt(column).width }
-            }
+        SessionTableView {
+            id: table
+            width: parent.width
+            height: parent.height / 2
+            anchors.topMargin: header.height
+            updateInterval: sbUpdate.value * 1000
+            updateEnabled: cbUpdate.checked
+            filterText: userFilter.text
+            columnWidthProvider: function(column) { return repeater.itemAt(column).width }
         }
 
         Rectangle {
@@ -94,11 +91,10 @@ ApplicationWindow {
                 Row {
                     spacing: 4
 
-
                     TextField {
                         id: userFilter
                         placeholderText : qsTr("User")
-                        implicitWidth: table.model.columnWidth(0)
+                        width: adaptiveColumnWidth(0)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
@@ -106,7 +102,7 @@ ApplicationWindow {
                     CalendarSpoiler {
                         id: createFilter
                         defaultText: "Create date"
-                        implicitWidth: table.model.columnWidth(1)
+                        width: adaptiveColumnWidth(1)
                         implicitHeight: 20
                         //onTextEdited: table.contentY = 0 todo
                     }
@@ -114,7 +110,7 @@ ApplicationWindow {
                     CalendarSpoiler {
                         id: updateFilter
                         defaultText: "Update date"
-                        implicitWidth: table.model.columnWidth(2)
+                        width: adaptiveColumnWidth(2)
                         implicitHeight: 20
                         //onTextEdited: table.contentY = 0 todo
                     }
@@ -122,7 +118,7 @@ ApplicationWindow {
                     TextField {
                         id: activeFilter
                         placeholderText : qsTr("Active")
-                        implicitWidth: table.model.columnWidth(3)
+                        width: adaptiveColumnWidth(3)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
@@ -130,7 +126,7 @@ ApplicationWindow {
                     TextField {
                         id: srcFilter
                         placeholderText : qsTr("Source")
-                        implicitWidth: table.model.columnWidth(4)
+                        width: adaptiveColumnWidth(4)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
@@ -138,7 +134,7 @@ ApplicationWindow {
                     TextField {
                         id: dstFilter
                         placeholderText : qsTr("Destination")
-                        implicitWidth: table.model.columnWidth(5)
+                        width: adaptiveColumnWidth(5)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
@@ -146,14 +142,14 @@ ApplicationWindow {
                     TextField {
                         id: sentFilter
                         placeholderText : qsTr("Sent bytes")
-                        implicitWidth: table.model.columnWidth(6)
+                        width: adaptiveColumnWidth(6)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
                     TextField {
                         id: receivedFilter
                         placeholderText : qsTr("Receive bytes")
-                        implicitWidth: table.model.columnWidth(7)
+                        width: adaptiveColumnWidth(7)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                     }
@@ -176,5 +172,9 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    function adaptiveColumnWidth(column) {
+        return Math.max(table.model.columnWidth(column), table.model.columnWidth(column) / table.model.tableWidth() * header.width);
     }
 }

@@ -32,6 +32,7 @@ public:
                         int role = Qt::DisplayRole) const override;
 
     Q_INVOKABLE int columnWidth(int c, const QFont *font = nullptr);
+    Q_INVOKABLE int tableWidth(const QFont *font = nullptr);
     Q_INVOKABLE void update();
 
 private:
