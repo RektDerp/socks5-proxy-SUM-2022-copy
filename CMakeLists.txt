@@ -1,103 +1,55 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 project(socks5-proxy)
 set (CMAKE_CXX_STANDARD 11)
 set (libraries)
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(servicedir ${CMAKE_CURRENT_SOURCE_DIR}/service/windows)
 set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
-set(LINK_DIRECTORIES ${libdir})
-link_directories(${LINK_DIRECTORIES})
-#set(CMAKE_VERBOSE_MAKEFILE ON)
 
-###############################################################################################################
-set(executable "main")
+##########################################################################
 
 set(modules
-"LogConfigReader.cpp"
-"Logger.cpp"
-"session.cpp"
-"server.cpp"
-"sock5_impl.cpp"
-"stat_db_service.cpp"
-"sqlite3"
+"${sourcedir}/LogConfigReader.cpp:"
+"${sourcedir}/Logger.cpp:LogConfigReader"
+"${sourcedir}/session.cpp:Logger sock5_impl"
+"${sourcedir}/server.cpp: session"
+"${sourcedir}/sock5_impl.cpp:session"
+"${sourcedir}/stat_db_service.cpp:sqlite3"
+"${sourcedir}/stat_handlers.cpp:"
+"${servicedir}/service.cpp:"
 )
 
-set(module_dependencies
-""
-"LogConfigReader"
-"Logger sock5_impl"
-"session"
-"session"
-"sqlite3"
-""
+set(executables
+"main:${sourcedir}/main.cpp"
+"LogConfigReader Logger session sock5_impl server sock5_impl stat_db_service sqlite3:STATIC"
+
+"service:${servicedir}/main.cpp"
+"service"
 )
 
-###############################################################################################################
+##########################################################################
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-  message("Build for windows on unix")
-  include_directories(/usr/x86_64-w64-mingw32/include/)
-  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
-  link_directories(${LINK_DIRECTORIES})
-
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-  set(LINK_DIRECTORIES ${libdir}/dll)
-  link_directories(${LINK_DIRECTORIES})
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
-  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
-  add_compile_options("-static")
-  list(TRANSFORM module_dependencies APPEND " ws2_32 wsock32" AT 2 3)
-  list(APPEND modules "-static-libgcc" "-static-libstdc++" "ws2_32" "libwinpthread-1")
-  list(APPEND module_dependencies "" "" "" "")
-
-
-
-  add_executable("service" "service/windows/main.cpp")
-  add_library("serviceobj" "service/windows/service.cpp")
-  target_link_libraries("service" "serviceobj")
-  target_link_libraries("service" "-LKernel32.dll")
-  target_link_libraries("service" "-LAdvapi32.dll")
-  target_link_libraries("service" "-static-libgcc")
-  target_link_libraries("service" "-static-libstdc++")
-  target_link_libraries("service" "ws2_32")
-endif()
-
-if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-
-endif()
-
-add_executable(${executable} ${sourcedir}/${executable}.cpp)
-
-foreach (src dependencies IN ZIP_LISTS modules module_dependencies)
-    if(EXISTS ${sourcedir}/${src})
-        string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
-        string(PREPEND src "${sourcedir}/")
-        list(APPEND libraries ${lib})
-        message("\nlib " ${lib}: "\nsrc: " ${src} "\ndependencies:")
-        add_library(${lib} ${src})
-        string(REPLACE " " ";" dependencies "${dependencies}")
-        foreach(dep ${dependencies})
-          message(${dep})
-          if(NOT EXISTS ${sourcedir}/${dep}.cpp)
-            find_library(deppath ${dep} PATHS ${LINK_DIRECTORIES} REQUIRED)
-            message("at " ${deppath})
-          endif()
-          target_link_libraries (${lib} ${dep})
-        endforeach()
-    else()
-        message("\nexternal lib " ${src}:)
-        string(REGEX REPLACE "\.[a-z]+$" "" lib "${src}")
-        find_library(path ${src} PATHS ${LINK_DIRECTORIES} REQUIRED)
-        message(${path})
-        list(APPEND libraries ${src})
+set(i 0)
+foreach (module IN LISTS modules)
+    if (NOT ${module} MATCHES ".*\:.*")
+        message( FATAL_ERROR "module " ${i} ": "  ${module} " has wrong format")
     endif()
+    string(REPLACE ":" ";" module ${module})
+
+    list(GET module 0 path)
+    if (NOT EXISTS ${path})
+        message( FATAL_ERROR "module " ${i} ": "  ${path} " does not exist")
+    endif()
+
+    get_filename_component(name ${path} NAME_WE)
+    message (${name} " OBJECT " ${path})
+    add_library(${name} OBJECT ${path})
+
+
+
+    math(EXPR i "${i} + 1")
 endforeach()
-
-message(${modules})
-
-target_link_libraries(${executable} ${libraries})
