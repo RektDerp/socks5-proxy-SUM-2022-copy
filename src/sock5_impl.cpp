@@ -86,7 +86,7 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-		log("error") << "Wrong credentials: " << _username << ":" << passString << "\n";
+		log(ERROR_LOG) << "Wrong credentials: " << _username << ":" << passString << "\n";
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
@@ -101,7 +101,7 @@ bool socks5_impl::checkError(bs::error_code& ec)
 {
 	if (ec)
 	{
-		log("error") << ec.what() << "\n";
+		log(ERROR_LOG) << ec.what() << "\n";
 		return true;
 	}
 	return false;
@@ -111,7 +111,7 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 {
 #ifdef STAT
 	if (id_ == 0) {
-		log("error") << "id is 0\n";
+		log(ERROR_LOG) << "id is 0\n";
 		return;
 	}
 
@@ -120,7 +120,7 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 		db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 	}
 	catch (const db_exception& er) {
-		log("error") << er.what() << "\n";
+		log(ERROR_LOG) << er.what() << "\n";
 	}
 #endif
 }
@@ -131,10 +131,10 @@ void socks5_impl::close()
 	if (id_ != 0) {
 		try {
 			proxy::stat::db_service::getInstance().close(id_);
-			log("trace") << "Closed session " << id_ << " in database\n";
+			log(TRACE_LOG) << "Closed session " << id_ << " in database\n";
 		}
 		catch (const db_exception& er) {
-			log("error") << er.what() << "\n";
+			log(ERROR_LOG) << er.what() << "\n";
 		}
 		id_ = 0;
 	}
@@ -293,7 +293,7 @@ bool socks5_impl::createRecord()
 		id_ = db_service::getInstance().create(s);
 	}
 	catch (const db_exception& ex) {
-		log("error") << "Database record was not created for session:" << ex.what() << "\n";
+		log(ERROR_LOG) << "Database record was not created for session:" << ex.what() << "\n";
 		return false;
 	}
 #endif
@@ -320,7 +320,7 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		response.push_back(0);
 	}
 	else if (_atyp == IPV6) {
-		log("error") << "IPV6 is not suppored.\n";
+		log(ERROR_LOG) << "IPV6 is not suppored.\n";
 		return false;
 	}
 	response.push_back((bindPort & 0xFF) >> 8);
