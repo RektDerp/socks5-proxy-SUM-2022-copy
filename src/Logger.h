@@ -23,6 +23,19 @@
 #define LOG_TRACE(x)    Logger::getInstance()->trace(x)
 #define LOG_DEBUG(x)    Logger::getInstance()->debug(x)
 
+    typedef enum LOGGED_LEVEL
+    {
+        CONSOLE_LOG,
+        ERROR_LOG,
+        ALARM_LOG,
+        ALWAYS_LOG,
+        INFO_LOG,
+        BUFFER_LOG,
+        TRACE_LOG,
+        DEBUG_LOG
+    } LoggedLevel;
+
+
     typedef enum LOG_LEVEL
     {
         DISABLE_LOG = 0,  
@@ -121,20 +134,25 @@
 
 
     };
-    struct BUFF {
+    class BUFF {
         std::ostringstream ss;
-        std::string type;
+        LoggedLevel type;
         BUFF() = delete;
-        BUFF(const std::string& type);
-        BUFF(std::string&& type);
         BUFF(const BUFF&) = delete;
         BUFF& operator=(const BUFF&) = delete;
         BUFF& operator=(BUFF&&) = delete;
+    public:
+        BUFF(const LoggedLevel type);
         BUFF(BUFF&& buf);
         template <typename T>
         BUFF& operator<<(T&& message)
         {
             ss << std::forward<T>(message);
+            return *this;
+        }
+        BUFF& operator<<(std::ostream& (*os)(std::ostream&))
+        {
+            ss << os;
             return *this;
         }
         ~BUFF();
@@ -149,8 +167,7 @@
         return buff.operator<<(message);
     }
 
-    BUFF log(const std::string& type);
-    BUFF log(std::string&& type);
+    BUFF log(const LoggedLevel type);
 
     
 #endif

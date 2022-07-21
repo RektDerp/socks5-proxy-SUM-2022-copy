@@ -438,15 +438,11 @@ void Logger::configure()
 
 
 
-BUFF log(const std::string& type)
+BUFF log(const LoggedLevel type)
 {
     return BUFF(type);
 }
 
-BUFF log(std::string&& type)
-{
-    return BUFF(std::move(type));
-}
 
 template <typename T>
 BUFF operator<<(Logger& simpleLogger, T&& message)
@@ -456,10 +452,7 @@ BUFF operator<<(Logger& simpleLogger, T&& message)
     return buf;
 }
 
-BUFF::BUFF(const std::string& type) : type(type)
-{
-}
-BUFF::BUFF(std::string&& type) : type(std::move(type))
+BUFF::BUFF(const LoggedLevel type) : type(type)
 {
 }
 
@@ -469,35 +462,35 @@ BUFF::BUFF(BUFF&& buf) : ss(move(buf.ss))
 
 BUFF::~BUFF()
 {
-    if (type == "console")
+    if (type == LoggedLevel::CONSOLE_LOG)
     {
         Logger::getInstance()->console(ss);
     }
-    else if (type == "error")
+    else if (type == LoggedLevel::ERROR_LOG)
     {
         Logger::getInstance()->error(ss);
     }
-    else if (type == "alarm")
+    else if (type == LoggedLevel::ALARM_LOG)
     {
         Logger::getInstance()->alarm(ss);
     }
-    else if (type == "always")
+    else if (type == LoggedLevel::ALWAYS_LOG)
     {
         Logger::getInstance()->always(ss);
     }
-    else if (type == "buffer")
+    else if (type == LoggedLevel::BUFFER_LOG)
     {
         Logger::getInstance()->buffer(ss);
     }
-    else if (type == "info")
+    else if (type == LoggedLevel::INFO_LOG)
     {
         Logger::getInstance()->info(ss);
     }
-    else if (type == "trace")
+    else if (type == LoggedLevel::TRACE_LOG)
     {
         Logger::getInstance()->trace(ss);
     }
-    else if (type == "debug")
+    else if (type == LoggedLevel::DEBUG_LOG)
     {
         Logger::getInstance()->debug(ss);
     }

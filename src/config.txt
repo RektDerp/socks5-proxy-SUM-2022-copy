@@ -1,4 +1,4 @@
-log_level = ENABLE_LOG			#specifying the log level
+log_level = DEBUG_LOG			#specifying the log level
  
 log_type = CONSOLE_LOG			#specifying the log type
 
