@@ -26,26 +26,26 @@ namespace proxy { namespace stat {
 	void db_service::createDB()
 	{
 		db_connection db(_db_path);
-		std::ostringstream tmp;
-		tmp << "Database created Successfully" << endl;
-		LOG_TRACE(tmp);
+		log(TRACE_LOG) << "Database created Successfully\n";
 	}
 
 	void db_service::createTable()
 	{
 		db_connection DB(_db_path);
 		char* messageError;
-		int err = sqlite3_exec(DB, create_table_sql.c_str(), NULL, 0, &messageError);
+		int err = sqlite3_exec(DB, create_table_sql, NULL, 0, &messageError);
 		if (err != SQLITE_OK) {
 			db_exception ex(concat("createTable: error during executing stmt: ", messageError));
 			sqlite3_free(messageError);
 			throw ex;
 		}
-		else {
-			std::ostringstream tmp;
-			tmp << "Table created Successfully" << endl;
-			LOG_TRACE(tmp);
+		err = sqlite3_exec(DB, set_all_inactive, NULL, 0, &messageError);
+		if (err != SQLITE_OK) {
+			db_exception ex(concat("createTable: error during executing stmt: ", messageError));
+			sqlite3_free(messageError);
+			throw ex;
 		}
+		log(TRACE_LOG) << "Table created Successfully\n";
 	}
 
 	long long db_service::create(const session s)
@@ -76,9 +76,7 @@ namespace proxy { namespace stat {
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
-		std::ostringstream tmp;
-		tmp << "Created session with id " << endl;
-		LOG_TRACE(tmp);
+		log(TRACE_LOG) << "Created session with id " << id << "\n";
 		return id;
 	}
 	

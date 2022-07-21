@@ -64,7 +64,7 @@ namespace proxy { namespace stat {
 	};
 
 	namespace {
-		const string create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
+		const char* create_table_sql = "CREATE TABLE IF NOT EXISTS sessions("
 			"id			INTEGER PRIMARY KEY AUTOINCREMENT, "
 			"user		TEXT, "
 			"create_date TEXT DEFAULT(datetime()), "
@@ -84,6 +84,7 @@ namespace proxy { namespace stat {
 		const char* update_sent_bytes = "UPDATE sessions SET update_date = datetime(), bytes_sent = ? WHERE id = ?";
 		const char* update_recv_bytes = "UPDATE sessions SET update_date = datetime(), bytes_recv = ? WHERE id = ?";
 		const char* update_inactive   = "UPDATE sessions SET update_date = datetime(), is_active = 0 WHERE id = ?";
+		const char* set_all_inactive   = "UPDATE sessions SET is_active = 0";
 		const char* select_all = "SELECT * FROM sessions";
 		const char* select_id = "SELECT * FROM sessions WHERE id = ?";
 	}
