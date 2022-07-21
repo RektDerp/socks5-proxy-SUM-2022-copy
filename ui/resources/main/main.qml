@@ -121,6 +121,14 @@ Window {
                         defaultText: "Update date"
                         width: adaptiveColumnWidth(2)
                         implicitHeight: 20
+
+                        onDateChanged: {
+                            table.updateDateFilter = selectedDate
+                        }
+
+                        onClear: {
+                            table.updateDateFilter = new Date(0,0,0)
+                        }
                     }
 
                     TextField {
@@ -168,14 +176,28 @@ Window {
                 }
 
                 Column {
-                    CalendarSpoiler {
-                        id: from
-                        defaultText: "From"
-                    }
+                    Row {
+                        Text {
+                            text: "From: "
+                            height: from.height
+                            verticalAlignment: Text.AlignVCenter
+                        }
 
-                    CalendarSpoiler {
-                        id: to
-                        defaultText: "To"
+                        CalendarSpoiler {
+                            id: from
+                            defaultText: "[Not chosen]"
+                        }
+                    }
+                    Row {
+                        Text {
+                            height: to.height
+                            text: "To: "
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        CalendarSpoiler {
+                            id: to
+                            defaultText: "[Not chosen]"
+                        }
                     }
                 }
             }
