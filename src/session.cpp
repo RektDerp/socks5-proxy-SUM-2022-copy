@@ -22,12 +22,10 @@ session::~session()
 
 void session::start()
 {
+	log("trace") << "IP of connected client: " << client_socket_.remote_endpoint().address() << ":"
+		<< client_socket_.remote_endpoint().port() << "\n";
 	if (impl_->init()) {
-		{
-			std::ostringstream tmp;
-			tmp << "[" << bind_port_ << "] Starting session...\n";
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "[" << bind_port_ << "] Starting session...\n";
 		client_read();
 		server_read();
 	}
@@ -53,12 +51,8 @@ void session::writeBytes(const bvec& bytes, bs::error_code& ec)
 
 unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec)
 {
-	{
-		std::ostringstream tmp;
-		tmp << "[session] connecting to destination server..." << " at address : "
-		<< query.host_name() << " " << query.service_name() << std::endl;
-		LOG_TRACE(tmp);
-	}
+	log("trace") << "[session] connecting to destination server..." << " at address : "
+		<< query.host_name() << " " << query.service_name() << "\n";
 	using namespace ba::ip;
 	tcp::resolver resolver(io_context_);
 	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
@@ -71,11 +65,7 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 	}
 	if (ec) return 0;
 	bind_port_ = server_socket_.local_endpoint().port();
-	{
-		std::ostringstream tmp;
-		tmp << "[session] server connected on local port " << bind_port_ << std::endl;
-		LOG_TRACE(tmp);
-	}
+	log("trace") << "[session] server connected on local port " << bind_port_ << "\n";
 	return bind_port_;
 }
 
@@ -88,14 +78,9 @@ void session::client_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		{
-			std::ostringstream tmp;
-			tmp << "["
-				<< bind_port_
-				<< "] " << " Stopped reading - client socket is closed."
-				<< std::endl;
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "["
+			<< bind_port_
+			<< "] Stopped reading - client socket is closed.\n";
 	}
 }
 
@@ -108,14 +93,9 @@ void session::server_read()
 				boost::asio::placeholders::bytes_transferred));
 	}
 	else {
-		{
-			std::ostringstream tmp;
-			tmp << "["
-				<< bind_port_
-				<< "] Stopped reading - server socket is closed."
-				<< std::endl;
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "["
+			<< bind_port_
+			<< "] Stopped reading - server socket is closed.\n";
 	}
 }
 
@@ -123,23 +103,15 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << "[" << bind_port_ << "] Client EOF." << std::endl;
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "[" << bind_port_ << "] Client EOF.\n";
 		return;
 	}
 	else if (error.value() > 0)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << "["
-				<< bind_port_
-				<< "] " << "error occured while reading client: "
-				<< error.what() << std::endl;;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "["
+			<< bind_port_
+			<< "] " << "error occured while reading client: "
+			<< error.what() << "\n";
 		return;
 	}
 	
@@ -151,12 +123,7 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 		}
 	}
 	else {
-		{
-			std::ostringstream tmp;
-			tmp << bind_port_
-				<< "no bytes transferred, closing connection...\n";
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "[" << bind_port_ << "] no bytes transferred, closing connection...\n";
 	}
 }
 
@@ -164,23 +131,15 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 {
 	if (error.value() == ba::error::eof)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << "[" << bind_port_ << "] Server EOF." << std::endl;
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "[" << bind_port_ << "] Server EOF.\n";
 		return;
 	}
 	else if (error.value() > 0)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << "["
-				<< bind_port_
-				<< "] " << "error occured while reading server: "
-				<< error.what() << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "["
+			<< bind_port_
+			<< "] " << "error occured while reading server: "
+			<< error.what() << "\n";
 		return;
 	}
 
@@ -192,69 +151,42 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 		}
 	}
 	else {
-		{
-			std::ostringstream tmp;
-			tmp << "[" << bind_port_
-				<< "] no bytes transferred...\n";
-			LOG_TRACE(tmp);
-		}
+		log("trace") << "[" << bind_port_ << "] no bytes transferred...\n";
 	}
 }
 
 bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
-	{
-		std::ostringstream tmp;
-		tmp << "["
+	log("debug") << "["
 			<< bind_port_
-			<< "] " << "Sending " << len << " bytes to " << target << std::endl;
-		LOG_TRACE(tmp);
-	}
+			<< "] " << "Sending " << len << " bytes to " << target << "\n";
 	bs::error_code ec;
 	ba::write(socket, ba::buffer(buffer, len), ec);
 	if (ec) {
-		std::cerr << "["
-			<< bind_port_
-			<< "] " << ec.what() << std::endl;
-		{
-			std::ostringstream tmp;
-			tmp << "["
-				<< bind_port_
-				<< "] " << ec.what() << std::endl;
-			LOG_TRACE(tmp);
-		}
+		log("error") << "[" << bind_port_ << "] " << ec.what() << "\n";
 		return false;
 	}
-
 	impl_->write_stat(len, isServer);
 	return true;
 }
 
 void session::close()
 {
-	{
-		std::ostringstream tmp;
-		tmp << "[" << bind_port_ << "] Closing sockets..." << std::endl;
-		LOG_TRACE(tmp);
-	}
+	log("debug") << "[" << bind_port_ << "] Closing sockets..." << "\n";
 	try {
 		client_socket_.close();
 	}
 	catch (const bs::system_error& e)
 	{
-
+		log("error") << "[" << bind_port_ << "] Error occurred during closing client socket: " << e.what() << "\n";
 	}
 	try {
 		server_socket_.close();
 	}
 	catch (const bs::system_error& e)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << "[" << bind_port_ << "] Error occurred during closing: " << e.what() << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "[" << bind_port_ << "] Error occurred during closing server socket: " << e.what() << "\n";
 	}
 	impl_->close();
 	_server->_sessions--;

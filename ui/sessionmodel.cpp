@@ -107,8 +107,15 @@ int SessionModel::columnWidth(int c, const QFont *font)
         }
         _columnWidths[c] = ret + 10;
     }
-
     return _columnWidths[c];
+}
+
+int SessionModel::tableWidth(const QFont *font)
+{
+    int sum = 0;
+    for (int c = 0; c < _columnWidths.size(); c++)
+        sum += columnWidth(c, font);
+    return sum;
 }
 
 void SessionModel::update()

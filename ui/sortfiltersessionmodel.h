@@ -23,6 +23,7 @@ public:
     void setFilterText(QString filterText);
     Q_INVOKABLE void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
     Q_INVOKABLE int columnWidth(int c, const QFont* font = nullptr);
+    Q_INVOKABLE int tableWidth(const QFont* font = nullptr);
     Q_INVOKABLE Qt::SortOrder initialSortOrder(int column) const;
 
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const override;

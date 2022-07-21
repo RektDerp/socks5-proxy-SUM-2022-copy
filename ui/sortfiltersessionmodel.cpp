@@ -27,6 +27,11 @@ int SortFilterSessionModel::columnWidth(int c, const QFont *font)
     return _sessionModel.columnWidth(c, font);
 }
 
+int SortFilterSessionModel::tableWidth(const QFont *font)
+{
+    return _sessionModel.tableWidth(font);
+}
+
 Qt::SortOrder SortFilterSessionModel::initialSortOrder(int column) const
 {
     if (column >= F_BYTES_SENT)
