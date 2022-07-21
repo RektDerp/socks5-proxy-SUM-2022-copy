@@ -143,6 +143,12 @@
     template <typename T>
     BUFF operator<<(Logger& simpleLogger, T&& message);
 
+    template <typename T>
+    BUFF& operator<<(BUFF& buff, T& message)
+    {
+        return buff.operator<<(message);
+    }
+
     BUFF log(const std::string& type);
     BUFF log(std::string&& type);
 

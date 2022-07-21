@@ -34,6 +34,7 @@ int main(int argc, char **argv)
 	int maxSessions = 0;
 	
 	config->dumpFileValues();
+	config->dumpUsersValues();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
 	config->getValue("max_sessions", maxSessions);

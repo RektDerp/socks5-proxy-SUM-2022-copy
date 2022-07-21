@@ -86,11 +86,7 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-		{
-			std::ostringstream tmp;
-			tmp << "Wrong credentials: " << _username << ":" << passString << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "Wrong credentials: " << _username << ":" << passString << "\n";
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
@@ -98,18 +94,14 @@ bool socks5_impl::auth()
 	if (checkError(ec)) {
 		return false;
 	}
-	return true;
+	return success;
 }
 
 bool socks5_impl::checkError(bs::error_code& ec)
 {
 	if (ec)
 	{
-		{
-			std::ostringstream tmp;
-			tmp << ec.what() << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << ec.what() << "\n";
 		return true;
 	}
 	return false;
@@ -119,11 +111,7 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 {
 #ifdef STAT
 	if (id_ == 0) {
-		{
-			std::ostringstream tmp;
-			tmp << "id is 0\n";
-			LOG_ERROR(tmp);
-		}
+		log("error") << "id is 0\n";
 		return;
 	}
 
@@ -132,33 +120,21 @@ void socks5_impl::write_stat(size_t bytes, bool isServer)
 		db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 	}
 	catch (const db_exception& er) {
-		{
-			std::ostringstream tmp;
-			tmp << er.what() << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << er.what() << "\n";
 	}
 #endif
 }
 
 void socks5_impl::close()
 {
-	{
-		std::ostringstream tmp;
-		tmp << "Closed session " << id_ << std::endl;
-		LOG_TRACE(tmp);
-	}
 #ifdef STAT
 	if (id_ != 0) {
 		try {
 			proxy::stat::db_service::getInstance().close(id_);
+			log("trace") << "Closed session " << id_ << " in database\n";
 		}
 		catch (const db_exception& er) {
-			{
-				std::ostringstream tmp;
-				tmp << er.what() << std::endl;
-				LOG_ERROR(tmp);
-			}
+			log("error") << er.what() << "\n";
 		}
 		id_ = 0;
 	}
@@ -317,12 +293,7 @@ bool socks5_impl::createRecord()
 		id_ = db_service::getInstance().create(s);
 	}
 	catch (const db_exception& ex) {
-		{
-			std::ostringstream tmp;
-			tmp << "Database record was not created for session." << std::endl
-				<< ex.what() << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "Database record was not created for session:" << ex.what() << "\n";
 		return false;
 	}
 #endif
@@ -349,11 +320,7 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		response.push_back(0);
 	}
 	else if (_atyp == IPV6) {
-		{
-			std::ostringstream tmp;
-			tmp << "IPV6 is not suppored" << std::endl;
-			LOG_ERROR(tmp);
-		}
+		log("error") << "IPV6 is not suppored.\n";
 		return false;
 	}
 	response.push_back((bindPort & 0xFF) >> 8);
