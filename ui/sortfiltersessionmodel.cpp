@@ -48,8 +48,25 @@ void SortFilterSessionModel::setUserFilter(QString filterText)
     invalidateFilter();
 }
 
+void SortFilterSessionModel::setCreateDateFilter(QDate createDate)
+{
+    if (createDate.year() < 1970) {
+        createDate = QDate();
+    }
+    if (_createDateFilter == createDate) {
+        return;
+    }
+    _createDateFilter = createDate;
+    invalidateFilter();
+}
+
 bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const {
-    QModelIndex userIndex = sourceModel()->index(sourceRow, 0, sourceParent);
+    int index = 0;
+    QModelIndex userIndex = sourceModel()->index(sourceRow, index++, sourceParent);
     QString username = sourceModel()->data(userIndex).toString();
-    return username.contains(_userFilter);
+    QModelIndex createDateIndex = sourceModel()->index(sourceRow, index++, sourceParent);
+    QDate createDate = sourceModel()->data(createDateIndex).toDate();
+    //qDebug() << createDate << " , filter: " << _createDateFilter;
+    return username.contains(_userFilter)
+            && (!_createDateFilter.isValid() || createDate == _createDateFilter);
 }

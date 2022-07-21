@@ -5,9 +5,13 @@ ListView {
     id: root
 
  // public
-    function set(date) { // new Date(2019, 10 - 1, 4)
+    function set(date) {
         selectedDate = new Date(date)
-        currentIndex = (selectedDate.getFullYear()) * 12 + selectedDate.getMonth()
+        setPosition(selectedDate)
+    }
+
+    function setPosition(date) {
+        currentIndex = (date.getFullYear()) * 12 + date.getMonth()
         positionViewAtIndex(currentIndex, ListView.Center) // index from month year
     }
 
@@ -104,5 +108,5 @@ ListView {
         }
     }
 
-    Component.onCompleted: set(new Date())
+    Component.onCompleted: setPosition(new Date())
 }

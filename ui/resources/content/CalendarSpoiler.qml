@@ -5,12 +5,20 @@ import "../content/"
 Button {
     property string defaultText: "Choose Date"
     property alias calendarVisible: calendar.visible
+    property alias selectedDate: datePicker.selectedDate
 
     id: button
     text: defaultText
 
     onClicked: {
         calendar.visible = !calendar.visible
+    }
+
+    signal dateChanged;
+    signal clear;
+
+    onDateChanged: {
+        button.text = getDate(selectedDate)
     }
 
     Rectangle {
@@ -54,6 +62,16 @@ Button {
                             datePicker.next()
                         }
                     }
+                    Button {
+                        height: 30
+                        text: "Clear"
+                        onClicked: {
+                            datePicker.set(new Date)
+                            button.text = defaultText
+                            calendar.visible = false
+                            clear()
+                        }
+                    }
                 }
 
                 DatePicker {
@@ -62,12 +80,16 @@ Button {
                     height: 200
                     id: datePicker
                     onClicked: {
-                        button.text = defaultText + ": " + selectedDate
                         calendar.visible = false
+                        dateChanged()
                     }
                 }
             }
         }
+    }
+
+    function getDate(date) {
+       return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
     }
 }
 

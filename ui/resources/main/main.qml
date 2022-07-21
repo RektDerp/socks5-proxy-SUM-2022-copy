@@ -73,8 +73,8 @@ Window {
             anchors.topMargin: header.height
             updateInterval: sbUpdate.value * 1000
             updateEnabled: cbUpdate.checked
-            userFilter: userFilter.text
             columnWidthProvider: function(column) { return repeater.itemAt(column).width }
+            //createDateFilter: createFilter.selectedDate
         }
 
         Rectangle {
@@ -96,6 +96,10 @@ Window {
                         placeholderText : qsTr("User")
                         width: adaptiveColumnWidth(0)
                         implicitHeight: 20
+
+                        onTextChanged: {
+                            table.userFilter = text
+                        }
                     }
 
                     CalendarSpoiler {
@@ -103,6 +107,13 @@ Window {
                         defaultText: "Create date"
                         width: adaptiveColumnWidth(1)
                         implicitHeight: 20
+                        onDateChanged: {
+                            table.createDateFilter = selectedDate
+                        }
+
+                        onClear: {
+                            table.createDateFilter = new Date(0,0,0)
+                        }
                     }
 
                     CalendarSpoiler {
