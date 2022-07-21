@@ -218,17 +218,17 @@ void Logger::always(std::ostringstream& stream) throw()
 
 void Logger::buffer(const char* text) throw()
 {
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
+    if ((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_BUFFER) )
     {
         lock();
         m_File << text << endl;
         unlock();
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
+    else if ((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_BUFFER) )
     {
         cout << text << endl;
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_BUFFER) && m_LogLevel != 0)
+    else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_BUFFER) )
     {
         lock();
         m_File << text << endl;
@@ -254,15 +254,15 @@ void Logger::info(const char* text) throw()
     data.append("[INFO]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
+    if ((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_INFO) )
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
+    else if ((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_INFO) )
     {
         logOnConsole(data);
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_INFO) && m_LogLevel != 0)
+    else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_INFO) )
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -286,15 +286,15 @@ void Logger::trace(const char* text) throw()
     data.append("[TRACE]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
+    if ((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_TRACE) )
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
+    else if ((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_TRACE) )
     {
         logOnConsole(data);
     }
-    else if (m_LogType == ALL_LOG && (m_LogLevel <= LOG_LEVEL_TRACE) && m_LogLevel != 0)
+    else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_TRACE) )
     {
         logOnConsole(data);
         logIntoFile(data);
@@ -318,15 +318,15 @@ void Logger::debug(const char* text) throw()
     data.append("[DEBUG]: ");
     data.append(text);
 
-    if ((m_LogType == FILE_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
+    if ((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_DEBUG) )
     {
         logIntoFile(data);
     }
-    else if ((m_LogType == CONSOLE) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
+    else if ((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_DEBUG) )
     {
         logOnConsole(data);
     }
-    else if ((m_LogType == ALL_LOG) && (m_LogLevel <= LOG_LEVEL_DEBUG) && m_LogLevel != 0)
+    else if ((m_LogType == ALL_LOG) && (m_LogLevel >= LOG_LEVEL_DEBUG) )
     {
         logOnConsole(data);
         logIntoFile(data);
