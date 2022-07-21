@@ -72,6 +72,30 @@ void SortFilterSessionModel::setUpdateDateFilter(QDate updateDate)
     invalidateFilter();
 }
 
+void SortFilterSessionModel::setFromDateFilter(QDate fromDate)
+{
+    if (fromDate.year() < 1970) {
+        fromDate = QDate();
+    }
+    if (_fromDateFilter == fromDate) {
+        return;
+    }
+    _fromDateFilter = fromDate;
+    invalidateFilter();
+}
+
+void SortFilterSessionModel::setToDateFilter(QDate toDate)
+{
+    if (toDate.year() < 1970) {
+        toDate = QDate();
+    }
+    if (_toDateFilter == toDate) {
+        return;
+    }
+    _toDateFilter = toDate;
+    invalidateFilter();
+}
+
 bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const {
     int index = 0;
     QModelIndex userIndex = sourceModel()->index(sourceRow, index++, sourceParent);
@@ -82,5 +106,8 @@ bool SortFilterSessionModel::filterAcceptsRow(int sourceRow, const QModelIndex& 
     QDate updateDate = sourceModel()->data(updateDateIndex).toDate();
     return username.contains(_userFilter)
             && (!_createDateFilter.isValid() || createDate == _createDateFilter)
-            && (!_updateDateFilter.isValid() || updateDate == _updateDateFilter);
+            && (!_updateDateFilter.isValid() || updateDate == _updateDateFilter)
+            && (!_fromDateFilter.isValid()   || updateDate >= _fromDateFilter)
+            && (!_toDateFilter.isValid()   || updateDate <= _toDateFilter);
+
 }

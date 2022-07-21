@@ -13,6 +13,8 @@ class SortFilterSessionModel : public QSortFilterProxyModel
     Q_PROPERTY(QString userFilter READ userFilter WRITE setUserFilter)
     Q_PROPERTY(QDate createDateFilter READ createDateFilter WRITE setCreateDateFilter)
     Q_PROPERTY(QDate updateDateFilter READ updateDateFilter WRITE setUpdateDateFilter)
+    Q_PROPERTY(QDate fromDateFilter READ fromDateFilter WRITE setFromDateFilter)
+    Q_PROPERTY(QDate toDateFilter READ toDateFilter WRITE setToDateFilter)
     Q_CLASSINFO("DefaultProperty", "data")
 public:
     explicit SortFilterSessionModel(QObject *parent = nullptr);
@@ -42,7 +44,14 @@ public:
     QDate updateDateFilter() {
         return _updateDateFilter;
     }
-
+    void setFromDateFilter(QDate fromDate);
+    QDate fromDateFilter() {
+        return _fromDateFilter;
+    }
+    void setToDateFilter(QDate toDate);
+    QDate toDateFilter() {
+        return _toDateFilter;
+    }
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const  override;
 private:
@@ -51,6 +60,8 @@ private:
     QString _userFilter;
     QDate _createDateFilter;
     QDate _updateDateFilter;
+    QDate _fromDateFilter;
+    QDate _toDateFilter;
 };
 
 #endif // _SORT_FILTER_SESSION_MODEL_H_

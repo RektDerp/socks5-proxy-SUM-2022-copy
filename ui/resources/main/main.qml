@@ -186,6 +186,14 @@ Window {
                         CalendarSpoiler {
                             id: from
                             defaultText: "[Not chosen]"
+
+                            onDateChanged: {
+                                table.fromDateFilter = selectedDate
+                            }
+
+                            onClear: {
+                                table.fromDateFilter = new Date(0,0,0)
+                            }
                         }
                     }
                     Row {
@@ -197,6 +205,14 @@ Window {
                         CalendarSpoiler {
                             id: to
                             defaultText: "[Not chosen]"
+
+                            onDateChanged: {
+                                table.toDateFilter = selectedDate
+                            }
+
+                            onClear: {
+                                table.toDateFilter = new Date(0,0,0)
+                            }
                         }
                     }
                 }

@@ -9,6 +9,8 @@ TableView {
     property alias userFilter: tableModel.userFilter
     property alias createDateFilter: tableModel.createDateFilter
     property alias updateDateFilter: tableModel.updateDateFilter
+    property alias fromDateFilter: tableModel.fromDateFilter
+    property alias toDateFilter: tableModel.toDateFilter
 
     columnSpacing: 4; rowSpacing: 4
     model: SortFilterSessionModel { id: tableModel }
