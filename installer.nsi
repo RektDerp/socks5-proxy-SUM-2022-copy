@@ -9,9 +9,9 @@
 !define VERSIONBUILD 1
 
 !define MUI_ICON "installer\install.ico"
-#!define MUI_UNICON "installer\juju.ico"
+#!define MUI_UNICON ""
 !define MUI_HEADERIMAGE
-#!define MUI_HEADERIMAGE_BITMAP "installer\cover.bmp"
+!define MUI_HEADERIMAGE_BITMAP "header.bmp"
 #!define MUI_WELCOMEFINISHPAGE_BITMAP ""
 !define MUI_WELCOMEPAGE_TITLE "${APPNAME} installer"
 !define MUI_WELCOMEPAGE_TEXT "${DESCRIPTION}"
@@ -34,11 +34,8 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
 
-    file "bin\main.exe"
-    file "bin\winservice.exe"
+    file "build\bin\*.*"
     file "config.txt"
-    file "lib\dll\sqlite3.dll"
-    file "lib\dll\libwinpthread-1.dll"
 
     nsExec::Exec '"sc.exe" delete Socks5'
     nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\service.exe"'
@@ -58,7 +55,6 @@ section "uninstall"
     nsExec::Exec '"sc.exe" delete Socks5'
 
     delete "$INSTDIR\*"
-    delete "$INSTDIR\uninstall.exe"
     rmDir $INSTDIR
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
 sectionEnd

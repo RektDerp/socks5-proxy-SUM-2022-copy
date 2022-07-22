@@ -1,29 +1,29 @@
 #!/usr/bin/sh
 
-EXE=socks5-proxy
+EXE=/usr/local/bin/socks5-proxy
+UI=/usr/local/bin/socks5-interface
+ICON=/usr/local/share/icons/socks5-interface.png
+DESKTOP=/usr/local/share/applications/socks5-interface.desktop
 
 if [ "$1" != "-r" ]
 then
-    cat > /usr/lib/systemd/system/socks5-proxy.service << EOM
-[Unit]
-Description=Socks 5 Proxy server
-[Service]
-StandardInput=data
-StandardInputText=quit
-StandardOutput=truncate:/home/derpy/git/socks5-proxy-SUM-2022/log.txt
-ExecStart=/usr/local/bin/$EXE
-[Install]
-WantedBy=multi-user.target
-EOM
-
-    cp -bf bin/main /usr/local/bin/$EXE
-    cp -bf config.txt /etc/socks5-config.txt
+    mkdir -p /usr/local/share/icons
+    cp -f installer/socks5-interface.desktop $DESKTOP
+    cp -f installer/socks5-interface.png $ICON
+    cp -f service/linux/socks5-proxy.service /usr/lib/systemd/system/socks5-proxy.service
+    cp -f build/bin/main $EXE
+    cp -f build/bin/interface $UI
+    cp -f config.txt /etc/socks5-config.txt
     chmod +x /usr/lib/systemd/system/socks5-proxy.service
-    chmod +x /usr/local/bin/$EXE
+    chmod +x $EXE
+    chmod +x $UI
     systemctl daemon-reload
 else
+    rm -f $ICON
+    rm -f $DESKTOP
     rm -f /usr/lib/systemd/system/socks5-proxy.service
-    rm -f /usr/local/bin/$EXE
+    rm -f $EXE
+    rm -f $UI
     rm -f /etc/socks5-config.txt
     systemctl daemon-reload
 fi
