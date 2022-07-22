@@ -55,6 +55,7 @@ Window {
                     height: parent.height
                     text: table.model.sessionModel.headerData(index, Qt.Horizontal)
                     initialSortOrder: table.model.initialSortOrder(index)
+
                     onSorting: {
                         table.contentY = 0
                         for (var i = 0; i < repeater.model; ++i) {
@@ -75,7 +76,6 @@ Window {
             updateInterval: sbUpdate.value * 1000
             updateEnabled: cbUpdate.checked
             columnWidthProvider: function(column) { return repeater.itemAt(column).width }
-            //createDateFilter: createFilter.selectedDate
         }
 
         Rectangle {
@@ -94,7 +94,7 @@ Window {
 
                     TextField {
                         id: userFilter
-                        placeholderText : qsTr("User")
+                        placeholderText : qsTr("Username")
                         width: adaptiveColumnWidth(0)
                         implicitHeight: 20
 
@@ -144,7 +144,7 @@ Window {
 
                     TextField {
                         id: srcFilter
-                        placeholderText : qsTr("Source")
+                        placeholderText : qsTr("Client")
                         width: adaptiveColumnWidth(4)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
@@ -155,7 +155,7 @@ Window {
 
                     TextField {
                         id: dstFilter
-                        placeholderText : qsTr("Destination")
+                        placeholderText : qsTr("Server")
                         width: adaptiveColumnWidth(5)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
@@ -176,7 +176,7 @@ Window {
                     }
                     TextField {
                         id: receivedFilter
-                        placeholderText : qsTr("Receive bytes")
+                        placeholderText : qsTr("Recv bytes")
                         width: adaptiveColumnWidth(7)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20

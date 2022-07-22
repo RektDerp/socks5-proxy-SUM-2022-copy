@@ -11,8 +11,8 @@
 SessionModel::SessionModel(QObject *parent)
     : QAbstractTableModel{parent}
 {
-    _header.append({"user", "create_date", "update_date", "is_active", "src_endpoint",
-                    "dst_endpoint", "bytes_sent", "bytes_recv"});
+    _header.append({"Username", "Create date", "Update date", "Is active?", "Client [ip:port]",
+                    "Server [ip:port]", "Sent bytes", "Recv bytes"});
     _roleNames = QAbstractTableModel::roleNames();
     _roleNames.insert(int(Role::Sort), QByteArray("sort"));
 

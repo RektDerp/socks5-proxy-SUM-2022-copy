@@ -20,7 +20,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-	DBService.h \
 	session.h \
 	sessionmodel.h \
 	sortfiltersessionmodel.h
