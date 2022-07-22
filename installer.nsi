@@ -35,7 +35,7 @@ section "install"
     writeUninstaller "$INSTDIR\uninstall.exe"
 
     file "bin\main.exe"
-    file "bin\service.exe"
+    file "bin\winservice.exe"
     file "config.txt"
     file "lib\dll\sqlite3.dll"
     file "lib\dll\libwinpthread-1.dll"
@@ -57,12 +57,7 @@ sectionEnd
 section "uninstall"
     nsExec::Exec '"sc.exe" delete Socks5'
 
-    delete "$INSTDIR\main.exe"
-    delete "$INSTDIR\service.exe"
-    delete "$INSTDIR\config.txt"
-    delete "$INSTDIR\sqlite3.dll"
-    delete "$INSTDIR\libwinpthread-1.dll"
-    delete "$INSTDIR\*.db"
+    delete "$INSTDIR\*"
     delete "$INSTDIR\uninstall.exe"
     rmDir $INSTDIR
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
