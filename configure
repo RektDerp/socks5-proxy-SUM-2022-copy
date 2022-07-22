@@ -29,7 +29,7 @@ case $1 in
         clean
     ;;
     *)
-        echo "usage: ./configure <linux | windows> <cmake_args>
+        echo "usage: ./configure <linux | windows>
         ./configure clean"
         ;;
 esac

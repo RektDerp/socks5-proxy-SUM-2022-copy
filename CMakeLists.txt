@@ -137,7 +137,9 @@ while(${i} LESS ${len})
     message("wrapped " ${executablepath})
   endif()
   add_executable(${executable} ${executablepath})
-
+  if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    install(TARGETS ${executable} DESTINATION "/usr/local/bin")
+  endif()
   math(EXPR i "${i} + 1")
 
   list(GET executables ${i} libraries)

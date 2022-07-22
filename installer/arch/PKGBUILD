@@ -1,0 +1,25 @@
+# Maintainer: Kyrychuk Anton <youremail@domain.com>
+pkgname='socks5-proxy'
+pkgdesc='Apriorit project'
+pkgver='2.2.8'
+pkgrel=1
+arch=('any')
+url='http://ragalik.tk'
+license=('GPL3')
+depends=('qt6-base' 'boost' 'boost-libs' 'sqlite')
+
+prepare() {
+    cd ${srcdir}/
+    git clone https://github.com/apriorit/socks5-proxy-SUM-2022.git
+}
+
+build() {
+    cd ${srcdir}/socks5-proxy-SUM-2022
+    ./configure
+    cd build
+    make
+}
+package() {
+    cd ${srcdir}/socks5-proxy-SUM-2022
+    env DESTDIR="$pkgdir/" ./install
+}
