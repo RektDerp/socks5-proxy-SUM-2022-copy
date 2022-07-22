@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/main/main.qml</file>
+        <file>resources/content/CalendarSpoiler.qml</file>
+        <file>resources/content/SortableColumnHeading.qml</file>
+        <file>resources/content/DatePicker.qml</file>
+        <file>resources/content/SessionTableView.qml</file>
+    </qresource>
+</RCC>
