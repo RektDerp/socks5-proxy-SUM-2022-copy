@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Socks5 Proxy GUI
+Comment=Apriorit project
+Path=/usr/local/bin
+Exec=socks5-interface
+Icon=socks5-interface
+Terminal=false

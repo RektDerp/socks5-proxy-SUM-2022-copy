@@ -4,6 +4,7 @@
 #include "sessionmodel.h"
 #include "sortfiltersessionmodel.h"
 #include <QFont>
+#include <QString>
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +13,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SortFilterSessionModel>("SortFilterSessionModel", 0, 1, "SortFilterSessionModel");
     qRegisterMetaType<QFont*>("const QFont*");
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/resources/main/main.qml"_qs);
+    const QUrl url(QString("qrc:/resources/main/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

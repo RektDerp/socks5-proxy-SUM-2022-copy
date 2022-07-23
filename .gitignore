@@ -43,6 +43,8 @@ CMakeCache.txt
 ./Makefile
 cmake_install.cmake
 src/CMakeFiles/
+installer/arch/src
+installer/arch/pkg
 
 # logger
 *.log
@@ -56,4 +58,5 @@ src/CMakeFiles/
 *.db*
 
 # Qt
+.qt
 /build*

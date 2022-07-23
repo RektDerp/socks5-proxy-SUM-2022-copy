@@ -13,6 +13,7 @@
 	    SetConsoleOutputCP(1251);\
 	}
 const char defaultConfigPath [] = "config.txt";
+const char defaultDatabasePath [] = R"(./sessions_stat.db)";
 #else
     #define WININIT() {}
 const char defaultConfigPath [] = "/etc/socks5-config.txt";
