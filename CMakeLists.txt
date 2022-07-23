@@ -13,6 +13,14 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+  message("Build for windows on unix")
+  include_directories(/usr/x86_64-w64-mingw32/include/)
+  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
+  link_directories(${LINK_DIRECTORIES})
+  list(APPEND CMAKE_PREFIX_PATH "/media/derpy/C/Qt/6.3.1/mingw_64/")
+endif()
+
 
 ##########################################################################
 find_package(${Qt} COMPONENTS Core Widgets Sql Qml QuickControls2 REQUIRED)
@@ -33,33 +41,26 @@ set(modules
 )
 
 set(executables
-"main:${sourcedir}/main.cpp"
+"main,${sourcedir}/main.cpp"
 "LogConfigReader Logger session sock5_impl server sock5_impl stat_db_service -lsqlite3"
 
-"interface:${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
+"interface,${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
 "sessionmodel sortfiltersessionmodel ${Qt}::Widgets ${Qt}::Core ${Qt}::Qml ${Qt}::QuickControls2"
 )
 
 set(moc "interface" "sessionmodel" "sortfiltersessionmodel")
 ##########################################################################
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-  message("Build for windows on unix")
-  include_directories(/usr/x86_64-w64-mingw32/include/)
-  set(LINK_DIRECTORIES ${libdir}/dll /usr/x86_64-w64-mingw32/lib/ /usr/x86_64-w64-mingw32/bin/)
-  link_directories(${LINK_DIRECTORIES})
-endif()
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   set(LINK_DIRECTORIES ${libdir}/dll)
   link_directories(${LINK_DIRECTORIES})
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")
   SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 
   list(TRANSFORM modules APPEND " ws2_32 wsock32" AT 2 3)
   list(APPEND modules "${servicedir}/service.cpp,")
 
-  list(APPEND executables "winservice:${servicedir}/main.cpp")
+  list(APPEND executables "winservice,${servicedir}/main.cpp")
   list(APPEND executables "service")
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -126,7 +127,7 @@ endif()
 set(i 0)
 while(${i} LESS ${len})
   list(GET executables ${i} exec)
-  string(REPLACE ":" ";" exec ${exec})
+  string(REPLACE "," ";" exec ${exec})
   list(GET exec 0 executable)
   list(GET exec 1 executablepath)
   message (${executable} " at " ${executablepath} ":")

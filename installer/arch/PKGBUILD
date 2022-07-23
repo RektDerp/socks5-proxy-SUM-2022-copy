@@ -3,6 +3,7 @@ pkgname='socks5-proxy'
 pkgdesc='Apriorit project'
 pkgver='2.2.8'
 pkgrel=1
+install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
@@ -21,5 +22,10 @@ build() {
 }
 package() {
     cd ${srcdir}/socks5-proxy-SUM-2022
-    env DESTDIR="$pkgdir/" ./install
+    cp build/bin/* $pkgdir/usr/bin
+    cp config.txt  $pkgdir/etc
+    cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
+    cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
+    cp service/linux/socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
 }
+
