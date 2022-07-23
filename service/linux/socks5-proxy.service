@@ -4,6 +4,6 @@ Description=Socks 5 Proxy server
 StandardInput=data
 StandardInputText=quit
 StandardOutput=truncate:/home/derpy/log.txt
-ExecStart=/usr/local/bin/socks5-proxy
+ExecStart=/usr/bin/socks5-proxy
 [Install]
 WantedBy=multi-user.target
