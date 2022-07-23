@@ -22,7 +22,13 @@ build() {
 }
 package() {
     cd ${srcdir}/socks5-proxy-SUM-2022
-    cp build/bin/* $pkgdir/usr/bin
+    mkdir -p $pkgdir/usr/bin/
+    mkdir -p $pkgdir/etc/
+    mkdir -p $pkgdir/usr/share/applications/
+    mkdir -p $pkgdir/usr/share/icons/
+    mkdir -p $pkgdir/usr/lib/systemd/system/
+    cp build/bin/main $pkgdir/usr/bin/socks5-proxy
+    cp build/bin/interface $pkgdir/usr/bin/socks5-interface
     cp config.txt  $pkgdir/etc
     cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
     cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png

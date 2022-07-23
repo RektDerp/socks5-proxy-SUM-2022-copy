@@ -3,7 +3,7 @@ Description=Socks 5 Proxy server
 [Service]
 StandardInput=data
 StandardInputText=quit
-StandardOutput=truncate:/home/derpy/git/socks5-proxy-SUM-2022/log.txt
-ExecStart=/usr/local/bin/$EXE
+StandardOutput=truncate:/home/derpy/log.txt
+ExecStart=/usr/local/bin/socks5-proxy
 [Install]
 WantedBy=multi-user.target
