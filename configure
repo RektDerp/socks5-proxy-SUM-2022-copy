@@ -3,7 +3,7 @@
 root=$( dirname -- "$0"; )
 
 clean () {
-    rm -rf lib/*.a build/* *.db *.log installer/arch/pkg installer/arch/pkg/src installer/arch/*.zst
+    rm -rf lib/*.a build/* *.db *.log installer/arch/pkg installer/arch/src installer/arch/*.zst
 }
 
 case $1 in

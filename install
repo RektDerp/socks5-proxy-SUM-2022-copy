@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 if [[ -z "${DESTDIR}" ]]; then
-DESTDIR=""
+DESTDIR="/"
 fi
 
 EXE=$DESTDIR/usr/local/bin/socks5-proxy
@@ -10,6 +10,7 @@ ICON=$DESTDIR/usr/local/share/icons/socks5-interface.png
 DESKTOP=$DESTDIR/usr/local/share/applications/socks5-interface.desktop
 CONFIG=$DESTDIR/etc/socks5-config.txt
 SERVICE=$DESTDIR/usr/lib/systemd/system/socks5-proxy.service
+DATABASE=$DESTDIR/tmp/sessions_stat.db
 
 if [ "$1" != "-r" ]
 then
@@ -20,6 +21,8 @@ then
     cp -f build/bin/main $EXE
     cp -f build/bin/interface $UI
     cp -f config.txt $CONFIG
+    touch $DATABASE
+    chmod 666 $DATABASE
     chmod +x $SERVICE
     chmod +x $EXE
     chmod +x $UI
@@ -31,5 +34,6 @@ else
     rm -f $EXE
     rm -f $UI
     rm -f $CONFIG
+    rm -f $DATABASE
     systemctl daemon-reload
 fi

@@ -7,7 +7,7 @@ install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
-depends=('qt6-base' 'boost' 'boost-libs' 'sqlite')
+depends=#('qt6-base' 'boost' 'boost-libs' 'sqlite')
 
 prepare() {
     cd ${srcdir}/
@@ -33,5 +33,7 @@ package() {
     cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
     cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
     cp service/linux/socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
+    touch $pkgdir/tmp/sessions_stat.db
+    chmod 666 $pkgdir/tmp/sessions_stat.db
 }
 
