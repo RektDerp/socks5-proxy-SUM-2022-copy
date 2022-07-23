@@ -65,6 +65,8 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 	}
 	if (ec) return 0;
 	bind_port_ = server_socket_.local_endpoint().port();
+	log(TRACE_LOG) << "[session] Connected to " << server_socket_.remote_endpoint().address() << ":"
+		<< server_socket_.remote_endpoint().port() << "\n";
 	log(TRACE_LOG) << "[session] server connected on local port " << bind_port_ << "\n";
 	return bind_port_;
 }

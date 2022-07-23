@@ -312,8 +312,8 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 	response.push_back(SOCKS_VER);
 	response.push_back(SUCCEEDED);
 	response.push_back(RSV);
-	response.push_back(_atyp);
-	if (_atyp == IPV4) {
+	if (_atyp == IPV4 || _atyp == DOMAIN_NAME) {
+		response.push_back(IPV4);
 		response.push_back(0);
 		response.push_back(0);
 		response.push_back(0);
