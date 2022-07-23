@@ -1,5 +1,6 @@
 #include "server.h"
 #include "LogConfigReader.h"
+#include "Logger.h"
 #include <stdexcept>
 #ifdef STAT
 #include "stat_db_service.h"
@@ -25,7 +26,7 @@ int main(int argc, char **argv)
 {
 	WININIT();
 	LogConfigReader::configFilePath = defaultConfigPath;
-	std::cout << LogConfigReader::configFilePath << std::endl;
+	std::cout << "Config file: " << LogConfigReader::configFilePath << std::endl;
 	LogConfigReader* config = LogConfigReader::getInstance();
 
 	initDb();
@@ -40,13 +41,28 @@ int main(int argc, char **argv)
 	config->getValue("buffer_size_kb", bufferSizeKB);
 	config->getValue("max_sessions", maxSessions);
 	ba::io_context context;
-	
-	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
-	
-	std::thread thread([&] {
+
+	try {
+		tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
+	}
+	catch (const std::exception& ex) {
+		log(ERROR_LOG) << "Error occurred while setting up server: \n" << ex.what();
+		return -1;
+	}
+
+	try {
 		context.run();
-		});
-	thread.join();
+	}
+	catch (const std::exception& ex) {
+		log(ERROR_LOG) << "Error in io_context: " << ex.what();
+		return -1;
+	}
+
+
+	/*std::thread thread([&] {
+		);
+
+	thread.join();*/
 
 	return 0;
 }
