@@ -1,5 +1,5 @@
 #include "server.h"
-#include "LogConfigReader.h"
+#include "ConfigReader.h"
 #include <stdexcept>
 #ifdef STAT
 #include "stat_db_service.h"
@@ -24,11 +24,9 @@ void initDb();
 int main(int argc, char** argv)
 {
 	WININIT();
-	LogConfigReader::configFilePath = defaultConfigPath;
-	std::cout << "Config path: " << LogConfigReader::configFilePath << std::endl;
-	LogConfigReader* config = LogConfigReader::getInstance();
-	config->dumpFileValues();
-	config->dumpUsersValues();
+	ConfigReader::configFilePath = defaultConfigPath;
+	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
+	ConfigReader* config = ConfigReader::getInstance();
 	initDb();
 
 	// default server parameters
@@ -41,9 +39,9 @@ int main(int argc, char** argv)
 
 	ba::io_context context;
 
-	std::unique_ptr<tcp_server> server = nullptr;
+	std::unique_ptr<TcpServer> server = nullptr;
 	try {
-		server = std::make_unique<tcp_server>(context, port, bufferSizeKB, maxSessions);
+		server = std::make_unique<TcpServer>(context, port, bufferSizeKB, maxSessions);
 	}
 	catch (const std::exception& ex) {
 		log(ERROR_LOG) << "Failed to start server: " << ex.what();
@@ -68,9 +66,9 @@ void initDb()
 #ifdef STAT
 	using namespace proxy::stat;
 #ifdef __linux__
-	db_service::getInstance("/tmp/sessions_stat.db");
+	DatabaseService::getInstance("/tmp/sessions_stat.db");
 #else 
-	db_service::getInstance(); // this initializes table
+	DatabaseService::getInstance(); // this initializes table
 #endif // __linux__
 #endif // STAT
 }

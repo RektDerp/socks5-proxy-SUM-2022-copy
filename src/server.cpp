@@ -1,7 +1,7 @@
 #include "server.h"
 #include <thread>
 
-tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB,
+TcpServer::TcpServer(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB,
 	int maxSessions): 
 	io_context_(io_context),
 	acceptor_(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
@@ -19,7 +19,7 @@ tcp_server::tcp_server(ba::io_context& io_context, unsigned short port, size_t b
 	start_accept();
 }
 
-void tcp_server::start_accept()
+void TcpServer::start_accept()
 {
 	while (_maxSessions > 0 && _sessions == _maxSessions) {
 		std::this_thread::yield();
@@ -28,13 +28,13 @@ void tcp_server::start_accept()
 	log(TRACE_LOG) << "[server] Current connections: " << _sessions;
 	log(TRACE_LOG) << "[server] waiting for new client... " << acceptor_.local_endpoint();
 	
-	session::pointer new_connection = session::create(this, io_context_, bufferSizeKB_);
+	TcpSession::pointer new_connection = TcpSession::create(this, io_context_, bufferSizeKB_);
 	acceptor_.async_accept(new_connection->socket(),
-		boost::bind(&tcp_server::handle_accept, this, new_connection,
+		boost::bind(&TcpServer::handle_accept, this, new_connection,
 			boost::asio::placeholders::error));
 }
 
-void tcp_server::handle_accept(session::pointer new_connection, const boost::system::error_code& error)
+void TcpServer::handle_accept(TcpSession::pointer new_connection, const boost::system::error_code& error)
 {
 	if (!error)
 	{

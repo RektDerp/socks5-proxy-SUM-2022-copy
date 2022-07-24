@@ -1,17 +1,17 @@
-#include "socks5_impl.h"
+#include "socks5.h"
 #include "string_utils.h"
 #include "session.h"
-#include "LogConfigReader.h"
+#include "ConfigReader.h"
 
 using string_utils::to_string;
 using string_utils::formIpAddressString;
 
-socks5_impl::socks5_impl(session* s) : socks(s, SOCKS5_VER), _authFlag(false)
+Socks5::Socks5(TcpSession* s) : Socks(s, SOCKS5_VER), _authFlag(false)
 {
-	LogConfigReader::getInstance()->getValue("Auth", _authFlag);
+	ConfigReader::getInstance()->getValue("Auth", _authFlag);
 }
 
-bool socks5_impl::init()
+bool Socks5::init()
 {
 	if (!readMethodRequest())
 		return false;
@@ -50,7 +50,7 @@ bool socks5_impl::init()
 	return true;
 }
 
-bool socks5_impl::auth()
+bool Socks5::auth()
 {
 	/*
 	+---- + ------ + ---------- + ------ + ---------- +
@@ -87,7 +87,7 @@ bool socks5_impl::auth()
 	_username = string_utils::to_string(uname);
 	std::string passString = string_utils::to_string(passwd);
 
-	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
+	bool success = ConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
 		log(ERROR_LOG) << "Wrong credentials: " << _username << ":" << passString;
 	bvec response;
@@ -100,7 +100,7 @@ bool socks5_impl::auth()
 	return success;
 }
 
-void socks5_impl::sendErrorResponse(REP responseCode)
+void Socks5::sendErrorResponse(REP responseCode)
 {
 	bvec response;
 	response.push_back(_socks_ver);
@@ -112,7 +112,7 @@ void socks5_impl::sendErrorResponse(REP responseCode)
 	_session->writeBytes(response, ec); // ec ignored
 }
 
-std::string socks5_impl::readAddress(unsigned char atyp)
+std::string Socks5::readAddress(unsigned char atyp)
 {
 	bs::error_code ec;
 	if (atyp == ATYP::IPV4) {
@@ -138,7 +138,7 @@ std::string socks5_impl::readAddress(unsigned char atyp)
 	return {};
 }
 
-bool socks5_impl::checkMethod()
+bool Socks5::checkMethod()
 {
 	bs::error_code ec;
 	unsigned char nMethods = _session->readByte(ec);
@@ -152,7 +152,7 @@ bool socks5_impl::checkMethod()
 	return std::find(methods.begin(), methods.end(), getServerMethod()) != methods.end();
 }
 
-bool socks5_impl::sendMethodResponse(METHOD method)
+bool Socks5::sendMethodResponse(METHOD method)
 {
 	bs::error_code ec;
 	bvec response;
@@ -163,7 +163,7 @@ bool socks5_impl::sendMethodResponse(METHOD method)
 	return false;
 }
 
-bool socks5_impl::readMethodRequest()
+bool Socks5::readMethodRequest()
 {
 	/*  +---- + ---------- + ---------- +
 		| VER |  NMETHODS  |   METHODS  |
@@ -178,7 +178,7 @@ bool socks5_impl::readMethodRequest()
 	return !sendMethodResponse(getServerMethod());
 }
 
-bool socks5_impl::readCommandRequest()
+bool Socks5::readCommandRequest()
 {
 	/*  +----+-----+-------+------+----------+----------+
 		|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
@@ -206,7 +206,7 @@ bool socks5_impl::readCommandRequest()
 	return readPort();
 }
 
-bool socks5_impl::sendCommandResponse(unsigned short bindPort)
+bool Socks5::sendCommandResponse(unsigned short bindPort)
 {
 	/*  +----+-----+-------+------+----------+----------+
 		|VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
@@ -242,7 +242,7 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 	return true;
 }
 
-bool socks5_impl::connect(ba::ip::tcp::resolver::query query)
+bool Socks5::connect(ba::ip::tcp::resolver::query query)
 {
 	bs::error_code ec;
 	_bindPort = _session->connect(query, ec);

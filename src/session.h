@@ -9,19 +9,19 @@
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
 
-class socks;
-class tcp_server;
+class Socks;
+class TcpServer;
 
-class session : public boost::enable_shared_from_this<session>
+class TcpSession : public boost::enable_shared_from_this<TcpSession>
 {
 public:
-	typedef boost::shared_ptr<session> pointer;
-	static session::pointer create(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB)
+	typedef boost::shared_ptr<TcpSession> pointer;
+	static TcpSession::pointer create(TcpServer* server, ba::io_context& io_context, size_t bufferSizeKB)
 	{	
-		return pointer(new session(server, io_context, bufferSizeKB));
+		return pointer(new TcpSession(server, io_context, bufferSizeKB));
 	}
 	
-	~session();
+	~TcpSession();
 
 	ba::ip::tcp::socket& socket()
 	{
@@ -36,7 +36,7 @@ public:
 	unsigned short connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec);
 	void close();
 private:
-	session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB);
+	TcpSession(TcpServer* server, ba::io_context& io_context, size_t bufferSizeKB);
 
 	bool createProxy();
 
@@ -47,7 +47,7 @@ private:
 	void client_handle(const bs::error_code& error, size_t bytes_transferred);
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
 
-	tcp_server* _server;
+	TcpServer* _server;
 	ba::io_context& io_context_;
 
 	ba::ip::tcp::socket client_socket_;
@@ -58,7 +58,7 @@ private:
 	bvec client_buf_;
 	bvec server_buf_;
 
-	socks* impl_;
+	Socks* impl_;
 
 	std::stringstream logString;
 };

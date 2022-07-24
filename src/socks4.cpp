@@ -2,7 +2,7 @@
 #include "session.h"
 #include "string_utils.h"
 
-bool socks4::init()
+bool Socks4::init()
 {
     /*
                  +----+----+----+----+----+----+----+----+----+----+....+----+

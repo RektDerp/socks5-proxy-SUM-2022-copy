@@ -1,9 +1,9 @@
 #include "session.h"
 #include "server.h"
-#include "socks5_impl.h"
 #include "socks4.h"
+#include "socks5.h"
 
-session::session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB):
+TcpSession::TcpSession(TcpServer* server, ba::io_context& io_context, size_t bufferSizeKB):
 	_server(server),
 	io_context_(io_context), 
 	client_socket_(io_context), server_socket_(io_context),
@@ -15,13 +15,13 @@ session::session(tcp_server* server, ba::io_context& io_context, size_t bufferSi
 	server_buf_.resize(bufferSizeKB * 1024);
 }
 
-session::~session()
+TcpSession::~TcpSession()
 {
 	close();
 	delete impl_;
 }
 
-void session::start()
+void TcpSession::start()
 {
 	log(TRACE_LOG) << "IP of connected client: " << client_socket_.remote_endpoint().address() << ":"
 		<< client_socket_.remote_endpoint().port();
@@ -34,7 +34,7 @@ void session::start()
 	}
 }
 
-bool session::createProxy()
+bool TcpSession::createProxy()
 {
 	bs::error_code ec;
 	int socks_ver = readByte(ec);
@@ -46,10 +46,10 @@ bool session::createProxy()
 
 	switch (socks_ver) {
 	case SOCKS5_VER:
-		impl_ = new socks5_impl(this);
+		impl_ = new Socks5(this);
 		break;
 	case SOCKS4_VER:
-		impl_ = new socks4(this);
+		impl_ = new Socks4(this);
 		break;
 	default:
 		log(ERROR_LOG) << "Invalid version: " << socks_ver;
@@ -59,24 +59,24 @@ bool session::createProxy()
 }
 
 // todo add timeout
-unsigned char session::readByte(bs::error_code& ec)
+unsigned char TcpSession::readByte(bs::error_code& ec)
 {
 	boost::asio::read(client_socket_, ba::buffer(client_buf_),
 		boost::asio::transfer_exactly(1), ec);
 	return client_buf_[0];
 }
 
-void session::readBytes(bvec& vec, bs::error_code& ec)
+void TcpSession::readBytes(bvec& vec, bs::error_code& ec)
 {
 	boost::asio::read(client_socket_, ba::buffer(vec), ec);
 }
 
-void session::writeBytes(const bvec& bytes, bs::error_code& ec)
+void TcpSession::writeBytes(const bvec& bytes, bs::error_code& ec)
 {
 	ba::write(client_socket_, ba::buffer(bytes), ec);
 }
 
-unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec)
+unsigned short TcpSession::connect(ba::ip::tcp::resolver::query& query, bs::error_code& ec)
 {
 	log(TRACE_LOG) << "[session] connecting to destination server..." << " at address : "
 		<< query.host_name() << " " << query.service_name();
@@ -99,11 +99,11 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 	return bind_port_;
 }
 
-void session::client_read()
+void TcpSession::client_read()
 {
 	if (client_socket_.is_open()) {
 		client_socket_.async_read_some(ba::buffer(client_buf_),
-			boost::bind(&session::client_handle, shared_from_this(),
+			boost::bind(&TcpSession::client_handle, shared_from_this(),
 				boost::asio::placeholders::error,
 				boost::asio::placeholders::bytes_transferred));
 	}
@@ -114,11 +114,11 @@ void session::client_read()
 	}
 }
 
-void session::server_read()
+void TcpSession::server_read()
 {
 	if (server_socket_.is_open()) {
 		server_socket_.async_read_some(ba::buffer(server_buf_),
-			boost::bind(&session::server_handle, shared_from_this(),
+			boost::bind(&TcpSession::server_handle, shared_from_this(),
 				boost::asio::placeholders::error,
 				boost::asio::placeholders::bytes_transferred));
 	}
@@ -129,7 +129,7 @@ void session::server_read()
 	}
 }
 
-void session::client_handle(const bs::error_code& error, size_t bytes_transferred)
+void TcpSession::client_handle(const bs::error_code& error, size_t bytes_transferred)
 {
 	if (error.value() == ba::error::eof)
 	{
@@ -157,7 +157,7 @@ void session::client_handle(const bs::error_code& error, size_t bytes_transferre
 	}
 }
 
-void session::server_handle(const bs::error_code& error, size_t bytes_transferred)
+void TcpSession::server_handle(const bs::error_code& error, size_t bytes_transferred)
 {
 	if (error.value() == ba::error::eof)
 	{
@@ -185,7 +185,7 @@ void session::server_handle(const bs::error_code& error, size_t bytes_transferre
 	}
 }
 
-bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
+bool TcpSession::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
 {
 	std::string target = isServer ? "server" : "client"; // todo: optimise
 	log(DEBUG_LOG) << "["
@@ -201,7 +201,7 @@ bool session::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t le
 	return true;
 }
 
-void session::close()
+void TcpSession::close()
 {
 	log(DEBUG_LOG) << "[" << bind_port_ << "] Closing sockets...";
 	try {

@@ -5,18 +5,18 @@
 
 const unsigned char AUTH_VER = 0x01;
 
-class socks5_impl : public socks {
+class Socks5 : public Socks {
 public:
-	socks5_impl(session* s);
-	~socks5_impl() = default;
+	Socks5(TcpSession* s);
+	~Socks5() = default;
 	bool init() override;
 private:
 	unsigned char _atyp;
 	unsigned char _cmd;
 	bool _authFlag;
 
-	socks5_impl(const socks5_impl&) = delete;
-	socks5_impl& operator=(const socks5_impl&) = delete;
+	Socks5(const Socks5&) = delete;
+	Socks5& operator=(const Socks5&) = delete;
 
 	bool checkMethod();
 	bool auth();

@@ -8,13 +8,13 @@ struct sqlite3_stmt;
 
 namespace proxy { namespace stat {
 
-	class db_connection {
+	class DatabaseConnection {
 	private:
 		sqlite3* _con;
 	public:
-		db_connection(const std::string& path);
+		DatabaseConnection(const std::string& path);
 
-		~db_connection();
+		~DatabaseConnection();
 
 		operator sqlite3* ()
 		{
@@ -27,14 +27,14 @@ namespace proxy { namespace stat {
 		}
 	};
 
-	class db_stmt {
+	class DatabaseStatement {
 	private:
 		sqlite3_stmt* _stmt;
 	public:
-		db_stmt() : _stmt(nullptr)
+		DatabaseStatement() : _stmt(nullptr)
 		{}
 
-		~db_stmt();
+		~DatabaseStatement();
 
 		operator sqlite3_stmt* ()
 		{

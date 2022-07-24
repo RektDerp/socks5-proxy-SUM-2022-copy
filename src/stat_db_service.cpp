@@ -10,48 +10,48 @@ namespace proxy { namespace stat {
 	using namespace std;
 	using string_utils::concat;
 
-	db_service* db_service::_instance = nullptr;
-	mutex db_service::_mutex;
+	DatabaseService* DatabaseService::_instance = nullptr;
+	mutex DatabaseService::_mutex;
 
-	db_service& db_service::getInstance(const string& db_path)
+	DatabaseService& DatabaseService::getInstance(const string& db_path)
 	{
 		lock_guard<mutex> guard(_mutex);
 		if (_instance == nullptr)
 		{
-			_instance = new db_service(db_path);
+			_instance = new DatabaseService(db_path);
 		}
 		return *_instance;
 	}
 
-	void db_service::createDB()
+	void DatabaseService::createDB()
 	{
-		db_connection db(_db_path);
+		DatabaseConnection db(_db_path);
 		log(TRACE_LOG) << "Database created Successfully";
 	}
 
-	void db_service::createTable()
+	void DatabaseService::createTable()
 	{
-		db_connection DB(_db_path);
+		DatabaseConnection DB(_db_path);
 		int err = sqlite3_exec(DB, create_table_sql, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			throw db_exception(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
 		}
 		err = sqlite3_exec(DB, set_all_inactive, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			throw db_exception(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
 		}
 		log(TRACE_LOG) << "Table created Successfully";
 	}
 
-	long long db_service::create(const session s)
+	long long DatabaseService::create(const Session s)
 	{
 		lock_guard<mutex> guard(_mutex);
-		db_connection db(_db_path);
-		db_stmt stmt;
+		DatabaseConnection db(_db_path);
+		DatabaseStatement stmt;
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(std::string("Create: error during preparing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException(std::string("Create: error during preparing stmt: ") + sqlite3_errstr(err));
 		}
 
 		int index = 0;
@@ -62,12 +62,12 @@ namespace proxy { namespace stat {
 		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Create: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Create: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception("Create: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Create: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
@@ -75,17 +75,17 @@ namespace proxy { namespace stat {
 		return id;
 	}
 	
-	void db_service::update(long long session_id, int bytes, Dest dest)
+	void DatabaseService::update(long long session_id, int bytes, Dest dest)
 	{
 		lock_guard<mutex> guard(_mutex);
-		session s = selectSession(session_id);
+		Session s = selectSession(session_id);
 		if (s.id == 0)
 		{
-			throw db_exception(concat("Update: no session with id: ", session_id));
+			throw DatabaseException(concat("Update: no session with id: ", session_id));
 		}
 		long long newBytes;
-		db_connection db(_db_path);
-		db_stmt stmt;
+		DatabaseConnection db(_db_path);
+		DatabaseStatement stmt;
 		int err;
 		if (dest == Dest::TO_CLIENT) {
 			newBytes = s.bytes_recv + bytes;
@@ -97,93 +97,93 @@ namespace proxy { namespace stat {
 		}
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Update: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Update: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, newBytes);
 		sqlite3_bind_int64(stmt, 2, session_id);
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception("Update: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Update: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
-	void db_service::close(long long session_id)
+	void DatabaseService::close(long long session_id)
 	{
 		lock_guard<mutex> guard(_mutex);
-		session s = selectSession(session_id);
+		Session s = selectSession(session_id);
 		if (s.id == 0) {
-			throw db_exception(concat("Close: no session with id: ", session_id));
+			throw DatabaseException(concat("Close: no session with id: ", session_id));
 		}
-		db_connection db(_db_path);
-		db_stmt stmt;
+		DatabaseConnection db(_db_path);
+		DatabaseStatement stmt;
 		int err = sqlite3_prepare_v2(db, update_inactive, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Close: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, s.id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Close: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception("Close: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
-	session db_service::selectSession(long long session_id)
+	Session DatabaseService::selectSession(long long session_id)
 	{
-		db_connection db(_db_path);
-		db_stmt stmt;
+		DatabaseConnection db(_db_path);
+		DatabaseStatement stmt;
 		int err = sqlite3_prepare_v2(db, select_id, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Select: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, session_id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("Select: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
-			session s;
+			Session s;
 			readRow(s, stmt);
 			return s;
 		}
 		else {
-			throw db_exception("Select: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
-	vector<session> db_service::selectAll()
+	vector<Session> DatabaseService::selectAll()
 	{
 		int err;
-		db_connection db(_db_path);
-		db_stmt stmt;
+		DatabaseConnection db(_db_path);
+		DatabaseStatement stmt;
 		err = sqlite3_prepare_v2(db, select_all, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception("SelectAll: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("SelectAll: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
-		vector<session> vec;
+		vector<Session> vec;
 
 		for (;;) {
 			err = sqlite3_step(stmt);
 			if (err != SQLITE_ROW)
 				break;
 
-			session s;
+			Session s;
 			readRow(s, stmt);
 			vec.push_back(s);
 		}
 		return vec;
 	}
 
-	void db_service::readRow(session& s, sqlite3_stmt* stmt)
+	void DatabaseService::readRow(Session& s, sqlite3_stmt* stmt)
 	{
 		int index = 0;
 		s.id = sqlite3_column_int(stmt, index++);

@@ -47,21 +47,21 @@ enum REP {
 	ADDR_TYPE_NOT_SUPP = 0x08
 };
 
-class session;
+class TcpSession;
 
-class socks {
+class Socks {
 protected:
-	socks(session* const s, VER socks_ver):
+	Socks(TcpSession* const s, VER socks_ver):
 		_session(s), _id(0), _socks_ver(socks_ver)
 	{}
 public:
-	virtual ~socks() = 0
+	virtual ~Socks() = 0
 	{}
 	virtual bool init() = 0;
 	void close();
 	void write_stat(size_t bytes, bool isServer);
 protected:
-	session* const _session;
+	TcpSession* const _session;
 	long long _id;
 	const VER _socks_ver;
 	unsigned short _serverPort;
@@ -75,8 +75,8 @@ protected:
 	bool readPort();
 	std::string readIPV4();
 private:
-	socks(const socks&) = delete;
-	socks& operator=(const socks&) = delete;
+	Socks(const Socks&) = delete;
+	Socks& operator=(const Socks&) = delete;
 };
 
 #endif // _SOCKS_H_

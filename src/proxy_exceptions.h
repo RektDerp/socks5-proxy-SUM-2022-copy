@@ -5,20 +5,20 @@
 #include <exception>
 #include <stdexcept>
 
-class proxy_exception : public std::runtime_error {
+class ProxyException : public std::runtime_error {
 public:
-	proxy_exception() = default;
-	proxy_exception(const std::string& msg) : std::runtime_error(msg)
+	ProxyException() = default;
+	ProxyException(const std::string& msg) : std::runtime_error(msg)
 	{}
-	virtual ~proxy_exception() = default;
+	virtual ~ProxyException() = default;
 };
 
-class db_exception : public proxy_exception {
+class DatabaseException : public ProxyException {
 public:
-	db_exception() = default;
-	db_exception(const std::string& msg) : proxy_exception(msg.c_str())
+	DatabaseException() = default;
+	DatabaseException(const std::string& msg) : ProxyException(msg.c_str())
 	{}
-	virtual ~db_exception() = default;
+	virtual ~DatabaseException() = default;
 };
 
 #endif

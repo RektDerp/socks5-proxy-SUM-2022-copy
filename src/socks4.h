@@ -8,11 +8,11 @@ enum REPLY {
 	REJECTED = 91
 };
 
-class socks4 : public socks {
+class Socks4 : public Socks {
 public:
-	socks4(session* const s): socks(s, SOCKS4_VER)
+	Socks4(TcpSession* const s): Socks(s, SOCKS4_VER)
 	{}
-	~socks4() = default;
+	~Socks4() = default;
 	bool init();
 };
 

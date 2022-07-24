@@ -1,33 +1,33 @@
-#include "LogConfigReader.h"
+#include "ConfigReader.h"
 
 #include <algorithm>
 
 using namespace std; // don't use this
 
-LogConfigReader* LogConfigReader::m_pInstance = nullptr;
-std::string LogConfigReader::configFilePath;
+ConfigReader* ConfigReader::m_pInstance = nullptr;
+std::string ConfigReader::configFilePath;
 
-LogConfigReader::LogConfigReader(string configFile)
+ConfigReader::ConfigReader(string configFile)
 {
     m_ConfigSettingMap.clear();
     parseFile(configFile);
 }
 
-LogConfigReader::~LogConfigReader()
+ConfigReader::~ConfigReader()
 {
     m_ConfigSettingMap.clear();
 }
 
-LogConfigReader* LogConfigReader::getInstance()
+ConfigReader* ConfigReader::getInstance()
 {
     if (nullptr == m_pInstance)
     {
-        m_pInstance = new LogConfigReader(configFilePath);
+        m_pInstance = new ConfigReader(configFilePath);
     }
     return m_pInstance;
 }
 
-bool LogConfigReader::getValue(std::string tag, bool& value)
+bool ConfigReader::getValue(std::string tag, bool& value)
 {
     map<string, string>::iterator it;
     it = m_ConfigSettingMap.find(tag);
@@ -38,7 +38,7 @@ bool LogConfigReader::getValue(std::string tag, bool& value)
     }
     return false;
 }
-bool LogConfigReader::getValue(std::string tag, int& value)
+bool ConfigReader::getValue(std::string tag, int& value)
 {
     map<string, string>::iterator it;
     it = m_ConfigSettingMap.find(tag);
@@ -50,7 +50,7 @@ bool LogConfigReader::getValue(std::string tag, int& value)
     return false;
 }
 
-bool LogConfigReader::getValue(std::string tag, std::string& value)
+bool ConfigReader::getValue(std::string tag, std::string& value)
 {
     map<string, string>::iterator it;
     it = m_ConfigSettingMap.find(tag);
@@ -61,7 +61,7 @@ bool LogConfigReader::getValue(std::string tag, std::string& value)
     }
     return false;
 }
-bool LogConfigReader::hasUser(const std::string& tag, const std::string& value)
+bool ConfigReader::hasUser(const std::string& tag, const std::string& value)
 {
     map<string, string>::iterator it;
     it = m_UsersData.find(tag);
@@ -72,7 +72,7 @@ bool LogConfigReader::hasUser(const std::string& tag, const std::string& value)
     return false;
 }
 
-bool LogConfigReader::parseFile(string fileName)
+bool ConfigReader::parseFile(string fileName)
 {
     ifstream inputFile;
     inputFile.open(fileName.c_str());
@@ -127,7 +127,7 @@ bool LogConfigReader::parseFile(string fileName)
     }
     return true;
 }
-bool LogConfigReader::fillUsers(ifstream &inputFile)
+bool ConfigReader::fillUsers(ifstream &inputFile)
 {
     string delimeter = ":";
     int initPos = 0;
@@ -208,7 +208,7 @@ bool LogConfigReader::fillUsers(ifstream &inputFile)
     return true;
 }
 
-std::string LogConfigReader::trim(const std::string& str, const std::string& whitespace)
+std::string ConfigReader::trim(const std::string& str, const std::string& whitespace)
 {
     size_t strBegin = str.find_first_not_of(whitespace);
     if (strBegin == std::string::npos)
@@ -220,7 +220,7 @@ std::string LogConfigReader::trim(const std::string& str, const std::string& whi
     return str.substr(strBegin, strRange);
 }
 
-std::string LogConfigReader::reduce(const std::string& str,
+std::string ConfigReader::reduce(const std::string& str,
     const std::string& fill,
     const std::string& whitespace)
 {
@@ -241,7 +241,7 @@ std::string LogConfigReader::reduce(const std::string& str,
     return result;
 }
 
-void LogConfigReader::dumpFileValues()
+void ConfigReader::dumpFileValues()
 {
     map<string, string>::iterator it;
     for (it = m_ConfigSettingMap.begin(); it != m_ConfigSettingMap.end(); ++it)
@@ -249,7 +249,7 @@ void LogConfigReader::dumpFileValues()
         cout << it->first << " = " << it->second << endl;
     }
 }
-void LogConfigReader::dumpUsersValues()
+void ConfigReader::dumpUsersValues()
 {
     map<string, string>::iterator it;
     for (it = m_UsersData.begin(); it != m_UsersData.end(); ++it)

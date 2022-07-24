@@ -5,7 +5,7 @@
 #include <cstring>
 
 #include "Logger.h"
-#include "LogConfigReader.h"
+#include "ConfigReader.h"
 
 using namespace std;
 
@@ -380,7 +380,7 @@ void Logger::enableALLLogging()
 
 void Logger::configure()
 {
-    LogConfigReader* config = LogConfigReader::getInstance();
+    ConfigReader* config = ConfigReader::getInstance();
     LogLevel logLevel;
     LogType logType;
 

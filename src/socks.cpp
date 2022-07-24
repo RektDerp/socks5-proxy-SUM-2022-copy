@@ -3,15 +3,15 @@
 #include "session.h"
 #include "string_utils.h"
 
-void socks::close()
+void Socks::close()
 {
 #ifdef STAT
 	if (_id != 0) {
 		try {
-			proxy::stat::db_service::getInstance().close(_id);
+			proxy::stat::DatabaseService::getInstance().close(_id);
 			log(TRACE_LOG) << "Closed session " << _id << " in database";
 		}
-		catch (const db_exception& er) {
+		catch (const DatabaseException& er) {
 			log(ERROR_LOG) << er.what();
 		}
 		_id = 0;
@@ -19,7 +19,7 @@ void socks::close()
 #endif
 }
 
-void socks::write_stat(size_t bytes, bool isServer)
+void Socks::write_stat(size_t bytes, bool isServer)
 {
 #ifdef STAT
 	if (_id == 0) {
@@ -29,28 +29,28 @@ void socks::write_stat(size_t bytes, bool isServer)
 
 	using namespace proxy::stat;
 	try {
-		db_service::getInstance().update(_id, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
+		DatabaseService::getInstance().update(_id, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 	}
-	catch (const db_exception& er) {
+	catch (const DatabaseException& er) {
 		log(ERROR_LOG) << er.what();
 	}
 #endif
 }
 
-bool socks::createRecord()
+bool Socks::createRecord()
 {
 #ifdef STAT
 	using namespace proxy::stat;
-	proxy::stat::session s;
+	proxy::stat::Session s;
 	s.user = _username;
 	s.src_addr = _session->socket().remote_endpoint().address().to_string();
 	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
 	s.dst_addr = _dstAddress;
 	s.dst_port = std::to_string(_serverPort);
 	try {
-		_id = db_service::getInstance().create(s);
+		_id = DatabaseService::getInstance().create(s);
 	}
-	catch (const db_exception& ex) {
+	catch (const DatabaseException& ex) {
 		log(ERROR_LOG) << "Failed to create record in database: " << ex.what();
 		return false;
 	}
@@ -58,7 +58,7 @@ bool socks::createRecord()
 	return true;
 }
 
-bool socks::checkVersion()
+bool Socks::checkVersion()
 {
 	bs::error_code ec;
 	int ver = _session->readByte(ec);
@@ -73,7 +73,7 @@ bool socks::checkVersion()
 	return true;
 }
 
-bool socks::checkError(bs::error_code& ec)
+bool Socks::checkError(bs::error_code& ec)
 {
 	if (ec)
 	{
@@ -83,7 +83,7 @@ bool socks::checkError(bs::error_code& ec)
 	return false;
 }
 
-bool socks::readPort()
+bool Socks::readPort()
 {
 	bs::error_code ec;
 	_serverPort = _session->readByte(ec);
@@ -93,7 +93,7 @@ bool socks::readPort()
 	return true;
 }
 
-std::string socks::readIPV4()
+std::string Socks::readIPV4()
 {
 	bs::error_code ec;
 	bvec dstAdd;

@@ -18,7 +18,7 @@ namespace proxy { namespace stat {
 		TO_CLIENT
 	};
 
-	struct session {
+	struct Session {
 		long long id;
 		string user;
 		string create_date;
@@ -32,35 +32,35 @@ namespace proxy { namespace stat {
 		long long bytes_recv;
 	};
 
-	class db_service {
+	class DatabaseService {
 	private:
-		static db_service* _instance;
+		static DatabaseService* _instance;
 		static std::mutex _mutex;
 	public:
-		static db_service& getInstance(const string& db_path = R"(./sessions_stat.db)");
+		static DatabaseService& getInstance(const string& db_path = R"(./sessions_stat.db)");
 
-		~db_service() = default;
+		~DatabaseService() = default;
 		void createDB();
 		void createTable();
-		long long create(const session s);
+		long long create(const Session s);
 		void update(long long session_id, int bytes, Dest dest);
 		void close(long long session_id);
-		session selectSession(long long session_id);
-		vector<session> selectAll();
+		Session selectSession(long long session_id);
+		vector<Session> selectAll();
 	private:
 		const string _db_path; // todo move to config?
 
-		db_service(const std::string& db_path) :
+		DatabaseService(const std::string& db_path) :
 			_db_path(db_path)
 		{
 			createDB();
 			createTable();
 		}
 
-		void readRow(session& s, sqlite3_stmt* stmt);
+		void readRow(Session& s, sqlite3_stmt* stmt);
 
-		db_service(const db_service&) = delete;
-		db_service& operator=(const db_service&) = delete;
+		DatabaseService(const DatabaseService&) = delete;
+		DatabaseService& operator=(const DatabaseService&) = delete;
 	};
 
 	namespace {

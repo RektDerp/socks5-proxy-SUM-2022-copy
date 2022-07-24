@@ -5,21 +5,21 @@
 namespace proxy { namespace stat {
 	using string_utils::concat;
 
-	db_connection::db_connection(const std::string& path)
+	DatabaseConnection::DatabaseConnection(const std::string& path)
 		: _con(nullptr)
 	{
 		int err = sqlite3_open(path.c_str(), &_con);
 		if (err != SQLITE_OK) {
-			throw db_exception("Error during opening connection: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Error during opening connection: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
-	db_connection::~db_connection()
+	DatabaseConnection::~DatabaseConnection()
 	{
 		sqlite3_close(_con);
 	}
 
-	db_stmt::~db_stmt()
+	DatabaseStatement::~DatabaseStatement()
 	{
 		sqlite3_finalize(_stmt);
 	}
