@@ -1,11 +1,15 @@
 #include "socks5_impl.h"
 #include "string_utils.h"
 #include "session.h"
-#ifdef STAT
-#include "stat_db_service.h"
-#endif
+#include "LogConfigReader.h"
+
 using string_utils::to_string;
 using string_utils::formIpAddressString;
+
+socks5_impl::socks5_impl(session* s) : socks(s, SOCKS5_VER), _authFlag(false)
+{
+	LogConfigReader::getInstance()->getValue("Auth", _authFlag);
+}
 
 bool socks5_impl::init()
 {
@@ -14,7 +18,6 @@ bool socks5_impl::init()
 	
 	if (_authFlag && !auth())
 		return false;
-		
 
 	if (!readCommandRequest())
 		return false;
@@ -97,54 +100,10 @@ bool socks5_impl::auth()
 	return success;
 }
 
-bool socks5_impl::checkError(bs::error_code& ec)
-{
-	if (ec)
-	{
-		log(ERROR_LOG) << ec.what() << "\n";
-		return true;
-	}
-	return false;
-}
-
-void socks5_impl::write_stat(size_t bytes, bool isServer)
-{
-#ifdef STAT
-	if (id_ == 0) {
-		log(ERROR_LOG) << "id is 0\n";
-		return;
-	}
-
-	using namespace proxy::stat;
-	try {
-		db_service::getInstance().update(id_, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
-	}
-	catch (const db_exception& er) {
-		log(ERROR_LOG) << er.what() << "\n";
-	}
-#endif
-}
-
-void socks5_impl::close()
-{
-#ifdef STAT
-	if (id_ != 0) {
-		try {
-			proxy::stat::db_service::getInstance().close(id_);
-			log(TRACE_LOG) << "Closed session " << id_ << " in database\n";
-		}
-		catch (const db_exception& er) {
-			log(ERROR_LOG) << er.what() << "\n";
-		}
-		id_ = 0;
-	}
-#endif
-}
-
 void socks5_impl::sendErrorResponse(REP responseCode)
 {
 	bvec response;
-	response.push_back(SOCKS_VER);
+	response.push_back(_socks_ver);
 	response.push_back(responseCode);
 	response.push_back(RSV);
 	response.push_back(IPV4);
@@ -157,11 +116,7 @@ std::string socks5_impl::readAddress(unsigned char atyp)
 {
 	bs::error_code ec;
 	if (atyp == ATYP::IPV4) {
-		bvec dstAdd;
-		dstAdd.resize(4);
-		_session->readBytes(dstAdd, ec);
-		if (checkError(ec)) return {};
-		return formIpAddressString(dstAdd);
+		return readIPV4();
 	}
 	else if (atyp == ATYP::DOMAIN_NAME) {
 		unsigned char addSize = _session->readByte(ec);
@@ -179,25 +134,6 @@ std::string socks5_impl::readAddress(unsigned char atyp)
 	}
 	sendErrorResponse(ADDR_TYPE_NOT_SUPP);
 	return {};
-}
-
-bool socks5_impl::checkVersion()
-{
-	bs::error_code ec;
-	unsigned char ver = _session->readByte(ec);
-	if (checkError(ec))
-		return false;
-
-	if (ver != SOCKS_VER)
-	{
-		{
-			std::ostringstream tmp;
-			tmp << "Invalid version: " << (int)ver << std::endl;
-			LOG_ERROR(tmp);
-		}
-		return false;
-	}
-	return true;
 }
 
 bool socks5_impl::checkMethod()
@@ -218,7 +154,7 @@ bool socks5_impl::sendMethodResponse(METHOD method)
 {
 	bs::error_code ec;
 	bvec response;
-	response.push_back(SOCKS_VER);
+	response.push_back(_socks_ver);
 	response.push_back(method);
 	_session->writeBytes(response, ec);
 	if (ec) return true;
@@ -232,11 +168,6 @@ bool socks5_impl::readMethodRequest()
 		+---- + ---------- + ---------- +
 		|  1  |      1     |  1 to 255  |
 		+---- + ---------- + ---------- +  */
-	if (!checkVersion())
-	{
-		sendMethodResponse(METHOD::NO_ACC_METHODS);
-		return false;
-	}
 	if (!checkMethod())
 	{
 		sendMethodResponse(METHOD::NO_ACC_METHODS);
@@ -270,34 +201,7 @@ bool socks5_impl::readCommandRequest()
 	_dstAddress = readAddress(_atyp);
 	if (_dstAddress.size() == 0) return false;
 
-	_serverPort = _session->readByte(ec);
-	if (checkError(ec)) return false;
-	_serverPort = ((int) _serverPort << 8) | ((int) _session->readByte(ec));
-	if (checkError(ec)) return false;
-	return true;
-}
-
-bool socks5_impl::createRecord()
-{
-#ifdef STAT
-	using namespace proxy::stat;
-
-	proxy::stat::session s;
-	s.user = _username;
-	s.src_addr = _session->socket().remote_endpoint().address().to_string();
-	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
-	s.dst_addr = _dstAddress;
-	s.dst_port = std::to_string(_serverPort);
-
-	try {
-		id_ = db_service::getInstance().create(s);
-	}
-	catch (const db_exception& ex) {
-		log(ERROR_LOG) << "Database record was not created for session:" << ex.what() << "\n";
-		return false;
-	}
-#endif
-	return true;
+	return readPort();
 }
 
 bool socks5_impl::sendCommandResponse(unsigned short bindPort)
@@ -309,7 +213,7 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		+----+-----+-------+------+----------+----------+ */
 
 	bvec response;
-	response.push_back(SOCKS_VER);
+	response.push_back(_socks_ver);
 	response.push_back(SUCCEEDED);
 	response.push_back(RSV);
 	if (_atyp == IPV4 || _atyp == DOMAIN_NAME) {

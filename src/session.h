@@ -9,7 +9,7 @@
 #include <boost/array.hpp>
 #include <boost/make_shared.hpp>
 
-class socks5_impl;
+class socks;
 class tcp_server;
 
 class session : public boost::enable_shared_from_this<session>
@@ -38,6 +38,8 @@ public:
 private:
 	session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB);
 
+	bool createProxy();
+
 	void client_read();
 	void server_read();
 	
@@ -56,7 +58,7 @@ private:
 	bvec client_buf_;
 	bvec server_buf_;
 
-	socks5_impl* impl_;
+	socks* impl_;
 
 	std::stringstream logString;
 };

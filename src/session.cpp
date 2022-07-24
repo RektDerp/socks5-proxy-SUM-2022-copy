@@ -1,12 +1,13 @@
 #include "session.h"
 #include "server.h"
 #include "socks5_impl.h"
+#include "socks4.h"
 
 session::session(tcp_server* server, ba::io_context& io_context, size_t bufferSizeKB):
 	_server(server),
 	io_context_(io_context), 
 	client_socket_(io_context), server_socket_(io_context),
-	impl_(new socks5_impl(this)),
+	impl_(nullptr),
 	client_buf_(),
 	server_buf_()
 {
@@ -24,11 +25,37 @@ void session::start()
 {
 	log(TRACE_LOG) << "IP of connected client: " << client_socket_.remote_endpoint().address() << ":"
 		<< client_socket_.remote_endpoint().port() << "\n";
-	if (impl_->init()) {
-		log(TRACE_LOG) << "[" << bind_port_ << "] Starting session...\n";
-		client_read();
-		server_read();
+	if (createProxy()) {
+		if (impl_->init()) {
+			log(TRACE_LOG) << "[" << bind_port_ << "] Starting session...\n";
+			client_read();
+			server_read();
+		}
 	}
+}
+
+bool session::createProxy()
+{
+	bs::error_code ec;
+	int socks_ver = readByte(ec);
+	if (ec) {
+		log(ERROR_LOG) << "There was an error during reading socks ver: "
+			<< ec.message();
+		return false;
+	}
+
+	switch (socks_ver) {
+	case SOCKS5_VER:
+		impl_ = new socks5_impl(this);
+		break;
+	case SOCKS4_VER:
+		impl_ = new socks4(this);
+		break;
+	default:
+		log(ERROR_LOG) << "Invalid version: " << socks_ver;
+		return false;
+	}
+	return true;
 }
 
 // todo add timeout
@@ -55,7 +82,8 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 		<< query.host_name() << " " << query.service_name() << "\n";
 	using namespace ba::ip;
 	tcp::resolver resolver(io_context_);
-	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query, ec);
+	if (ec) return 0;
 	tcp::resolver::iterator end;
 	ec = ba::error::host_not_found;
 	while (ec && endpoint_iterator != end)
@@ -66,8 +94,8 @@ unsigned short session::connect(ba::ip::tcp::resolver::query& query, bs::error_c
 	if (ec) return 0;
 	bind_port_ = server_socket_.local_endpoint().port();
 	log(TRACE_LOG) << "[session] Connected to " << server_socket_.remote_endpoint().address() << ":"
-		<< server_socket_.remote_endpoint().port() << "\n";
-	log(TRACE_LOG) << "[session] server connected on local port " << bind_port_ << "\n";
+		<< server_socket_.remote_endpoint().port();
+	log(TRACE_LOG) << "[session] server connected on local port " << bind_port_;
 	return bind_port_;
 }
 

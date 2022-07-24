@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 using bvec = std::vector<unsigned char>;
 
@@ -24,6 +25,17 @@ namespace string_utils {
 		{
 			ip_address += std::to_string((int) bytes[i]);
 			if (i != 3) ip_address += '.';
+		}
+		return ip_address;
+	}
+
+	inline string formIpAddressReverseString(const bvec& bytes)
+	{
+		std::string ip_address;
+		for (int i = bytes.size() - 1; i >= 0; i--)
+		{
+			ip_address += std::to_string((int)bytes[i]);
+			if (i != 0) ip_address += '.';
 		}
 		return ip_address;
 	}
