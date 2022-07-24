@@ -21,33 +21,45 @@ const char defaultConfigPath [] = "/etc/socks5-config.txt";
 
 void initDb();
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	WININIT();
 	LogConfigReader::configFilePath = defaultConfigPath;
-	std::cout << LogConfigReader::configFilePath << std::endl;
+	std::cout << "Config path: " << LogConfigReader::configFilePath << std::endl;
 	LogConfigReader* config = LogConfigReader::getInstance();
-
+	config->dumpFileValues();
+	config->dumpUsersValues();
 	initDb();
+
 	// default server parameters
 	int port = 1080;
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
-	
-	config->dumpFileValues();
-	config->dumpUsersValues();
 	config->getValue("listen_port", port);
 	config->getValue("buffer_size_kb", bufferSizeKB);
 	config->getValue("max_sessions", maxSessions);
-	ba::io_context context;
-	
-	tcp_server tcp_server(context, port, bufferSizeKB, maxSessions);
-	
-	std::thread thread([&] {
-		context.run();
-		});
-	thread.join();
 
+	ba::io_context context;
+
+	std::unique_ptr<tcp_server> server = nullptr;
+	try {
+		server = std::make_unique<tcp_server>(context, port, bufferSizeKB, maxSessions);
+	}
+	catch (const std::exception& ex) {
+		log(ERROR_LOG) << "Failed to start server: " << ex.what();
+		return -1;
+	}
+
+	std::thread thread([&] { 
+		try {
+			context.run();
+		}
+		catch (const std::exception& ex) {
+			log(ERROR_LOG) << "io_context throwed exception: " << ex.what();
+		}
+	});
+	thread.join();
+	log(TRACE_LOG) << "Stopped server.";
 	return 0;
 }
 

@@ -89,7 +89,7 @@ bool socks5_impl::auth()
 
 	bool success = LogConfigReader::getInstance()->hasUser(_username, passString);
 	if (!success)
-		log(ERROR_LOG) << "Wrong credentials: " << _username << ":" << passString << "\n";
+		log(ERROR_LOG) << "Wrong credentials: " << _username << ":" << passString;
 	bvec response;
 	response.push_back(AUTH_VER);
 	response.push_back(success ? AUTH_STATUS::SUCCESS : AUTH_STATUS::DENY);
@@ -133,9 +133,6 @@ std::string socks5_impl::readAddress(unsigned char atyp)
 		_session->readBytes(dstAdd, ec);
 		if (checkError(ec)) return {};
 		return formIpAddressString(dstAdd);
-		/*sendErrorResponse(ADDR_TYPE_NOT_SUPP);
-		return {};*/
-		// todo to be implemented
 	}
 	sendErrorResponse(ADDR_TYPE_NOT_SUPP);
 	return {};
@@ -234,8 +231,6 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		{
 			response.push_back(0);
 		}
-		//log(ERROR_LOG) << "IPV6 is not suppored.\n";
-		//return false;
 	}
 	response.push_back((bindPort & 0xFF) >> 8);
 	response.push_back(bindPort & 0x00FF);

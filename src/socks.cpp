@@ -23,7 +23,7 @@ void socks::write_stat(size_t bytes, bool isServer)
 {
 #ifdef STAT
 	if (_id == 0) {
-		log(ERROR_LOG) << "id is 0";
+		log(ERROR_LOG) << "Cannot write statistics: id of session is 0";
 		return;
 	}
 
@@ -51,7 +51,7 @@ bool socks::createRecord()
 		_id = db_service::getInstance().create(s);
 	}
 	catch (const db_exception& ex) {
-		log(ERROR_LOG) << "Database record was not created for session:" << ex.what() << "\n";
+		log(ERROR_LOG) << "Failed to create record in database: " << ex.what();
 		return false;
 	}
 #endif
@@ -67,7 +67,7 @@ bool socks::checkVersion()
 
 	if (ver != _socks_ver)
 	{
-		log(ERROR_LOG) << "Invalid version: " << ver << std::endl;
+		log(ERROR_LOG) << "Invalid version: " << ver;
 		return false;
 	}
 	return true;
