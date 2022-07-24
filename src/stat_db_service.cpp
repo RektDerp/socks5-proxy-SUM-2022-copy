@@ -26,26 +26,21 @@ namespace proxy { namespace stat {
 	void db_service::createDB()
 	{
 		db_connection db(_db_path);
-		log(TRACE_LOG) << "Database created Successfully\n";
+		log(TRACE_LOG) << "Database created Successfully";
 	}
 
 	void db_service::createTable()
 	{
 		db_connection DB(_db_path);
-		char* messageError;
-		int err = sqlite3_exec(DB, create_table_sql, NULL, 0, &messageError);
+		int err = sqlite3_exec(DB, create_table_sql, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			db_exception ex(concat("createTable: error during executing stmt: ", messageError));
-			sqlite3_free(messageError);
-			throw ex;
+			throw db_exception(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
 		}
-		err = sqlite3_exec(DB, set_all_inactive, NULL, 0, &messageError);
+		err = sqlite3_exec(DB, set_all_inactive, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			db_exception ex(concat("createTable: error during executing stmt: ", messageError));
-			sqlite3_free(messageError);
-			throw ex;
+			throw db_exception(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
 		}
-		log(TRACE_LOG) << "Table created Successfully\n";
+		log(TRACE_LOG) << "Table created Successfully";
 	}
 
 	long long db_service::create(const session s)
@@ -56,7 +51,7 @@ namespace proxy { namespace stat {
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Create: error during preparing stmt: ", err));
+			throw db_exception(std::string("Create: error during preparing stmt: ") + sqlite3_errstr(err));
 		}
 
 		int index = 0;
@@ -67,16 +62,16 @@ namespace proxy { namespace stat {
 		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Create: error during binding stmt: ", err));
+			throw db_exception("Create: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Create: error during executing stmt: ", err));
+			throw db_exception("Create: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
-		log(TRACE_LOG) << "Created session with id " << id << "\n";
+		log(TRACE_LOG) << "Created session with id " << id;
 		return id;
 	}
 	
@@ -102,14 +97,14 @@ namespace proxy { namespace stat {
 		}
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Update: error during preparing stmt: ", err));
+			throw db_exception("Update: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, newBytes);
 		sqlite3_bind_int64(stmt, 2, session_id);
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Update: error during executing stmt: ", err));
+			throw db_exception("Update: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -125,17 +120,17 @@ namespace proxy { namespace stat {
 		int err = sqlite3_prepare_v2(db, update_inactive, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Close: error during preparing stmt: ", err));
+			throw db_exception("Close: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, s.id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Close: error during binding stmt: ", err));
+			throw db_exception("Close: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw db_exception(concat("Close: error during executing stmt: ", err));
+			throw db_exception("Close: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -146,12 +141,12 @@ namespace proxy { namespace stat {
 		int err = sqlite3_prepare_v2(db, select_id, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Select: error during preparing stmt: ", err));
+			throw db_exception("Select: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, session_id);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("Select: error during binding stmt: ", err));
+			throw db_exception("Select: error during binding stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
@@ -160,7 +155,7 @@ namespace proxy { namespace stat {
 			return s;
 		}
 		else {
-			throw db_exception(concat("Select: error during executing stmt: ", err));
+			throw db_exception("Select: error during executing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -172,7 +167,7 @@ namespace proxy { namespace stat {
 		err = sqlite3_prepare_v2(db, select_all, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw db_exception(concat("SelectAll: error during preparing stmt: ", err));
+			throw db_exception("SelectAll: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
 		}
 		vector<session> vec;
 
@@ -195,7 +190,7 @@ namespace proxy { namespace stat {
 		const char* user = (const char*) sqlite3_column_text(stmt, index++);
 		if (user == nullptr)
 		{
-			s.user = "[NO AUTH]";
+			s.user = "";
 		}
 		else {
 			s.user = string(user, strlen(user));
