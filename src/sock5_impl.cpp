@@ -128,8 +128,13 @@ std::string socks5_impl::readAddress(unsigned char atyp)
 		return to_string(dstAdd);
 	}
 	else if (atyp == ATYP::IPV6) {
-		sendErrorResponse(ADDR_TYPE_NOT_SUPP);
-		return {};
+		bvec dstAdd;
+		dstAdd.resize(16);
+		_session->readBytes(dstAdd, ec);
+		if (checkError(ec)) return {};
+		return formIpAddressString(dstAdd);
+		/*sendErrorResponse(ADDR_TYPE_NOT_SUPP);
+		return {};*/
 		// todo to be implemented
 	}
 	sendErrorResponse(ADDR_TYPE_NOT_SUPP);
@@ -224,8 +229,13 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		response.push_back(0);
 	}
 	else if (_atyp == IPV6) {
-		log(ERROR_LOG) << "IPV6 is not suppored.\n";
-		return false;
+		response.push_back(IPV6);
+		for (size_t i = 0; i < 16; i++)
+		{
+			response.push_back(0)
+		}
+		//log(ERROR_LOG) << "IPV6 is not suppored.\n";
+		//return false;
 	}
 	response.push_back((bindPort & 0xFF) >> 8);
 	response.push_back(bindPort & 0x00FF);

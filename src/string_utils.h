@@ -21,10 +21,21 @@ namespace string_utils {
 	inline string formIpAddressString(const bvec& bytes)
 	{
 		std::string ip_address;
-		for (int i = 0; i < 4; i++)
+		if (bytes.size() == 4)
 		{
-			ip_address += std::to_string((int) bytes[i]);
-			if (i != 3) ip_address += '.';
+			for (int i = 0; i < 4; i++)
+			{
+				ip_address += std::to_string((int)bytes[i]);
+				if (i != 3) ip_address += '.';
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 16; i++)
+			{
+				ip_address += std::to_string((int)bytes[i]);
+				if (i != 15) ip_address += ':';
+			}
 		}
 		return ip_address;
 	}
