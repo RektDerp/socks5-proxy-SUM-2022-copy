@@ -232,7 +232,7 @@ bool socks5_impl::sendCommandResponse(unsigned short bindPort)
 		response.push_back(IPV6);
 		for (size_t i = 0; i < 16; i++)
 		{
-			response.push_back(0)
+			response.push_back(0);
 		}
 		//log(ERROR_LOG) << "IPV6 is not suppored.\n";
 		//return false;
