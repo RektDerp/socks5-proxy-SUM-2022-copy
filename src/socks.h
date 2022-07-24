@@ -55,8 +55,7 @@ protected:
 		_session(s), _id(0), _socks_ver(socks_ver)
 	{}
 public:
-	virtual ~Socks() = 0
-	{}
+	//virtual ~Socks() = 0;
 	virtual bool init() = 0;
 	void close();
 	void write_stat(size_t bytes, bool isServer);

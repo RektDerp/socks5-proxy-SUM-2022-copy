@@ -8,7 +8,7 @@ const unsigned char AUTH_VER = 0x01;
 class Socks5 : public Socks {
 public:
 	Socks5(TcpSession* s);
-	~Socks5() = default;
+	//~Socks5() = default;
 	bool init() override;
 private:
 	unsigned char _atyp;

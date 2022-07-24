@@ -12,7 +12,7 @@ class Socks4 : public Socks {
 public:
 	Socks4(TcpSession* const s): Socks(s, SOCKS4_VER)
 	{}
-	~Socks4() = default;
+	//~Socks4() = default;
 	bool init();
 };
 

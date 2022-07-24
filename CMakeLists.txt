@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 
 project(socks5-proxy)
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(uidir ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 set(servicedir ${CMAKE_CURRENT_SOURCE_DIR}/service/windows)
@@ -13,6 +13,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
 set (Qt "Qt6")
 set (Qtdir "${libdir}/Qt/6.3.1/mingw_64")
+
+if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+    message("Build for windows on windows")
+
+endif()
 
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
@@ -33,11 +38,13 @@ set(CMAKE_AUTORCC ON)
 qt_add_resources(QT_RESOURCES ${uidir}/main.qrc)
 
 set(modules
-"${sourcedir}/LogConfigReader.cpp|"
-"${sourcedir}/Logger.cpp|LogConfigReader"
-"${sourcedir}/session.cpp|Logger sock5_impl"
+"${sourcedir}/ConfigReader.cpp|"
+"${sourcedir}/Logger.cpp|ConfigReader"
+"${sourcedir}/session.cpp|server socks4 sock5"
 "${sourcedir}/server.cpp|session"
-"${sourcedir}/sock5_impl.cpp|session"
+"${sourcedir}/socks.cpp|session Logger"
+"${sourcedir}/sock5.cpp|session ConfigReader socks"
+"${sourcedir}/socks4.cpp|session socks"
 "${sourcedir}/stat_db_service.cpp|Logger stat_handlers sqlite3"
 "${sourcedir}/stat_handlers.cpp|sqlite3"
 "${uidir}/sessionmodel.cpp|${Qt}::Widgets ${Qt}::Core ${Qt}::Sql"
@@ -46,7 +53,7 @@ set(modules
 
 set(executables
 "main|${sourcedir}/main.cpp"
-"LogConfigReader Logger session sock5_impl server sock5_impl stat_db_service sqlite3"
+"Logger session ConfigReader server stat_db_service socks socks4 sock5 stat_handlers"
 
 "interface|${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
 "sessionmodel sortfiltersessionmodel ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"
@@ -80,17 +87,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
       find_file(qtdllpath ${qtdll} HINTS "${Qtdir}/bin")
       file(COPY_FILE ${qtdllpath} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${qtdll})
   endforeach()
-
   message("qt " ${qtfilter})
-
-
 endif()
-
-if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-    message("Build for windows on windows")
-
-endif()
-
 
 message("\n-==Defining modules==-\n")
 
