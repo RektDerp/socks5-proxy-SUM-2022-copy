@@ -10,15 +10,7 @@ case $1 in
     windows | Windows | WINDOWS)
         clean
         mkdir -p build/bin
-        if [ "$2" = "static-sqlite" ] || [ "$2" = "--static-sqlite" ]
-        then
-            echo "static sqlite"
-            ADDITIONAL_FLAGS="-D STATIC_SQLITE=true"
-        else
-            cp lib/dll/sqlite3.dll build/bin
-            cp lib/dll/libssp-0.dll build/bin
-        fi
-        cmake -S. -B build -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" $ADDITIONAL_FLAGS
+        cmake -S. -B build -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" 
         ;;
     Linux | linux | LINUX | "")
         clean

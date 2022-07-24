@@ -7,7 +7,7 @@ install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
-depends=#('qt6-base' 'boost' 'boost-libs' 'sqlite')
+depends=('qt6-quick3d')
 
 prepare() {
     cd ${srcdir}/
@@ -27,6 +27,7 @@ package() {
     mkdir -p $pkgdir/usr/share/applications/
     mkdir -p $pkgdir/usr/share/icons/
     mkdir -p $pkgdir/usr/lib/systemd/system/
+    mkdir -p $pkgdir/tmp
     cp build/bin/main $pkgdir/usr/bin/socks5-proxy
     cp build/bin/interface $pkgdir/usr/bin/socks5-interface
     cp config.txt  $pkgdir/etc
