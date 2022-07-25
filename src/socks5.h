@@ -5,6 +5,30 @@
 
 const unsigned char AUTH_VER = 0x01;
 
+enum METHOD {
+	NO_AUTH_REQ = 0x0,
+	USERNAME_PASSWORD = 0x2,
+	NO_ACC_METHODS = 0xFF
+};
+
+enum ATYP {
+	IPV4 = 0x1,
+	DOMAIN_NAME = 0x3,
+	IPV6 = 0x4
+};
+
+enum REP {
+	SUCCEEDED = 0x00,
+	SERVER_FAILURE = 0x01,
+	CONN_NOT_ALLOWED = 0x02,
+	NETWORK_UNREACH = 0x03,
+	HOST_UNREACHABLE = 0x04,
+	CONNECTION_REFUSED = 0x05,
+	TTL_EXPIRED = 0x06,
+	COMMAND_NOT_SUPP = 0x07,
+	ADDR_TYPE_NOT_SUPP = 0x08
+};
+
 class Socks5 : public Socks {
 public:
 	Socks5(TcpSession* s);

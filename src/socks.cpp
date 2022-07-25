@@ -46,7 +46,7 @@ bool Socks::createRecord()
 	s.src_addr = _session->socket().remote_endpoint().address().to_string();
 	s.src_port = std::to_string(_session->socket().remote_endpoint().port());
 	s.dst_addr = _dstAddress;
-	s.dst_port = std::to_string(_serverPort);
+	s.dst_port = std::to_string(_dstPort);
 	try {
 		_id = DatabaseService::getInstance().create(s);
 	}
@@ -86,9 +86,9 @@ bool Socks::checkError(bs::error_code& ec)
 bool Socks::readPort()
 {
 	bs::error_code ec;
-	_serverPort = _session->readByte(ec);
+	_dstPort = _session->readByte(ec);
 	if (checkError(ec)) return false;
-	_serverPort = ((int)_serverPort << 8) | ((int)_session->readByte(ec));
+	_dstPort = ((int)_dstPort << 8) | ((int)_session->readByte(ec));
 	if (checkError(ec)) return false;
 	return true;
 }

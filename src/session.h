@@ -25,11 +25,10 @@ public:
 
 	ba::ip::tcp::socket& socket()
 	{
-		return client_socket_;
+		return _client_socket;
 	}
 
 	void start();
-	
 	unsigned char readByte(bs::error_code& ec);
 	void readBytes(bvec& bytes, bs::error_code& ec);
 	void writeBytes(const bvec& bytes, bs::error_code& ec);
@@ -48,19 +47,16 @@ private:
 	void server_handle(const bs::error_code& error, size_t bytes_transferred);
 
 	TcpServer* _server;
-	ba::io_context& io_context_;
+	std::unique_ptr<Socks> _socks;
+	ba::io_context& _io_context;
 
-	ba::ip::tcp::socket client_socket_;
-	ba::ip::tcp::socket server_socket_;
+	ba::ip::tcp::socket _client_socket;
+	ba::ip::tcp::socket _server_socket;
 
-	unsigned short bind_port_ = 0;
+	unsigned short _bind_port = 0;
 
-	bvec client_buf_;
-	bvec server_buf_;
-
-	Socks* impl_;
-
-	std::stringstream logString;
+	bvec _client_buf;
+	bvec _server_buf;
 };
 
 #endif // _SESSION_H_

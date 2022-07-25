@@ -31,7 +31,7 @@ bool Socks4::init()
         return false;
     _username = string_utils::to_string(userid);
 
-    ba::ip::tcp::resolver::query query(_dstAddress, std::to_string(_serverPort));
+    ba::ip::tcp::resolver::query query(_dstAddress, std::to_string(_dstPort));
 
     /*
                 +----+----+----+----+----+----+----+----+

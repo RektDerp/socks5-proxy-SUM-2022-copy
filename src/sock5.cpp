@@ -22,7 +22,7 @@ bool Socks5::init()
 	if (!readCommandRequest())
 		return false;
 
-	ba::ip::tcp::resolver::query query(_dstAddress, std::to_string(_serverPort));
+	ba::ip::tcp::resolver::query query(_dstAddress, std::to_string(_dstPort));
 
 	if (_cmd == CMD::CONNECT)
 	{

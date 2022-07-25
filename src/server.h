@@ -11,7 +11,7 @@ public:
 	TcpServer(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB, size_t maxSessions);
 private:
 	void start_accept();
-	void handle_accept(TcpSession::pointer new_connection, const boost::system::error_code& error);
+	void handle_accept(TcpSession::pointer new_connection, const bs::error_code& error);
 
 	friend class TcpSession;
 

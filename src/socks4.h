@@ -10,10 +10,10 @@ enum REPLY {
 
 class Socks4 : public Socks {
 public:
-	Socks4(TcpSession* const s): Socks(s, SOCKS4_VER)
+	Socks4(TcpSession* const session): Socks(session, SOCKS4_VER)
 	{}
 	~Socks4() = default;
-	bool init();
+	bool init() override;
 };
 
 #endif // _SOCKS4_H_
