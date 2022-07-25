@@ -85,15 +85,15 @@ unsigned short TcpSession::connect(ba::ip::tcp::resolver::query& query, bs::erro
 {
 	log(TRACE_LOG) << "[session] connecting to destination server..." << " at address : "
 		<< query.host_name() << " " << query.service_name();
-	using namespace ba::ip;
-	tcp::resolver resolver(_io_context);
-	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query, ec);
+	using resolver_t = ba::ip::tcp::resolver;
+	resolver_t resolver(_io_context);
+	resolver_t::iterator endpoint_iterator = resolver.resolve(query, ec);
 	if (ec) {
 		log(ERROR_LOG) << "[session] Error occurred while resolving address '"
 			<< query.host_name() << "': " << ec.what();
 		return 0;
 	}
-	tcp::resolver::iterator end;
+	resolver_t::iterator end;
 	ec = ba::error::host_not_found;
 	while (ec && endpoint_iterator != end)
 	{
@@ -108,7 +108,7 @@ unsigned short TcpSession::connect(ba::ip::tcp::resolver::query& query, bs::erro
 	_bind_port = _server_socket.local_endpoint().port();
 	log(TRACE_LOG) << "[session] Connected to " << _server_socket.remote_endpoint().address() << ":"
 		<< _server_socket.remote_endpoint().port();
-	log(TRACE_LOG) << "[session] server connected on local port " << _bind_port;
+	log(TRACE_LOG) << "[session] Server connected on local port " << _bind_port;
 	return _bind_port;
 }
 
@@ -121,9 +121,7 @@ void TcpSession::client_read()
 				ba::placeholders::bytes_transferred));
 	}
 	else {
-		log(TRACE_LOG) << "["
-			<< _bind_port
-			<< "] Stopped reading - client socket is closed.";
+		log(TRACE_LOG) << "[" << _bind_port << "] Stopped reading - client socket is closed.";
 	}
 }
 
@@ -136,74 +134,55 @@ void TcpSession::server_read()
 				ba::placeholders::bytes_transferred));
 	}
 	else {
-		log(TRACE_LOG) << "["
-			<< _bind_port
-			<< "] Stopped reading - server socket is closed.";
+		log(TRACE_LOG) << "[" << _bind_port << "] Stopped reading - server socket is closed.";
 	}
 }
 
 void TcpSession::client_handle(const bs::error_code& error, size_t bytes_transferred)
 {
-	if (error.value() == ba::error::eof) // todo do we need to close connection right here?
+	if (error.value())
 	{
-		log(TRACE_LOG) << "[" << _bind_port << "] Client EOF.";
-		return;
-	}
-	else if (error.value() > 0)
-	{
-		log(ERROR_LOG) << "["
-			<< _bind_port
-			<< "] " << "error occured while reading client: "
+		log(ERROR_LOG) << "[" << _bind_port << "] error occured while reading client: "
 			<< error.what();
+		close();
 		return;
 	}
-	
-	if (bytes_transferred > 0)
+		
+	if (bytes_transferred > 0
+		&& writeToSocket(_server_socket, _client_buf, bytes_transferred, true))
 	{
-		if (writeToSocket(_server_socket, _client_buf, bytes_transferred, true))
-		{
-			client_read();
-		}
+		client_read();
 	}
 	else {
 		log(TRACE_LOG) << "[" << _bind_port << "] no bytes transferred, closing connection...";
+		close();
 	}
 }
 
 void TcpSession::server_handle(const bs::error_code& error, size_t bytes_transferred)
 {
-	if (error.value() == ba::error::eof)
+	if (error.value())
 	{
-		log(TRACE_LOG) << "[" << _bind_port << "] Server EOF.";
-		return;
-	}
-	else if (error.value() > 0)
-	{
-		log(ERROR_LOG) << "["
-			<< _bind_port
-			<< "] " << "error occured while reading server: "
+		log(ERROR_LOG) << "[" << _bind_port << "] " << "error occured while reading server: "
 			<< error.what();
+		close();
 		return;
 	}
 
-	if (bytes_transferred > 0)
-	{
-		if (writeToSocket(_client_socket, _server_buf, bytes_transferred, false))
-		{
-			server_read();
-		}
+	if (bytes_transferred > 0
+		&& writeToSocket(_client_socket, _server_buf, bytes_transferred, false)) {
+		server_read();
 	}
 	else {
-		log(TRACE_LOG) << "[" << _bind_port << "] no bytes transferred...";
+		log(TRACE_LOG) << "[" << _bind_port << "] no bytes transferred, closing connection...";
+		close();
 	}
 }
 
 bool TcpSession::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
 {
-	std::string target = isServer ? "server" : "client"; // todo: optimise
-	log(DEBUG_LOG) << "["
-			<< _bind_port
-			<< "] " << "Sending " << len << " bytes to " << target;
+	std::string target = isServer ? "server" : "client";
+	log(DEBUG_LOG) << "[" << _bind_port << "] Sending " << len << " bytes to " << target;
 	bs::error_code ec;
 	ba::write(socket, ba::buffer(buffer, len), ec);
 	if (ec) {
@@ -216,21 +195,23 @@ bool TcpSession::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t
 
 void TcpSession::close()
 {
-	log(DEBUG_LOG) << "[" << _bind_port << "] Closing sockets...";
-	try {
-		_client_socket.close();
+	if (!_isClosed.exchange(true)) {
+		log(DEBUG_LOG) << "[" << _bind_port << "] Closing sockets...";
+		try {
+			_client_socket.close();
+		}
+		catch (const bs::system_error& e)
+		{
+			log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing client socket: " << e.what();
+		}
+		try {
+			_server_socket.close();
+		}
+		catch (const bs::system_error& e)
+		{
+			log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing server socket: " << e.what();
+		}
+		if (_socks != nullptr) _socks->close();
+		_server->_sessions--;
 	}
-	catch (const bs::system_error& e)
-	{
-		log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing client socket: " << e.what();
-	}
-	try {
-		_server_socket.close();
-	}
-	catch (const bs::system_error& e)
-	{
-		log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing server socket: " << e.what();
-	}
-	if (_socks != nullptr) _socks->close();
-	_server->_sessions--;
 }

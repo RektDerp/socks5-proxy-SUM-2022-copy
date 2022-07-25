@@ -57,6 +57,8 @@ private:
 
 	bvec _client_buf;
 	bvec _server_buf;
+
+	std::atomic_bool _isClosed = false;
 };
 
 #endif // _SESSION_H_
