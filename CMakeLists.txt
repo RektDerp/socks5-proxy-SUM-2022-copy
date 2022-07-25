@@ -11,7 +11,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
-set (Qt "Qt6")
+
+if(NOT DEFINED Qt)
+    message ("Qt not defined")
+    set(Qt "Qt6")
+endif()
+
 set (Qtdir "${libdir}/Qt/QtStatic")
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
@@ -39,10 +44,10 @@ qt_add_resources(QT_RESOURCES ${uidir}/main.qrc)
 set(modules
 "${sourcedir}/ConfigReader.cpp|"
 "${sourcedir}/Logger.cpp|ConfigReader"
-"${sourcedir}/session.cpp|server socks4 sock5"
+"${sourcedir}/session.cpp|server socks4 socks5"
 "${sourcedir}/server.cpp|session"
 "${sourcedir}/socks.cpp|session Logger"
-"${sourcedir}/sock5.cpp|session ConfigReader socks"
+"${sourcedir}/socks5.cpp|session ConfigReader socks"
 "${sourcedir}/socks4.cpp|session socks"
 "${sourcedir}/stat_db_service.cpp|Logger stat_handlers sqlite3"
 "${sourcedir}/stat_handlers.cpp|sqlite3"
@@ -52,7 +57,7 @@ set(modules
 
 set(executables
 "main|${sourcedir}/main.cpp"
-"Logger session ConfigReader server stat_db_service socks socks4 sock5 stat_handlers"
+"Logger session ConfigReader server stat_db_service socks socks4 socks5 stat_handlers"
 
 "interface|${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
 "sessionmodel sortfiltersessionmodel ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"

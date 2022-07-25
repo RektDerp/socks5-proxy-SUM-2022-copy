@@ -1,56 +1,89 @@
 #!/usr/bin/bash
 
 basedir=$PWD
-builddir=$basedir/build
+builddir=$basedir/build/
 pkgbuild_dir=$basedir/installer/arch-scripted/
+deb_packagename=socks5-proxy-2.2.8-1_amd64
 
 clean () {
-  cd "$basedir" || exit
-  rm -rf "lib/*.a" "$builddir" "*.db" "*.log" "installer/arch/pkg" "installer/arch/src" "installer/arch/*.zst"
-  mkdir -p "$builddir/bin"
+    cd "$basedir" || exit
+    rm -rf "lib/*.a" "$builddir" "*.db" "*.log" "installer/arch/pkg" "installer/arch/src" "installer/arch/*.zst"
+    mkdir -p "$builddir/bin"
 }
+
 configure_linux () {
-  echo "Configuring for linux"
-  echo "flags $ADDITIONAL_FLAGS"
-  cmake -S. -B "$builddir" $ADDITIONAL_FLAGS
+    echo "Configuring for linux"
+    echo "flags $ADDITIONAL_FLAGS"
+    cmake -S. -B "$builddir" $ADDITIONAL_FLAGS
 }
+
 configure_windows () {
-  echo "Configuring for windows"
-  echo "flags $ADDITIONAL_FLAGS"
-  cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
+    echo "Configuring for windows"
+    echo "flags $ADDITIONAL_FLAGS"
+    cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
+
 build () {
     echo "building"
     echo "Build directory: $builddir"
     cd "$builddir" || exit
     cmake --build .
+    bstatus=$?
 }
 
-package () {
-    echo "packaging"
-    if which makepkg > /dev/null 2>&1
-    then
-        cd "$basedir" || exit
-        cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
-        mkdir -p "$builddir/installer"
-        cp config.txt "$builddir"
-        cp "installer/socks5-interface.png" "installer/socks5-interface.desktop" "$builddir/installer/"
-        cp service/linux/socks5-proxy.service "$builddir"
-        cd "$builddir" || exit
-        makepkg $force_arg
-    else
-        echo -e "makepkg not found.\nPackaging currently supported only for Arch Linux"
-    fi
+copy_resources () {
+    pkgdir=$builddir/$deb_packagename/
+    cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
+    mkdir -p "$builddir/installer"
+    cp $basedir/config.txt "$builddir"
+    cp "$basedir/installer/socks5-interface.png" "$basedir/installer/socks5-interface.desktop" "$builddir/installer/"
+    cp $basedir/service/linux/socks5-proxy.service "$builddir"
+}
+
+package_arch () {
+  echo "packaging for Arch linux"
+  if which makepkg > /dev/null 2>&1
+  then
+      copy_resources
+      cd "$builddir" || exit
+      makepkg $force_arg
+  else
+      echo -e "makepkg not found.\nCannot package for Arch Linux"
+  fi
+}
+
+package_deb () {
+    echo "packaging deb"
+    copy_resources
+    cd "$builddir" || exit
+
+
+    mkdir -p $pkgdir/usr/bin/
+    mkdir -p $pkgdir/etc/
+    mkdir -p $pkgdir/usr/share/applications/
+    mkdir -p $pkgdir/usr/share/icons/
+    mkdir -p $pkgdir/usr/lib/systemd/system/
+    mkdir -p $pkgdir/tmp
+
+    cp bin/main $pkgdir/usr/bin/socks5-proxy
+    cp bin/interface $pkgdir/usr/bin/socks5-interface
+    cp config.txt  $pkgdir/etc/socks5-config.txt
+    cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
+    cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
+    cp socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
+    touch $pkgdir/tmp/sessions_stat.db
+    chmod 666 $pkgdir/tmp/sessions_stat.db
 }
 
 invalid () {
-  printf "%s\nusage: x[\n" "$1"
+    printf "%s\nusage: x[\n" "$1"
 }
 
 cnt=1
-while [ "$cnt" -lt "$(($# + 1))" ]; do
+while [ "$cnt" -lt "$(($# + 1))" ]
+do
   i=${!cnt}
-  #echo "param $cnt / $#: $i"
+#echo "param $cnt / $#: $i"
   case $i in
     windows | Windows | WINDOWS)
         if [ "$linux" = "true" ]
@@ -78,8 +111,21 @@ while [ "$cnt" -lt "$(($# + 1))" ]; do
         continue
     ;;
     package | --package | -p)
-        package_flg=true
         cnt=$((cnt + 1))
+        case ${!cnt} in
+            arch | a)
+                package_flg=arch
+                cnt=$((cnt + 1))
+            ;;
+            deb | debian | ubuntu)
+                package_flg=deb
+                cnt=$((cnt + 1))
+            ;;
+            *)
+                echo "Package type: defaulting to arch"
+                package_flg=arch
+            ;;
+        esac
         continue
     ;;
     -D)
@@ -127,13 +173,13 @@ else
   configure_linux
 fi
 
-if [ "$build_flg" = true ] || [ "$package_flg" = true ]; then build; fi
+if [ "$build_flg" = true ] || [ "$package_flg" != "" ]; then build; fi
 
-if [ "$package_flg" = true ]
+if [ "$package_flg" != "" ]
 then
-    if [ $? = 0 ]
+    if [ "$bstatus" = 0 ]
     then
-        package
+        package_$package_flg
     else
         echo "Build failed. Skipping package step."
     fi

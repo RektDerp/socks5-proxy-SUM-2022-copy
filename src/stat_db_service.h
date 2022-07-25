@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <mutex>
+#include <memory>
 
 struct sqlite3_stmt;
 
