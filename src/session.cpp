@@ -215,6 +215,7 @@ namespace proxy {
 			}
 			if (_socks != nullptr) _socks->close();
 			_server->_sessions--;
-		}
-	}
+        }
+    }
+
 } // namespace proxy

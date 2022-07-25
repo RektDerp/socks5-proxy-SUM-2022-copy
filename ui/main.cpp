@@ -1,17 +1,16 @@
+#include "sessionmodel.h"
+#include "sortfiltersessionmodel.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "sessionmodel.h"
-#include "sortfiltersessionmodel.h"
-#include <QFont>
 #include <QString>
 
 int main(int argc, char *argv[])
 {
+    using namespace proxy::ui;
     QGuiApplication app(argc, argv);
     qmlRegisterType<SessionModel>("SessionModel", 0, 1, "SessionModel");
     qmlRegisterType<SortFilterSessionModel>("SortFilterSessionModel", 0, 1, "SortFilterSessionModel");
-    qRegisterMetaType<QFont*>("const QFont*");
     QQmlApplicationEngine engine;
     const QUrl url(QString("qrc:/resources/main/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

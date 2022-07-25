@@ -37,7 +37,7 @@ TableView {
 
         Text {
             id: cellData
-            width: parent.width
+            width: parent.width - 6
             text: model.display
             elide: Text.ElideRight
             anchors.centerIn: parent

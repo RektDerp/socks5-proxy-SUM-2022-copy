@@ -2,152 +2,103 @@
 #include "session.h"
 #include "qcoreevent.h"
 #include "qwindowdefs.h"
-#include <QSqlQuery>
 #include <QDebug>
 #include <qguiapplication.h>
-#include <QFont>
 #include <QFontMetrics>
 
-SessionModel::SessionModel(QObject *parent)
-    : QAbstractTableModel{parent}
-{
-    _header.append({"Username", "Create date", "Update date", "Is active?", "Client [ip:port]",
-                    "Server [ip:port]", "Sent bytes", "Recv bytes"});
-    _roleNames = QAbstractTableModel::roleNames();
-    _roleNames.insert(int(Role::Sort), QByteArray("sort"));
-
-    _columnWidths.resize(_header.size());
-    _db = QSqlDatabase::addDatabase("QSQLITE");
-#ifdef __linux__
-    _db.setDatabaseName("/tmp/sessions_stat.db");
-#else
-    _db.setDatabaseName("../sessions_stat.db");
-#endif
-    if (!_db.open()) {
-        qDebug() << "there was an error during opening db";
+namespace proxy { namespace ui {
+    SessionModel::SessionModel(QObject *parent)
+        : QAbstractTableModel{parent}
+    {
+        _header.append({"Username", "Create date", "Update date", "Is active?", "Client [ip:port]",
+                        "Server [ip:port]", "Sent bytes", "Recv bytes"});
+        _columnWidths.resize(_header.size());
+        update();
     }
 
-    update();
-}
+    int SessionModel::rowCount(const QModelIndex &) const
+    {
+        return _sessions.size();
+    }
 
-SessionModel::~SessionModel()
-{
-    _db.close();
-}
+    int SessionModel::columnCount(const QModelIndex &) const
+    {
+        return F_BYTES_RECV + 1;
+    }
 
-int SessionModel::rowCount(const QModelIndex &) const
-{
-    return _table.size();
-}
-
-int SessionModel::columnCount(const QModelIndex &) const
-{
-    return F_BYTES_RECV + 1;
-}
-
-QVariant SessionModel::data(const QModelIndex &index, int role) const
-{
-    fields field = fields(index.column());
-    switch (role) {
-    case Qt::DisplayRole: {
-        QVariant ret = _table[index.row()][field];
-        switch (field) {
-        case F_USER:
-        case F_IS_ACTIVE:
-        case F_SRC_ENDPOINT:
-        case F_DST_ENDPOINT:
-        case F_CREATE_DATE:
-        case F_UPDATE_DATE:
-            return ret;
-        case F_BYTES_SENT:
-        case F_BYTES_RECV:
-            return ret.toInt();
-        default:
-            return QVariant();
+    QVariant SessionModel::data(const QModelIndex &index, int role) const
+    {
+        fields field = fields(index.column());
+        if (role == Qt::DisplayRole) {
+            QVariant ret = _sessions.get(index.row(), field);
+            switch (field) {
+            case F_USER:
+            case F_IS_ACTIVE:
+            case F_SRC_ENDPOINT:
+            case F_DST_ENDPOINT:
+            case F_CREATE_DATE:
+            case F_UPDATE_DATE:
+                return ret;
+            case F_BYTES_SENT:
+            case F_BYTES_RECV:
+                return ret.toInt();
+            default:
+                return QVariant();
+            }
         }
-    }
-    default:
         return QVariant();
     }
-}
 
-QHash<int, QByteArray> SessionModel::roleNames() const
-{
-    return _roleNames;
-}
+    QHash<int, QByteArray> SessionModel::roleNames() const
+    {
+        return { {Qt::DisplayRole, "display"} };
+    }
 
-QVariant SessionModel::headerData(int id, Qt::Orientation orientation, int role) const
-{
-    if (role != Qt::DisplayRole)
-        return QVariant();
-
-    if (orientation == Qt::Horizontal) {
-        if (id > _header.size() || id < 0)
+    QVariant SessionModel::headerData(int id, Qt::Orientation orientation, int role) const
+    {
+        if (role != Qt::DisplayRole)
             return QVariant();
-        return _header[id];
-    } else {
-        return QString();
-    }
-}
 
-int SessionModel::columnWidth(int c, const QFont *font)
-{
-    if (c < 0 || c >= _columnWidths.size()) {
-        return 0;
-    }
-    if (!_columnWidths[c]) {
-        QFontMetrics defaultFontMetrics = QFontMetrics(QGuiApplication::font());
-        QFontMetrics fm = (font ? QFontMetrics(*font) : defaultFontMetrics);
-        int ret = fm.horizontalAdvance(headerData(c, Qt::Horizontal).toString()) + 8;
-
-        for (int r = 0; r < _table.size(); r++) {
-            ret = qMax(ret, fm.horizontalAdvance(_table[r][c]));
+        if (orientation == Qt::Horizontal) {
+            if (id > _header.size() || id < 0)
+                return QVariant();
+            return _header[id];
+        } else {
+            return QString();
         }
-        _columnWidths[c] = ret + 10;
     }
-    return _columnWidths[c];
-}
 
-int SessionModel::tableWidth(const QFont *font)
-{
-    int sum = 0;
-    for (int c = 0; c < _columnWidths.size(); c++)
-        sum += columnWidth(c, font);
-    return sum;
-}
+    int SessionModel::columnWidth(int c)
+    {
+        if (c < 0 || c >= _columnWidths.size()) {
+            return 0;
+        }
+        if (!_columnWidths[c]) {
+            QFontMetrics fm = QFontMetrics(QGuiApplication::font());
+            int ret = fm.horizontalAdvance(headerData(c, Qt::Horizontal).toString()) + 8;
 
-void SessionModel::update()
-{
-    beginResetModel();
-    _table.clear();
-    _columnWidths.clear();
-    _columnWidths.resize(_header.size());
-    QSqlQuery query(_db);
-    query.exec("SELECT * from sessions");
-    while (query.next()) {
-        QVector<QString> row;
-        int i = 0;
-        /*QString id = */query.value(i++).toString();
-        QString user = query.value(i++).toString();
-        QString create_date = query.value(i++).toString();
-        QString update_date = query.value(i++).toString();
-        QString is_active = query.value(i++).toString();
-        QString src_addr = query.value(i++).toString();
-        QString src_port = query.value(i++).toString();
-        QString dst_addr = query.value(i++).toString();
-        QString dst_port = query.value(i++).toString();
-        QString bytes_sent = query.value(i++).toString();
-        QString bytes_recv = query.value(i++).toString();
-        row.append(user);
-        row.append(create_date);
-        row.append(update_date);
-        row.append(is_active);
-        row.append(src_addr + ":" + src_port);
-        row.append(dst_addr + ":" + dst_port);
-        row.append(bytes_sent);
-        row.append(bytes_recv);
-
-        _table.append(row);
+            for (int r = 0; r < _sessions.size(); r++) {
+                ret = qMax(ret, fm.horizontalAdvance(_sessions.get(r, c)));
+            }
+            _columnWidths[c] = ret + 10;
+        }
+        return _columnWidths[c];
     }
-    endResetModel();
-}
+
+    int SessionModel::tableWidth()
+    {
+        int sum = 0;
+        for (int c = 0; c < _columnWidths.size(); c++)
+            sum += columnWidth(c);
+        return sum;
+    }
+
+    void SessionModel::update()
+    {
+        beginResetModel();
+        _columnWidths.clear();
+        _columnWidths.resize(_header.size());
+        _sessions.update();
+        endResetModel();
+    }
+}} // namespace proxy ui

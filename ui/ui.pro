@@ -2,6 +2,7 @@ QT += quick sql core gui
 
 SOURCES += \
         main.cpp \
+    session.cpp \
 	sessionmodel.cpp \
 	sortfiltersessionmodel.cpp
 
