@@ -11,7 +11,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
-set (Qt "Qt6")
+
+if(NOT DEFINED Qt)
+    message ("Qt not defined")
+    set(Qt "Qt6")
+endif()
+
 set (Qtdir "${libdir}/Qt/QtStatic")
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")

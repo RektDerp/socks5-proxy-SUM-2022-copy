@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
 basedir=$PWD
-builddir=$basedir/build
+builddir=$basedir/build/
 pkgbuild_dir=$basedir/installer/arch-scripted/
+deb_packagename=socks5-proxy-2.2.8-1_amd64
 
 clean () {
     cd "$basedir" || exit
@@ -30,25 +31,48 @@ build () {
     bstatus=$?
 }
 
+copy_resources () {
+    pkgdir=$builddir/$deb_packagename/
+    cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
+    mkdir -p "$builddir/installer"
+    cp $basedir/config.txt "$builddir"
+    cp "$basedir/installer/socks5-interface.png" "$basedir/installer/socks5-interface.desktop" "$builddir/installer/"
+    cp $basedir/service/linux/socks5-proxy.service "$builddir"
+}
+
 package_arch () {
   echo "packaging for Arch linux"
   if which makepkg > /dev/null 2>&1
   then
-      cd "$basedir" || exit
-      cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
-      mkdir -p "$builddir/installer"
-      cp config.txt "$builddir"
-      cp "installer/socks5-interface.png" "installer/socks5-interface.desktop" "$builddir/installer/"
-      cp service/linux/socks5-proxy.service "$builddir"
+      copy_resources
       cd "$builddir" || exit
       makepkg $force_arg
   else
-      echo -e "makepkg not found.\nPackaging currently supported only for Arch Linux"
+      echo -e "makepkg not found.\nCannot package for Arch Linux"
   fi
 }
 
 package_deb () {
     echo "packaging deb"
+    copy_resources
+    cd "$builddir" || exit
+
+
+    mkdir -p $pkgdir/usr/bin/
+    mkdir -p $pkgdir/etc/
+    mkdir -p $pkgdir/usr/share/applications/
+    mkdir -p $pkgdir/usr/share/icons/
+    mkdir -p $pkgdir/usr/lib/systemd/system/
+    mkdir -p $pkgdir/tmp
+
+    cp bin/main $pkgdir/usr/bin/socks5-proxy
+    cp bin/interface $pkgdir/usr/bin/socks5-interface
+    cp config.txt  $pkgdir/etc/socks5-config.txt
+    cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
+    cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
+    cp socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
+    touch $pkgdir/tmp/sessions_stat.db
+    chmod 666 $pkgdir/tmp/sessions_stat.db
 }
 
 invalid () {
