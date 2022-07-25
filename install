@@ -26,6 +26,7 @@ then
     chmod +x $SERVICE
     chmod +x $EXE
     chmod +x $UI
+    chmod 666 $DATABASE
     systemctl daemon-reload
 else
     rm -f $ICON
