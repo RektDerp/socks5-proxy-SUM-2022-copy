@@ -129,7 +129,7 @@ std::string Socks5::readAddress(unsigned char atyp)
 	}
 	else if (atyp == ATYP::IPV6) {
 		bvec dstAdd;
-		dstAdd.resize(16);
+		dstAdd.resize(8);
 		_session->readBytes(dstAdd, ec);
 		if (checkError(ec)) return {};
 		return formIpAddressString(dstAdd);
@@ -227,7 +227,7 @@ bool Socks5::sendCommandResponse(unsigned short bindPort)
 	}
 	else if (_atyp == IPV6) {
 		response.push_back(IPV6);
-		for (size_t i = 0; i < 16; i++)
+		for (size_t i = 0; i < 8; i++)
 		{
 			response.push_back(0);
 		}

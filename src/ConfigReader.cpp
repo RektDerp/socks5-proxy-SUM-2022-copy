@@ -101,6 +101,7 @@ bool ConfigReader::parseFile(string fileName)
             {
                 std::cout << "Users not loaded from config" << std::endl;
             }
+            continue;
         }
         unsigned int length = configData.find(delimeter);
 

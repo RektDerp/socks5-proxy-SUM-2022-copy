@@ -31,10 +31,10 @@ namespace string_utils {
 		}
 		else
 		{
-			for (int i = 0; i < 16; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				ip_address += std::to_string((int)bytes[i]);
-				if (i != 15) ip_address += ':';
+				if (i != 7) ip_address += ':';
 			}
 		}
 		return ip_address;
