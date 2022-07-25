@@ -10,7 +10,7 @@ namespace proxy {
 	using namespace std;
 	using string_utils::concat;
 
-	DatabaseService* DatabaseService::_instance = nullptr;
+	std::unique_ptr<DatabaseService> DatabaseService::_instance = nullptr;
 	mutex DatabaseService::_mutex;
 
 	DatabaseService& DatabaseService::getInstance(const string& db_path)
@@ -18,7 +18,7 @@ namespace proxy {
 		lock_guard<mutex> guard(_mutex);
 		if (_instance == nullptr)
 		{
-			_instance = new DatabaseService(db_path);
+			_instance = std::unique_ptr<DatabaseService>(new DatabaseService(db_path));
 		}
 		return *_instance;
 	}

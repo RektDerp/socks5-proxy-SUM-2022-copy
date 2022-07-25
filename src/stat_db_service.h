@@ -34,7 +34,7 @@ namespace proxy {
 
 	class DatabaseService {
 	private:
-		static DatabaseService* _instance;
+		static std::unique_ptr<DatabaseService> _instance;
 		static std::mutex _mutex;
 	public:
 		static DatabaseService& getInstance(const string& db_path = "./sessions_stat.db");
