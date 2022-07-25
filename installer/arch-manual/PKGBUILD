@@ -1,0 +1,40 @@
+# Maintainer: Kyrychuk Anton <youremail@domain.com>
+pkgname='socks5-proxy'
+pkgdesc='Apriorit project'
+pkgver='2.2.8'
+pkgrel=1
+install=$pkgname.install
+arch=('any')
+url='http://ragalik.tk'
+license=('GPL3')
+depends=('qt6-quick3d')
+
+prepare() {
+    cd ${srcdir}/
+    git clone https://github.com/apriorit/socks5-proxy-SUM-2022.git
+}
+
+build() {
+    cd ${srcdir}/socks5-proxy-SUM-2022
+    ./configure
+    cd build
+    make
+}
+package() {
+    cd ${srcdir}/socks5-proxy-SUM-2022
+    mkdir -p $pkgdir/usr/bin/
+    mkdir -p $pkgdir/etc/
+    mkdir -p $pkgdir/usr/share/applications/
+    mkdir -p $pkgdir/usr/share/icons/
+    mkdir -p $pkgdir/usr/lib/systemd/system/
+    mkdir -p $pkgdir/tmp
+    cp build/bin/main $pkgdir/usr/bin/socks5-proxy
+    cp build/bin/interface $pkgdir/usr/bin/socks5-interface
+    cp config.txt  $pkgdir/etc
+    cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
+    cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
+    cp service/linux/socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
+    touch $pkgdir/tmp/sessions_stat.db
+    chmod 666 $pkgdir/tmp/sessions_stat.db
+}
+
