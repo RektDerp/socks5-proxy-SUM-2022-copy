@@ -63,12 +63,13 @@ bool TcpSession::createProxy()
 }
 
 // todo add timeout
-// todo potentially this is thread unsafe method
 unsigned char TcpSession::readByte(bs::error_code& ec)
 {
-	ba::read(_client_socket, ba::buffer(_client_buf),
+	bvec vec;
+	vec.resize(1);
+	ba::read(_client_socket, ba::buffer(vec),
 		ba::transfer_exactly(1), ec);
-	return _client_buf[0];
+	return vec[0];
 }
 
 void TcpSession::readBytes(bvec& vec, bs::error_code& ec)
