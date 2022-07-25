@@ -31,10 +31,10 @@ void TcpServer::start_accept()
 	TcpSession::pointer new_connection = TcpSession::create(this, _io_context, _bufferSizeKB);
 	_acceptor.async_accept(new_connection->socket(),
 		boost::bind(&TcpServer::handle_accept, this, new_connection,
-			boost::asio::placeholders::error));
+			ba::placeholders::error));
 }
 
-void TcpServer::handle_accept(TcpSession::pointer new_connection, const boost::system::error_code& error)
+void TcpServer::handle_accept(TcpSession::pointer new_connection, const bs::error_code& error)
 {
 	if (!error)
 	{

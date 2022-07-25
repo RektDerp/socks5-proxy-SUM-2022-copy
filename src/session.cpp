@@ -22,14 +22,19 @@ TcpSession::~TcpSession()
 
 void TcpSession::start()
 {
-	log(TRACE_LOG) << "IP of connected client: " << _client_socket.remote_endpoint().address() << ":"
-		<< _client_socket.remote_endpoint().port();
-	if (createProxy()) {
-		if (_socks->init()) {
-			log(TRACE_LOG) << "[" << _bind_port << "] Starting session...";
-			client_read();
-			server_read();
+	try {
+		log(TRACE_LOG) << "IP of connected client: " << _client_socket.remote_endpoint().address() << ":"
+			<< _client_socket.remote_endpoint().port();
+		if (createProxy()) {
+			if (_socks->init()) {
+				log(TRACE_LOG) << "[" << _bind_port << "] Starting session...";
+				client_read();
+				server_read();
+			}
 		}
+	}
+	catch (const std::runtime_error& err) {
+		log(ERROR_LOG) << "Error occured while starting session: " << err.what();
 	}
 }
 
@@ -58,16 +63,17 @@ bool TcpSession::createProxy()
 }
 
 // todo add timeout
+// todo potentially this is thread unsafe method
 unsigned char TcpSession::readByte(bs::error_code& ec)
 {
-	boost::asio::read(_client_socket, ba::buffer(_client_buf),
-		boost::asio::transfer_exactly(1), ec);
+	ba::read(_client_socket, ba::buffer(_client_buf),
+		ba::transfer_exactly(1), ec);
 	return _client_buf[0];
 }
 
 void TcpSession::readBytes(bvec& vec, bs::error_code& ec)
 {
-	boost::asio::read(_client_socket, ba::buffer(vec), ec);
+	ba::read(_client_socket, ba::buffer(vec), ec);
 }
 
 void TcpSession::writeBytes(const bvec& bytes, bs::error_code& ec)
@@ -82,7 +88,11 @@ unsigned short TcpSession::connect(ba::ip::tcp::resolver::query& query, bs::erro
 	using namespace ba::ip;
 	tcp::resolver resolver(_io_context);
 	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query, ec);
-	if (ec) return 0;
+	if (ec) {
+		log(ERROR_LOG) << "[session] Error occurred while resolving address '"
+			<< query.host_name() << "': " << ec.what();
+		return 0;
+	}
 	tcp::resolver::iterator end;
 	ec = ba::error::host_not_found;
 	while (ec && endpoint_iterator != end)
@@ -90,7 +100,11 @@ unsigned short TcpSession::connect(ba::ip::tcp::resolver::query& query, bs::erro
 		_server_socket.close(ec);
 		_server_socket.connect(*endpoint_iterator++, ec);
 	}
-	if (ec) return 0;
+	if (ec) {
+		log(ERROR_LOG) << "[session] Error occurred while connecting to address '"
+			<< query.host_name() << "': " << ec.what();
+		return 0;
+	}
 	_bind_port = _server_socket.local_endpoint().port();
 	log(TRACE_LOG) << "[session] Connected to " << _server_socket.remote_endpoint().address() << ":"
 		<< _server_socket.remote_endpoint().port();
@@ -103,8 +117,8 @@ void TcpSession::client_read()
 	if (_client_socket.is_open()) {
 		_client_socket.async_read_some(ba::buffer(_client_buf),
 			boost::bind(&TcpSession::client_handle, shared_from_this(),
-				boost::asio::placeholders::error,
-				boost::asio::placeholders::bytes_transferred));
+				ba::placeholders::error,
+				ba::placeholders::bytes_transferred));
 	}
 	else {
 		log(TRACE_LOG) << "["
@@ -118,8 +132,8 @@ void TcpSession::server_read()
 	if (_server_socket.is_open()) {
 		_server_socket.async_read_some(ba::buffer(_server_buf),
 			boost::bind(&TcpSession::server_handle, shared_from_this(),
-				boost::asio::placeholders::error,
-				boost::asio::placeholders::bytes_transferred));
+				ba::placeholders::error,
+				ba::placeholders::bytes_transferred));
 	}
 	else {
 		log(TRACE_LOG) << "["
@@ -130,7 +144,7 @@ void TcpSession::server_read()
 
 void TcpSession::client_handle(const bs::error_code& error, size_t bytes_transferred)
 {
-	if (error.value() == ba::error::eof)
+	if (error.value() == ba::error::eof) // todo do we need to close connection right here?
 	{
 		log(TRACE_LOG) << "[" << _bind_port << "] Client EOF.";
 		return;
