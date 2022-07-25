@@ -32,7 +32,6 @@ enum REP {
 class Socks5 : public Socks {
 public:
 	Socks5(TcpSession* s);
-	//~Socks5() = default;
 	bool init() override;
 private:
 	unsigned char _atyp;
