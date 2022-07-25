@@ -39,10 +39,10 @@ qt_add_resources(QT_RESOURCES ${uidir}/main.qrc)
 set(modules
 "${sourcedir}/ConfigReader.cpp|"
 "${sourcedir}/Logger.cpp|ConfigReader"
-"${sourcedir}/session.cpp|server socks4 sock5"
+"${sourcedir}/session.cpp|server socks4 socks5"
 "${sourcedir}/server.cpp|session"
 "${sourcedir}/socks.cpp|session Logger"
-"${sourcedir}/sock5.cpp|session ConfigReader socks"
+"${sourcedir}/socks5.cpp|session ConfigReader socks"
 "${sourcedir}/socks4.cpp|session socks"
 "${sourcedir}/stat_db_service.cpp|Logger stat_handlers sqlite3"
 "${sourcedir}/stat_handlers.cpp|sqlite3"
@@ -52,7 +52,7 @@ set(modules
 
 set(executables
 "main|${sourcedir}/main.cpp"
-"Logger session ConfigReader server stat_db_service socks socks4 sock5 stat_handlers"
+"Logger session ConfigReader server stat_db_service socks socks4 socks5 stat_handlers"
 
 "interface|${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
 "sessionmodel sortfiltersessionmodel ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"

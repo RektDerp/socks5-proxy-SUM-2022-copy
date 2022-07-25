@@ -155,7 +155,7 @@ if [ "$package_flg" != "" ]
 then
     if [ "$bstatus" = 0 ]
     then
-        package_${!package_flg}
+        package_$package_flg
     else
         echo "Build failed. Skipping package step."
     fi
