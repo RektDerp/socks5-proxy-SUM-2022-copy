@@ -5,7 +5,6 @@
 
 void Socks::close()
 {
-#ifdef STAT
 	if (_id != 0) {
 		try {
 			proxy::stat::DatabaseService::getInstance().close(_id);
@@ -16,12 +15,10 @@ void Socks::close()
 		}
 		_id = 0;
 	}
-#endif
 }
 
 void Socks::write_stat(size_t bytes, bool isServer)
 {
-#ifdef STAT
 	if (_id == 0) {
 		log(ERROR_LOG) << "Cannot write statistics: id of session is 0";
 		return;
@@ -34,12 +31,10 @@ void Socks::write_stat(size_t bytes, bool isServer)
 	catch (const DatabaseException& er) {
 		log(ERROR_LOG) << er.what();
 	}
-#endif
 }
 
 bool Socks::createRecord()
 {
-#ifdef STAT
 	using namespace proxy::stat;
 	proxy::stat::Session s;
 	s.user = _username;
@@ -54,7 +49,6 @@ bool Socks::createRecord()
 		log(ERROR_LOG) << "Failed to create record in database: " << ex.what();
 		return false;
 	}
-#endif
 	return true;
 }
 

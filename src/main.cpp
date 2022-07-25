@@ -1,9 +1,7 @@
 #include "server.h"
 #include "ConfigReader.h"
 #include <stdexcept>
-#ifdef STAT
 #include "stat_db_service.h"
-#endif
 #include <thread>
 #include <memory>
 
@@ -64,12 +62,10 @@ int main(int argc, char** argv)
 
 void initDb()
 {
-#ifdef STAT
 	using namespace proxy::stat;
 #ifdef __linux__
 	DatabaseService::getInstance("/tmp/sessions_stat.db");
 #else 
 	DatabaseService::getInstance(); // this initializes table
 #endif // __linux__
-#endif // STAT
 }

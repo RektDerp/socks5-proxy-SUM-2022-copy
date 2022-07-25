@@ -1,10 +1,8 @@
 #ifndef _SOCKS_H_
 #define _SOCKS_H_
 #include "proxy_common.h"
-
-#ifdef STAT
 #include "stat_db_service.h"
-#endif
+
 const unsigned char RSV = 0x00;
 
 enum VER {
