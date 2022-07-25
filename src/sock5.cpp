@@ -227,7 +227,7 @@ bool Socks5::sendCommandResponse(unsigned short bindPort)
 	}
 	else if (_atyp == IPV6) {
 		response.push_back(IPV6);
-		for (size_t i = 0; i < 8; i++)
+		for (size_t i = 0; i < 16; i++)
 		{
 			response.push_back(0);
 		}
