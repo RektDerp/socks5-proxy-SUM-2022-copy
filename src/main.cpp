@@ -11,22 +11,29 @@
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
 	}
-const char defaultConfigPath [] = "config.txt";
-const char defaultDatabasePath [] = R"(./sessions_stat.db)";
+	const char defaultConfigPath [] = "config.txt";
+	const char defaultDatabasePath [] = "./sessions_stat.db";
 #else
-    #define WININIT() {}
-const char defaultConfigPath [] = "/etc/socks5-config.txt";
+	#define WININIT() {}
+	const char defaultConfigPath [] = "/etc/socks5-config.txt";
+	const char defaultDatabasePath[] = "/tmp/sessions_stat.db";
 #endif
-
-void initDb();
 
 int main(int argc, char** argv)
 {
 	WININIT();
 	ConfigReader::configFilePath = defaultConfigPath;
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
+	std::cout << "Database path: " << defaultDatabasePath << std::endl;
 	ConfigReader* config = ConfigReader::getInstance();
-	initDb();
+	try {
+		// this initializes the table
+		proxy::stat::DatabaseService::getInstance(defaultDatabasePath);
+	}
+	catch (const DatabaseException& ex) {
+		log(ERROR_LOG) << "Database was not created: " << ex.what();
+		return -1;
+	}
 
 	// default server parameters
 	int port = 1080;
@@ -58,14 +65,4 @@ int main(int argc, char** argv)
 	thread.join();
 	log(TRACE_LOG) << "Stopped server.";
 	return 0;
-}
-
-void initDb()
-{
-	using namespace proxy::stat;
-#ifdef __linux__
-	DatabaseService::getInstance("/tmp/sessions_stat.db");
-#else 
-	DatabaseService::getInstance(); // this initializes table
-#endif // __linux__
 }

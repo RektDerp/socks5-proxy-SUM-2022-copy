@@ -37,7 +37,7 @@ namespace proxy { namespace stat {
 		static DatabaseService* _instance;
 		static std::mutex _mutex;
 	public:
-		static DatabaseService& getInstance(const string& db_path = R"(./sessions_stat.db)");
+		static DatabaseService& getInstance(const string& db_path = "./sessions_stat.db");
 
 		~DatabaseService() = default;
 		void createDB();
