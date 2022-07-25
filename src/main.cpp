@@ -5,6 +5,7 @@
 #include "stat_db_service.h"
 #endif
 #include <thread>
+#include <memory>
 
 #ifdef _WIN32
     #include <windows.h>

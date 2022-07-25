@@ -9,20 +9,19 @@ url='http://ragalik.tk'
 license=('GPL3')
 depends=('qt6-quick3d')
 
+prepare() {
+    cd ${srcdir}/
+    git clone https://github.com/apriorit/socks5-proxy-SUM-2022.git
+}
+
 build() {
-    cd ${srcdir}/../../..
-    echo $PWD
-    if [[ -f build/bin/main && -f build/bin/interface ]]
-    then
-        echo "already built."
-    else
-        ./configure
-        cd build
-        make -j 2
-    fi
+    cd ${srcdir}/socks5-proxy-SUM-2022
+    ./configure
+    cd build
+    make
 }
 package() {
-    cd ${srcdir}/../../..
+    cd ${srcdir}/socks5-proxy-SUM-2022
     mkdir -p $pkgdir/usr/bin/
     mkdir -p $pkgdir/etc/
     mkdir -p $pkgdir/usr/share/applications/

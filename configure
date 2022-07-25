@@ -3,33 +3,56 @@
 root=$( dirname -- "$0"; )
 
 clean () {
-    rm -rf lib/*.a build/* *.db *.log installer/arch/pkg installer/arch/src installer/arch/*.zst
+  rm -rf lib/*.a build/* *.db *.log installer/arch/pkg installer/arch/src installer/arch/*.zst
+}
+invalid () {
+  printf "%s\nusage: x[" $1
 }
 
-case $1 in
+
+cnt=0
+for i in "$@"; do
+  case $i in
     windows | Windows | WINDOWS)
-        clean
-        mkdir -p build/bin
-        if [ "$2" = "static-sqlite" ] || [ "$2" = "--static-sqlite" ]
+        if [ $linux == "true" ]
         then
-            echo "static sqlite"
-            ADDITIONAL_FLAGS="-D STATIC_SQLITE=true"
+          invalid "cannnot compile for multiple platforms"
         else
-            cp lib/dll/sqlite3.dll build/bin
-            cp lib/dll/libssp-0.dll build/bin
+          windows=true
         fi
-        cmake -S. -B build -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" $ADDITIONAL_FLAGS
-        ;;
-    Linux | linux | LINUX | "")
-        clean
-        mkdir -p build/bin
-        cmake -S. -B build
-        ;;
+    ;;
+    Linux | linux | LINUX)
+        if [ $cnt == 0 ]
+        then
+          linux=true
+        else
+          invalid
+        fi
+    ;;
     clean)
-        clean
     ;;
     *)
-        echo "usage: ./configure <linux | windows>
-        ./configure clean"
-        ;;
-esac
+      invalid "Invalid command"
+    ;;
+  esac
+  cnt=$($cnt + 1)
+done
+
+
+
+
+
+
+
+
+
+#         clean
+#         mkdir -p build/bin
+#         cmake -S. -B build -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES=""
+
+
+#         clean
+#         mkdir -p build/bin
+#         cmake -S. -B build
+
+#         clean
