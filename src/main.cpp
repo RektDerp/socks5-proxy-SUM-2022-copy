@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	ConfigReader::configFilePath = defaultConfigPath;
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
 	std::cout << "Database path: " << defaultDatabasePath << std::endl;
-	ConfigReader* config = ConfigReader::getInstance();
+	ConfigReader& config = ConfigReader::getInstance();
 	try {
 		// this initializes the table
 		proxy::DatabaseService::getInstance(defaultDatabasePath);
@@ -40,9 +40,9 @@ int main(int argc, char** argv)
 	int port = 1080;
 	int bufferSizeKB = 100;
 	int maxSessions = 0;
-	config->getValue("listen_port", port);
-	config->getValue("buffer_size_kb", bufferSizeKB);
-	config->getValue("max_sessions", maxSessions);
+	config.getValue("listen_port", port);
+	config.getValue("buffer_size_kb", bufferSizeKB);
+	config.getValue("max_sessions", maxSessions);
 
 	ba::io_context context;
 

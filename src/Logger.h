@@ -13,14 +13,14 @@
 #include <pthread.h>
 #endif
 namespace proxy {
-#define LOG_CONSOLE(x)    Logger::getInstance()->console(x)
-#define LOG_ERROR(x)    Logger::getInstance()->error(x)
-#define LOG_ALARM(x)	   Logger::getInstance()->alarm(x)
-#define LOG_ALWAYS(x)	Logger::getInstance()->always(x)
-#define LOG_INFO(x)     Logger::getInstance()->info(x)
-#define LOG_BUFFER(x)   Logger::getInstance()->buffer(x)
-#define LOG_TRACE(x)    Logger::getInstance()->trace(x)
-#define LOG_DEBUG(x)    Logger::getInstance()->debug(x)
+#define LOG_CONSOLE(x)    Logger::getInstance().console(x)
+#define LOG_ERROR(x)    Logger::getInstance().error(x)
+#define LOG_ALARM(x)	   Logger::getInstance().alarm(x)
+#define LOG_ALWAYS(x)	Logger::getInstance().always(x)
+#define LOG_INFO(x)     Logger::getInstance().info(x)
+#define LOG_BUFFER(x)   Logger::getInstance().buffer(x)
+#define LOG_TRACE(x)    Logger::getInstance().trace(x)
+#define LOG_DEBUG(x)    Logger::getInstance().debug(x)
 
     typedef enum LOGGED_LEVEL
     {
@@ -57,7 +57,7 @@ namespace proxy {
     class Logger
     {
     public:
-        static Logger* getInstance() throw ();
+        static Logger& getInstance() throw ();
 
         void console(const char* text) throw();
         void console(const std::string& text) throw();

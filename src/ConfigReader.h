@@ -15,7 +15,7 @@ namespace proxy {
 
     public:
         static std::string configFilePath;
-        static ConfigReader* getInstance();
+        static ConfigReader& getInstance();
 
         bool parseFile(std::string fileName);
 

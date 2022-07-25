@@ -49,13 +49,13 @@ namespace proxy {
 #endif
     }
 
-    Logger* Logger::getInstance() throw ()
+    Logger& Logger::getInstance() throw ()
     {
         if (m_Instance == 0)
         {
             m_Instance = new Logger();
         }
-        return m_Instance;
+        return *m_Instance;
     }
 
     void Logger::console(const char* text) throw()
@@ -380,14 +380,14 @@ namespace proxy {
 
     void Logger::configure()
     {
-        ConfigReader* config = ConfigReader::getInstance();
+        ConfigReader& config = ConfigReader::getInstance();
         LogLevel logLevel;
         LogType logType;
 
         string logLevel_str;
         string logType_str;
 
-        if (config->getValue("log_level", logLevel_str))
+        if (config.getValue("log_level", logLevel_str))
         {
             if (logLevel_str == "ENABLE_LOG" || logLevel_str == "1")
                 logLevel = ENABLE_LOG;
@@ -413,7 +413,7 @@ namespace proxy {
         else
             logLevel = ENABLE_LOG;
 
-        if (config->getValue("log_type", logType_str))
+        if (config.getValue("log_type", logType_str))
         {
             if (logType_str == "NO_LOG" || logType_str == "1")
                 logType = NO_LOG;
@@ -464,35 +464,35 @@ namespace proxy {
     {
         if (type == LoggedLevel::CONSOLE_LOG)
         {
-            Logger::getInstance()->console(ss);
+            Logger::getInstance().console(ss);
         }
         else if (type == LoggedLevel::ERROR_LOG)
         {
-            Logger::getInstance()->error(ss);
+            Logger::getInstance().error(ss);
         }
         else if (type == LoggedLevel::ALARM_LOG)
         {
-            Logger::getInstance()->alarm(ss);
+            Logger::getInstance().alarm(ss);
         }
         else if (type == LoggedLevel::ALWAYS_LOG)
         {
-            Logger::getInstance()->always(ss);
+            Logger::getInstance().always(ss);
         }
         else if (type == LoggedLevel::BUFFER_LOG)
         {
-            Logger::getInstance()->buffer(ss);
+            Logger::getInstance().buffer(ss);
         }
         else if (type == LoggedLevel::INFO_LOG)
         {
-            Logger::getInstance()->info(ss);
+            Logger::getInstance().info(ss);
         }
         else if (type == LoggedLevel::TRACE_LOG)
         {
-            Logger::getInstance()->trace(ss);
+            Logger::getInstance().trace(ss);
         }
         else if (type == LoggedLevel::DEBUG_LOG)
         {
-            Logger::getInstance()->debug(ss);
+            Logger::getInstance().debug(ss);
         }
     }
 } // namespace proxy

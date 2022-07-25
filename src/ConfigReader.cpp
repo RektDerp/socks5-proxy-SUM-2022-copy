@@ -17,13 +17,13 @@ namespace proxy {
         m_ConfigSettingMap.clear();
     }
 
-    ConfigReader* ConfigReader::getInstance()
+    ConfigReader& ConfigReader::getInstance()
     {
         if (nullptr == m_pInstance)
         {
             m_pInstance = new ConfigReader(configFilePath);
         }
-        return m_pInstance;
+        return *m_pInstance;
     }
 
     bool ConfigReader::getValue(std::string tag, bool& value)
