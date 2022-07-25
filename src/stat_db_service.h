@@ -48,7 +48,7 @@ namespace proxy {
 		Session selectSession(long long session_id);
 		vector<Session> selectAll();
 	private:
-		const string _db_path; // todo move to config?
+		const string _db_path;
 
 		DatabaseService(const std::string& db_path) :
 			_db_path(db_path)
