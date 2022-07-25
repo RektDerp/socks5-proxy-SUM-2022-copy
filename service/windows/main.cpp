@@ -2,15 +2,15 @@
 #include "debug.h"
 #include "libloaderapi.h"
 #include "service.h"
+#include <boost/function.hpp>
+#include <cstring>
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <cstring>
-#include <boost/function.hpp>
 
 int main(int argc, char *argv[]) {
-  char filename [256];
-  char executable [] = "main.exe";
+  char filename[256];
+  char executable[] = "main.exe";
   initdebug();
 
   GetModuleFileName(NULL, filename, 256);
