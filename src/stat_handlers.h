@@ -6,7 +6,7 @@
 struct sqlite3;
 struct sqlite3_stmt;
 
-namespace proxy { namespace stat {
+namespace proxy {
 
 	class DatabaseConnection {
 	private:
@@ -47,6 +47,5 @@ namespace proxy { namespace stat {
 		}
 	};
 
-}} // proxy stat
-
+} // namespace proxy
 #endif // _STAT_HANDLERS_H_

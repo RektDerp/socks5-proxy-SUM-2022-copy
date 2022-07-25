@@ -1,10 +1,9 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
 
-#include <iostream>
+#include "proxy_common.h"
 #include <fstream>
 #include <sstream>
-#include <string>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -13,7 +12,7 @@
 #include <errno.h>
 #include <pthread.h>
 #endif
-
+namespace proxy {
 #define LOG_CONSOLE(x)    Logger::getInstance()->console(x)
 #define LOG_ERROR(x)    Logger::getInstance()->error(x)
 #define LOG_ALARM(x)	   Logger::getInstance()->alarm(x)
@@ -38,13 +37,13 @@
 
     typedef enum LOG_LEVEL
     {
-        DISABLE_LOG = 0,  
+        DISABLE_LOG = 0,
         ENABLE_LOG = 1,
         LOG_LEVEL_INFO = 2,
         LOG_LEVEL_BUFFER = 3,
         LOG_LEVEL_TRACE = 4,
         LOG_LEVEL_DEBUG = 5,
-        
+
     } LogLevel;
 
     typedef enum LOG_TYPE
@@ -93,7 +92,7 @@
         void debug(std::ostringstream& stream) throw();
 
         void updateLogLevel(LogLevel logLevel);
-        void enaleLog(); 
+        void enaleLog();
         void disableLog();
 
         void updateLogType(LogType logType);
@@ -169,7 +168,5 @@
 
     BUFF log(const LoggedLevel type);
 
-    
-#endif
-
-    
+}
+#endif // _LOGGER_H_

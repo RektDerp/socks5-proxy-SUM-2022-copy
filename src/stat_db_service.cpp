@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string.h>
 
-namespace proxy { namespace stat {
+namespace proxy {
 	using namespace std;
 	using string_utils::concat;
 
@@ -211,4 +211,4 @@ namespace proxy { namespace stat {
 		s.bytes_sent = sqlite3_column_int(stmt, index++);
 		s.bytes_recv = sqlite3_column_int(stmt, index++);
 	}
-}}
+} // namespace proxy

@@ -2,7 +2,7 @@
 #include "string_utils.h"
 #include <sqlite3.h>
 
-namespace proxy { namespace stat {
+namespace proxy {
 	using string_utils::concat;
 
 	DatabaseConnection::DatabaseConnection(const std::string& path)
@@ -24,4 +24,4 @@ namespace proxy { namespace stat {
 		sqlite3_finalize(_stmt);
 	}
 
-}} // namespace proxy stat
+} // namespace proxy

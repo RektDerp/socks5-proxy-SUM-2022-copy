@@ -8,7 +8,7 @@
 
 struct sqlite3_stmt;
 
-namespace proxy { namespace stat {
+namespace proxy {
 	using std::string;
 	using std::vector;
 
@@ -88,5 +88,5 @@ namespace proxy { namespace stat {
 		const char* select_all = "SELECT * FROM sessions";
 		const char* select_id = "SELECT * FROM sessions WHERE id = ?";
 	}
-}} // namespace proxy stat
+} // namespace proxy 
 #endif // _STAT_DB_SERVICE_H_

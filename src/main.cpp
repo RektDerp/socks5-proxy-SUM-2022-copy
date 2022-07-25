@@ -21,6 +21,7 @@
 
 int main(int argc, char** argv)
 {
+	using namespace proxy;
 	WININIT();
 	ConfigReader::configFilePath = defaultConfigPath;
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
@@ -28,7 +29,7 @@ int main(int argc, char** argv)
 	ConfigReader* config = ConfigReader::getInstance();
 	try {
 		// this initializes the table
-		proxy::stat::DatabaseService::getInstance(defaultDatabasePath);
+		proxy::DatabaseService::getInstance(defaultDatabasePath);
 	}
 	catch (const DatabaseException& ex) {
 		log(ERROR_LOG) << "Database was not created: " << ex.what();
