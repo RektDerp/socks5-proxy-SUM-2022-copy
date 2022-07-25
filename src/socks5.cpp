@@ -8,7 +8,7 @@ namespace proxy {
 
 	Socks5::Socks5(TcpSession* s) : Socks(s, SOCKS5_VER), _authFlag(false)
 	{
-		ConfigReader::getInstance()->getValue("Auth", _authFlag);
+		ConfigReader::getInstance().getValue("Auth", _authFlag);
 	}
 
 	bool Socks5::init()
@@ -87,7 +87,7 @@ namespace proxy {
 		_username = string_utils::to_string(uname);
 		std::string passString = string_utils::to_string(passwd);
 
-		bool success = ConfigReader::getInstance()->hasUser(_username, passString);
+		bool success = ConfigReader::getInstance().hasUser(_username, passString);
 		if (!success)
 			log(ERROR_LOG) << "Wrong credentials: " << _username << ":" << passString;
 		bvec response;
