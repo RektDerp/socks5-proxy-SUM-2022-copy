@@ -1,58 +1,137 @@
 #!/usr/bin/bash
 
-root=$( dirname -- "$0"; )
+basedir=$PWD
+builddir=$basedir/build
+pkgbuild_dir=$basedir/installer/arch-scripted/
 
 clean () {
-  rm -rf lib/*.a build/* *.db *.log installer/arch/pkg installer/arch/src installer/arch/*.zst
+  cd "$basedir" || exit
+  rm -rf "lib/*.a" "$builddir" "*.db" "*.log" "installer/arch/pkg" "installer/arch/src" "installer/arch/*.zst"
+  mkdir -p "$builddir/bin"
 }
+configure_linux () {
+  echo "Configuring for linux"
+  echo "flags $ADDITIONAL_FLAGS"
+  clean
+  cmake -S. -B "$builddir" "$ADDITIONAL_FLAGS"
+}
+configure_windows () {
+  echo "Configuring for windows"
+  echo "flags $ADDITIONAL_FLAGS"
+  clean
+  cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" "$ADDITIONAL_FLAGS"
+}
+build () {
+    echo "building"
+    echo "Build directory: $builddir"
+    cd "$builddir" || exit
+    cmake --build .
+}
+
+package () {
+    echo "packaging"
+    if which makepkg > /dev/null 2>1
+    then
+        cd "$basedir" || exit
+        cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
+        mkdir -p "$builddir/installer"
+        cp config.txt "$builddir"
+        cp "installer/socks5-interface.png" "installer/socks5-interface.desktop" "$builddir/installer/"
+        cp service/linux/socks5-proxy.service "$builddir"
+        cd "$builddir" || exit
+        makepkg
+    else
+        echo -e "makepkg not found.\nPackaging currently supported only for Arch Linux"
+    fi
+}
+
 invalid () {
-  printf "%s\nusage: x[" $1
+  printf "%s\nusage: x[\n" "$1"
 }
 
-
-cnt=0
-for i in "$@"; do
+cnt=1
+while [ "$cnt" -lt "$(($# + 1))" ]; do
+  i=${!cnt}
+  #echo "param $cnt / $#: $i"
   case $i in
     windows | Windows | WINDOWS)
-        if [ $linux == "true" ]
+        if [ "$linux" = "true" ]
         then
           invalid "cannnot compile for multiple platforms"
         else
           windows=true
         fi
+        cnt=$((cnt + 1))
+        continue
     ;;
     Linux | linux | LINUX)
-        if [ $cnt == 0 ]
+        if [ "$windows" = "true" ]
         then
-          linux=true
+          invalid "cannnot compile for multiple platforms"
         else
-          invalid
+          linux=true
         fi
+        cnt=$((cnt + 1))
+        continue
     ;;
-    clean)
+    build | --build | -b)
+        build_flg=true
+        cnt=$((cnt + 1))
+        continue
+    ;;
+    package | --package | -p)
+        package_flg=true
+        cnt=$((cnt + 1))
+        continue
+    ;;
+    -D)
+        cnt=$((cnt + 1))
+        ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS-D ${!cnt} "
+        cnt=$((cnt + 1))
+        continue
+    ;;
+    -B)
+        cnt=$((cnt + 1))
+        builddir=${!cnt}
+        cnt=$((cnt + 1))
+        continue
+    ;;
+    clean | --clean | -c)
+        clean_only=true
+        cnt=$((cnt + 1))
+        continue
     ;;
     *)
-      invalid "Invalid command"
+      invalid "Invalid command $i"
     ;;
   esac
-  cnt=$($cnt + 1)
 done
 
 
+if [ "$linux" = true ]
+then
+  configure_linux
+elif [ "$windows" = true ]
+then
+  configure_windows
+elif [ "$clean_only" = true ]
+then
+  echo "clean only"
+  clean
+  exit 0
+else
+  echo "No configuration parameters were passed. Defaulting to configure linux"
+  configure_linux
+fi
 
+if [ "$build_flg" = true ] || [ "$package_flg" = true ]; then build; fi
 
-
-
-
-
-
-#         clean
-#         mkdir -p build/bin
-#         cmake -S. -B build -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES=""
-
-
-#         clean
-#         mkdir -p build/bin
-#         cmake -S. -B build
-
-#         clean
+if [ "$package_flg" = true ]
+then
+    if [ $? = 0 ]
+    then
+        package
+    else
+        echo "Build failed. Skipping package step."
+    fi
+fi
