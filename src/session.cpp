@@ -9,7 +9,8 @@ namespace proxy {
 		_client_socket(io_context), _server_socket(io_context),
 		_socks(nullptr),
 		_client_buf(),
-		_server_buf()
+		_server_buf(),
+		_isClosed(false)
 	{
 		_client_buf.resize(bufferSizeKB * 1024);
 		_server_buf.resize(bufferSizeKB * 1024);

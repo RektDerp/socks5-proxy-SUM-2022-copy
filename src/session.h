@@ -56,7 +56,7 @@ namespace proxy {
 		bvec _client_buf;
 		bvec _server_buf;
 
-		std::atomic_bool _isClosed = false;
+		std::atomic_bool _isClosed;
 	};
 } // namespace proxy
 #endif // _SESSION_H_
