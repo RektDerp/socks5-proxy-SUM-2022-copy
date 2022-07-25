@@ -18,7 +18,11 @@ SessionModel::SessionModel(QObject *parent)
 
     _columnWidths.resize(_header.size());
     _db = QSqlDatabase::addDatabase("QSQLITE");
+#ifdef __linux__
+    _db.setDatabaseName("/tmp/sessions_stat.db");
+#else
     _db.setDatabaseName("../sessions_stat.db");
+#endif
     if (!_db.open()) {
         qDebug() << "there was an error during opening db";
     }

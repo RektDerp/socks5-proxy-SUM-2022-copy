@@ -20,7 +20,7 @@ package() {
     mkdir -p $pkgdir/tmp
     cp bin/main $pkgdir/usr/bin/socks5-proxy
     cp bin/interface $pkgdir/usr/bin/socks5-interface
-    cp config.txt  $pkgdir/etc
+    cp config.txt  $pkgdir/etc/socks5-config.txt
     cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
     cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
     cp socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service

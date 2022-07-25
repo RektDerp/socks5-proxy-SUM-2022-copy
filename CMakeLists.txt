@@ -12,18 +12,17 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
 set (Qt "Qt6")
-set (Qtdir "${libdir}/Qt/6.3.1/mingw_64")
+set (Qtdir "${libdir}/Qt/QtStatic")
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
     message("Build for windows on windows")
 
 endif()
 
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
   message("Build for windows on unix")
 
-  set(CMAKE_FIND_ROOT_PATH "/usr/x86_64-w64-mingw32/" "${Qtdir}" "${Qtdir}/bin" "${libdir}/bin" "includedir")
+  set(CMAKE_FIND_ROOT_PATH "/usr/x86_64-w64-mingw32/" "${Qtdir}" "${Qtdir}/bin" "${Qtdir}/lib" "${Qtdir}/include" "${libdir}/bin" "${includedir}")
   set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
   set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
   set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)

@@ -12,14 +12,12 @@ clean () {
 configure_linux () {
   echo "Configuring for linux"
   echo "flags $ADDITIONAL_FLAGS"
-  clean
-  cmake -S. -B "$builddir" "$ADDITIONAL_FLAGS"
+  cmake -S. -B "$builddir" $ADDITIONAL_FLAGS
 }
 configure_windows () {
   echo "Configuring for windows"
   echo "flags $ADDITIONAL_FLAGS"
-  clean
-  cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" "$ADDITIONAL_FLAGS"
+  cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
 build () {
     echo "building"
@@ -30,7 +28,7 @@ build () {
 
 package () {
     echo "packaging"
-    if which makepkg > /dev/null 2>1
+    if which makepkg > /dev/null 2>&1
     then
         cd "$basedir" || exit
         cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
@@ -39,7 +37,7 @@ package () {
         cp "installer/socks5-interface.png" "installer/socks5-interface.desktop" "$builddir/installer/"
         cp service/linux/socks5-proxy.service "$builddir"
         cd "$builddir" || exit
-        makepkg
+        makepkg $force_arg
     else
         echo -e "makepkg not found.\nPackaging currently supported only for Arch Linux"
     fi
@@ -96,8 +94,13 @@ while [ "$cnt" -lt "$(($# + 1))" ]; do
         cnt=$((cnt + 1))
         continue
     ;;
+    -f)
+        force_arg="-f"
+        cnt=$((cnt + 1))
+        continue
+    ;;
     clean | --clean | -c)
-        clean_only=true
+        clean=true
         cnt=$((cnt + 1))
         continue
     ;;
@@ -107,6 +110,11 @@ while [ "$cnt" -lt "$(($# + 1))" ]; do
   esac
 done
 
+if [ "$clean" = true ]
+then
+  echo "clean"
+  clean
+fi
 
 if [ "$linux" = true ]
 then
@@ -114,11 +122,6 @@ then
 elif [ "$windows" = true ]
 then
   configure_windows
-elif [ "$clean_only" = true ]
-then
-  echo "clean only"
-  clean
-  exit 0
 else
   echo "No configuration parameters were passed. Defaulting to configure linux"
   configure_linux
