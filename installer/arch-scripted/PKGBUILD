@@ -1,3 +1,4 @@
+Qt=qt5
 # Maintainer: Kyrychuk Anton <youremail@domain.com>
 pkgname='socks5-proxy'
 pkgdesc='Apriorit project'
@@ -7,7 +8,8 @@ install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
-depends=('qt6-quick3d')
+depends=("sqlite" "$Qt-base" "$Qt-quickcontrols2")
+#makedepends=("base-devel" "git" "cmake" "boost" "sqlite" "$Qt-base" "$Qt-declarative" "$Qt-quickcontrols2")
 
 package() {
     cd ${srcdir}/..
@@ -27,4 +29,3 @@ package() {
     touch $pkgdir/tmp/sessions_stat.db
     chmod 666 $pkgdir/tmp/sessions_stat.db
 }
-

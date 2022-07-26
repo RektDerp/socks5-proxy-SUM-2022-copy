@@ -4,6 +4,7 @@ basedir=$PWD
 builddir=$basedir/build/
 pkgbuild_dir=$basedir/installer/arch-scripted/
 deb_packagename=socks5-proxy-2.2.8-1_amd64
+Qt=Qt5
 
 clean () {
     cd "$basedir" || exit
@@ -47,6 +48,9 @@ package_arch () {
   then
       copy_resources
       cd "$builddir" || exit
+      Qt=${Qt,,}
+      echo "----------------------- qt $Qt"
+      sed -i "s/qt5/$Qt/g" PKGBUILD
       makepkg $force_arg
   else
       echo -e "makepkg not found.\nCannot package for Arch Linux"
@@ -132,6 +136,12 @@ do
     -D)
         cnt=$((cnt + 1))
         ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS-D ${!cnt} "
+        if [[ ${!cnt} == *"Qt="* ]]
+        then
+            param=${!cnt}
+            Qt=${param##Qt=}
+            echo $Qt
+        fi
         cnt=$((cnt + 1))
         continue
     ;;
