@@ -30,12 +30,12 @@ Window {
 
         SessionTableView {
             id: table
-            width: parent.width
+            implicitWidth: parent.width
             Layout.fillHeight: true
         }
 
         Rectangle {
-            width: parent.width
+            implicitWidth: parent.width
             height: 125
 
             ColumnLayout {
