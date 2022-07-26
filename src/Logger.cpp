@@ -60,12 +60,20 @@ namespace proxy {
     }
 
     // todo const std::string& or std::string&& ???
-    void Logger::log(std::string data, LOG_LEVEL level)
+    void Logger::log(const std::string& data, LOG_LEVEL level)
     {
-        ba::post(m_worker, [=] { logTask(data, level); });
+        ba::post(m_worker, [&] { logTask(data, level); });
+    }
+    void Logger::log(std::string&& data, LOG_LEVEL level)
+    {
+        ba::post(m_worker, 
+            [this, data_Rvalue = std::move(data), level_value = level]
+            {
+                logTask(data_Rvalue, level_value);
+            });
     }
 
-    void Logger::logTask(std::string data, LOG_LEVEL level)
+    void Logger::logTask(const std::string& data, LOG_LEVEL level)
     {
         if (m_LogLevel >= level) {
             if (m_LogType == CONSOLE_LOG)
