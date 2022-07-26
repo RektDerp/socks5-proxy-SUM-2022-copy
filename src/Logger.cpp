@@ -10,43 +10,18 @@ namespace proxy {
     using namespace std;
 
     Logger* Logger::m_Instance = 0;
-
+    std::mutex Logger::m_mutex;
     const string logFileName = "MyLogFile.log";
 
     Logger::Logger()
     {
         m_File.open(logFileName.c_str(), ios::out | ios::app);
         configure();
-
-        // Initialize mutex
-#ifdef _WIN32
-        InitializeCriticalSection(&m_Mutex);
-#else
-        int ret = 0;
-        ret = pthread_mutexattr_settype(&m_Attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-        if (ret != 0)
-        {
-            printf("Logger::Logger() -- Mutex attribute not initialize!!\n");
-            exit(0);
-        }
-        ret = pthread_mutex_init(&m_Mutex, &m_Attr);
-        if (ret != 0)
-        {
-            printf("Logger::Logger() -- Mutex not initialize!!\n");
-            exit(0);
-        }
-#endif
     }
 
     Logger::~Logger()
     {
         m_File.close();
-#ifdef _WIN32
-        DeleteCriticalSection(&m_Mutex);
-#else
-        pthread_mutexattr_destroy(&m_Attr);
-        pthread_mutex_destroy(&m_Mutex);
-#endif
     }
 
     Logger& Logger::getInstance() throw ()
@@ -76,45 +51,23 @@ namespace proxy {
         string text = stream.str();
         console(text.data());
     }
-
-    void Logger::lock()
-    {
-#ifdef _WIN32
-        EnterCriticalSection(&m_Mutex);
-#else
-        pthread_mutex_lock(&m_Mutex);
-#endif
-    }
-
-    void Logger::unlock()
-    {
-#ifdef _WIN32
-        LeaveCriticalSection(&m_Mutex);
-#else
-        pthread_mutex_unlock(&m_Mutex);
-#endif
-    }
-
     void Logger::logIntoFile(std::string& data)
     {
-        lock();
+        std::lock_guard<std::mutex> guard(m_mutex);
         m_File << getCurrentTime() << "  " << data << endl;
-        unlock();
     }
 
     void Logger::logOnConsole(std::string& data)
     {
-        lock();
+        std::lock_guard<std::mutex> guard(m_mutex);
         cout << data << endl;
-        unlock();
     }
 
     void Logger::allLog(std::string& data)
     {
-        lock();
+        std::lock_guard<std::mutex> guard(m_mutex);
         cout << data << endl;
         m_File << getCurrentTime() << "  " << data << endl;
-        unlock();
     }
 
     string Logger::getCurrentTime()
@@ -225,9 +178,8 @@ namespace proxy {
     {
         if ((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_BUFFER))
         {
-            lock();
+            std::lock_guard<std::mutex> guard(m_mutex);
             m_File << text << endl;
-            unlock();
         }
         else if ((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_BUFFER))
         {
@@ -235,10 +187,9 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_BUFFER))
         {
-            lock();
+            std::lock_guard<std::mutex> guard(m_mutex);
             m_File << text << endl;
             cout << text << endl;
-            unlock();
         }
     }
 

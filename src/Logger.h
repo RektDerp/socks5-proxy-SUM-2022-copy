@@ -4,14 +4,8 @@
 #include "proxy_common.h"
 #include <fstream>
 #include <sstream>
-
-#ifdef _WIN32
-#include <windows.h>
-#include <process.h>
-#else
-#include <errno.h>
-#include <pthread.h>
-#endif
+#include <mutex>
+#include <memory>
 namespace proxy {
 #define LOG_CONSOLE(x)    Logger::getInstance().console(x)
 #define LOG_ERROR(x)    Logger::getInstance().error(x)
@@ -104,9 +98,6 @@ namespace proxy {
         Logger();
         ~Logger();
 
-        void lock();
-        void unlock();
-
         std::string getCurrentTime();
 
     private:
@@ -121,12 +112,7 @@ namespace proxy {
         static Logger* m_Instance;
         std::ofstream           m_File;
 
-#ifdef	_WIN32
-        CRITICAL_SECTION        m_Mutex;
-#else
-        pthread_mutexattr_t     m_Attr;
-        pthread_mutex_t         m_Mutex;
-#endif
+        static std::mutex m_mutex;
 
         LogLevel                m_LogLevel;
         LogType                 m_LogType;
