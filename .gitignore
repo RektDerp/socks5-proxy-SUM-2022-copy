@@ -62,3 +62,4 @@ installer/arch/pkg
 .qt
 /build*
 /ui/ui.*
+*.autosave

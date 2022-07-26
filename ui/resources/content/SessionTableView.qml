@@ -4,8 +4,6 @@ import SortFilterSessionModel 0.1
 
 TableView {
     id: table
-    property alias updateInterval: timer.interval
-    property alias updateEnabled: timer.running
     property alias userFilter: tableModel.userFilter
     property alias createDateFilter: tableModel.createDateFilter
     property alias updateDateFilter: tableModel.updateDateFilter
@@ -23,12 +21,6 @@ TableView {
         onFilterChanged: {
             table.contentY = 0
         }
-    }
-
-    Timer {
-        id: timer
-        repeat: true
-        onTriggered: tableModel.sessionModel.update()
     }
 
     delegate: Rectangle {

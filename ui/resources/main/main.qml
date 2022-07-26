@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
-import SortFilterSessionModel 0.1
 import "../content"
 
 Window {
@@ -14,11 +13,12 @@ Window {
     property int scrollBarWidth: 20
 
     Column {
+        id: timerBar
         anchors.fill: parent
         anchors.leftMargin: sideMargin
         anchors.rightMargin: sideMargin
         spacing: sideMargin
-
+        height: 30
         RowLayout {
             height: 30
             Switch {
@@ -71,11 +71,9 @@ Window {
 
         SessionTableView {
             id: table
+            anchors.topMargin: header.height
             width: parent.width
             height: parent.height / 2
-            anchors.topMargin: header.height
-            updateInterval: sbUpdate.value * 1000
-            updateEnabled: cbUpdate.checked
             columnWidthProvider: function(column) { return repeater.itemAt(column).width }
         }
 
@@ -236,7 +234,20 @@ Window {
         }
     }
 
+    Timer {
+        id: timer
+        repeat: true
+        interval: sbUpdate.value * 1000
+        running: cbUpdate.checked
+        onTriggered: {
+            table.model.sessionModel.update()
+            window.width = window.width - 1
+            window.width = window.width + 1
+        }
+    }
+
     function adaptiveColumnWidth(column) {
-        return Math.max(table.model.columnWidth(column), table.model.columnWidth(column) / table.model.tableWidth() * header.width);
+        return Math.max(table.model.columnWidth(column),
+                        table.model.columnWidth(column) / table.model.tableWidth() * header.width);
     }
 }
