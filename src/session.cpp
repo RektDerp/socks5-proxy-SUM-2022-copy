@@ -92,7 +92,7 @@ namespace proxy {
 		resolver_t::iterator endpoint_iterator = resolver.resolve(query, ec);
 		if (ec) {
 			log(ERROR_LOG) << "[session] Error occurred while resolving address '"
-				<< query.host_name() << "': " << ec.what();
+				<< query.host_name() << "': " << ec.message();
 			return 0;
 		}
 		resolver_t::iterator end;
@@ -104,7 +104,7 @@ namespace proxy {
 		}
 		if (ec) {
 			log(ERROR_LOG) << "[session] Error occurred while connecting to address '"
-				<< query.host_name() << "': " << ec.what();
+				<< query.host_name() << "': " << ec.message();
 			return 0;
 		}
 		_bind_port = _server_socket.local_endpoint().port();
@@ -145,7 +145,7 @@ namespace proxy {
 		if (error.value())
 		{
 			log(ERROR_LOG) << "[" << _bind_port << "] error occured while reading client: "
-				<< error.what();
+				<< error.message();
 			close();
 			return;
 		}
@@ -166,7 +166,7 @@ namespace proxy {
 		if (error.value())
 		{
 			log(ERROR_LOG) << "[" << _bind_port << "] " << "error occured while reading server: "
-				<< error.what();
+				<< error.message();
 			close();
 			return;
 		}
@@ -188,7 +188,7 @@ namespace proxy {
 		bs::error_code ec;
 		ba::write(socket, ba::buffer(buffer, len), ec);
 		if (ec) {
-			log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during writing: " << ec.what();
+			log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during writing: " << ec.message();
 			return false;
 		}
 		_socks->write_stat(len, isServer);
