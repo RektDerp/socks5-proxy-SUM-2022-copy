@@ -4,7 +4,7 @@
 A very interesting description
 
 ## Building from source
----
+
 ### Linux 
 Install dependencies: 
 - Boost
@@ -35,7 +35,9 @@ Or create package
 
 The package fil will be written to `build` directory
 
----
+## Windows
+
+todo
 
 
 
