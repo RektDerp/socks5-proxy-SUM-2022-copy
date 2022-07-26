@@ -8,18 +8,19 @@ deb_packagename=socks5-proxy-2.2.8-1_amd64
 clean () {
     cd "$basedir" || exit
     rm -rf "lib/*.a" "$builddir" "*.db" "*.log" "installer/arch/pkg" "installer/arch/src" "installer/arch/*.zst"
-    mkdir -p "$builddir/bin"
 }
 
 configure_linux () {
     echo "Configuring for linux"
     echo "flags $ADDITIONAL_FLAGS"
+    mkdir -p "$builddir/bin"
     cmake -S. -B "$builddir" $ADDITIONAL_FLAGS
 }
 
 configure_windows () {
     echo "Configuring for windows"
     echo "flags $ADDITIONAL_FLAGS"
+    mkdir -p "$builddir/bin"
     cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
 
