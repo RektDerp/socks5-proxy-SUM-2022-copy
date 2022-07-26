@@ -22,7 +22,12 @@ Unbuntu / Debian
 
 Arch Linux
 
-`    sudo pacman -Sy boost sqlite qt5-base qt5-declarative qt5-quickcontrols2 base-devel git cmake`
+```
+    #Qt5
+    sudo pacman -Sy boost sqlite qt5-base qt5-declarative qt5-quickcontrols2 base-devel git cmake
+    #Qt6
+    sudo pacman -Sy boost sqlite qt6-base qt6-declarative qt6-quickcontrols2 base-devel git cmake
+```
 
 Compiling
 ```
