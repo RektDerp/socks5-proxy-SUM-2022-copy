@@ -41,7 +41,7 @@ Or create package
     ./configure package deb #For debian derivatives ###TODO###
 ```
 
-The package fil will be written to `build` directory
+The package file will be written to `build` directory
 
 ## Windows
 
