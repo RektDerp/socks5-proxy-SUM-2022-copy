@@ -19,11 +19,6 @@ endif()
 
 set (Qtdir "${libdir}/Qt/QtStatic")
 
-if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-    message("Build for windows on windows")
-
-endif()
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
   message("Build for windows on unix")
 
@@ -53,6 +48,7 @@ set(modules
 "${sourcedir}/stat_handlers.cpp|sqlite3"
 "${uidir}/sessionmodel.cpp|${Qt}::Widgets ${Qt}::Core ${Qt}::Sql"
 "${uidir}/sortfiltersessionmodel.cpp|${Qt}::Widgets ${Qt}::Core ${Qt}::Sql"
+"${uidir}/session.cpp|${Qt}::Sql"
 )
 
 set(executables
@@ -60,11 +56,16 @@ set(executables
 "Logger session ConfigReader server stat_db_service socks socks4 socks5 stat_handlers"
 
 "interface|${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
-"sessionmodel sortfiltersessionmodel ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"
+"sessionmodel sortfiltersessionmodel session_d ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"
 )
 
 set(moc "interface" "sessionmodel" "sortfiltersessionmodel")
 ##########################################################################
+
+if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+    message("Build for windows on windows")
+
+endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")
@@ -73,7 +74,6 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   list(TRANSFORM modules APPEND " ws2_32 wsock32" AT 2 3)
   list(APPEND modules "${servicedir}/service.cpp|")
   list(APPEND modules "${includedir}/sqlite3.c|")
-
   list(APPEND executables "winservice|${servicedir}/main.cpp")
   list(APPEND executables "service")
 
@@ -109,6 +109,9 @@ foreach (module IN LISTS modules)
     endif()
 
     get_filename_component(name ${path} NAME_WE)
+    if(TARGET ${name})
+        string(APPEND name "_d")
+    endif()
     message ("\nModule " ${name} " at " ${path} "\nDependencies:")
 
     if(${name} IN_LIST moc)
