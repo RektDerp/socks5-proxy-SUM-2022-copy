@@ -31,7 +31,6 @@ Window {
         SessionTableView {
             id: table
             width: parent.width
-            //height: parent.height / 2
             Layout.fillHeight: true
         }
 
@@ -92,7 +91,6 @@ Window {
                         id: activeFilter
                         placeholderText : qsTr("Active")
                         width: table.adaptiveColumnWidth(3)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
                             table.isActiveFilter = text
@@ -103,7 +101,6 @@ Window {
                         id: srcFilter
                         placeholderText : qsTr("Client")
                         width: table.adaptiveColumnWidth(4)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
                             table.srcEndpointFilter = text
@@ -114,7 +111,6 @@ Window {
                         id: dstFilter
                         placeholderText : qsTr("Server")
                         width: table.adaptiveColumnWidth(5)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
                             table.dstEndpointFilter = text
@@ -125,7 +121,6 @@ Window {
                         id: sentFilter
                         placeholderText : qsTr("Sent bytes")
                         width: table.adaptiveColumnWidth(6)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
                             table.bytesSentFilter = text.length > 0 ? text : "-1"
@@ -135,7 +130,6 @@ Window {
                         id: receivedFilter
                         placeholderText : qsTr("Recv bytes")
                         width: table.adaptiveColumnWidth(7)
-                        onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
                             table.bytesRecvFilter = text.length > 0 ? text : "-1"

@@ -68,7 +68,7 @@ Item {
         model: SortFilterSessionModel {
             id: tableModel
             onFilterChanged: {
-                tableView.contentY = 0
+                tableView.contentY = 0 // scroll to the top
             }
         }
 
