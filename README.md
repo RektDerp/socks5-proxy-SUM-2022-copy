@@ -22,7 +22,7 @@ Unbuntu / Debian
 
 Arch Linux
 
-`    sudo pacman -Sy qt5-base qt5-declarative`
+`    sudo pacman -Sy qt5-base qt5-declarative base-devel git cmake`
 
 Compiling
 ```
