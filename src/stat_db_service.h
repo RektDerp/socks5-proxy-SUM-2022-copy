@@ -44,7 +44,7 @@ namespace proxy {
 		void createDB();
 		void createTable();
 		long long create(const Session s);
-		void update(long long session_id, int bytes, Dest dest);
+		void update(long long session_id, size_t bytes, Dest dest);
 		void close(long long session_id);
 		Session selectSession(long long session_id);
 		vector<Session> selectAll();

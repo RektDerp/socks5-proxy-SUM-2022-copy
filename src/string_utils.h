@@ -7,7 +7,7 @@
 
 using bvec = std::vector<unsigned char>;
 
-namespace string_utils {
+namespace proxy { namespace string_utils {
 	using std::string;
 
 	inline string to_string(const bvec& vec)
@@ -16,6 +16,14 @@ namespace string_utils {
 		for (auto c : vec)
 			ss << c;
 		return ss.str();
+	}
+
+	inline string to_string(const unsigned char* c)
+	{
+		if (c == nullptr) {
+			return string("");
+		}
+		return string((const char*) c);
 	}
 
 	inline string formIpAddressString(const bvec& bytes)
@@ -45,7 +53,7 @@ namespace string_utils {
 	inline string formIpAddressReverseString(const bvec& bytes)
 	{
 		std::string ip_address;
-		for (int i = bytes.size() - 1; i >= 0; i--)
+		for (size_t i = bytes.size() - 1; i >= 0; i--)
 		{
 			ip_address += std::to_string((int)bytes[i]);
 			if (i != 0) ip_address += '.';
@@ -60,7 +68,6 @@ namespace string_utils {
 		ss << s << i;
 		return ss.str();
 	}
+}} // namespace proxy string_utils
 
-}
-
-#endif
+#endif // _STRING_UTILS_H_

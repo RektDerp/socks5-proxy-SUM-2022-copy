@@ -7,8 +7,12 @@
 #include <string.h>
 
 namespace proxy {
-	using namespace std;
+	using std::string;
+	using std::lock_guard;
+	using std::mutex;
+	using std::vector;
 	using string_utils::concat;
+	using string_utils::to_string;
 
 	std::unique_ptr<DatabaseService> DatabaseService::_instance = nullptr;
 	mutex DatabaseService::_mutex;
@@ -34,11 +38,11 @@ namespace proxy {
 		DatabaseConnection DB(_db_path);
 		int err = sqlite3_exec(DB, create_table_sql, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			throw DatabaseException(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException("createTable: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_exec(DB, set_all_inactive, NULL, 0, NULL);
 		if (err != SQLITE_OK) {
-			throw DatabaseException(std::string("createTable: error during executing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException("createTable: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 		log(TRACE_LOG) << "Table created Successfully";
 	}
@@ -51,23 +55,23 @@ namespace proxy {
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException(std::string("Create: error during preparing stmt: ") + sqlite3_errstr(err));
+			throw DatabaseException("Create: error during preparing stmt: " + string(sqlite3_errstr(err)));
 		}
 
 		int index = 0;
-		err = sqlite3_bind_text(stmt, ++index, s.user.c_str(), s.user.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.src_addr.c_str(), s.src_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.src_port.c_str(), s.src_port.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.dst_addr.c_str(), s.dst_addr.length(), SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), s.dst_port.length(), SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.user.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.src_addr.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.src_port.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.dst_addr.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), -1, SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Create: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Create: error during binding stmt: " + string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw DatabaseException("Create: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Create: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 
 		long long id = sqlite3_last_insert_rowid(db);
@@ -75,7 +79,7 @@ namespace proxy {
 		return id;
 	}
 	
-	void DatabaseService::update(long long session_id, int bytes, Dest dest)
+	void DatabaseService::update(long long session_id, size_t bytes, Dest dest)
 	{
 		lock_guard<mutex> guard(_mutex);
 		Session s = selectSession(session_id);
@@ -97,14 +101,14 @@ namespace proxy {
 		}
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Update: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Update: error during preparing stmt: " + string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, newBytes);
 		sqlite3_bind_int64(stmt, 2, session_id);
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw DatabaseException("Update: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Update: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -120,17 +124,17 @@ namespace proxy {
 		int err = sqlite3_prepare_v2(db, update_inactive, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Close: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during preparing stmt: " + string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, s.id);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Close: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during binding stmt: " + string(sqlite3_errstr(err)));
 		}
 		err = sqlite3_step(stmt);
 		if (err != SQLITE_DONE)
 		{
-			throw DatabaseException("Close: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Close: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -141,12 +145,12 @@ namespace proxy {
 		int err = sqlite3_prepare_v2(db, select_id, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Select: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during preparing stmt: " + string(sqlite3_errstr(err)));
 		}
 		sqlite3_bind_int64(stmt, 1, session_id);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("Select: error during binding stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during binding stmt: " + string(sqlite3_errstr(err)));
 		}
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
@@ -155,7 +159,7 @@ namespace proxy {
 			return s;
 		}
 		else {
-			throw DatabaseException("Select: error during executing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("Select: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
 	}
 
@@ -167,7 +171,7 @@ namespace proxy {
 		err = sqlite3_prepare_v2(db, select_all, -1, stmt, nullptr);
 		if (err != SQLITE_OK)
 		{
-			throw DatabaseException("SelectAll: error during preparing stmt: " + std::string(sqlite3_errstr(err)));
+			throw DatabaseException("SelectAll: error during preparing stmt: " + string(sqlite3_errstr(err)));
 		}
 		vector<Session> vec;
 
@@ -186,29 +190,16 @@ namespace proxy {
 	void DatabaseService::readRow(Session& s, sqlite3_stmt* stmt)
 	{
 		int index = 0;
-		s.id = sqlite3_column_int(stmt, index++);
-		const char* user = (const char*) sqlite3_column_text(stmt, index++);
-		if (user == nullptr)
-		{
-			s.user = "";
-		}
-		else {
-			s.user = string(user, strlen(user));
-		}
-		const char* create_date = (const char*)sqlite3_column_text(stmt, index++);
-		const char* update_date = (const char*)sqlite3_column_text(stmt, index++);
-		s.is_active = sqlite3_column_int(stmt, index++);
-		const char* src_addr = (const char*) sqlite3_column_text(stmt, index++);
-		const char* src_port = (const char*) sqlite3_column_text(stmt, index++);
-		const char* dst_addr = (const char*) sqlite3_column_text(stmt, index++);
-		const char* dst_port = (const char*) sqlite3_column_text(stmt, index++);
-		if (create_date != nullptr) s.create_date = string(create_date, strlen(create_date));
-		if (update_date != nullptr) s.update_date = string(update_date, strlen(update_date));
-		if (src_addr != nullptr) s.src_addr = string(src_addr, strlen(src_addr));
-		if (src_port != nullptr) s.src_port = string(src_port, strlen(src_port));
-		if (dst_addr != nullptr) s.dst_addr = string(dst_addr, strlen(dst_addr));
-		if (dst_port != nullptr) s.dst_port = string(dst_port, strlen(dst_port));
-		s.bytes_sent = sqlite3_column_int(stmt, index++);
-		s.bytes_recv = sqlite3_column_int(stmt, index++);
+		s.id			= sqlite3_column_int(stmt, index++);
+		s.user			= to_string(sqlite3_column_text(stmt, index++));
+		s.create_date	= to_string(sqlite3_column_text(stmt, index++));
+		s.update_date	= to_string(sqlite3_column_text(stmt, index++));
+		s.is_active		= sqlite3_column_int(stmt, index++);
+		s.src_addr		= to_string(sqlite3_column_text(stmt, index++));
+		s.src_port		= to_string(sqlite3_column_text(stmt, index++));
+		s.dst_addr		= to_string(sqlite3_column_text(stmt, index++));
+		s.dst_port		= to_string(sqlite3_column_text(stmt, index++));
+		s.bytes_sent	= sqlite3_column_int(stmt, index++);
+		s.bytes_recv	= sqlite3_column_int(stmt, index++);
 	}
 } // namespace proxy
