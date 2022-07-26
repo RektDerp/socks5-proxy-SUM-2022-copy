@@ -2,8 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import SortFilterSessionModel 0.1
 
-TableView {
-    id: table
+Item {
     property alias userFilter: tableModel.userFilter
     property alias createDateFilter: tableModel.createDateFilter
     property alias updateDateFilter: tableModel.updateDateFilter
@@ -14,29 +13,82 @@ TableView {
     property alias dstEndpointFilter: tableModel.dstEndpointFilter
     property alias bytesSentFilter: tableModel.bytesSentFilter
     property alias bytesRecvFilter: tableModel.bytesRecvFilter
+    property alias contentY: tableView.contentY
+    property int scrollBarWidth: 40
+    property int spacingpx: 4
 
-    columnSpacing: 4; rowSpacing: 4
-    model: SortFilterSessionModel {
-        id: tableModel
-        onFilterChanged: {
-            table.contentY = 0
+    function adaptiveColumnWidth(column) {
+        return Math.max(tableModel.columnWidth(column),
+                        tableModel.columnWidth(column) / tableModel.tableWidth() * header.width);
+    }
+
+    function tableViewWidth() {
+        return tableModel.tableWidth() + scrollBarWidth +  4 * (tableModel.columnCount() - 1)
+    }
+
+    function update() {
+        tableModel.sessionModel.update()
+    }
+
+    Row {
+        id: header
+        width: parent.width - scrollBarWidth
+        height: 25
+        x: -tableView.contentX
+        z: 1
+        spacing: spacingpx
+
+        Repeater {
+            id: repeater
+            model: tableView.model.columnCount()
+            SortableColumnHeading {
+                id: heading
+                width: adaptiveColumnWidth(index)
+                height: parent.height
+                text: tableView.model.sessionModel.headerData(index, Qt.Horizontal)
+                initialSortOrder: tableView.model.initialSortOrder(index)
+
+                onSorting: {
+                    tableView.contentY = 0
+                    for (var i = 0; i < repeater.model; ++i) {
+                        if (i != index)
+                            repeater.itemAt(i).stopSorting()
+                        tableView.model.sort(index, state == "up" ? Qt.AscendingOrder : Qt.DescendingOrder)
+                    }
+                }
+            }
         }
     }
 
-    delegate: Rectangle {
-        implicitHeight: cellData.height + 5
-        color: "#EEE"
-
-        Text {
-            id: cellData
-            width: parent.width - 6
-            text: model.display
-            elide: Text.ElideRight
-            anchors.centerIn: parent
-            font.preferShaping: false
+    TableView {
+        id: tableView
+        anchors.topMargin: header.height
+        anchors.fill: parent
+        columnSpacing: spacingpx; rowSpacing: spacingpx
+        model: SortFilterSessionModel {
+            id: tableModel
+            onFilterChanged: {
+                tableView.contentY = 0
+            }
         }
-    }
 
-    ScrollBar.horizontal: ScrollBar { }
-    ScrollBar.vertical: ScrollBar { }
+        delegate: Rectangle {
+            implicitHeight: cellData.height + 5
+            color: "#EEE"
+
+            Text {
+                id: cellData
+                width: parent.width - 6
+                text: model.display
+                elide: Text.ElideRight
+                anchors.centerIn: parent
+                font.preferShaping: false
+            }
+        }
+
+        columnWidthProvider: function(column) { return repeater.itemAt(column).width }
+
+        ScrollBar.horizontal: ScrollBar { }
+        ScrollBar.vertical: ScrollBar { }
+    }
 }

@@ -7,12 +7,11 @@ import "../content"
 Window {
     id: window
     title: qsTr("Proxy Statistics")
-    width: table.model.tableWidth() + scrollBarWidth + 2 * sideMargin + 4 * (table.model.columnCount() - 1);
+    width: 2 * sideMargin + table.tableViewWidth()
     height: 480; visible: true
     property int sideMargin: 10
-    property int scrollBarWidth: 20
 
-    Column {
+    ColumnLayout {
         anchors.fill: parent
         anchors.leftMargin: sideMargin
         anchors.rightMargin: sideMargin
@@ -23,53 +22,22 @@ Window {
             width: parent.width
 
             timer.onTriggered: {
-                table.model.sessionModel.update()
+                table.update()
                 window.width = window.width - 1
                 window.width = window.width + 1
             }
         }
 
-        Row {
-            id: header
-            width: parent.width - scrollBarWidth - 2 * sideMargin
-            height: 25
-            x: -table.contentX
-            z: 1
-            spacing: 4
-
-            Repeater {
-                id: repeater
-                model: table.model.columnCount()
-                SortableColumnHeading {
-                    id: heading
-                    width: adaptiveColumnWidth(index)
-                    height: parent.height
-                    text: table.model.sessionModel.headerData(index, Qt.Horizontal)
-                    initialSortOrder: table.model.initialSortOrder(index)
-
-                    onSorting: {
-                        table.contentY = 0
-                        for (var i = 0; i < repeater.model; ++i) {
-                            if (i != index)
-                                repeater.itemAt(i).stopSorting()
-                            table.model.sort(index, state == "up" ? Qt.AscendingOrder : Qt.DescendingOrder)
-                        }
-                    }
-                }
-            }
-        }
-
         SessionTableView {
             id: table
-            anchors.topMargin: header.height
             width: parent.width
-            height: parent.height / 2
-            columnWidthProvider: function(column) { return repeater.itemAt(column).width }
+            //height: parent.height / 2
+            Layout.fillHeight: true
         }
 
         Rectangle {
             width: parent.width
-            height: 200
+            height: 125
 
             ColumnLayout {
                 id: filters
@@ -84,7 +52,7 @@ Window {
                     TextField {
                         id: userFilter
                         placeholderText : qsTr("Username")
-                        width: adaptiveColumnWidth(0)
+                        width: table.adaptiveColumnWidth(0)
                         implicitHeight: 20
 
                         onTextChanged: {
@@ -95,7 +63,7 @@ Window {
                     CalendarSpoiler {
                         id: createFilter
                         defaultText: "Create date"
-                        width: adaptiveColumnWidth(1)
+                        width: table.adaptiveColumnWidth(1)
                         implicitHeight: 20
                         onDateChanged: {
                             table.createDateFilter = selectedDate
@@ -108,7 +76,7 @@ Window {
                     CalendarSpoiler {
                         id: updateFilter
                         defaultText: "Update date"
-                        width: adaptiveColumnWidth(2)
+                        width: table.adaptiveColumnWidth(2)
                         implicitHeight: 20
 
                         onDateChanged: {
@@ -123,7 +91,7 @@ Window {
                     TextField {
                         id: activeFilter
                         placeholderText : qsTr("Active")
-                        width: adaptiveColumnWidth(3)
+                        width: table.adaptiveColumnWidth(3)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
@@ -134,7 +102,7 @@ Window {
                     TextField {
                         id: srcFilter
                         placeholderText : qsTr("Client")
-                        width: adaptiveColumnWidth(4)
+                        width: table.adaptiveColumnWidth(4)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
@@ -145,7 +113,7 @@ Window {
                     TextField {
                         id: dstFilter
                         placeholderText : qsTr("Server")
-                        width: adaptiveColumnWidth(5)
+                        width: table.adaptiveColumnWidth(5)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
@@ -156,7 +124,7 @@ Window {
                     TextField {
                         id: sentFilter
                         placeholderText : qsTr("Sent bytes")
-                        width: adaptiveColumnWidth(6)
+                        width: table.adaptiveColumnWidth(6)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
@@ -166,7 +134,7 @@ Window {
                     TextField {
                         id: receivedFilter
                         placeholderText : qsTr("Recv bytes")
-                        width: adaptiveColumnWidth(7)
+                        width: table.adaptiveColumnWidth(7)
                         onTextEdited: table.contentY = 0
                         implicitHeight: 20
                         onTextChanged: {
@@ -222,12 +190,5 @@ Window {
                 }
             }
         }
-    }
-
-
-
-    function adaptiveColumnWidth(column) {
-        return Math.max(table.model.columnWidth(column),
-                        table.model.columnWidth(column) / table.model.tableWidth() * header.width);
     }
 }
