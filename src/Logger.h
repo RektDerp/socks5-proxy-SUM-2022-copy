@@ -112,6 +112,7 @@ namespace proxy {
     private:
         void logIntoFile(std::string& data);
         void logOnConsole(std::string& data);
+        void allLog(std::string& data);
         Logger(const Logger& obj) {}
         void operator=(const Logger& obj) {}
         void configure();

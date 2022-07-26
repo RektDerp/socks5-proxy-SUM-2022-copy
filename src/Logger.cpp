@@ -109,6 +109,14 @@ namespace proxy {
         unlock();
     }
 
+    void Logger::allLog(std::string& data)
+    {
+        lock();
+        cout << data << endl;
+        m_File << getCurrentTime() << "  " << data << endl;
+        unlock();
+    }
+
     string Logger::getCurrentTime()
     {
         string currTime;
@@ -136,8 +144,7 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && m_LogLevel)
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
@@ -168,8 +175,7 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && m_LogLevel)
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
@@ -200,8 +206,7 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && m_LogLevel)
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
@@ -264,8 +269,7 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_INFO))
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
@@ -296,8 +300,7 @@ namespace proxy {
         }
         else if (m_LogType == ALL_LOG && (m_LogLevel >= LOG_LEVEL_TRACE))
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
@@ -328,8 +331,7 @@ namespace proxy {
         }
         else if ((m_LogType == ALL_LOG) && (m_LogLevel >= LOG_LEVEL_DEBUG))
         {
-            logOnConsole(data);
-            logIntoFile(data);
+            allLog(data);
         }
     }
 
