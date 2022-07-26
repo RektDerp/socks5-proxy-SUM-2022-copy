@@ -31,7 +31,8 @@ namespace proxy {
     {
     public:
         static Logger& getInstance();
-        void log(std::string data, LOG_LEVEL level);
+        void log(const std::string& data, LOG_LEVEL level);
+        void log(std::string&& data, LOG_LEVEL level);
 
         void updateLogLevel(LOG_LEVEL logLevel);
         void enableLog();
@@ -48,7 +49,7 @@ namespace proxy {
 
         std::string getCurrentTime();
     private:
-        void logTask(std::string data, LOG_LEVEL level);
+        void logTask(const std::string& data, LOG_LEVEL level);
         Logger(const Logger& obj) {}
         void operator=(const Logger& obj) {}
         void configure();
