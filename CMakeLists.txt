@@ -14,7 +14,7 @@ add_compile_options("-O2")
 
 if(NOT DEFINED Qt)
     message ("Qt not defined")
-    set(Qt "Qt6")
+    set(Qt "Qt5")
 endif()
 
 set (Qtdir "${libdir}/Qt/QtStatic")
