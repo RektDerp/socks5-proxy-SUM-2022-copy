@@ -27,4 +27,5 @@ HEADERS += \
 
 DISTFILES += \
 	resources/content/CalendarSpoiler.qml \
-	resources/content/DatePicker.qml
+	resources/content/DatePicker.qml \
+	resources/content/TimerBar.qml

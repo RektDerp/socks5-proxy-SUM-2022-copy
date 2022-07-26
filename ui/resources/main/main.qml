@@ -13,31 +13,21 @@ Window {
     property int scrollBarWidth: 20
 
     Column {
-        id: timerBar
         anchors.fill: parent
         anchors.leftMargin: sideMargin
         anchors.rightMargin: sideMargin
         spacing: sideMargin
-        height: 30
-        RowLayout {
+
+        TimerBar {
             height: 30
-            Switch {
-                id: cbUpdate
-                checked: true
-                text: qsTr("Update every")
-            }
-            SpinBox {
-                id: sbUpdate
-                from: 1
-                to: 60
-                value: 2
-                enabled: cbUpdate.checked
-            }
-            Label {
-                text: "sec"
+            width: parent.width
+
+            timer.onTriggered: {
+                table.model.sessionModel.update()
+                window.width = window.width - 1
+                window.width = window.width + 1
             }
         }
-
 
         Row {
             id: header
@@ -234,17 +224,7 @@ Window {
         }
     }
 
-    Timer {
-        id: timer
-        repeat: true
-        interval: sbUpdate.value * 1000
-        running: cbUpdate.checked
-        onTriggered: {
-            table.model.sessionModel.update()
-            window.width = window.width - 1
-            window.width = window.width + 1
-        }
-    }
+
 
     function adaptiveColumnWidth(column) {
         return Math.max(table.model.columnWidth(column),
