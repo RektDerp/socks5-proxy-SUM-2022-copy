@@ -51,12 +51,11 @@ namespace proxy {
 		ba::ip::tcp::socket _client_socket;
 		ba::ip::tcp::socket _server_socket;
 
-		unsigned short _bind_port = 0;
-
 		bvec _client_buf;
 		bvec _server_buf;
 
 		std::atomic_bool _isClosed;
+		long long _id = 0;
 	};
 } // namespace proxy
 #endif // _SESSION_H_

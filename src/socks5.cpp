@@ -6,17 +6,17 @@ namespace proxy {
 	using string_utils::to_string;
 	using string_utils::formIpAddressString;
 
-	Socks5::Socks5(TcpSession* s) : Socks(s, SOCKS5_VER), _authFlag(false)
-	{
-		ConfigReader::getInstance().getValue("Auth", _authFlag);
-	}
+	bool Socks5::AUTH_FLAG = false;
+
+	Socks5::Socks5(TcpSession* s) : Socks(s, SOCKS5_VER)
+	{}
 
 	bool Socks5::init()
 	{
 		if (!readMethodRequest())
 			return false;
 
-		if (_authFlag && !auth())
+		if (AUTH_FLAG && !auth())
 			return false;
 
 		if (!readCommandRequest())
@@ -173,6 +173,7 @@ namespace proxy {
 		if (!checkMethod())
 		{
 			sendMethodResponse(METHOD::NO_ACC_METHODS);
+			log(ERROR_LOG) << "[socks5] Method is not supported";
 			return false;
 		}
 		return !sendMethodResponse(getServerMethod());

@@ -8,7 +8,7 @@ namespace proxy {
 		if (_id != 0) {
 			try {
 				DatabaseService::getInstance().close(_id);
-				log(TRACE_LOG) << "Closed session " << _id << " in database";
+				log(TRACE_LOG) << "[socks] Closed session " << _id << " in database";
 			}
 			catch (const DatabaseException& er) {
 				log(ERROR_LOG) << er.what();
@@ -20,7 +20,7 @@ namespace proxy {
 	void Socks::write_stat(size_t bytes, bool isServer)
 	{
 		if (_id == 0) {
-			log(ERROR_LOG) << "Cannot write statistics: id of session is 0";
+			log(ERROR_LOG) << "[socks] Cannot write statistics: id of session is 0";
 			return;
 		}
 
@@ -44,7 +44,7 @@ namespace proxy {
 			_id = DatabaseService::getInstance().create(s);
 		}
 		catch (const DatabaseException& ex) {
-			log(ERROR_LOG) << "Failed to create record in database: " << ex.what();
+			log(ERROR_LOG) << "[socks] Failed to create record in database: " << ex.what();
 			return false;
 		}
 		return true;
@@ -59,7 +59,7 @@ namespace proxy {
 
 		if (ver != _socks_ver)
 		{
-			log(ERROR_LOG) << "Invalid version: " << ver;
+			log(ERROR_LOG) << "[socks] Invalid version: " << ver;
 			return false;
 		}
 		return true;
@@ -69,7 +69,7 @@ namespace proxy {
 	{
 		if (ec)
 		{
-			log(ERROR_LOG) << "Error occured in socks: " << ec.message();
+			log(ERROR_LOG) << "[socks] Error occured: " << ec.message();
 			return true;
 		}
 		return false;

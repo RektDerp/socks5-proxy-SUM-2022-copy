@@ -33,6 +33,13 @@ namespace proxy {
 		virtual bool init() = 0;
 		void close();
 		void write_stat(size_t bytes, bool isServer);
+		long long id() { return _id; }
+	protected:
+		bool checkVersion();
+		bool checkError(bs::error_code& ec);
+		bool createRecord();
+		bool readPort();
+		std::string readIPV4();
 	protected:
 		TcpSession* const _session;
 		long long _id;
@@ -41,12 +48,6 @@ namespace proxy {
 		unsigned short _dstPort = 0;
 		unsigned short _bindPort = 0;
 		std::string _username;
-
-		bool checkVersion();
-		bool checkError(bs::error_code& ec);
-		bool createRecord();
-		bool readPort();
-		std::string readIPV4();
 	private:
 		Socks(const Socks&) = delete;
 		Socks& operator=(const Socks&) = delete;

@@ -30,7 +30,7 @@ namespace proxy {
 	void DatabaseService::createDB()
 	{
 		DatabaseConnection db(_db_path);
-		log(TRACE_LOG) << "Database created Successfully";
+		log(DEBUG_LOG) << "Database created successfully.";
 	}
 
 	void DatabaseService::createTable()
@@ -44,7 +44,7 @@ namespace proxy {
 		if (err != SQLITE_OK) {
 			throw DatabaseException("createTable: error during executing stmt: " + string(sqlite3_errstr(err)));
 		}
-		log(TRACE_LOG) << "Table created Successfully";
+		log(DEBUG_LOG) << "Table created successfully.";
 	}
 
 	long long DatabaseService::create(const Session s)

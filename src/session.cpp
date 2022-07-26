@@ -28,14 +28,20 @@ namespace proxy {
 				<< _client_socket.remote_endpoint().port();
 			if (createProxy()) {
 				if (_socks->init()) {
-					log(TRACE_LOG) << "[" << _bind_port << "] Starting session...";
+					_id = _socks->id();
+					log(INFO_LOG) << "[" << _id << "] Starting session: "
+						<< "client-ip:" << _client_socket.remote_endpoint().address()
+						<< ":" << _client_socket.remote_endpoint().port()
+						<< ", server-ip:" << _server_socket.remote_endpoint().address()
+						<< ":" << _server_socket.remote_endpoint().port();
 					client_read();
 					server_read();
 				}
 			}
 		}
 		catch (const std::runtime_error& err) {
-			log(ERROR_LOG) << "Error occured while starting session: " << err.what();
+			log(ERROR_LOG) << "Error occured while starting session: "
+				<< err.what();
 		}
 	}
 
@@ -107,11 +113,12 @@ namespace proxy {
 				<< query.host_name() << "': " << ec.message();
 			return 0;
 		}
-		_bind_port = _server_socket.local_endpoint().port();
+		unsigned short bind_port = _server_socket.local_endpoint().port();
 		log(TRACE_LOG) << "[session] Connected to " << _server_socket.remote_endpoint().address() << ":"
 			<< _server_socket.remote_endpoint().port();
-		log(TRACE_LOG) << "[session] Server connected on local port " << _bind_port;
-		return _bind_port;
+		log(TRACE_LOG) << "[session] Server connected on local port "
+			<< bind_port;
+		return bind_port;
 	}
 
 	void TcpSession::client_read()
@@ -123,7 +130,7 @@ namespace proxy {
 					ba::placeholders::bytes_transferred));
 		}
 		else {
-			log(TRACE_LOG) << "[" << _bind_port << "] Stopped reading - client socket is closed.";
+			log(INFO_LOG) << "[" << _id << "] Stopped reading - client socket is closed.";
 		}
 	}
 
@@ -136,7 +143,7 @@ namespace proxy {
 					ba::placeholders::bytes_transferred));
 		}
 		else {
-			log(TRACE_LOG) << "[" << _bind_port << "] Stopped reading - server socket is closed.";
+			log(INFO_LOG) << "[" << _id << "] Stopped reading - server socket is closed.";
 		}
 	}
 
@@ -144,8 +151,10 @@ namespace proxy {
 	{
 		if (error.value())
 		{
-			log(ERROR_LOG) << "[" << _bind_port << "] error occured while reading client: "
-				<< error.message();
+			if (error.value() != ba::error::eof) {
+				log(ERROR_LOG) << "[" << _id << "] error occured while reading client: "
+					<< error.message();
+			}
 			close();
 			return;
 		}
@@ -156,7 +165,7 @@ namespace proxy {
 			client_read();
 		}
 		else {
-			log(TRACE_LOG) << "[" << _bind_port << "] no bytes transferred, closing connection...";
+			log(TRACE_LOG) << "[" << _id << "] no bytes transferred, closing connection...";
 			close();
 		}
 	}
@@ -165,8 +174,10 @@ namespace proxy {
 	{
 		if (error.value())
 		{
-			log(ERROR_LOG) << "[" << _bind_port << "] " << "error occured while reading server: "
-				<< error.message();
+			if (error.value() != ba::error::eof) {
+				log(ERROR_LOG) << "[" << _id << "] " << "error occured while reading server: "
+					<< error.message();
+			}
 			close();
 			return;
 		}
@@ -176,7 +187,7 @@ namespace proxy {
 			server_read();
 		}
 		else {
-			log(TRACE_LOG) << "[" << _bind_port << "] no bytes transferred, closing connection...";
+			log(TRACE_LOG) << "[" << _id << "] no bytes transferred, closing connection...";
 			close();
 		}
 	}
@@ -184,11 +195,11 @@ namespace proxy {
 	bool TcpSession::writeToSocket(ba::ip::tcp::socket& socket, bvec& buffer, size_t len, bool isServer)
 	{
 		std::string target = isServer ? "server" : "client";
-		log(DEBUG_LOG) << "[" << _bind_port << "] Sending " << len << " bytes to " << target;
+		log(TRACE_LOG) << "[" << _id << "] Sending " << len << " bytes to " << target;
 		bs::error_code ec;
 		ba::write(socket, ba::buffer(buffer, len), ec);
 		if (ec) {
-			log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during writing: " << ec.message();
+			log(ERROR_LOG) << "[" << _id << "] Error occurred during writing: " << ec.message();
 			return false;
 		}
 		_socks->write_stat(len, isServer);
@@ -198,23 +209,24 @@ namespace proxy {
 	void TcpSession::close()
 	{
 		if (!_isClosed.exchange(true)) {
-			log(DEBUG_LOG) << "[" << _bind_port << "] Closing sockets...";
+			log(TRACE_LOG) << "[" << _id << "] Closing sockets...";
 			try {
 				_client_socket.close();
 			}
 			catch (const bs::system_error& e)
 			{
-				log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing client socket: " << e.what();
+				log(ERROR_LOG) << "[" << _id << "] Error occurred during closing client socket: " << e.what();
 			}
 			try {
 				_server_socket.close();
 			}
 			catch (const bs::system_error& e)
 			{
-				log(ERROR_LOG) << "[" << _bind_port << "] Error occurred during closing server socket: " << e.what();
+				log(ERROR_LOG) << "[" << _id << "] Error occurred during closing server socket: " << e.what();
 			}
 			if (_socks != nullptr) _socks->close();
 			_server->_sessions--;
+			log(INFO_LOG) << "[" << _id << "] Closed session.";
         }
     }
 

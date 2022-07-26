@@ -1,4 +1,5 @@
 #include "server.h"
+#include "Socks5.h"
 #include <thread>
 namespace proxy {
 	TcpServer::TcpServer(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB,
@@ -15,6 +16,7 @@ namespace proxy {
 		log(INFO_LOG) << "[server] port: " << port;
 		log(INFO_LOG) << "[server] buffer size (per connection): " << bufferSizeKB << " KB";
 		log(INFO_LOG) << "[server] max sessions: " << maxSessions;
+		log(INFO_LOG) << "[server] auth enabled?: " << (Socks5::AUTH_FLAG ? "true" : "false");
 		log(INFO_LOG) << "[server] =============================================";
 		start_accept();
 	}
@@ -25,8 +27,8 @@ namespace proxy {
 			std::this_thread::yield();
 		}
 
-		log(TRACE_LOG) << "[server] Current connections: " << _sessions;
-		log(TRACE_LOG) << "[server] waiting for new client... " << _acceptor.local_endpoint();
+		log(DEBUG_LOG) << "[server] Current connections: " << _sessions;
+		log(DEBUG_LOG) << "[server] waiting for new client... " << _acceptor.local_endpoint();
 
 		TcpSession::pointer new_connection = TcpSession::create(this, _io_context, _bufferSizeKB);
 		_acceptor.async_accept(new_connection->socket(),
@@ -38,7 +40,7 @@ namespace proxy {
 	{
 		if (!error)
 		{
-			log(TRACE_LOG) << "[server] Client connected";
+			log(DEBUG_LOG) << "[server] Client connected";
 			++_sessions;
 			ba::post(_pool, [new_connection] { new_connection->start(); });
 		}

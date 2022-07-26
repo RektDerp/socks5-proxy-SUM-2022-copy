@@ -33,10 +33,17 @@ namespace proxy {
 	public:
 		Socks5(TcpSession* s);
 		bool init() override;
+	public:
+		static bool AUTH_FLAG;
+
+		inline static METHOD getServerMethod()
+		{
+			return AUTH_FLAG ? USERNAME_PASSWORD : NO_AUTH_REQ;
+		}
 	private:
 		unsigned char _atyp;
 		unsigned char _cmd;
-		bool _authFlag;
+		
 
 		Socks5(const Socks5&) = delete;
 		Socks5& operator=(const Socks5&) = delete;
@@ -50,11 +57,6 @@ namespace proxy {
 		bool readCommandRequest();
 		bool sendCommandResponse(unsigned short bindPort);
 		bool connect(ba::ip::tcp::resolver::query query);
-
-		inline METHOD getServerMethod()
-		{
-			return _authFlag ? USERNAME_PASSWORD : NO_AUTH_REQ;
-		}
 	};
 } // namespace proxy
 #endif //_SOCKS5_IMPL_H_ 

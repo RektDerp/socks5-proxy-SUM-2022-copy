@@ -1,4 +1,5 @@
 #include "server.h"
+#include "Socks5.h"
 #include "ConfigReader.h"
 #include <stdexcept>
 #include "stat_db_service.h"
@@ -32,8 +33,9 @@ int main(int argc, char** argv)
 		// this initializes the table
 		proxy::DatabaseService::getInstance(defaultDatabasePath);
 	}
+
 	catch (const DatabaseException& ex) {
-		log(ERROR_LOG) << "Database was not created: " << ex.what();
+		log(FATAL_LOG) << "Database was not created: " << ex.what();
 		return -1;
 	}
 
@@ -44,6 +46,7 @@ int main(int argc, char** argv)
 	config.getValue("listen_port", port);
 	config.getValue("buffer_size_kb", bufferSizeKB);
 	config.getValue("max_sessions", maxSessions);
+	config.getValue("Auth", Socks5::AUTH_FLAG);
 
 	ba::io_context context;
 
@@ -52,7 +55,7 @@ int main(int argc, char** argv)
 		server = std::make_unique<TcpServer>(context, port, bufferSizeKB, maxSessions);
 	}
 	catch (const std::exception& ex) {
-		log(ERROR_LOG) << "Failed to start server: " << ex.what();
+		log(FATAL_LOG) << "Failed to start server: " << ex.what();
 		return -1;
 	}
 
@@ -61,10 +64,10 @@ int main(int argc, char** argv)
 			context.run();
 		}
 		catch (const std::exception& ex) {
-			log(ERROR_LOG) << "io_context throwed exception: " << ex.what();
+			log(FATAL_LOG) << "io_context throwed exception: " << ex.what();
 		}
 	});
 	thread.join();
-	log(TRACE_LOG) << "Stopped server.";
+	log(INFO_LOG) << "Stopped server.";
 	return 0;
 }
