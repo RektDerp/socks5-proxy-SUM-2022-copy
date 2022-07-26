@@ -10,12 +10,12 @@ namespace proxy {
 		_sessions(0),
 		_maxSessions(maxSessions)
 	{
-		log(TRACE_LOG) << "[server] =============================================";
-		log(TRACE_LOG) << "[server] Starting proxy server with given parameters:";
-		log(TRACE_LOG) << "[server] port: " << port;
-		log(TRACE_LOG) << "[server] buffer size (per connection): " << bufferSizeKB << " KB";
-		log(TRACE_LOG) << "[server] max sessions: " << maxSessions;
-		log(TRACE_LOG) << "[server] =============================================";
+		log(INFO_LOG) << "[server] =============================================";
+		log(INFO_LOG) << "[server] Starting proxy server with given parameters:";
+		log(INFO_LOG) << "[server] port: " << port;
+		log(INFO_LOG) << "[server] buffer size (per connection): " << bufferSizeKB << " KB";
+		log(INFO_LOG) << "[server] max sessions: " << maxSessions;
+		log(INFO_LOG) << "[server] =============================================";
 		start_accept();
 	}
 
