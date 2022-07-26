@@ -38,12 +38,11 @@ namespace proxy {
     typedef enum LOG_LEVEL
     {
         DISABLE_LOG = 0,
-        ENABLE_LOG = 1,
-        LOG_LEVEL_INFO = 2,
-        LOG_LEVEL_BUFFER = 3,
+        LOG_LEVEL_INFO = 1,
+        LOG_LEVEL_BUFFER = 2,
+        LOG_LEVEL_DEBUG = 3,
         LOG_LEVEL_TRACE = 4,
-        LOG_LEVEL_DEBUG = 5,
-
+        ENABLE_LOG = 5
     } LogLevel;
 
     typedef enum LOG_TYPE

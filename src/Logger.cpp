@@ -104,9 +104,9 @@ namespace proxy {
 
     void Logger::logOnConsole(std::string& data)
     {
-        //lock();
+        lock();
         cout << data << endl;
-        //unlock();
+        unlock();
     }
 
     string Logger::getCurrentTime()
@@ -389,19 +389,19 @@ namespace proxy {
 
         if (config.getValue("log_level", logLevel_str))
         {
-            if (logLevel_str == "ENABLE_LOG" || logLevel_str == "1")
+            if (logLevel_str == "ENABLE_LOG" || logLevel_str == "5")
                 logLevel = ENABLE_LOG;
 
-            else if (logLevel_str == "LOG_LEVEL_INFO" || logLevel_str == "2")
+            else if (logLevel_str == "LOG_LEVEL_INFO" || logLevel_str == "1")
                 logLevel = LOG_LEVEL_INFO;
 
-            else if (logLevel_str == "LOG_LEVEL_BUFFER" || logLevel_str == "3")
+            else if (logLevel_str == "LOG_LEVEL_BUFFER" || logLevel_str == "2")
                 logLevel = LOG_LEVEL_BUFFER;
 
             else if (logLevel_str == "LOG_LEVEL_TRACE" || logLevel_str == "4")
                 logLevel = LOG_LEVEL_TRACE;
 
-            else if (logLevel_str == "LOG_LEVEL_DEBUG" || logLevel_str == "5")
+            else if (logLevel_str == "LOG_LEVEL_DEBUG" || logLevel_str == "3")
                 logLevel = LOG_LEVEL_DEBUG;
 
             else if (logLevel_str == "DISABLE_LOG" || logLevel_str == "0")
