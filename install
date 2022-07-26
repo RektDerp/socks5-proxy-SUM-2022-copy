@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-if [[ -z "${DESTDIR}" ]]; then
+if [ -z "${DESTDIR}" ]; then
 DESTDIR="/"
 fi
 
@@ -15,6 +15,12 @@ DATABASE=$DESTDIR/tmp/sessions_stat.db
 if [ "$1" != "-r" ]
 then
     mkdir -p $DESTDIR/usr/local/share/icons
+    mkdir -p $DESTDIR/usr/local/bin/
+    mkdir -p $DESTDIR/etc/
+    mkdir -p $DESTDIR/usr/local/share/applications/
+    mkdir -p $DESTDIR/usr/local/share/icons/
+    mkdir -p $DESTDIR/usr/lib/systemd/system/
+    mkdir -p $DESTDIR/tmp
     cp -f installer/socks5-interface.desktop $DESKTOP
     cp -f installer/socks5-interface.png $ICON
     cp -f service/linux/socks5-proxy.service $SERVICE
