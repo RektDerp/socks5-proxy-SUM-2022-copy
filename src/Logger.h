@@ -7,127 +7,74 @@
 #include <mutex>
 #include <memory>
 namespace proxy {
-#define LOG_CONSOLE(x)    Logger::getInstance().console(x)
-#define LOG_ERROR(x)    Logger::getInstance().error(x)
-#define LOG_ALARM(x)	   Logger::getInstance().alarm(x)
-#define LOG_ALWAYS(x)	Logger::getInstance().always(x)
-#define LOG_INFO(x)     Logger::getInstance().info(x)
-#define LOG_BUFFER(x)   Logger::getInstance().buffer(x)
-#define LOG_TRACE(x)    Logger::getInstance().trace(x)
-#define LOG_DEBUG(x)    Logger::getInstance().debug(x)
-
-    typedef enum LOGGED_LEVEL
+    enum LOG_LEVEL
     {
-        CONSOLE_LOG,
+        OFF_LOG = 0,
+        FATAL_LOG,
         ERROR_LOG,
-        ALARM_LOG,
-        ALWAYS_LOG,
         INFO_LOG,
-        BUFFER_LOG,
+        DEBUG_LOG,
         TRACE_LOG,
-        DEBUG_LOG
-    } LoggedLevel;
+        ALL_LOG
+    };
 
-
-    typedef enum LOG_LEVEL
+    enum LOG_TYPE
     {
         DISABLE_LOG = 0,
-        LOG_LEVEL_INFO = 1,
-        LOG_LEVEL_BUFFER = 2,
-        LOG_LEVEL_DEBUG = 3,
-        LOG_LEVEL_TRACE = 4,
-        ENABLE_LOG = 5
-    } LogLevel;
+        CONSOLE_LOG,
+        FILE_LOG,
+        ENABLE_LOG
+    };
 
-    typedef enum LOG_TYPE
-    {
-        NO_LOG = 1,
-        CONSOLE = 2,
-        FILE_LOG = 3,
-        ALL_LOG = 4,
-    }LogType;
-
+    class BUFF;
     class Logger
     {
     public:
-        static Logger& getInstance() throw ();
+        static Logger& getInstance();
+        void log(std::string data, LOG_LEVEL level);
 
-        void console(const char* text) throw();
-        void console(const std::string& text) throw();
-        void console(std::ostringstream& stream) throw();
-
-        void error(const char* text) throw();
-        void error(const std::string& text) throw();
-        void error(std::ostringstream& stream) throw();
-
-        void alarm(const char* text) throw();
-        void alarm(const std::string& text) throw();
-        void alarm(std::ostringstream& stream) throw();
-
-        void always(const char* text) throw();
-        void always(const std::string& text) throw();
-        void always(std::ostringstream& stream) throw();
-
-        void buffer(const char* text) throw();
-        void buffer(const std::string& text) throw();
-        void buffer(std::ostringstream& stream) throw();
-
-        void info(const char* text) throw();
-        void info(const std::string& text) throw();
-        void info(std::ostringstream& stream) throw();
-
-        void trace(const char* text) throw();
-        void trace(const std::string& text) throw();
-        void trace(std::ostringstream& stream) throw();
-
-        void debug(const char* text) throw();
-        void debug(const std::string& text) throw();
-        void debug(std::ostringstream& stream) throw();
-
-        void updateLogLevel(LogLevel logLevel);
-        void enaleLog();
+        void updateLogLevel(LOG_LEVEL logLevel);
+        void enableLog();
         void disableLog();
 
-        void updateLogType(LogType logType);
+        void updateLogType(LOG_TYPE logType);
         void enableConsoleLogging();
         void enableFileLogging();
         void enableALLLogging();
-
-
+        
     protected:
         Logger();
         ~Logger();
 
         std::string getCurrentTime();
-
     private:
-        void logIntoFile(std::string& data);
-        void logOnConsole(std::string& data);
-        void allLog(std::string& data);
+        void logTask(std::string data, LOG_LEVEL level);
         Logger(const Logger& obj) {}
         void operator=(const Logger& obj) {}
         void configure();
-
     private:
-        static Logger* m_Instance;
-        std::ofstream           m_File;
+        static Logger*  m_Instance;
+        std::ofstream   m_File;
 
-        static std::mutex m_mutex;
+        LOG_LEVEL       m_LogLevel;
+        LOG_TYPE        m_LogType;
 
-        LogLevel                m_LogLevel;
-        LogType                 m_LogType;
-
-
+        ba::thread_pool m_worker;
+        static std::vector<std::string> LOG_LEVEL_PREFIX;
+        static std::vector<std::string> LOG_LEVEL_NAMES;
+        static std::vector<std::string> LOG_TYPE_NAMES;
     };
+
     class BUFF {
+    private:
         std::ostringstream ss;
-        LoggedLevel type;
+        LOG_LEVEL logLevel;
         BUFF() = delete;
         BUFF(const BUFF&) = delete;
         BUFF& operator=(const BUFF&) = delete;
         BUFF& operator=(BUFF&&) = delete;
     public:
-        BUFF(const LoggedLevel type);
+        BUFF(const LOG_LEVEL logLevel);
         BUFF(BUFF&& buf);
         template <typename T>
         BUFF& operator<<(T&& message)
@@ -152,7 +99,6 @@ namespace proxy {
         return buff.operator<<(message);
     }
 
-    BUFF log(const LoggedLevel type);
-
+    BUFF log(const LOG_LEVEL logLevel);
 }
 #endif // _LOGGER_H_

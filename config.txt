@@ -1,4 +1,4 @@
-log_level = LOG_LEVEL_DEBUG 		#specifying the log level
+log_level = ENABLE_LOG		#specifying the log level
  
 log_type = ALL_LOG #specifying the log type
 
