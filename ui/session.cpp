@@ -25,8 +25,8 @@ namespace proxy { namespace ui {
         query.exec("SELECT * from sessions");
         while (query.next()) {
             QVector<QString> row;
-            int i = 0;
-            //QString id = */query.value(i++).toString();
+            int i = 1;
+            // QString id = query.value(i++).toString();
             QString user = query.value(i++).toString();
             QString create_date = query.value(i++).toString();
             QString update_date = query.value(i++).toString();
