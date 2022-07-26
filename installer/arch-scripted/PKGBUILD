@@ -7,7 +7,8 @@ install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
-makedepends=('boost sqlite' 'qt5-base' 'qt5-declarative' 'qt5-quickcontrols2')
+depends=('sqlite' 'qt5-base' 'qt5-quickcontrols2')
+#makedepends=('base-devel' 'git' 'cmake' 'boost' 'sqlite' 'qt5-base' 'qt5-declarative' 'qt5-quickcontrols2')
 
 package() {
     cd ${srcdir}/..
