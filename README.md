@@ -1,7 +1,7 @@
 # socks5-proxy-SUM-2022
 Корпоративный SOCKS5 Proxy
 
-A very interesting descroption
+A very interesting description
 
 ## Building from source
 ---
