@@ -27,6 +27,7 @@ int main(int argc, char** argv)
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
 	std::cout << "Database path: " << defaultDatabasePath << std::endl;
 	ConfigReader& config = ConfigReader::getInstance();
+	config.dumpFileValues();
 	try {
 		// this initializes the table
 		proxy::DatabaseService::getInstance(defaultDatabasePath);

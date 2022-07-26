@@ -104,9 +104,9 @@ namespace proxy {
 
     void Logger::logOnConsole(std::string& data)
     {
-        //lock();
+        lock();
         cout << data << endl;
-        //unlock();
+        unlock();
     }
 
     string Logger::getCurrentTime()
