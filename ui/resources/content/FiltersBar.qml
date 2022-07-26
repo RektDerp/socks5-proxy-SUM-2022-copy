@@ -114,44 +114,67 @@ Item {
             text: "By period:"
         }
 
-        Column {
-            Row {
-                Text {
-                    text: "From: "
-                    height: from.height
-                    verticalAlignment: Text.AlignVCenter
+        Grid {
+            columns: 3
+            spacing: 5
+
+            Text {
+                text: "From: "
+                height: from.height
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            CalendarSpoiler {
+                id: from
+                defaultText: "[Not chosen]"
+
+                onDateChanged: {
+                    table.fromDateFilter = selectedDate
                 }
 
-                CalendarSpoiler {
-                    id: from
-                    defaultText: "[Not chosen]"
-
-                    onDateChanged: {
-                        table.fromDateFilter = selectedDate
-                    }
-
-                    onClear: {
-                        table.fromDateFilter = new Date(0,0,0)
-                    }
+                onClear: {
+                    table.fromDateFilter = new Date(0,0,0)
                 }
             }
-            Row {
-                Text {
-                    height: to.height
-                    text: "To: "
-                    verticalAlignment: Text.AlignVCenter
+
+            Button {
+                anchors.leftMargin: 50
+                text: "Reset filters"
+                onClicked: {
+                    userFilter.text = null
+                    table.userFilter = null
+                    createFilter.clear()
+                    updateFilter.clear()
+                    from.clear()
+                    to.clear()
+                    activeFilter.text = null
+                    table.isActiveFilter = null
+                    srcFilter.text = null
+                    table.srcEndpointFilter = null
+                    dstFilter.text = null
+                    table.dstEndpointFilter= null
+                    sentFilter.text = null
+                    table.bytesSentFilter = -1
+                    receivedFilter.text = null
+                    table.bytesRecvFilter = -1
                 }
-                CalendarSpoiler {
-                    id: to
-                    defaultText: "[Not chosen]"
+            }
 
-                    onDateChanged: {
-                        table.toDateFilter = selectedDate
-                    }
+            Text {
+                height: to.height
+                text: "To: "
+                verticalAlignment: Text.AlignVCenter
+            }
 
-                    onClear: {
-                        table.toDateFilter = new Date(0,0,0)
-                    }
+            CalendarSpoiler {
+                id: to
+                defaultText: "[Not chosen]"
+                onDateChanged: {
+                    table.toDateFilter = selectedDate
+                }
+
+                onClear: {
+                    table.toDateFilter = new Date(0,0,0)
                 }
             }
         }

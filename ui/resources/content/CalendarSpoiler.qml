@@ -17,6 +17,12 @@ Button {
     signal dateChanged;
     signal clear;
 
+    onClear: {
+        datePicker.set(new Date)
+        button.text = defaultText
+        calendar.visible = false
+    }
+
     onDateChanged: {
         button.text = getDate(selectedDate)
     }
@@ -66,9 +72,6 @@ Button {
                         height: 30
                         text: "Clear"
                         onClicked: {
-                            datePicker.set(new Date)
-                            button.text = defaultText
-                            calendar.visible = false
                             clear()
                         }
                     }
