@@ -46,14 +46,13 @@ Window {
                     text: "Filters"
                 }
                 Row {
-                    spacing: 4
-
+                    spacing: table.spacingpx
                     TextField {
                         id: userFilter
                         placeholderText : qsTr("Username")
                         width: table.adaptiveColumnWidth(0)
                         implicitHeight: 20
-
+                        x: -table.contentX
                         onTextChanged: {
                             table.userFilter = text
                         }
@@ -64,6 +63,7 @@ Window {
                         defaultText: "Create date"
                         width: table.adaptiveColumnWidth(1)
                         implicitHeight: 20
+                        x: userFilter.x + userFilter.width + table.spacingpx
                         onDateChanged: {
                             table.createDateFilter = selectedDate
                         }
@@ -76,6 +76,7 @@ Window {
                         id: updateFilter
                         defaultText: "Update date"
                         width: table.adaptiveColumnWidth(2)
+                        x: createFilter.x + createFilter.width + table.spacingpx
                         implicitHeight: 20
 
                         onDateChanged: {
@@ -92,6 +93,7 @@ Window {
                         placeholderText : qsTr("Active")
                         width: table.adaptiveColumnWidth(3)
                         implicitHeight: 20
+                        x: updateFilter.x + updateFilter.width + table.spacingpx
                         onTextChanged: {
                             table.isActiveFilter = text
                         }
@@ -102,6 +104,7 @@ Window {
                         placeholderText : qsTr("Client")
                         width: table.adaptiveColumnWidth(4)
                         implicitHeight: 20
+                        x: activeFilter.x + activeFilter.width + table.spacingpx
                         onTextChanged: {
                             table.srcEndpointFilter = text
                         }
@@ -112,6 +115,7 @@ Window {
                         placeholderText : qsTr("Server")
                         width: table.adaptiveColumnWidth(5)
                         implicitHeight: 20
+                        x: srcFilter.x + srcFilter.width + table.spacingpx
                         onTextChanged: {
                             table.dstEndpointFilter = text
                         }
@@ -122,6 +126,7 @@ Window {
                         placeholderText : qsTr("Sent bytes")
                         width: table.adaptiveColumnWidth(6)
                         implicitHeight: 20
+                        x: dstFilter.x + dstFilter.width + table.spacingpx
                         onTextChanged: {
                             table.bytesSentFilter = text.length > 0 ? text : "-1"
                         }
@@ -131,6 +136,7 @@ Window {
                         placeholderText : qsTr("Recv bytes")
                         width: table.adaptiveColumnWidth(7)
                         implicitHeight: 20
+                        x: sentFilter.x + sentFilter.width + table.spacingpx
                         onTextChanged: {
                             table.bytesRecvFilter = text.length > 0 ? text : "-1"
                         }

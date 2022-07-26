@@ -14,6 +14,7 @@ Item {
     property alias bytesSentFilter: tableModel.bytesSentFilter
     property alias bytesRecvFilter: tableModel.bytesRecvFilter
     property alias contentY: tableView.contentY
+    property alias contentX: tableView.contentX
     property int scrollBarWidth: 40
     property int spacingpx: 4
 
