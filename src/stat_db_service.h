@@ -43,7 +43,7 @@ namespace proxy {
 		~DatabaseService() = default;
 		void createDB();
 		void createTable();
-		long long create(const Session s);
+		long long create(const Session session);
 		void update(long long session_id, size_t bytes, Dest dest);
 		void close(long long session_id);
 		Session selectSession(long long session_id);
@@ -58,7 +58,7 @@ namespace proxy {
 			createTable();
 		}
 
-		void readRow(Session& s, sqlite3_stmt* stmt);
+		void readRow(Session& session, sqlite3_stmt* stmt);
 
 		DatabaseService(const DatabaseService&) = delete;
 		DatabaseService& operator=(const DatabaseService&) = delete;
