@@ -1,2 +1,3 @@
 #!/usr/bin/sh
+sudo systemctl stop socks5-proxy
 systemctl daemon-reload

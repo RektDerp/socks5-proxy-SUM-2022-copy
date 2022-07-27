@@ -22,7 +22,7 @@ then
     mkdir -p $DESTDIR/usr/lib/systemd/system/
     mkdir -p $DESTDIR/tmp
     cp -f installer/socks5-interface.desktop $DESKTOP
-    cp -f installer/socks5-interface.png $ICON
+    cp -f icon.png $ICON
     cp -f service/linux/socks5-proxy.service $SERVICE
     cp -f build/bin/main $EXE
     cp -f build/bin/interface $UI
@@ -33,6 +33,7 @@ then
     chmod +x $EXE
     chmod +x $UI
     chmod 666 $DATABASE
+    sudo systemctl stop socks5-proxy
     systemctl daemon-reload
 else
     rm -f $ICON
@@ -42,5 +43,6 @@ else
     rm -f $UI
     rm -f $CONFIG
     rm -f $DATABASE
+    sudo systemctl stop socks5-proxy
     systemctl daemon-reload
 fi
