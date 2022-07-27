@@ -46,8 +46,8 @@ Item {
                 id: heading
                 width: adaptiveColumnWidth(index)
                 height: parent.height
-                text: tableView.model.sessionModel.headerData(index, Qt.Horizontal)
-                initialSortOrder: tableView.model.initialSortOrder(index)
+                text: tableModel.sessionModel.headerData(index, Qt.Horizontal)
+                initialSortOrder: tableModel.initialSortOrder(index)
 
                 onSorting: {
                     tableView.contentY = 0
