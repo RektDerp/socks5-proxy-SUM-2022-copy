@@ -69,7 +69,7 @@ namespace proxy {
         ba::post(m_worker, 
             [this, data_Rvalue = std::move(data), level_value = level]
             {
-                logTask(data_Rvalue, level_value);
+                logTask(std::move(data_Rvalue), level_value);
             });
     }
 

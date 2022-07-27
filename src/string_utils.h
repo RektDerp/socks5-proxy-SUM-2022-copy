@@ -41,9 +41,11 @@ namespace proxy { namespace string_utils {
 		{
 			for (int i = 0; i < 16; i++)
 			{
-				ip_address += std::to_string((int)bytes[i]);
+				std::stringstream ss;
+				ss << std::hex << (int)bytes[i];
 				i++;
-				ip_address += std::to_string((int)bytes[i]);
+				ss << std::hex << (int)bytes[i];
+				ip_address += ss.str();
 				if (i != 15) ip_address += ':';
 			}
 		}
