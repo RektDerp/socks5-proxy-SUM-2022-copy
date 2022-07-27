@@ -40,7 +40,7 @@ namespace proxy {
 			}
 		}
 		catch (const std::runtime_error& err) {
-			log(ERROR_LOG) << "Error occured while starting session: "
+			log(ERROR_LOG) << "[session] Error occured while starting: "
 				<< err.what();
 		}
 	}
@@ -50,7 +50,7 @@ namespace proxy {
 		bs::error_code ec;
 		int socks_ver = readByte(ec);
 		if (ec) {
-			log(ERROR_LOG) << "There was an error during reading socks ver: "
+			log(ERROR_LOG) << "[session] There was an error during reading socks ver: "
 				<< ec.message();
 			return false;
 		}
@@ -63,7 +63,7 @@ namespace proxy {
 			_socks = std::make_unique<Socks4>(this);
 			break;
 		default:
-			log(ERROR_LOG) << "Invalid version: " << socks_ver;
+			log(ERROR_LOG) << "[session] Invalid version: " << socks_ver;
 			return false;
 		}
 		return true;

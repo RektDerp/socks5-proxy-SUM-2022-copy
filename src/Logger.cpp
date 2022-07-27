@@ -59,11 +59,11 @@ namespace proxy {
         return *m_Instance;
     }
 
-    // todo const std::string& or std::string&& ???
     void Logger::log(const std::string& data, LOG_LEVEL level)
     {
         ba::post(m_worker, [&] { logTask(data, level); });
     }
+
     void Logger::log(std::string&& data, LOG_LEVEL level)
     {
         ba::post(m_worker, 

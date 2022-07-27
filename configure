@@ -38,7 +38,7 @@ copy_resources () {
     cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
     mkdir -p "$builddir/installer"
     cp $basedir/config.txt "$builddir"
-    cp "$basedir/installer/socks5-interface.png" "$builddir/installer/socks5-interface.png"
+    cp "$basedir/icon.png" "$builddir/installer/socks5-interface.png"
     cp "$basedir/installer/socks5-interface.desktop" "$builddir/installer/socks5-interface.desktop"
     cp $basedir/service/linux/socks5-proxy.service "$builddir"
 }
