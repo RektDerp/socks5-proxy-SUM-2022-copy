@@ -47,7 +47,7 @@ namespace proxy {
 		log(DEBUG_LOG) << "Table created successfully.";
 	}
 
-	long long DatabaseService::create(const Session s)
+	long long DatabaseService::create(const Session session)
 	{
 		lock_guard<mutex> guard(_mutex);
 		DatabaseConnection db(_db_path);
@@ -59,11 +59,11 @@ namespace proxy {
 		}
 
 		int index = 0;
-		err = sqlite3_bind_text(stmt, ++index, s.user.c_str(), -1, SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.src_addr.c_str(), -1, SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.src_port.c_str(), -1, SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.dst_addr.c_str(), -1, SQLITE_STATIC);
-		err = sqlite3_bind_text(stmt, ++index, s.dst_port.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, session.user.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, session.src_addr.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, session.src_port.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, session.dst_addr.c_str(), -1, SQLITE_STATIC);
+		err = sqlite3_bind_text(stmt, ++index, session.dst_port.c_str(), -1, SQLITE_STATIC);
 		if (err != SQLITE_OK)
 		{
 			throw DatabaseException("Create: error during binding stmt: " + string(sqlite3_errstr(err)));
@@ -187,19 +187,19 @@ namespace proxy {
 		return vec;
 	}
 
-	void DatabaseService::readRow(Session& s, sqlite3_stmt* stmt)
+	void DatabaseService::readRow(Session& session, sqlite3_stmt* stmt)
 	{
 		int index = 0;
-		s.id			= sqlite3_column_int(stmt, index++);
-		s.user			= to_string(sqlite3_column_text(stmt, index++));
-		s.create_date	= to_string(sqlite3_column_text(stmt, index++));
-		s.update_date	= to_string(sqlite3_column_text(stmt, index++));
-		s.is_active		= sqlite3_column_int(stmt, index++);
-		s.src_addr		= to_string(sqlite3_column_text(stmt, index++));
-		s.src_port		= to_string(sqlite3_column_text(stmt, index++));
-		s.dst_addr		= to_string(sqlite3_column_text(stmt, index++));
-		s.dst_port		= to_string(sqlite3_column_text(stmt, index++));
-		s.bytes_sent	= sqlite3_column_int(stmt, index++);
-		s.bytes_recv	= sqlite3_column_int(stmt, index++);
+		session.id			= sqlite3_column_int(stmt, index++);
+		session.user			= to_string(sqlite3_column_text(stmt, index++));
+		session.create_date	= to_string(sqlite3_column_text(stmt, index++));
+		session.update_date	= to_string(sqlite3_column_text(stmt, index++));
+		session.is_active		= sqlite3_column_int(stmt, index++);
+		session.src_addr		= to_string(sqlite3_column_text(stmt, index++));
+		session.src_port		= to_string(sqlite3_column_text(stmt, index++));
+		session.dst_addr		= to_string(sqlite3_column_text(stmt, index++));
+		session.dst_port		= to_string(sqlite3_column_text(stmt, index++));
+		session.bytes_sent	= sqlite3_column_int(stmt, index++);
+		session.bytes_recv	= sqlite3_column_int(stmt, index++);
 	}
 } // namespace proxy
