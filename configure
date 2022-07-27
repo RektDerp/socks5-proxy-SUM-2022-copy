@@ -96,7 +96,7 @@ package_deb () {
     cat > "$pkgdir"/DEBIAN/control << EOM
 Package: socks5-proxy
 Version: 2.2.8
-Architecture: arm64
+Architecture: amd64
 Maintainer: Kyrychuk Anton <6377200@stud.nau.edu.ua>
 Description: Apriorit project
 #Depends: $deps
