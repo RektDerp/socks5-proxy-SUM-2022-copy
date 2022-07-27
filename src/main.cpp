@@ -1,5 +1,5 @@
 #include "server.h"
-#include "Socks5.h"
+#include "socks5.h"
 #include "ConfigReader.h"
 #include <stdexcept>
 #include "stat_db_service.h"
