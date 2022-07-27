@@ -1,4 +1,5 @@
-// https://www.ics.com/blog/creating-qml-controls-scratch-datepicker
+// source: https://www.ics.com/blog/creating-qml-controls-scratch-datepicker
+// (c) Chris Cortopassi
 import QtQuick 2.0
 
 ListView {

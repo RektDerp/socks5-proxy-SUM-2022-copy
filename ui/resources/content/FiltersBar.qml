@@ -25,7 +25,7 @@ Item {
                 }
             }
 
-            CalendarSpoiler {
+            CalendarButton {
                 id: createFilter
                 defaultText: "Create date"
                 width: table.adaptiveColumnWidth(1)
@@ -39,7 +39,7 @@ Item {
                 }
             }
 
-            CalendarSpoiler {
+            CalendarButton {
                 id: updateFilter
                 defaultText: "Update date"
                 width: table.adaptiveColumnWidth(2)
@@ -124,7 +124,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            CalendarSpoiler {
+            CalendarButton {
                 id: from
                 defaultText: "[Not chosen]"
 
@@ -166,7 +166,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            CalendarSpoiler {
+            CalendarButton {
                 id: to
                 defaultText: "[Not chosen]"
                 onDateChanged: {

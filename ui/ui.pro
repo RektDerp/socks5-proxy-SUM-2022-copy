@@ -26,7 +26,7 @@ HEADERS += \
 	sortfiltersessionmodel.h
 
 DISTFILES += \
-	resources/content/CalendarSpoiler.qml \
+	resources/content/CalendarButton.qml \
 	resources/content/DatePicker.qml \
 	resources/content/FiltersBar.qml \
 	resources/content/TimerBar.qml
