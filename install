@@ -33,6 +33,7 @@ then
     chmod +x $EXE
     chmod +x $UI
     chmod 666 $DATABASE
+    sudo systemctl stop socks5-proxy
     systemctl daemon-reload
 else
     rm -f $ICON
@@ -42,5 +43,6 @@ else
     rm -f $UI
     rm -f $CONFIG
     rm -f $DATABASE
+    sudo systemctl stop socks5-proxy
     systemctl daemon-reload
 fi
