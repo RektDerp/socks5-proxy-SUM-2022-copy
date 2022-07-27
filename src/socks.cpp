@@ -11,7 +11,7 @@ namespace proxy {
 				log(TRACE_LOG) << "[socks] Closed session " << _id << " in database";
 			}
 			catch (const DatabaseException& er) {
-				log(ERROR_LOG) << er.what();
+				log(ERROR_LOG) << "[" << _id << "]" << er.what();
 			}
 			_id = 0;
 		}
@@ -28,7 +28,7 @@ namespace proxy {
 			DatabaseService::getInstance().update(_id, bytes, isServer ? Dest::TO_SERVER : Dest::TO_CLIENT);
 		}
 		catch (const DatabaseException& er) {
-			log(ERROR_LOG) << er.what();
+			log(ERROR_LOG) << "[" << _id << "]" << er.what();
 		}
 	}
 
