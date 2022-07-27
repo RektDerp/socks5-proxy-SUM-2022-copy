@@ -34,9 +34,6 @@ build () {
 }
 
 copy_resources () {
-echo "packaging .deb"
-  if which dpkg-deb > /dev/null 2>&1
-  then
     pkgdir="$builddir/$deb_packagename/"
     cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
     mkdir -p "$builddir/installer"
@@ -45,19 +42,6 @@ echo "packaging .deb"
     cp "$basedir/installer/socks5-interface.desktop" "$builddir/installer/socks5-interface.desktop"
     cp "$basedir/service/linux/socks5-proxy.service" "$builddir"
 
-    mkdir -p $pkgdir/DEBIAN
-    cat > $pkgdir/DEBIAN/control << EOM
-Package: socks5-proxy
-Version: 2.2.8
-Architecture: arm64
-Maintainer: Kyrychuk Anton <6377200@stud.nau.edu.ua>
-Description: Apriorit project
-Depends: qtbase5-dev qtdeclarative5-dev libsqlite3-dev libboost-all-dev qtquickcontrols2-5-dev qml-module-qtquick-controls2 qml-module-qtquick-controls
-    EOM
-    dpkg-deb --build --root-owner-group "$pkgdir"
-  else
-        echo -e "dpkg-deb not found.\nCannot package deb"
-  fi
 }
 
 package_arch () {
@@ -77,6 +61,8 @@ package_arch () {
 
 package_deb () {
     echo "packaging deb"
+    if which dpkg-deb > /dev/null 2>&1
+    then
     copy_resources
     cd "$builddir" || exit
 
@@ -88,14 +74,38 @@ package_deb () {
     mkdir -p "$pkgdir/usr/lib/systemd/system/"
     mkdir -p "$pkgdir/tmp"
 
-    cp bin/main $pkgdir/usr/bin/socks5-proxy
-    cp bin/interface $pkgdir/usr/bin/socks5-interface
-    cp config.txt  $pkgdir/etc/socks5-config.txt
-    cp installer/socks5-interface.desktop $pkgdir/usr/share/applications/socks5-interface.desktop
-    cp installer/socks5-interface.png $pkgdir/usr/share/icons/socks5-interface.png
-    cp socks5-proxy.service $pkgdir/usr/lib/systemd/system/socks5-proxy.service
-    touch $pkgdir/tmp/sessions_stat.db
-    chmod 666 $pkgdir/tmp/sessions_stat.db
+    cp bin/main "$pkgdir"/usr/bin/socks5-proxy
+    cp bin/interface "$pkgdir"/usr/bin/socks5-interface
+    cp config.txt  "$pkgdir"/etc/socks5-config.txt
+    cp installer/socks5-interface.desktop "$pkgdir"/usr/share/applications/socks5-interface.desktop
+    cp installer/socks5-interface.png "$pkgdir"/usr/share/icons/socks5-interface.png
+    cp socks5-proxy.service "$pkgdir"/usr/lib/systemd/system/socks5-proxy.service
+    touch "$pkgdir"/tmp/sessions_stat.db
+    chmod 666 "$pkgdir"/tmp/sessions_stat.db
+
+    mkdir -p "$pkgdir"/DEBIAN
+    case $Qt in
+    Qt5)
+    deps=("qtbase5-dev" "qtdeclarative5-dev" "libsqlite3-dev" "libboost-all-dev" "cmake" "build-essential" "qtquickcontrols2-5-dev" "qml-module-qtquick-controls2" "qml-module-qtquick-controls")
+    ;;
+    Qt6)
+    deps=("qt6-base-dev" "qt6-declarative-dev" "libsqlite3-dev" "libboost-all-dev" "qml6-module-qtquick-controls" "qml6-module-qtquick-layouts" "qml6-module-qtquick" "qml6-module-qtquick-templates" "qml6-module-qtquick-window" "qml6-module-qtqml-workerscript")
+    ;;
+    esac
+
+    cat > "$pkgdir"/DEBIAN/control << EOM
+Package: socks5-proxy
+Version: 2.2.8
+Architecture: arm64
+Maintainer: Kyrychuk Anton <6377200@stud.nau.edu.ua>
+Description: Apriorit project
+#Depends: $deps
+EOM
+    dpkg-deb --build --root-owner-group "$pkgdir"
+    else
+        echo -e "dpkg-deb not found.\nCannot package deb"
+  fi
+
 }
 
 invalid () {
