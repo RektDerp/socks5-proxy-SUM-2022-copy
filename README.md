@@ -33,7 +33,7 @@ Compiling
 ```
     git clone https://github.com/apriorit/socks5-proxy-SUM-2022.git
     cd socks5-proxy-SUM-2022
-    ./configure clean build [-D Qt=<Qt5|Qt6>]
+    ./configure clean build [-D Qt=<Qt5|Qt6>] #Qt5 is default
 ```
 
 Installation
