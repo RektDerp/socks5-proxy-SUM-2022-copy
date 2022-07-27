@@ -44,8 +44,9 @@ namespace proxy {
 			return false;
 		}
 
-		if (!createRecord())
-			return false;
+		if (!createRecord()) {
+			log(ERROR_LOG) << "Record was not created in database!!!";
+		}
 
 		return true;
 	}
