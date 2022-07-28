@@ -3,7 +3,6 @@
 basedir=$PWD
 builddir=$basedir/build/
 pkgbuild_dir=$basedir/installer/arch-scripted/
-deb_packagename=socks5-proxy-2.2.8-1_amd64
 Qt=Qt5
 
 clean () {
@@ -34,6 +33,7 @@ build () {
 }
 
 copy_resources () {
+
     pkgdir="$builddir/$deb_packagename/"
     cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
     mkdir -p "$builddir/installer"
@@ -60,6 +60,7 @@ package_arch () {
 }
 
 package_deb () {
+    deb_packagename="socks5-proxy-$Qt-2.2.8-1_amd64"
     echo "packaging deb"
     if which dpkg-deb > /dev/null 2>&1
     then
@@ -99,7 +100,7 @@ Version: 2.2.8
 Architecture: amd64
 Maintainer: Kyrychuk Anton <6377200@stud.nau.edu.ua>
 Description: Apriorit project
-#Depends: $deps
+Depends: $deps
 EOM
     dpkg-deb --build --root-owner-group "$pkgdir"
     else

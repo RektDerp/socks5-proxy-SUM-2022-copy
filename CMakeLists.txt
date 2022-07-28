@@ -60,6 +60,7 @@ set(executables
 )
 
 set(moc "interface" "sessionmodel" "sortfiltersessionmodel")
+add_compile_options("-static")
 ##########################################################################
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
