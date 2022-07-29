@@ -1,33 +1,43 @@
 cmake_minimum_required(VERSION 3.8)
 
 project(socks5-proxy)
+if(NOT DEFINED libdir)
+set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+endif()
+
+if(NOT DEFINED includedir)
+set(includedir ${CMAKE_CURRENT_SOURCE_DIR}/include)
+endif()
+
+if(NOT DEFINED Qt)
+    set(Qt "Qt5")
+endif()
+
+if(NOT DEFINED Qtdir)
+    set (Qtdir "${libdir}/Qt/QtStatic")
+endif()
+
 set (CMAKE_CXX_STANDARD 14)
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(uidir ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 set(servicedir ${CMAKE_CURRENT_SOURCE_DIR}/service/windows)
-set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-set(includedir ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
 add_compile_options("-O2")
 
-if(NOT DEFINED Qt)
-    message ("Qt not defined")
-    set(Qt "Qt5")
-endif()
-
-set (Qtdir "${libdir}/Qt/QtStatic")
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
   message("Build for windows on unix")
-
-  set(CMAKE_FIND_ROOT_PATH "/usr/x86_64-w64-mingw32/" "${Qtdir}" "${Qtdir}/bin" "${Qtdir}/lib" "${Qtdir}/include" "${libdir}/bin" "${includedir}")
+  list(APPEND CMAKE_PREFIX_PATH "/usr/x86_64-w64-mingw32/")
   set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
   set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
   set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+  execute_process(COMMAND "which" "unzip" OUTPUT_VARIABLE unzipprogram)
+endif()
 
-  list(APPEND CMAKE_PREFIX_PATH "${Qtdir}" "includedir")
+if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
+    message("Build for windows on windows")
+    execute_process(COMMAND "where" "unzip" OUTPUT_VARIABLE unzipprogram)
 endif()
 
 ##########################################################################
@@ -63,12 +73,23 @@ set(moc "interface" "sessionmodel" "sortfiltersessionmodel")
 add_compile_options("-static")
 ##########################################################################
 
-if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
-    message("Build for windows on windows")
-
-endif()
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+  list(APPEND CMAKE_PREFIX_PATH "${Qtdir}" "${CMAKE_CURRENT_SOURCE_DIR}")
+  if (NOT EXISTS "${includedir}/sqlite3.c")
+      message ("sqlite not found, downloading")
+      file(MAKE_DIRECTORY "${includedir}")
+      file(DOWNLOAD "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip" "${includedir}/sqlite.zip"
+      SHOW_PROGRESS)
+      if(NOT EXISTS ${unzipprogram})
+          ###file(DOWNLOAD
+      endif()
+
+  endif()
+
+  if()
+
+  endif()
+
   SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")
   SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 
@@ -82,17 +103,18 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lssp -lwinpthread  -Wl,--no-whole-archive" AT 1)
     list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++" AT 3)
   endif()
+  if(NOT DEFINED QtStatic)
+    list(GET executables 3 qtfilter)
+    string(REGEX MATCHALL "${Qt}::[A-Za-z]*" qtfilter ${qtfilter})
+    list(TRANSFORM qtfilter REPLACE "::" "")
+    list(TRANSFORM qtfilter APPEND ".dll")
 
-  list(GET executables 3 qtfilter)
-  string(REGEX MATCHALL "${Qt}::[A-Za-z]*" qtfilter ${qtfilter})
-  list(TRANSFORM qtfilter REPLACE "::" "")
-  list(TRANSFORM qtfilter APPEND ".dll")
-
-  foreach (qtdll IN LISTS qtfilter)
-      find_file(qtdllpath ${qtdll} HINTS "${Qtdir}/bin")
-      file(COPY_FILE ${qtdllpath} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${qtdll})
-  endforeach()
-  message("qt " ${qtfilter})
+    foreach (qtdll IN LISTS qtfilter)
+        find_file(qtdllpath ${qtdll} HINTS "${Qtdir}/bin")
+        file(COPY_FILE ${qtdllpath} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${qtdll})
+    endforeach()
+    message("qt " ${qtfilter})
+  endif()
 endif()
 
 message("\n-==Defining modules==-\n")

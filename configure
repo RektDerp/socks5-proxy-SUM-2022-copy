@@ -21,6 +21,7 @@ configure_windows () {
     echo "Configuring for windows"
     echo "flags $ADDITIONAL_FLAGS"
     mkdir -p "$builddir/bin"
+    ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS -D Qtdir=$Qtdir"
     cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
 
@@ -164,12 +165,18 @@ do
     ;;
     -D)
         cnt=$((cnt + 1))
-        ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS-D ${!cnt} "
         if [[ ${!cnt} == *"Qt="* ]]
         then
             param=${!cnt}
             Qt=${param##Qt=}
             echo $Qt
+        fi
+        if [[ ${!cnt} == *"Qtdir="* ]]
+        then
+            Qtdir="${!cnt}"
+            echo $Qtdir
+        else
+            ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS-D ${!cnt} "
         fi
         cnt=$((cnt + 1))
         continue
@@ -190,11 +197,33 @@ do
         cnt=$((cnt + 1))
         continue
     ;;
+    qtdir | Qtdir | -qd | --qtdir)
+        cnt=$((cnt + 1))
+        Qtdir="${!cnt}"
+    ;;
     *)
       invalid "Invalid command $i"
     ;;
   esac
 done
+
+if [ "$windows" == true ] && [ "$Qtdir" == "" ]
+then
+  echo -e "Warning! Windows build chosen, but Qt root directory is not specified, the build will likely fail. Continue?\nHint: Set path to build itself, i.e directory containing ./bin ./lib ./include directories, not the parent directory\n[S]pecify path [Y]es [N]o"
+fi
+read answer
+case $answer in
+  y | Y | yes | Yes | YES)
+
+  ;;
+  S | s | Specify | "Specify path")
+    echo "Enter path:"
+    read Qtdir
+  ;;
+  *)
+    exit 0
+  ;;
+esac
 
 if [ "$clean" = true ]
 then
