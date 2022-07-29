@@ -29,8 +29,6 @@ OutFile "install.exe"
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "gpl-3.0.rtf"
 !insertmacro MUI_PAGE_DIRECTORY
-!insertmacro MUI_PAGE_INSTFILES
-!insertmacro MUI_UNPAGE_CONFIRM
 
 Var Dialog
 Var Label
@@ -54,22 +52,20 @@ Function nsDialogsPage
 	${NSD_CreateLabel} 0 0 100% 12u "Select additional parameters"
 	Pop $Label
 
-    ${NSD_CreateCheckBox} 0 200 100% 6% "Create menu shortcuts only for this user (buggy)"
+    ${NSD_CreateCheckBox} 0 78% 100% 6% "Create menu shortcuts only for this user (buggy)"
     Pop $CheckboxUser
     ${NSD_OnClick} $CheckboxUser setContext
 
-    ${NSD_CreateCheckBox} 0 200 100% 6% "Create Desktop shortcuts"
+    ${NSD_CreateCheckBox} 0 86% 100% 6% "Create Desktop shortcuts"
     Pop $CheckboxDesktop
     ${NSD_OnClick} $CheckboxDesktop switch
 
-    ${NSD_CreateCheckBox} 0 200 100% 6% "Create service control shortcuts"
+    ${NSD_CreateCheckBox} 0 94% 100% 6% "Create service control shortcuts"
     Pop $CheckboxServiceControls
     ${NSD_OnClick} $CheckboxServiceControls switch
 
 	nsDialogs::Show
 FunctionEnd
-
-Var context
 
 Function setContext
     Pop $CheckboxUser
@@ -88,6 +84,8 @@ Function switch
     StrCpy $bService $0
 FunctionEnd
 
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 
 section "install"
@@ -100,19 +98,19 @@ section "install"
     file "start.ico"
     file "stop.ico"
 
-    createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\socks5-interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+    createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
 
     ${If} $bDesktop == "1"
-        createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\socks5-interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+        createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
         ${If} $bService == "1"
-        createShortCut "$DESKTOP\$Start {APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
-        createShortCut "$DESKTOP\$Start {APPNAME} service.lnk" "sc.exe" "start Socks5" "${stopLogo}" 0 "" "" "Service control"
+        createShortCut "$DESKTOP\Start {APPNAME} service.lnk" "sc.exe start Socks5" "" "${startLogo}" 0 "" "" "Service control"
+        createShortCut "$DESKTOP\Stop {APPNAME} service.lnk" "sc.exe stop Socks5" "" "${stopLogo}" 0 "" "" "Service control"
     ${EndIf}
     ${EndIf}
 
     ${If} $bService == "1"
-        createShortCut "$SMPROGRAMS\$Start {APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
-        createShortCut "$SMPROGRAMS\$Start {APPNAME} service.lnk" "sc.exe" "start Socks5" "${stopLogo}" 0 "" "" "Service control"
+        createShortCut "$SMPROGRAMS\Start {APPNAME} service.lnk" "sc.exe start Socks5" "" "${startLogo}" 0 "" "" "Service control"
+        createShortCut "$SMPROGRAMS\Stop {APPNAME} service.lnk" "sc.exe stop Socks5" "" "${stopLogo}" 0 "" "" "Service control"
     ${EndIf}
 
 
@@ -128,6 +126,9 @@ section "install"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayVersion" "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoRepair" 1
+
+    #EnVar::AddValue "Path" "$INSTDIR/dll"
+
 sectionEnd
 
 section "uninstall"
@@ -135,8 +136,11 @@ section "uninstall"
 
     delete "$INSTDIR\*"
     delete "$SMPROGRAMS\${APPNAME}.lnk"
+    delete "$SMPROGRAMS\Start {APPNAME} service.lnk"
+    delete "$DESKTOP\Stop {APPNAME} service.lnk"
     rmDir $INSTDIR
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
+    #EnVar::DeleteValue "Path" "$INSTDIR/dll"
 sectionEnd
 
 !insertmacro MUI_LANGUAGE "English"
