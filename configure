@@ -22,7 +22,7 @@ configure_windows () {
     echo "flags $ADDITIONAL_FLAGS"
     mkdir -p "$builddir/bin"
     ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS -D Qtdir=$Qtdir"
-    cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
+    cmake -S. -B "$builddir" -G "mingw32-make" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
 
 build () {
