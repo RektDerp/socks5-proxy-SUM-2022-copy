@@ -78,10 +78,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   if (NOT EXISTS "${includedir}/sqlite3.c")
       message ("sqlite not found, downloading")
       file(MAKE_DIRECTORY "${includedir}")
-      file(DOWNLOAD "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip" "${includedir}/sqlite.zip"
-      SHOW_PROGRESS)
+      file(DOWNLOAD "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip" "${includedir}/sqlite.zip" SHOW_PROGRESS)
       if(NOT EXISTS ${unzipprogram})
-          ###file(DOWNLOAD
+          file(DOWNLOAD "" "${libdir}/unzip.exe")
+          set (unzipprogram "${libdir}/unzip.exe")
       endif()
 
   endif()
