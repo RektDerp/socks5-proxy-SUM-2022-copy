@@ -115,7 +115,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   list(APPEND executables "service")
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lssp -lwinpthread  -Wl,--no-whole-archive" AT 1)
+    list(TRANSFORM executables REPLACE "-lpthread" "-static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lssp -lpthread  -Wl,--no-whole-archive" AT 1)
     list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++" AT 3)
   endif()
   if(NOT DEFINED QtStatic)
