@@ -17,6 +17,8 @@ if(NOT DEFINED Qtdir)
     set (Qtdir "${libdir}/Qt/QtStatic")
 endif()
 
+message ("Qtdir " ${Qtdir})
+
 set (CMAKE_CXX_STANDARD 14)
 set(sourcedir ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(uidir ${CMAKE_CURRENT_SOURCE_DIR}/ui)
@@ -32,12 +34,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUA
   set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
   set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
   set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-  execute_process(COMMAND "which" "unzip" OUTPUT_VARIABLE unzipprogram)
 endif()
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
     message("Build for windows on windows")
-    execute_process(COMMAND "where" "unzip" OUTPUT_VARIABLE unzipprogram)
 endif()
 
 ##########################################################################
@@ -79,15 +79,19 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
       message ("sqlite not found, downloading")
       file(MAKE_DIRECTORY "${includedir}")
       file(DOWNLOAD "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip" "${includedir}/sqlite.zip" SHOW_PROGRESS)
-      if(NOT EXISTS ${unzipprogram})
-          file(DOWNLOAD "" "${libdir}/unzip.exe")
-          set (unzipprogram "${libdir}/unzip.exe")
-      endif()
-
+      file(ARCHIVE_EXTRACT INPUT "${includedir}/sqlite.zip" DESTINATION "${includedir}")
+      file(COPY
+      "${includedir}/sqlite-amalgamation-3390200/sqlite3.c"
+      "${includedir}/sqlite-amalgamation-3390200/shell.c"
+      "${includedir}/sqlite-amalgamation-3390200/sqlite3.h"
+      "${includedir}/sqlite-amalgamation-3390200/sqlite3ext.h"
+      DESTINATION "${includedir}")
+      file(REMOVE_RECURSE "${includedir}/sqlite.zip" "${includedir}/sqlite-amalgamation-3390200")
   endif()
-
-  if()
-
+  find_path(boostcheck "boost/asio.hpp")
+  message("boost " ${boostcheck})
+  if($boostcheck STREQUAL "boostcheck-NOTFOUND")
+    message ("boost not found. downloading")
   endif()
 
   SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")
@@ -110,6 +114,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     list(TRANSFORM qtfilter APPEND ".dll")
 
     foreach (qtdll IN LISTS qtfilter)
+        message("find_file(qtdllpath ${qtdll} HINTS ${Qtdir}/bin)")
         find_file(qtdllpath ${qtdll} HINTS "${Qtdir}/bin")
         file(COPY_FILE ${qtdllpath} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${qtdll})
     endforeach()
