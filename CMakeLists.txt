@@ -75,6 +75,7 @@ add_compile_options("-static")
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   list(APPEND CMAKE_PREFIX_PATH "${Qtdir}" "${CMAKE_CURRENT_SOURCE_DIR}")
+  list(APPEND CMAKE_MODULE_PATH "${Qtdir}/lib/cmake")
   if (NOT EXISTS "${includedir}/sqlite3.c")
       message ("sqlite not found, downloading")
       file(MAKE_DIRECTORY "${includedir}")
