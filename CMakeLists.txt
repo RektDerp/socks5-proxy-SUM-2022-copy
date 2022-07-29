@@ -26,6 +26,7 @@ set(servicedir ${CMAKE_CURRENT_SOURCE_DIR}/service/windows)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${libdir})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${libdir})
+include_directories(${includedir})
 add_compile_options("-O2")
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows" AND ${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Linux")
@@ -40,6 +41,8 @@ if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Windows")
     message("Build for windows on windows")
 	set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
     set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+	list(APPEND CMAKE_PREFIX_PATH "${Qtdir}" "${CMAKE_CURRENT_SOURCE_DIR}")
+    set(${Qt}_DIR "${Qtdir}/lib/cmake/${Qt}")
 endif()
 
 ##########################################################################
@@ -76,13 +79,12 @@ add_compile_options("-static")
 ##########################################################################
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-  list(APPEND CMAKE_PREFIX_PATH "${Qtdir}" "${CMAKE_CURRENT_SOURCE_DIR}")
-  set(${Qt}_DIR "${Qtdir}/lib/cmake/${Qt}")
   if (NOT EXISTS "${includedir}/sqlite3.c")
       message ("sqlite not found, downloading")
       file(MAKE_DIRECTORY "${includedir}")
       file(DOWNLOAD "https://www.sqlite.org/2022/sqlite-amalgamation-3390200.zip" "${includedir}/sqlite.zip" SHOW_PROGRESS)
-      file(ARCHIVE_EXTRACT INPUT "${includedir}/sqlite.zip" DESTINATION "${includedir}")
+      message("extracting")
+	  file(ARCHIVE_EXTRACT INPUT "${includedir}/sqlite.zip" DESTINATION "${includedir}")
       file(COPY
       "${includedir}/sqlite-amalgamation-3390200/sqlite3.c"
       "${includedir}/sqlite-amalgamation-3390200/shell.c"
@@ -93,8 +95,14 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   endif()
   find_path(boostcheck "boost/asio.hpp")
   message("boost " ${boostcheck})
-  if($boostcheck STREQUAL "boostcheck-NOTFOUND")
+  if(NOT EXISTS "$boostcheck/asio.hpp")
     message ("boost not found. downloading")
+	file(MAKE_DIRECTORY "${includedir}")
+	file(DOWNLOAD "https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.7z" "${includedir}/boost.7z" SHOW_PROGRESS)
+	file(ARCHIVE_EXTRACT INPUT "${includedir}/boost.7z" PATTERNS "boost_1_79_0/boost/*" DESTINATION "${includedir}")
+	message("extracting")
+	file(COPY "${includedir}/boost_1_79_0/boost" DESTINATION "${includedir}")
+	file(REMOVE_RECURSE "${includedir}/boost.7z" "${includedir}/boost_1_79_0/")
   endif()
 
   SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")
