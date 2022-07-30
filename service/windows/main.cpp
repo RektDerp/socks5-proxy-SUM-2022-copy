@@ -23,6 +23,6 @@ int main(int argc, char *argv[]) {
   } catch (std::runtime_error &e) {
     fprintf(log,"exception %s\n", e.what());
   }
-
+  fclose(log);
   return 0;
 }
