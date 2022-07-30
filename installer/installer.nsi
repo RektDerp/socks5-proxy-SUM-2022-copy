@@ -7,6 +7,7 @@
 !define VERSIONMAJOR 0
 !define VERSIONMINOR 0
 !define VERSIONBUILD 1
+RequestExecutionLevel Admin
 
 !define MUI_ICON "install.ico"
 #!define MUI_UNICON ""
@@ -80,7 +81,7 @@ FunctionEnd
 Function switch
     ${NSD_GetState} $CheckboxDesktop $0
     StrCpy $bDesktop $0
-    ${NSD_GetState} CheckboxServiceControls $0
+    ${NSD_GetState} $CheckboxServiceControls $0
     StrCpy $bService $0
 FunctionEnd
 
@@ -92,30 +93,30 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
 
-    file "..\build\bin\*.*"
+    file /r "..\build\bin\*"
     file "..\config.txt"
     file "socks5-interface.ico"
     file "start.ico"
     file "stop.ico"
 
     createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
-
+    createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
     ${If} $bDesktop == "1"
         createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
         ${If} $bService == "1"
-        createShortCut "$DESKTOP\Start {APPNAME} service.lnk" "sc.exe start Socks5" "" "${startLogo}" 0 "" "" "Service control"
-        createShortCut "$DESKTOP\Stop {APPNAME} service.lnk" "sc.exe stop Socks5" "" "${stopLogo}" 0 "" "" "Service control"
-    ${EndIf}
+            createShortCut "$DESKTOP\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
+            createShortCut "$DESKTOP\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
+         ${EndIf}
     ${EndIf}
 
     ${If} $bService == "1"
-        createShortCut "$SMPROGRAMS\Start {APPNAME} service.lnk" "sc.exe start Socks5" "" "${startLogo}" 0 "" "" "Service control"
-        createShortCut "$SMPROGRAMS\Stop {APPNAME} service.lnk" "sc.exe stop Socks5" "" "${stopLogo}" 0 "" "" "Service control"
+        createShortCut "$SMPROGRAMS\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5"  "${startLogo}" 0 "" "" "Service control"
+        createShortCut "$SMPROGRAMS\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
     ${EndIf}
 
 
     nsExec::Exec '"sc.exe" delete Socks5'
-    nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\service.exe"'
+    nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\winservice.exe"'
 
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayName" "${APPNAME}"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
@@ -127,20 +128,25 @@ section "install"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoRepair" 1
 
-    #EnVar::AddValue "Path" "$INSTDIR/dll"
+    EnVar::SetHKLM
+    EnVar::AddValue "Path" "$INSTDIR\dll"
 
 sectionEnd
 
 section "uninstall"
     nsExec::Exec '"sc.exe" delete Socks5'
 
-    delete "$INSTDIR\*"
+    rmDir /r "$INSTDIR"
     delete "$SMPROGRAMS\${APPNAME}.lnk"
-    delete "$SMPROGRAMS\Start {APPNAME} service.lnk"
-    delete "$DESKTOP\Stop {APPNAME} service.lnk"
-    rmDir $INSTDIR
+    delete "$SMPROGRAMS\Start ${APPNAME} service.lnk"
+    delete "$SMPROGRAMS\Stop ${APPNAME} service.lnk"
+    delete "$DESKTOP\${APPNAME}.lnk"
+    delete "$DESKTOP\Start ${APPNAME} service.lnk"
+    delete "$DESKTOP\Stop ${APPNAME} service.lnk"
+
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
-    #EnVar::DeleteValue "Path" "$INSTDIR/dll"
+    EnVar::SetHKLM
+    EnVar::DeleteValue "Path" "$INSTDIR\dll"
 sectionEnd
 
 !insertmacro MUI_LANGUAGE "English"

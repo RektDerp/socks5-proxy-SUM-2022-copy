@@ -1,6 +1,4 @@
-//#define DEBUG_AUX
 #include "service.h"
-#include "debug.h"
 #include "processthreadsapi.h"
 #include "synchapi.h"
 #include "winnt.h"
@@ -18,10 +16,11 @@ STARTUPINFO ServiceWrapper::serviceStartupInfo = {0};
 PROCESS_INFORMATION ServiceWrapper::serviceProcessInfo = {0};
 std::string ServiceWrapper::serviceName;
 std::string ServiceWrapper::executablePath;
+FILE* log;
 
 void ServiceWrapper::start(const std::string &_name) {
 
-  debug("\nstart()\n");
+
   serviceName = _name;
   serviceTable[0].lpServiceName = (LPSTR)_name.c_str();
   serviceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)serviceMain;
@@ -31,7 +30,7 @@ void ServiceWrapper::start(const std::string &_name) {
 }
 
 void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
-  debug("serviceMain()\n");
+
   serviceStatusHandle =
       RegisterServiceCtrlHandler(serviceName.c_str(), serviceControlHandler);
   if (!serviceStatusHandle)
@@ -52,10 +51,9 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   }
 
   /////////////
-  debug("starting server\n");
+
   serviceStartupInfo.cb = sizeof(serviceStartupInfo);
-  if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, FALSE, 0,
-                     NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
+  if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
     std::string errortext = "Failed to create process: ";
     errortext.append(std::to_string(GetLastError()));
     throw(std::runtime_error(errortext));
@@ -69,10 +67,10 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
     throw(std::runtime_error("SetServiceStatus failed"));
 
   while (true) {
-    debug("loop:\n");
+
     if (WaitForSingleObject(stopEvent, 1000) != WAIT_TIMEOUT) {
       // stop process
-      debug("service stop event received\n");
+
       TerminateProcess(serviceProcessInfo.hProcess, 0);
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
@@ -82,10 +80,10 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
         throw(std::runtime_error("SetServiceStatus failed"));
       return;
     }
-    debug("wait for stop event not recieved\n");
+
     if (WaitForSingleObject(serviceProcessInfo.hProcess, 1000) !=
         WAIT_TIMEOUT) {
-      debug("server process died\n");
+
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
       serviceStatus.dwCurrentState = SERVICE_STOPPED;
@@ -94,7 +92,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
         throw(std::runtime_error("SetServiceStatus failed"));
       return;
     }
-    debug("process is alive\n");
+
   }
 }
 
@@ -102,7 +100,7 @@ void ServiceWrapper::serviceControlHandler(DWORD CtrlCode) {
 
   switch (CtrlCode) {
   case SERVICE_CONTROL_STOP:
-    debug("got stop control\n");
+
     serviceStatus.dwCurrentState = SERVICE_STOP_PENDING;
     if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
       throw(std::runtime_error("SetServiceStatus failed"));
