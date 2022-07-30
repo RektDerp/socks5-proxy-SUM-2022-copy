@@ -9,13 +9,16 @@ extern FILE* log;
 
 int main(int argc, char *argv[]) {
   char filename[256];
+  char logfile[256];
   char executable[] = "main.exe";
-  log = fopen("C:\\log.txt", "w+");
   GetModuleFileName(NULL, filename, 256);
-
   *(strrchr(filename, '\\') + 1) = '\0';
   strcat(filename, executable);
-  fprintf(log,"exec %s\n", filename);
+  strcpy(logfile, filename);
+  strcat(logfile, "\\log.txt");
+  log = fopen(logfile, "w+");
+
+  fprintf(log,"exec %s\nlog %s\n", filename, logfile);
 
   try {
     ServiceWrapper::executablePath = filename;

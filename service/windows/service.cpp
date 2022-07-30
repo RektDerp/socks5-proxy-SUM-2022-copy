@@ -20,7 +20,6 @@ FILE* log;
 
 void ServiceWrapper::start(const std::string &_name) {
 
-
   serviceName = _name;
   serviceTable[0].lpServiceName = (LPSTR)_name.c_str();
   serviceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)serviceMain;
@@ -51,7 +50,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   }
 
   /////////////
-
+  fprintf(log, "Starting server\n");
   serviceStartupInfo.cb = sizeof(serviceStartupInfo);
   if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
     std::string errortext = "Failed to create process: ";
@@ -70,7 +69,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
     if (WaitForSingleObject(stopEvent, 1000) != WAIT_TIMEOUT) {
       // stop process
-
+      fprintf(log, "Stopping server\n");
       TerminateProcess(serviceProcessInfo.hProcess, 0);
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
@@ -83,7 +82,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
     if (WaitForSingleObject(serviceProcessInfo.hProcess, 1000) !=
         WAIT_TIMEOUT) {
-
+      fprintf(log, "Server process died\n");
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
       serviceStatus.dwCurrentState = SERVICE_STOPPED;

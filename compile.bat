@@ -1,15 +1,18 @@
-@ECHO OFF
-if "%1"=="-c" (
+set param="%*"
+if NOT "%param%"=="%param:c=%" (
 rmdir /Q /S build
 mkdir "build\bin\dll"
+echo c
 )
 set /p Qtdir=Enter Qt installation root
-if "%Qtdir%"=="" ( set Qtdir=C:\Qt\6.3.1\mingw_64\ )
+if NOT EXISTS "%Qtdir%" ( set Qtdir=C:\Qt\6.3.1\mingw_64\)
 set mQtdir=%Qtdir:\=/%
-if "%1"=="-c" (
-xcopy /s/e %Qtdir%\bin\*.dll build\bin\dll
-xcopy /s/e %Qtdir%\plugins build\bin\plugins
-xcopy /s/e %Qtdir%\qml build\bin\qml
+if NOT "%param%"=="%param:dll=%" (
+echo "dll"
+
+xcopy %Qtdir%\bin\*.dll %CD%\build\bin\dll /S /E
+xcopy %Qtdir%\plugins\platforms %CD%\build\bin\plugins\platforms /S /E /I
+xcopy %Qtdir%\qml %CD%\build\bin\qml /S /E /I
 )
 cmake -S . -B build -G "MinGW Makefiles" -D Qt=Qt6 -D Qtdir=%mQtdir%
 cmake --build build
