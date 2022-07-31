@@ -6,11 +6,11 @@
 #include <thread>
 #include <memory>
 #define PATHSIZE 256
-
+extern char logFileName [];
 #ifdef _WIN32
     #include <windows.h>
-    const char defaultConfigPath [PATHSIZE] = ".\config.txt";
-	const char defaultDatabasePath [PATHSIZE] = ".\sessions_stat.db";
+    char defaultConfigPath [PATHSIZE] = ".\config.txt";
+    char defaultDatabasePath [PATHSIZE] = ".\sessions_stat.db";
 	char pwd[PATHSIZE];
     #define WININIT() {\
 	    SetConsoleCP(1251);\
@@ -19,13 +19,16 @@
 	    *(strrchr(pwd, '\\') + 1) = '\0';\
 	    strcpy(defaultConfigPath, pwd);\
 	    strcpy(defaultDatabasePath, pwd);\
+	    strcpy(logFileName, pwd);\
 	    strcat(defaultDatabasePath, "sessions_stat.db");\
 	    strcat(defaultConfigPath, "config.txt");\
+	    strcat(logFileName, "MyLogFile.log");\
 	}
 #else
 	#define WININIT() {}
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
 	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
+	strcpy(logFileName, "/tmp/MyLogFile.log");
 #endif
 
 int main(int argc, char** argv)
