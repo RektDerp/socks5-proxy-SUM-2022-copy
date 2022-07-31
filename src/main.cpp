@@ -12,7 +12,7 @@
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
 	}
-	const char defaultConfigPath [] = "config.txt";
+	const char defaultConfigPath [] = "./config.txt";
 	const char defaultDatabasePath [] = "./sessions_stat.db";
 #else
 	#define WININIT() {}

@@ -1,9 +1,11 @@
 #include "service.h"
+#include "namedpipeapi.h"
 #include "processthreadsapi.h"
 #include "synchapi.h"
 #include "winnt.h"
 #include "winsvc.h"
 #include <boost/function.hpp>
+#include <cstdio>
 #include <exception>
 #include <stdexcept>
 #include <string>
@@ -14,6 +16,7 @@ HANDLE ServiceWrapper::stopEvent = 0;
 SERVICE_TABLE_ENTRY ServiceWrapper::serviceTable[] = {0};
 STARTUPINFO ServiceWrapper::serviceStartupInfo = {0};
 PROCESS_INFORMATION ServiceWrapper::serviceProcessInfo = {0};
+SECURITY_ATTRIBUTES ServiceWrapper::pipeSecurityAttributes = {0};
 std::string ServiceWrapper::serviceName;
 std::string ServiceWrapper::executablePath;
 FILE* log;
@@ -30,8 +33,7 @@ void ServiceWrapper::start(const std::string &_name) {
 
 void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
-  serviceStatusHandle =
-      RegisterServiceCtrlHandler(serviceName.c_str(), serviceControlHandler);
+  serviceStatusHandle = RegisterServiceCtrlHandler(serviceName.c_str(), serviceControlHandler);
   if (!serviceStatusHandle)
     throw(std::runtime_error("RegisterServiceCtrlHandler failed"));
   serviceStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
@@ -51,8 +53,20 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
   /////////////
   fprintf(log, "Starting server\n");
+  pipeSecurityAttributes.nLength = sizeof(SECURITY_ATTRIBUTES);
+  pipeSecurityAttributes.bInheritHandle = TRUE;
+  pipeSecurityAttributes.lpSecurityDescriptor = NULL;
+  HANDLE pipeStdoutWr = NULL;
+  HANDLE pipeStdoutRd = NULL;
+  if(!CreatePipe(&pipeStdoutRd, &pipeStdoutWr, &pipeSecurityAttributes, 0))
+    throw(std::runtime_error("CreatePipe failed"));
+
+
   serviceStartupInfo.cb = sizeof(serviceStartupInfo);
-  if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
+  serviceStartupInfo.hStdOutput = pipeStdoutWr;
+  serviceStartupInfo.hStdError = pipeStdoutWr;
+  serviceStartupInfo.dwFlags = STARTF_USESTDHANDLES;
+  if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
     std::string errortext = "Failed to create process: ";
     errortext.append(std::to_string(GetLastError()));
     throw(std::runtime_error(errortext));
@@ -64,10 +78,14 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   serviceStatus.dwCurrentState = SERVICE_RUNNING;
   if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
     throw(std::runtime_error("SetServiceStatus failed"));
+  fprintf(log, "Service started, logging data from server process\n");
+  char buffer[BUFSIZE + 1] = {0};
+  BOOL status;
+  DWORD nbytes;
 
   while (true) {
 
-    if (WaitForSingleObject(stopEvent, 1000) != WAIT_TIMEOUT) {
+    if (WaitForSingleObject(stopEvent, 100) != WAIT_TIMEOUT) {
       // stop process
       fprintf(log, "Stopping server\n");
       TerminateProcess(serviceProcessInfo.hProcess, 0);
@@ -80,7 +98,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
       return;
     }
 
-    if (WaitForSingleObject(serviceProcessInfo.hProcess, 1000) !=
+    if (WaitForSingleObject(serviceProcessInfo.hProcess, 100) !=
         WAIT_TIMEOUT) {
       fprintf(log, "Server process died\n");
       CloseHandle(serviceProcessInfo.hProcess);
@@ -91,7 +109,13 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
         throw(std::runtime_error("SetServiceStatus failed"));
       return;
     }
-
+    PeekNamedPipe(pipeStdoutRd, buffer, BUFSIZE, NULL, &nbytes, NULL);
+    if(nbytes > 0){
+        status = ReadFile(pipeStdoutRd, buffer, BUFSIZE, &nbytes, NULL);
+        if(!status)
+          throw(std::runtime_error("Read from pipe failed"));
+        fwrite(buffer,BUFSIZE,1,log);
+    }
   }
 }
 
