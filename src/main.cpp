@@ -16,7 +16,7 @@
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
 	    GetModuleFileName(NULL, pwd, PATHSIZE);\
-	    *(strrchr(filename, '\\') + 1) = '\0';\
+	    *(strrchr(pwd, '\\') + 1) = '\0';\
 	    strcpy(defaultConfigPath, pwd);\
 	    strcpy(defaultDatabasePath, pwd);\
 	    strcat(defaultDatabasePath, "sessions_stat.db");\
