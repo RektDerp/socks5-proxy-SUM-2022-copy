@@ -5,19 +5,27 @@
 #include "stat_db_service.h"
 #include <thread>
 #include <memory>
+#define PATHSIZE 256
 
 #ifdef _WIN32
     #include <windows.h>
+    const char defaultConfigPath [PATHSIZE] = ".\config.txt";
+	const char defaultDatabasePath [PATHSIZE] = ".\sessions_stat.db";
+	char pwd[PATHSIZE];
     #define WININIT() {\
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
+	    GetModuleFileName(NULL, pwd, PATHSIZE);\
+	    *(strrchr(filename, '\\') + 1) = '\0';\
+	    strcpy(defaultConfigPath, pwd);\
+	    strcpy(defaultDatabasePath, pwd);\
+	    strcat(defaultDatabasePath, "sessions_stat.db");\
+	    strcat(defaultConfigPath, "config.txt");\
 	}
-	const char defaultConfigPath [] = "./config.txt";
-	const char defaultDatabasePath [] = "./sessions_stat.db";
 #else
 	#define WININIT() {}
-	const char defaultConfigPath [] = "/etc/socks5-config.txt";
-	const char defaultDatabasePath[] = "/tmp/sessions_stat.db";
+	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
+	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
 #endif
 
 int main(int argc, char** argv)
