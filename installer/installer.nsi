@@ -1,4 +1,5 @@
 ﻿Unicode True
+SetCompressor lzma
 !include "MUI2.nsh"
 !include LogicLib.nsh
 !define APPNAME "Socks 5 Proxy"
@@ -121,7 +122,7 @@ section "install"
 
     nsExec::Exec '"sc.exe" delete Socks5'
     nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\winservice.exe"'
-    nsExec::Exec '"sc.exe" configure Socks5 start=auto'
+    nsExec::Exec '"sc.exe" config Socks5 start=auto'
 
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayName" "${APPNAME}"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""

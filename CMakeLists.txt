@@ -119,7 +119,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   list(APPEND executables "service")
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++ -Bstatic -lssp -lpthread" AT 1)
+    list(TRANSFORM executables REPLACE "-lpthread" " -static-libgcc -static-libstdc++ -Wl,--whole-archive,-Bstatic -lssp -lpthread -Wl,--no-whole-archive" AT 1)
     list(TRANSFORM executables APPEND " -static-libgcc -static-libstdc++ -mwindows" AT 3)
   endif()
 endif()
