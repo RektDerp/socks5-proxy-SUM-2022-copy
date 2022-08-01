@@ -53,7 +53,7 @@ Function nsDialogsPage
 	${NSD_CreateLabel} 0 0 100% 12u "Select additional parameters"
 	Pop $Label
 
-    ${NSD_CreateCheckBox} 0 78% 100% 6% "Create menu shortcuts only for this user (buggy)"
+    ${NSD_CreateCheckBox} 0 78% 100% 6% "Create menu shortcuts only for this user (win 10+)"
     Pop $CheckboxUser
     ${NSD_OnClick} $CheckboxUser setContext
 
@@ -116,10 +116,12 @@ section "install"
         createShortCut "$SMPROGRAMS\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5"  "${startLogo}" 0 "" "" "Service control"
         createShortCut "$SMPROGRAMS\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
     ${EndIf}
-
+    createShortCut "$INSTDIR\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
+    createShortCut "$INSTDIR\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
 
     nsExec::Exec '"sc.exe" delete Socks5'
     nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\winservice.exe"'
+    nsExec::Exec '"sc.exe" configure Socks5 start=auto'
 
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "DisplayName" "${APPNAME}"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
