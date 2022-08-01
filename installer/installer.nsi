@@ -134,9 +134,6 @@ section "install"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "NoRepair" 1
 
-    EnVar::SetHKLM
-    EnVar::AddValue "Path" "$INSTDIR\dll"
-
 sectionEnd
 
 section "uninstall"
@@ -152,8 +149,6 @@ section "uninstall"
     delete "$DESKTOP\Stop ${APPNAME} service.lnk"
 
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
-    EnVar::SetHKLM
-    EnVar::DeleteValue "Path" "$INSTDIR\dll"
 sectionEnd
 
 !insertmacro MUI_LANGUAGE "English"
