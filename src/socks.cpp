@@ -69,7 +69,7 @@ namespace proxy {
 	{
 		if (ec)
 		{
-			log(ERROR_LOG) << "[socks] Error occured: " << ec.message();
+			log(DEBUG_LOG) << "[socks] Error occured: " << ec.message();
 			return true;
 		}
 		return false;
