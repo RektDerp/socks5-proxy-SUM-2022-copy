@@ -1,20 +1,42 @@
-log_level = INFO		#specifying the log level
- 
-log_type = CONSOLE #specifying the log type
+#specifying the log level
+# OFF < FATAL < ERROR < INFO < DEBUG < TRACE
 
-max_log_files = 3			#specifying the maximum number of log files
+log_level = DEBUG		
 
-log_size = 100000			#specifying the size of a log file (in bytes)
+# specifying the log type
+# DISABLE, CONSOLE, FILE, ENABLE
 
-listen_port = 1080			# port server is listening on
+log_type = CONSOLE 
 
-buffer_size_kb = 100		# session read/write buffers size in KB (optimal - 100 KB)
+# Port server is listening on
+# default - 1080
 
-max_sessions = 0     # max connections server will handle at a time (0 = inf)
+listen_port = 1080			
+
+# session read/write buffers size in KB (optimal - 100 KB)
+buffer_size_kb = 100
+
+# max connections server will handle at a time
+# 0 means server handles unbound number of connections
+
+max_sessions = 0     
+
+# Is server checking client credentials (login/password)
+# 0 - off, 1 - on
 
 Auth = 1
+
+# User credentials in format:
+# {
+# login: login
+# password: password
+# login: login1
+# password: password2
+# }
 
 {
 login: oleg
 password: 12345
+login: user
+password: user
 }
