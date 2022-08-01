@@ -19,7 +19,7 @@ PROCESS_INFORMATION ServiceWrapper::serviceProcessInfo = {0};
 SECURITY_ATTRIBUTES ServiceWrapper::pipeSecurityAttributes = {0};
 std::string ServiceWrapper::serviceName;
 std::string ServiceWrapper::executablePath;
-FILE* log;
+FILE* logfile;
 
 void ServiceWrapper::start(const std::string &_name) {
 
@@ -52,7 +52,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   }
 
   /////////////
-  fprintf(log, "Starting server\n");
+  fprintf(logfile, "Starting server\n");
   pipeSecurityAttributes.nLength = sizeof(SECURITY_ATTRIBUTES);
   pipeSecurityAttributes.bInheritHandle = TRUE;
   pipeSecurityAttributes.lpSecurityDescriptor = NULL;
@@ -78,7 +78,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   serviceStatus.dwCurrentState = SERVICE_RUNNING;
   if (!SetServiceStatus(serviceStatusHandle, &serviceStatus))
     throw(std::runtime_error("SetServiceStatus failed"));
-  fprintf(log, "Service started, logging data from server process\n");
+  fprintf(logfile, "Service started, logging data from server process\n");
   char buffer[BUFSIZE + 1] = {0};
   BOOL status;
   DWORD nbytes;
@@ -87,7 +87,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
     if (WaitForSingleObject(stopEvent, 100) != WAIT_TIMEOUT) {
       // stop process
-      fprintf(log, "Stopping server\n");
+      fprintf(logfile, "Stopping server\n");
       TerminateProcess(serviceProcessInfo.hProcess, 0);
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
@@ -100,7 +100,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
     if (WaitForSingleObject(serviceProcessInfo.hProcess, 100) !=
         WAIT_TIMEOUT) {
-      fprintf(log, "Server process died\n");
+      fprintf(logfile, "Server process died\n");
       CloseHandle(serviceProcessInfo.hProcess);
       CloseHandle(serviceProcessInfo.hThread);
       serviceStatus.dwCurrentState = SERVICE_STOPPED;
@@ -114,7 +114,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
         status = ReadFile(pipeStdoutRd, buffer, BUFSIZE, &nbytes, NULL);
         if(!status)
           throw(std::runtime_error("Read from pipe failed"));
-        fwrite(buffer,BUFSIZE,1,log);
+        fwrite(buffer,BUFSIZE,1,logfile);
     }
   }
 }

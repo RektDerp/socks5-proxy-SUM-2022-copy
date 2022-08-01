@@ -9,8 +9,8 @@
 extern char logFileName [];
 #ifdef _WIN32
     #include <windows.h>
-    char defaultConfigPath [PATHSIZE] = ".\config.txt";
-    char defaultDatabasePath [PATHSIZE] = ".\sessions_stat.db";
+    char defaultConfigPath [PATHSIZE] = ".\\config.txt";
+    char defaultDatabasePath [PATHSIZE] = ".\\sessions_stat.db";
 	char pwd[PATHSIZE];
     #define WININIT() {\
 	    SetConsoleCP(1251);\

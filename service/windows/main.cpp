@@ -5,28 +5,28 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
-extern FILE* log;
+extern FILE* logfile;
 
 int main(int argc, char *argv[]) {
   char filename[256];
-  char logfile[256];
+  char logfilepath[256];
   char executable[] = "main.exe";
   GetModuleFileName(NULL, filename, 256);
   *(strrchr(filename, '\\') + 1) = '\0';
-  strcpy(logfile, filename);
-  strcat(logfile, "log.txt");
+  strcpy(logfilepath, filename);
+  strcat(logfilepath, "log.txt");
 
   strcat(filename, executable);
-  log = fopen(logfile, "w+");
+  logfile = fopen(logfilepath, "w+");
 
-  fprintf(log,"exec %s\nlog %s\n", filename, logfile);
+  fprintf(logfile,"exec %s\nlog %s\n", filename, logfilepath);
 
   try {
     ServiceWrapper::executablePath = filename;
     ServiceWrapper::start("Socks5");
   } catch (std::runtime_error &e) {
-    fprintf(log,"exception %s\n", e.what());
+    fprintf(logfile,"exception %s\n", e.what());
   }
-  fclose(log);
+  fclose(logfile);
   return 0;
 }
