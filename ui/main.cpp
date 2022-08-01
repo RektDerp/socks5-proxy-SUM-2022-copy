@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     using namespace proxy::ui;
     QGuiApplication app(argc, argv);
-    app.setWindowIcon(QIcon("../icon.png"));
+    app.setWindowIcon(QIcon("icon.png"));
     qmlRegisterType<SessionModel>("SessionModel", 0, 1, "SessionModel");
     qmlRegisterType<SortFilterSessionModel>("SortFilterSessionModel", 0, 1, "SortFilterSessionModel");
     QQmlApplicationEngine engine;
