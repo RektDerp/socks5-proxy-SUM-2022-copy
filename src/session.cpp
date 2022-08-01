@@ -151,15 +151,9 @@ namespace proxy {
 	{
 		if (error.value())
 		{
-			if (error.value() == 10053)
-			{
+			if (error.value() != ba::error::eof) {
 				log(DEBUG_LOG) << "[" << _id << "] error occured while reading client: "
 					<< error.message();
-			}
-			else if (error.value() != ba::error::eof) {
-				log(ERROR_LOG) << "[" << _id << "] error occured while reading client: "
-					<< error.message();
-				log(ERROR_LOG) << error.value();
 			}
 			close();
 			return;
@@ -180,13 +174,8 @@ namespace proxy {
 	{
 		if (error.value())
 		{
-			if (error.value() == 1236)
-			{
+			if (error.value() != ba::error::eof) {
 				log(DEBUG_LOG) << "[" << _id << "] " << "error occured while reading server: "
-					<< error.message();
-			}
-			else if (error.value() != ba::error::eof) {
-				log(ERROR_LOG) << "[" << _id << "] " << "error occured while reading server: "
 					<< error.message();
 			}
 			close();
