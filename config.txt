@@ -24,7 +24,7 @@ max_sessions = 0
 # Is server checking client credentials (login/password)
 # 0 - off, 1 - on
 
-Auth = 1
+auth = 1
 
 # User credentials in format:
 # {
