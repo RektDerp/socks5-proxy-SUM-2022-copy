@@ -104,6 +104,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	message("extracting")
 	file(COPY "${includedir}/boost_1_79_0/boost" DESTINATION "${includedir}")
 	file(REMOVE_RECURSE "${includedir}/boost.7z" "${includedir}/boost_1_79_0/")
+  else()
+      include_directories(${boostcheck})
   endif()
 
   SET(CMAKE_FIND_LIBRARY_PREFIXES "" "lib")

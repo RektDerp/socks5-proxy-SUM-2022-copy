@@ -16,5 +16,5 @@ xcopy %Qtdir%\plugins\platforms %CD%\build\bin\plugins\platforms /S /E /I
 xcopy %Qtdir%\qml %CD%\build\bin\qml /S /E /I
 )
 cmake -S . -B build -G "MinGW Makefiles" -D Qt=Qt6 -D Qtdir=%mQtdir%
-cmake --build build
+cmake --build build -j 2
 "C:\Program Files (x86)\NSIS\makensis.exe" installer\installer.nsi
