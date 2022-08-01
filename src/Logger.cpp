@@ -41,7 +41,7 @@ namespace proxy {
 
     Logger::Logger() : m_LogLevel(ALL_LOG), m_LogType(ENABLE_LOG), m_worker(1)
     {
-        m_File.open(logFileName.c_str(), ios::out | ios::app);
+        m_File.open(logFileName, ios::out | ios::app);
         configure();
     }
 
