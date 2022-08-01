@@ -75,7 +75,7 @@ namespace proxy {
 
     void Logger::logTask(const std::string& data, LOG_LEVEL level)
     {
-        if (m_LogLevel >= level) {
+        if (m_LogLevel >= level && level != OFF_LOG) {
             if (m_LogType == CONSOLE_LOG)
             {
                 cout << getCurrentTime() << " " << LOG_LEVEL_PREFIX[level - 1] << " " << data << endl;
@@ -169,7 +169,7 @@ namespace proxy {
             boost::to_upper(logType_str);
             auto it = std::find(LOG_TYPE_NAMES.begin(), LOG_TYPE_NAMES.end(), logType_str);
             if (it != LOG_TYPE_NAMES.end()) {
-                logType_str = static_cast<LOG_LEVEL>(it - LOG_TYPE_NAMES.begin());
+                logType_str = static_cast<LOG_TYPE>(it - LOG_TYPE_NAMES.begin());
             }
             else {
                 log("Invalid log type, enabling all log", ERROR_LOG);
