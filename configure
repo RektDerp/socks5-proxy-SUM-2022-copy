@@ -22,19 +22,18 @@ configure_windows () {
     echo "flags $ADDITIONAL_FLAGS"
     mkdir -p "$builddir/bin"
     ADDITIONAL_FLAGS="$ADDITIONAL_FLAGS -D Qtdir=$Qtdir"
-    cmake -S. -B "$builddir" -G "MinGW Makefiles" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
+    cmake -S. -B "$builddir" -D CMAKE_SYSTEM_NAME="Windows" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_HOST_SYSTEM_NAME="UNIX" -D CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES="" $ADDITIONAL_FLAGS
 }
 
 build () {
     echo "building"
     echo "Build directory: $builddir"
     cd "$builddir" || exit
-    cmake --build .
+    cmake --build . -j 2
     bstatus=$?
 }
 
 copy_resources () {
-
     pkgdir="$builddir/$deb_packagename/"
     cp "$pkgbuild_dir/PKGBUILD" "$pkgbuild_dir/socks5-proxy.install" "$builddir"
     mkdir -p "$builddir/installer"
@@ -43,6 +42,17 @@ copy_resources () {
     cp "$basedir/installer/socks5-interface.desktop" "$builddir/installer/socks5-interface.desktop"
     cp "$basedir/service/linux/socks5-proxy.service" "$builddir"
 
+}
+
+package_win () {
+    cp -r $Qtdir/plugins/imageformats $Qtdir/plugins/platforms $Qtdir/plugins/sqldrivers $Qtdir/qml/QtQml $Qtdir/qml/QtQuick $builddir/bin
+    cd $Qtdir/bin
+    cp libgcc_s_seh-1.dll ${Qt}OpenGL.dll ${Qt}Quick.dll libstdc++*.dll ${Qt}Qml.dll ${Qt}QuickLayouts.dll libwinpthread*.dll ${Qt}QmlModels.dll ${Qt}QuickTemplates2.dll ${Qt}Core.dll ${Qt}QmlWorkerScript.dll ${Qt}Sql.dll ${Qt}Gui.dll ${Qt}QuickControls2.dll ${Qt}Svg.dll ${Qt}Network.dll ${Qt}QuickControls2Impl.dll $builddir/bin
+    cd $basedir
+    if ! ( wpath=`winepath -w "$basedir/installer/installer.nsi"` && wine 'C:\Program Files (x86)\NSIS\makensis.exe' "$wpath")
+    then
+        echo "Packaging failed. Are wine and NSIS installed?";
+    fi
 }
 
 package_arch () {
@@ -147,20 +157,25 @@ do
     ;;
     package | --package | -p)
         cnt=$((cnt + 1))
-        case ${!cnt} in
-            arch | a)
-                package_flg=arch
-                cnt=$((cnt + 1))
-            ;;
-            deb | debian | ubuntu)
-                package_flg=deb
-                cnt=$((cnt + 1))
-            ;;
-            *)
-                echo "Package type: defaulting to arch"
-                package_flg=arch
-            ;;
-        esac
+        if [ "$linux" = "true" ]
+        then
+          case ${!cnt} in
+              arch | a)
+                  package_flg=arch
+                  cnt=$((cnt + 1))
+              ;;
+              deb | debian | ubuntu)
+                  package_flg=deb
+                  cnt=$((cnt + 1))
+              ;;
+              *)
+                  echo "Package type: defaulting to arch"
+                  package_flg=arch
+              ;;
+          esac
+        else
+          package_flg=win
+        fi
         continue
     ;;
     -D)
@@ -197,7 +212,7 @@ do
         cnt=$((cnt + 1))
         continue
     ;;
-    qtdir | Qtdir | -qd | --qtdir)
+    qtdir | Qtdir | -qt | --qtdir)
         cnt=$((cnt + 1))
         Qtdir="${!cnt}"
         cnt=$((cnt + 1))

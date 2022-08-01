@@ -5,6 +5,7 @@
 #include "stat_db_service.h"
 #include <thread>
 #include <memory>
+#include <string.h>
 #define PATHSIZE 256
 extern char logFileName [];
 #ifdef _WIN32
@@ -25,10 +26,9 @@ extern char logFileName [];
 	    strcat(logFileName, "MyLogFile.log");\
 	}
 #else
-	#define WININIT() {}
+	#define WININIT() { strcpy(logFileName, "/tmp/MyLogFile.log"); }
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
 	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
-	strcpy(logFileName, "/tmp/MyLogFile.log");
 #endif
 
 int main(int argc, char** argv)
