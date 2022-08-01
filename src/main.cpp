@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 	config.getValue("listen_port", port);
 	config.getValue("buffer_size_kb", bufferSizeKB);
 	config.getValue("max_sessions", maxSessions);
-	config.getValue("Auth", Socks5::AUTH_FLAG);
+	config.getValue("auth", Socks5::AUTH_FLAG);
 
 	ba::io_context context;
 
