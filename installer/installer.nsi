@@ -134,8 +134,9 @@ section "install"
 sectionEnd
 
 section "uninstall"
+    nsExec::Exec '"sc.exe" stop Socks5'
     nsExec::Exec '"sc.exe" delete Socks5'
-
+    nsExec::Exec '"taskkill" /IM main.exe /F'
     rmDir /r "$INSTDIR"
     delete "$SMPROGRAMS\${APPNAME}.lnk"
     delete "$SMPROGRAMS\Start ${APPNAME} service.lnk"
