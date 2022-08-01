@@ -93,6 +93,9 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
 
+    FileOpen $4 "$INSTDIR\sessions_stat.db" w
+    FileWrite $4 ""
+    FileClose $4
     file /r "..\build\bin\*"
     file "..\config.txt"
     file "socks5-interface.ico"
