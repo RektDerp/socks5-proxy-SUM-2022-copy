@@ -37,7 +37,8 @@
 	    strcat(defaultLogPath, "server.log");\
 	}
 #else
-	#define WININIT() { strcpy(logFileName, "/tmp/server.log"); }
+	#define WININIT() { }
+	char defaultLogPath[PATHSIZE] = "/tmp/server.log";
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
 	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
 #endif
