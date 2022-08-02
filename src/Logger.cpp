@@ -7,13 +7,13 @@
 
 #include "Logger.h"
 #include "ConfigReader.h"
-char logFileName [256];
+
 
 namespace proxy {
     using namespace std;
 
     Logger* Logger::m_Instance = 0;
-
+    std::string Logger::logFileName;
     std::vector<std::string> Logger::LOG_LEVEL_PREFIX = {
         " [FATAL] ",
         " [ERROR] ",

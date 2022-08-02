@@ -30,6 +30,7 @@ namespace proxy {
     class Logger
     {
     public:
+        static std::string logFileName;
         static Logger& getInstance();
         void log(const std::string& data, LOG_LEVEL level);
         void log(std::string&& data, LOG_LEVEL level);
@@ -56,7 +57,6 @@ namespace proxy {
     private:
         static Logger*  m_Instance;
         std::ofstream   m_File;
-
         LOG_LEVEL       m_LogLevel;
         LOG_TYPE        m_LogType;
 
