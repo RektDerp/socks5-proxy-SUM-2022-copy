@@ -27,7 +27,7 @@ Name "${APPNAME}"
 !define HELPURL http://ragalik.tk
 
 InstallDir "$PROGRAMFILES\${APPNAME}"
-OutFile "install.exe"
+OutFile "socks5_installer.exe"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "gpl-3.0.rtf"
