@@ -8,7 +8,7 @@ install=$pkgname.install
 arch=('any')
 url='http://ragalik.tk'
 license=('GPL3')
-depends=("sqlite" "$Qt-base" "$Qt-quickcontrols2")
+depends=("$Qt-base" "$Qt-quickcontrols2")
 #makedepends=("base-devel" "git" "cmake" "boost" "sqlite" "$Qt-base" "$Qt-declarative" "$Qt-quickcontrols2")
 
 package() {
