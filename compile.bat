@@ -22,17 +22,18 @@ if %errorlevel%==0 (
 
 :COPYFILES
 cd %root%
-mkdir build\bin\imageformats
-mkdir build\bin\platforms
-mkdir build\bin\sqldrivers
-mkdir build\bin\QtQml
-mkdir build\bin\QtQuick
-xcopy %Qtdir%\plugins\imageformats %root%\build\bin\imageformats /S /E /Q
-xcopy %Qtdir%\plugins\platforms %root%\build\bin\platforms /S /E /Q
-xcopy %Qtdir%\plugins\sqldrivers %root%\build\bin\sqldrivers /S /E /Q
-xcopy %Qtdir%\qml\QtQml %root%\build\bin\QtQml /S /E /Q
-xcopy %Qtdir%\qml\QtQuick %root%\build\bin\QtQuick /S /E /Q
-for %%G in ( %dlls% ) do ( xcopy %Qtdir%\bin\%%G %root%\build\bin /S /E /Q /I )
+mkdir build\bin\statistics
+mkdir build\bin\statistics\imageformats
+mkdir build\bin\statistics\platforms
+mkdir build\bin\statistics\sqldrivers
+mkdir build\bin\statistics\QtQml
+mkdir build\bin\statistics\QtQuick
+xcopy %Qtdir%\plugins\imageformats %root%\build\bin\statistics\imageformats /S /E /Q
+xcopy %Qtdir%\plugins\platforms %root%\build\bin\statistics\platforms /S /E /Q
+xcopy %Qtdir%\plugins\sqldrivers %root%\build\bin\statistics\sqldrivers /S /E /Q
+xcopy %Qtdir%\qml\QtQml %root%\build\bin\statistics\QtQml /S /E /Q
+xcopy %Qtdir%\qml\QtQuick %root%\build\bin\statistics\QtQuick /S /E /Q
+for %%G in ( %dlls% ) do ( xcopy %Qtdir%\bin\%%G %root%\build\bin\statistics\ /S /E /Q /I )
 xcopy %root%\config.txt %root%\build\bin\config.txt /S /E /Q
 
 :END

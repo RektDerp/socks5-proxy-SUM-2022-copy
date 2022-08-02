@@ -32,7 +32,7 @@
 		* (wcsrchr(pwd, '\\') + 1) = '\0'; 
 		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL); 
 		strcpy(defaultDatabasePath, utf8_pwd); 
-		strcat(defaultDatabasePath, "sessions_stat.db"); 
+		strcat(defaultDatabasePath, "\\statistics\\statistics.db"); 
 	
 		GetModuleFileNameA(NULL, utf8_pwd, PATHSIZE); 
 		* (strrchr(utf8_pwd, '\\') + 1) = '\0'; 

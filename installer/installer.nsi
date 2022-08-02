@@ -95,7 +95,7 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
 
-    FileOpen $4 "$INSTDIR\sessions_stat.db" w
+    FileOpen $4 "$INSTDIR\statistics\statistics.db" w
     FileWrite $4 ""
     FileClose $4
     file /r "..\build\bin\*"
@@ -104,10 +104,10 @@ section "install"
     file "start.ico"
     file "stop.ico"
 
-    createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+    createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
     createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
     ${If} $bDesktop == "1"
-        createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+        createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
         ${If} $bService == "1"
             createShortCut "$DESKTOP\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
             createShortCut "$DESKTOP\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
