@@ -3,6 +3,7 @@
 #include "ConfigReader.h"
 #include <stdexcept>
 #include "stat_db_service.h"
+#include <thread>
 #include <memory>
 #include <string.h>
 #define PATHSIZE 256
