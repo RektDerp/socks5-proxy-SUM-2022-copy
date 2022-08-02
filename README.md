@@ -67,7 +67,7 @@ Download NSIS
     
 Open installer\\installer.nsi file using NSIS Compiler
 
-![https://imgur.com/X6sa19x.png](screenshot)
+![screenshot](https://imgur.com/X6sa19x.png)
 
 ---
 ## Usage
