@@ -60,9 +60,13 @@ Compile using script
 ```
 
 To create installer:
+
 Download NSIS 
+
     https://nsis.sourceforge.io/Download
+    
 Open installer\\installer.nsi file using NSIS Compiler
+
 ![https://imgur.com/X6sa19x.png](screenshot)
 
 ---
