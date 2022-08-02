@@ -125,7 +125,6 @@ Item {
 
             CalendarButton {
                 id: from
-                width: 80
                 implicitHeight: 20
                 defaultText: "[Not chosen]"
 
@@ -146,7 +145,6 @@ Item {
 
             CalendarButton {
                 id: to
-                width: 80
                 implicitHeight: 20
                 defaultText: "[Not chosen]"
                 onDateChanged: {
@@ -160,7 +158,6 @@ Item {
 
             Button {
                 anchors.leftMargin: 50
-                width: 80
                 implicitHeight: 20
                 text: "Reset filters"
                 onClicked: {
