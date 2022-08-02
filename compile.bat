@@ -1,6 +1,5 @@
 @ECHO OFF
 set root=%CD%
-GOTO PACKAGE
 rmdir build /S /Q
 mkdir build/bin
 
