@@ -70,7 +70,7 @@ set(modules
 
 set(executables
 "main|${sourcedir}/main.cpp"
-"Logger session ConfigReader server stat_db_service socks socks4 socks5 stat_handlers -lpthread -lboost_thread-mt"
+"Logger session ConfigReader server stat_db_service socks socks4 socks5 stat_handlers -lpthread"
 
 "interface|${uidir}/main.cpp ${QT_RESOURCES} ${uidir}/session.h  ${uidir}/sessionmodel.h  ${uidir}/sortfiltersessionmodel.h"
 "sessionmodel sortfiltersessionmodel session_d ${Qt}::Widgets ${Qt}::Core ${Qt}::Sql ${Qt}::QuickControls2"
