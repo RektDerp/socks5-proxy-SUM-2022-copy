@@ -53,6 +53,7 @@ The package file will be written to `build` directory
     https://www.mingw-w64.org/downloads/#mingw-builds
 2. Download CMake
     https://cmake.org/download/
+    
 Compile using script
 ```
     compile.bat
