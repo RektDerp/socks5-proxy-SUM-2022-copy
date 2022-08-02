@@ -49,11 +49,21 @@ Or create package
 The package file will be written to `build` directory
 
 ## Windows
+1. Download latest MinGW compiler: 
+    https://www.mingw-w64.org/downloads/#mingw-builds
+2. Download CMake
+    https://cmake.org/download/
+Compile using script
+```
+    compile.bat
+```
 
-todo
+To create installer:
+Download NSIS 
+    https://nsis.sourceforge.io/Download
+Open installer\\installer.nsi file using NSIS Compiler
+![https://imgur.com/X6sa19x.png](screenshot)
 
 ---
-
-
-
+## Usage
 
