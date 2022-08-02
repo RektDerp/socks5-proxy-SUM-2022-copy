@@ -41,3 +41,4 @@ GOTO PACKAGE
 :PACKAGE
 
 :END
+pause
