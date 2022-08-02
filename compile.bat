@@ -12,7 +12,7 @@ echo %mQtdir%
 
 set dlls=libgcc_s_seh-1.dll %Qt%OpenGL.dll %Qt%Quick.dll libstdc++*.dll %Qt%Qml.dll  %Qt%QuickLayouts.dll libwinpthread*.dll  %Qt%QmlModels.dll  %Qt%QuickTemplates2.dll %Qt%Core.dll %Qt%QmlWorkerScript.dll %Qt%Sql.dll %Qt%Gui.dll %Qt%QuickControls2.dll %Qt%Svg.dll %Qt%Network.dll %Qt%QuickControls2Impl.dll
 
-cmake -S . -B build -D Qt=%Qt% -D Qtdir=%mQtdir% -G "MinGW Makefiles" -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc -D CMAKE_MAKE_PROGRAM=mingw32-make
+cmake -S . -B build -D Qt=%Qt% -D Qtdir=%mQtdir% -G "MinGW Makefiles" -D CMAKE_CXX_COMPILER=g++ -D CMAKE_C_COMPILER=gcc -D CMAKE_MAKE_PROGRAM=make
 if %errorlevel%==0 (
   cd build
   cmake --build . -j 8 && GOTO COPYFILES
