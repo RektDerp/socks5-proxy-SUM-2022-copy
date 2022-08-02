@@ -169,7 +169,7 @@ namespace proxy {
             boost::to_upper(logType_str);
             auto it = std::find(LOG_TYPE_NAMES.begin(), LOG_TYPE_NAMES.end(), logType_str);
             if (it != LOG_TYPE_NAMES.end()) {
-                logType_str = static_cast<LOG_TYPE>(it - LOG_TYPE_NAMES.begin());
+                m_LogType = static_cast<LOG_TYPE>(it - LOG_TYPE_NAMES.begin());
             }
             else {
                 log("Invalid log type, enabling all log", ERROR_LOG);
