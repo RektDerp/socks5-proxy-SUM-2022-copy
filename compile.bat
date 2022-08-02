@@ -1,11 +1,9 @@
 @ECHO OFF
 set root=%CD%
 
-if "%1"=="c" (
-  echo "c"
-  rmdir build /S /Q
-  mkdir build/bin
-)
+rmdir build /S /Q
+mkdir build/bin
+
 set /p Qt=Enter Qt major version [Qt5 ^/ Qt6]^>
 set /p Qtdir=Enter Qt installation root^>
 if NOT EXIST "%Qtdir%" ( set Qtdir=C:\Qt\6.3.1\mingw_64\)
