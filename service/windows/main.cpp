@@ -13,14 +13,14 @@ int main(int argc, char *argv[]) {
   wchar_t executable[] = L"main.exe";
   wchar_t logfilename [] = L"service.log";
   GetModuleFileNameW(NULL, filename, 256);
-  *(wstrrchr(filename, L'\\') + 1) = '\0';
-  wstrcpy(logfilepath, filename);
-  wstrcat(logfilepath, logfilename);
+  *(wcsrchr(filename, L'\\') + 1) = '\0';
+  wcscpy(logfilepath, filename);
+  wcscat(logfilepath, logfilename);
 
-  wstrcat(filename, executable);
-  logfile = fopen(logfilepath, "w+");
+  wcscat(filename, executable);
+  logfile = _wfopen(logfilepath, L"w+");
 
-  wfprintf(logfile,L"exec %s\nlog %s\n", filename, logfilepath);
+  fwprintf(logfile,L"exec %s\nlog %s\n", filename, logfilepath);
 
   try {
     ServiceWrapper::executablePath = filename;
