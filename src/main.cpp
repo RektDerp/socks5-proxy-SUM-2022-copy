@@ -26,9 +26,9 @@ extern char logFileName [];
     #define WININIT() {\
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
-	    GetModuleFileName(NULL, pwd, PATHSIZE);\
+	    GetModuleFileNameW(NULL, pwd, PATHSIZE);\
 	    *(wcsrchr(pwd, '\\') + 1) = '\0';\
-		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL)
+		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL);\
 	    strcpy(defaultConfigPath, utf8_pwd);\
 	    strcpy(defaultDatabasePath, utf8_pwd);\
 	    strcpy(logFileName, utf8_pwd);\
