@@ -23,21 +23,29 @@
     char defaultDatabasePath [PATHSIZE] = ".\\sessions_stat.db";
 	wchar_t pwd[PATHSIZE];
 	char utf8_pwd[PATHSIZE];
-    #define WININIT() {\
-	    SetConsoleCP(1251);\
-	    SetConsoleOutputCP(1251);\
-	    GetModuleFileNameW(NULL, pwd, PATHSIZE);\
-	    *(wcsrchr(pwd, '\\') + 1) = '\0';\
-		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL);\
-	    strcpy(defaultConfigPath, utf8_pwd);\
-	    strcpy(defaultDatabasePath, utf8_pwd);\
-	    strcpy(defaultLogPath, utf8_pwd);\
-	    strcat(defaultDatabasePath, "sessions_stat.db");\
-	    strcat(defaultConfigPath, "config.txt");\
-	    strcat(defaultLogPath, "server.log");\
+
+	void INIT()
+	{
+		SetConsoleCP(1251); 
+		SetConsoleOutputCP(1251); 
+		GetModuleFileNameW(NULL, pwd, PATHSIZE); 
+		* (wcsrchr(pwd, '\\') + 1) = '\0'; 
+		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL); 
+		strcpy(defaultDatabasePath, utf8_pwd); 
+		strcat(defaultDatabasePath, "sessions_stat.db"); 
+		
+		GetModuleFileNameA(NULL, utf8_pwd, PATHSIZE); 
+		* (strrchr(utf8_pwd, '\\') + 1) = '\0'; 
+		strcpy(defaultConfigPath, utf8_pwd); 
+		strcat(defaultConfigPath, "config.txt"); 
+		strcpy(defaultLogPath, utf8_pwd);
+		strcat(defaultLogPath, "server.log");
 	}
 #else
-	#define WININIT() { }
+	void INIT()
+	{
+
+	}
 	char defaultLogPath[PATHSIZE] = "/tmp/server.log";
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
 	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
@@ -46,10 +54,11 @@
 int main(int argc, char** argv)
 {
 	using namespace proxy;
-	WININIT();
+	INIT();
 	Logger::logFileName = defaultLogPath;
 	ConfigReader::configFilePath = defaultConfigPath;
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
+	std::cout << "Log path: " << Logger::logFileName << std::endl;
 	std::cout << "Database path: " << defaultDatabasePath << std::endl;
 	ConfigReader& config = ConfigReader::getInstance();
 	config.dumpFileValues();

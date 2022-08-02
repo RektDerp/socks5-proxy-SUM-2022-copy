@@ -71,7 +71,7 @@ namespace proxy {
         return false;
     }
 
-    bool ConfigReader::parseFile(string fileName)
+    bool ConfigReader::parseFile(const string& fileName)
     {
         ifstream inputFile;
         inputFile.open(fileName.c_str());
