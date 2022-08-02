@@ -1,6 +1,6 @@
 #include "server.h"
 #include "socks5.h"
-
+#include <thread>
 namespace proxy {
 	TcpServer::TcpServer(ba::io_context& io_context, unsigned short port, size_t bufferSizeKB,
 		size_t maxSessions) :
