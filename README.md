@@ -51,6 +51,8 @@ The package file will be written to `build` directory
 ## Windows
 1. Download latest MinGW compiler: 
     https://www.mingw-w64.org/downloads/#mingw-builds
+    
+    Add \<installed location\>\bin to your system's PATH environment variable
 2. Download CMake
     https://cmake.org/download/
 3. Install Qt 6
