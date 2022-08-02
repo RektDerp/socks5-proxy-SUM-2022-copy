@@ -32,7 +32,7 @@ xcopy %Qtdir%\plugins\platforms %root%\build\bin\platforms /S /E /Q
 xcopy %Qtdir%\plugins\sqldrivers %root%\build\bin\sqldrivers /S /E /Q
 xcopy %Qtdir%\qml\QtQml %root%\build\bin\QtQml /S /E /Q
 xcopy %Qtdir%\qml\QtQuick %root%\build\bin\QtQuick /S /E /Q
-for %%G in ( %dlls% ) do ( xcopy %Qtdir%\bin\%%G %root%\build\bin\%%G )
+for %%G in ( %dlls% ) do ( xcopy %Qtdir%\bin\%%G %root%\build\bin\%%G /S /E /Q )
 xcopy %root%\config.txt %root%\build\bin\config.txt /S /E /Q
 
 :END
