@@ -19,7 +19,7 @@ namespace proxy { namespace ui {
 #ifdef __linux__
     const char* const DB_PATH = "/tmp/sessions_stat.db";
 #else
-    const char* const DB_PATH = "./sessions_stat.db";
+    const char* const DB_PATH = "./statistics.db";
 #endif
 
     class SessionDao {

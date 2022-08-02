@@ -21,7 +21,7 @@ Name "${APPNAME}"
 !define MUI_WELCOMEPAGE_TEXT "${DESCRIPTION}"
 !define MUI_ABORTWARNING
 !define MUI_ABORTWARNING_TEXT "Are you sure want to abort installation?"
-!define logo "$INSTDIR\socks5-interface.ico"
+!define logo "$INSTDIR\statistics\socks5-interface.ico"
 !define startLogo "$INSTDIR\start.ico"
 !define stopLogo "$INSTDIR\stop.ico"
 
