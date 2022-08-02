@@ -9,24 +9,35 @@
 #define PATHSIZE 256
 extern char logFileName [];
 #ifdef _WIN32
+    #ifndef UNICODE
+    #define UNICODE
+    #endif
+
+    #ifndef _UNICODE
+    #define _UNICODE
+    #endif
+
     #include <windows.h>
+    #include <stringapiset.h>
     char defaultConfigPath [PATHSIZE] = ".\\config.txt";
     char defaultDatabasePath [PATHSIZE] = ".\\sessions_stat.db";
-	char pwd[PATHSIZE];
+	wchar_t pwd[PATHSIZE];
+	char utf8_pwd[PATHSIZE];
     #define WININIT() {\
 	    SetConsoleCP(1251);\
 	    SetConsoleOutputCP(1251);\
 	    GetModuleFileName(NULL, pwd, PATHSIZE);\
-	    *(strrchr(pwd, '\\') + 1) = '\0';\
-	    strcpy(defaultConfigPath, pwd);\
-	    strcpy(defaultDatabasePath, pwd);\
-	    strcpy(logFileName, pwd);\
+	    *(wcsrchr(pwd, '\\') + 1) = '\0';\
+		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL)
+	    strcpy(defaultConfigPath, utf8_pwd);\
+	    strcpy(defaultDatabasePath, utf8_pwd);\
+	    strcpy(logFileName, utf8_pwd);\
 	    strcat(defaultDatabasePath, "sessions_stat.db");\
 	    strcat(defaultConfigPath, "config.txt");\
-	    strcat(logFileName, "MyLogFile.log");\
+	    strcat(logFileName, "server.log");\
 	}
 #else
-	#define WININIT() { strcpy(logFileName, "/tmp/MyLogFile.log"); }
+	#define WININIT() { strcpy(logFileName, "/tmp/server.log"); }
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
 	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
 #endif
