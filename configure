@@ -124,12 +124,7 @@ invalid () {
     printf "%s\nusage: x[\n" "$1"
 }
 
-cnt=1
-while [ "$cnt" -lt "$(($# + 1))" ]
-do
-  i=${!cnt}
-#echo "param $cnt / $#: $i"
-  case $i in
+case $1 in
     windows | Windows | WINDOWS)
         if [ "$linux" = "true" ]
         then
@@ -137,8 +132,7 @@ do
         else
           windows=true
         fi
-        cnt=$((cnt + 1))
-        continue
+        cnt=2
     ;;
     Linux | linux | LINUX)
         if [ "$windows" = "true" ]
@@ -147,9 +141,21 @@ do
         else
           linux=true
         fi
-        cnt=$((cnt + 1))
-        continue
+        cnt=2
     ;;
+    *)
+        echo "No configuration parameters were passed. Defaulting to configure linux"
+        linux=true
+        cnt=1
+    ;;
+esac
+
+
+while [ "$cnt" -lt "$(($# + 1))" ]
+do
+  i=${!cnt}
+#echo "param $cnt / $#: $i"
+  case $i in
     build | --build | -b)
         build_flg=true
         cnt=$((cnt + 1))
@@ -256,7 +262,6 @@ elif [ "$windows" = true ]
 then
   configure_windows
 else
-  echo "No configuration parameters were passed. Defaulting to configure linux"
   configure_linux
 fi
 
