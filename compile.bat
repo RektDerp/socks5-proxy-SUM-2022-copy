@@ -8,7 +8,7 @@ set /p Qtdir=Enter Qt installation root^>
 if NOT EXIST "%Qtdir%" ( set Qtdir=C:\Qt\6.3.1\mingw_64\)
 set mQtdir=%Qtdir:\=/%
 echo %mQtdir%
-GOTO COPYFILES
+::GOTO COPYFILES
 set dlls=libgcc_s_seh-1.dll %Qt%OpenGL.dll %Qt%Quick.dll libstdc++-*.dll %Qt%Qml.dll  %Qt%QuickLayouts.dll libwinpthread*.dll  %Qt%QmlModels.dll  %Qt%QuickTemplates2.dll %Qt%Core.dll %Qt%QmlWorkerScript.dll %Qt%Sql.dll %Qt%Gui.dll %Qt%QuickControls2.dll %Qt%Svg.dll %Qt%Network.dll %Qt%QuickControls2Impl.dll
 
 cmake -S . -B build -D Qt=%Qt% -D Qtdir=%mQtdir% -G "MinGW Makefiles"
