@@ -17,14 +17,14 @@ SERVICE_TABLE_ENTRY ServiceWrapper::serviceTable[] = {0};
 STARTUPINFO ServiceWrapper::serviceStartupInfo = {0};
 PROCESS_INFORMATION ServiceWrapper::serviceProcessInfo = {0};
 SECURITY_ATTRIBUTES ServiceWrapper::pipeSecurityAttributes = {0};
-std::string ServiceWrapper::serviceName;
-std::string ServiceWrapper::executablePath;
+LPWSTR ServiceWrapper::serviceName;
+LPWSTR ServiceWrapper::executablePath;
 FILE* logfile;
 
-void ServiceWrapper::start(const std::string &_name) {
+void ServiceWrapper::start(const LPWSTR &_name) {
 
   serviceName = _name;
-  serviceTable[0].lpServiceName = (LPSTR)_name.c_str();
+  serviceTable[0].lpServiceName = _name;
   serviceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)serviceMain;
   if (StartServiceCtrlDispatcher(serviceTable) == false) {
     throw(std::runtime_error("StartServiceCtrlDispatcher failed"));
@@ -33,7 +33,7 @@ void ServiceWrapper::start(const std::string &_name) {
 
 void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
 
-  serviceStatusHandle = RegisterServiceCtrlHandler(serviceName.c_str(), serviceControlHandler);
+  serviceStatusHandle = RegisterServiceCtrlHandler(serviceName, serviceControlHandler);
   if (!serviceStatusHandle)
     throw(std::runtime_error("RegisterServiceCtrlHandler failed"));
   serviceStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
@@ -66,7 +66,7 @@ void ServiceWrapper::serviceMain(DWORD argc, LPTSTR *argv) {
   serviceStartupInfo.hStdOutput = pipeStdoutWr;
   serviceStartupInfo.hStdError = pipeStdoutWr;
   serviceStartupInfo.dwFlags = STARTF_USESTDHANDLES;
-  if (!CreateProcess(NULL, (LPSTR)executablePath.c_str(), NULL, NULL, TRUE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
+  if (!CreateProcess(NULL, executablePath, NULL, NULL, TRUE, 0, NULL, NULL, &serviceStartupInfo, &serviceProcessInfo)) {
     std::string errortext = "Failed to create process: ";
     errortext.append(std::to_string(GetLastError()));
     throw(std::runtime_error(errortext));

@@ -8,22 +8,23 @@
 extern FILE* logfile;
 
 int main(int argc, char *argv[]) {
-  char filename[256];
-  char logfilepath[256];
-  char executable[] = "main.exe";
-  GetModuleFileName(NULL, filename, 256);
-  *(strrchr(filename, '\\') + 1) = '\0';
-  strcpy(logfilepath, filename);
-  strcat(logfilepath, "log.txt");
+  wchar_t filename[256];
+  wchar_t logfilepath[256];
+  wchar_t executable[] = L"main.exe";
+  wchar_t logfilename [] = L"service.log";
+  GetModuleFileNameW(NULL, filename, 256);
+  *(wstrrchr(filename, L'\\') + 1) = '\0';
+  wstrcpy(logfilepath, filename);
+  wstrcat(logfilepath, logfilename);
 
-  strcat(filename, executable);
+  wstrcat(filename, executable);
   logfile = fopen(logfilepath, "w+");
 
-  fprintf(logfile,"exec %s\nlog %s\n", filename, logfilepath);
+  wfprintf(logfile,L"exec %s\nlog %s\n", filename, logfilepath);
 
   try {
     ServiceWrapper::executablePath = filename;
-    ServiceWrapper::start("Socks5");
+    ServiceWrapper::start(L"Socks5");
   } catch (std::runtime_error &e) {
     fprintf(logfile,"exception %s\n", e.what());
   }
