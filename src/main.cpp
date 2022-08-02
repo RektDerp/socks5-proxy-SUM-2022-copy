@@ -7,7 +7,7 @@
 #include <memory>
 #include <string.h>
 #define PATHSIZE 256
-extern char logFileName [];
+extern char logFileName [256];
 #ifdef _WIN32
     #ifndef UNICODE
     #define UNICODE
