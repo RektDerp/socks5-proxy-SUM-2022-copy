@@ -9,6 +9,7 @@ SetCompressor lzma
 !define VERSIONMINOR 0
 !define VERSIONBUILD 1
 RequestExecutionLevel Admin
+Name "${APPNAME}"
 
 !define MUI_ICON "install.ico"
 #!define MUI_UNICON ""
