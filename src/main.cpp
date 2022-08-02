@@ -7,7 +7,6 @@
 #include <memory>
 #include <string.h>
 #define PATHSIZE 256
-extern char logFileName [256];
 #ifdef _WIN32
     #ifndef UNICODE
     #define UNICODE
@@ -19,6 +18,7 @@ extern char logFileName [256];
 
     #include <windows.h>
     #include <stringapiset.h>
+	char defaultLogPath[PATHSIZE] = ".\\server.txt";
     char defaultConfigPath [PATHSIZE] = ".\\config.txt";
     char defaultDatabasePath [PATHSIZE] = ".\\sessions_stat.db";
 	wchar_t pwd[PATHSIZE];
@@ -31,10 +31,10 @@ extern char logFileName [256];
 		WideCharToMultiByte(CP_UTF8, 0, pwd, -1, utf8_pwd, PATHSIZE, NULL, NULL);\
 	    strcpy(defaultConfigPath, utf8_pwd);\
 	    strcpy(defaultDatabasePath, utf8_pwd);\
-	    strcpy(logFileName, utf8_pwd);\
+	    strcpy(defaultLogPath, utf8_pwd);\
 	    strcat(defaultDatabasePath, "sessions_stat.db");\
 	    strcat(defaultConfigPath, "config.txt");\
-	    strcat(logFileName, "server.log");\
+	    strcat(defaultLogPath, "server.log");\
 	}
 #else
 	#define WININIT() { strcpy(logFileName, "/tmp/server.log"); }
@@ -46,6 +46,7 @@ int main(int argc, char** argv)
 {
 	using namespace proxy;
 	WININIT();
+	Logger::logFileName = defaultLogPath;
 	ConfigReader::configFilePath = defaultConfigPath;
 	std::cout << "Config path: " << ConfigReader::configFilePath << std::endl;
 	std::cout << "Database path: " << defaultDatabasePath << std::endl;
