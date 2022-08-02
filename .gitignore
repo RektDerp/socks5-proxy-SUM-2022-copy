@@ -63,5 +63,3 @@ installer/arch/pkg
 /build*
 /ui/ui.*
 *.autosave
-
-/include/
