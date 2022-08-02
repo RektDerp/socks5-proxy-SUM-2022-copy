@@ -114,8 +114,7 @@ Item {
             text: "By period:"
         }
 
-        Grid {
-            columns: 3
+        Row {
             spacing: 5
 
             Text {
@@ -126,6 +125,8 @@ Item {
 
             CalendarButton {
                 id: from
+                width: 80
+                implicitHeight: 20
                 defaultText: "[Not chosen]"
 
                 onDateChanged: {
@@ -137,8 +138,30 @@ Item {
                 }
             }
 
+            Text {
+                height: to.height
+                text: "To: "
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            CalendarButton {
+                id: to
+                width: 80
+                implicitHeight: 20
+                defaultText: "[Not chosen]"
+                onDateChanged: {
+                    table.toDateFilter = selectedDate
+                }
+
+                onClear: {
+                    table.toDateFilter = new Date(0,0,0)
+                }
+            }
+
             Button {
                 anchors.leftMargin: 50
+                width: 80
+                implicitHeight: 20
                 text: "Reset filters"
                 onClicked: {
                     userFilter.text = null
@@ -157,24 +180,6 @@ Item {
                     table.bytesSentFilter = -1
                     receivedFilter.text = null
                     table.bytesRecvFilter = -1
-                }
-            }
-
-            Text {
-                height: to.height
-                text: "To: "
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            CalendarButton {
-                id: to
-                defaultText: "[Not chosen]"
-                onDateChanged: {
-                    table.toDateFilter = selectedDate
-                }
-
-                onClear: {
-                    table.toDateFilter = new Date(0,0,0)
                 }
             }
         }

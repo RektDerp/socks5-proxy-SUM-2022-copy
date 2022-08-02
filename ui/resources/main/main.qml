@@ -18,7 +18,7 @@ Window {
         spacing: sideMargin
 
         TimerBar {
-            height: 30
+            Layout.preferredHeight: 30
             width: parent.width
 
             timer.onTriggered: {
@@ -36,7 +36,7 @@ Window {
 
         FiltersBar {
             implicitWidth: parent.width
-            height: 125
+            Layout.preferredHeight: 100
             table: table
         }
     }
