@@ -1,6 +1,7 @@
 ﻿Unicode True
 SetCompressor lzma
 !include "MUI2.nsh"
+!include 'FileFunc.nsh'
 !include LogicLib.nsh
 !define APPNAME "Socks 5 Proxy"
 !define COMPANYNAME "Apriorit"
@@ -103,6 +104,7 @@ section "install"
     file "socks5-interface.ico"
     file "start.ico"
     file "stop.ico"
+    !insertmacro MoveFile "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"
 
     createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
     createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
