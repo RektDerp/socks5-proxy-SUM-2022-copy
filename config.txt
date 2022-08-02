@@ -6,7 +6,7 @@ log_level = DEBUG
 # specifying the log type
 # DISABLE, CONSOLE, FILE, ENABLE
 
-log_type = CONSOLE 
+log_type = FILE
 
 # Port server is listening on
 # default - 1080
