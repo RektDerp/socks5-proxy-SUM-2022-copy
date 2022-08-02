@@ -53,6 +53,12 @@ The package file will be written to `build` directory
     https://www.mingw-w64.org/downloads/#mingw-builds
 2. Download CMake
     https://cmake.org/download/
+3. Install Qt 6
+    https://www.qt.io/download-qt-installer 
+    Choose "Custom Installation"
+    [scr](https://imgur.com/J6C2sfd.png)
+    And select Qt6 for MinGW 11
+    [](https://imgur.com/j58pYoe.png)
     
 Compile using script
 ```
