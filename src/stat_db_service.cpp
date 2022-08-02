@@ -9,7 +9,7 @@
 namespace proxy {
 	using std::string;
 	using std::lock_guard;
-	using boost::mutex;
+	using std::mutex;
 	using std::vector;
 	using string_utils::concat;
 	using string_utils::to_string;
@@ -19,7 +19,7 @@ namespace proxy {
 
 	DatabaseService& DatabaseService::getInstance(const string& db_path)
 	{
-		boost::mutex::scoped_lock guard(_mutex);
+		lock_guard<mutex> guard(_mutex);
 		if (_instance == nullptr)
 		{
 			_instance = std::unique_ptr<DatabaseService>(new DatabaseService(db_path));
@@ -49,7 +49,7 @@ namespace proxy {
 
 	long long DatabaseService::create(const Session session)
 	{
-		boost::mutex::scoped_lock guard(_mutex);
+		lock_guard<mutex> guard(_mutex);
 		DatabaseConnection db(_db_path);
 		DatabaseStatement stmt;
 		int err = sqlite3_prepare_v2(db, create_session, -1, stmt, nullptr);
@@ -81,7 +81,7 @@ namespace proxy {
 	
 	void DatabaseService::update(long long session_id, size_t bytes, Dest dest)
 	{
-		boost::mutex::scoped_lock guard(_mutex);
+		lock_guard<mutex> guard(_mutex);
 		Session s = selectSession(session_id);
 		if (s.id == 0)
 		{
@@ -114,7 +114,7 @@ namespace proxy {
 
 	void DatabaseService::close(long long session_id)
 	{
-		boost::mutex::scoped_lock guard(_mutex);
+		lock_guard<mutex> guard(_mutex);
 		Session s = selectSession(session_id);
 		if (s.id == 0) {
 			throw DatabaseException(concat("Close: no session with id: ", session_id));

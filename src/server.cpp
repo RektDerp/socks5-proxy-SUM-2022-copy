@@ -7,7 +7,7 @@ namespace proxy {
 		_io_context(io_context),
 		_acceptor(io_context, ba::ip::tcp::endpoint(ba::ip::tcp::v4(), port)),
 		_bufferSizeKB(bufferSizeKB),
-		_pool(boost::thread::hardware_concurrency() * 2),
+		_pool(std::thread::hardware_concurrency() * 2),
 		_sessions(0),
 		_maxSessions(maxSessions)
 	{

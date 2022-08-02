@@ -1,9 +1,11 @@
 #ifndef _STAT_DB_SERVICE_H_
 #define _STAT_DB_SERVICE_H_
 
-#include "proxy_common.h"
 #include "proxy_exceptions.h"
-#include "boost/thread/mutex.hpp"
+#include <string>
+#include <vector>
+#include <mutex>	
+#include <memory>
 
 struct sqlite3_stmt;
 
@@ -34,7 +36,7 @@ namespace proxy {
 	class DatabaseService {
 	private:
 		static std::unique_ptr<DatabaseService> _instance;
-		static boost::mutex _mutex;
+		static std::mutex _mutex;
 	public:
 		static DatabaseService& getInstance(const string& db_path = "./sessions_stat.db");
 

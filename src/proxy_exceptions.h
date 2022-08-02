@@ -4,7 +4,6 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
-
 namespace proxy {
 	class ProxyException : public std::runtime_error {
 	public:

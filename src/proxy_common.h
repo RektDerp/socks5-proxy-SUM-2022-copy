@@ -2,6 +2,7 @@
 #define _PROXY_COMMON_H
 
 #include <iostream>
+#include <thread>
 #include <bitset>
 #include <string>
 #include <chrono>
@@ -9,7 +10,6 @@
 #include <vector>
 #include <memory>
 
-#include <boost/thread.hpp>
 #include <boost/asio.hpp>
 #include <boost/bind/bind.hpp>
 

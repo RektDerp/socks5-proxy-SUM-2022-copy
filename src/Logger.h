@@ -4,7 +4,8 @@
 #include "proxy_common.h"
 #include <fstream>
 #include <sstream>
-
+#include <mutex>
+#include <memory>
 namespace proxy {
     enum LOG_LEVEL
     {

@@ -87,7 +87,7 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	boost::thread thread([&] { 
+	std::thread thread([&] { 
 		try {
 			context.run();
 		}
