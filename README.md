@@ -56,6 +56,7 @@ The package file will be written to `build` directory
 3. Install Qt 6
 4. 
     https://www.qt.io/download-qt-installer 
+    
     Choose "Custom Installation"
     
     ![scr](https://imgur.com/J6C2sfd.png)
