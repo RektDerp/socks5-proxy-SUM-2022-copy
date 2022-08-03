@@ -109,6 +109,5 @@ To create installer:
 - Stop - stop service
 - Enable - enable start on reboot
 - Disable - disable start on reboot
-4. To close the server, click the ```Stop Socks5 Proxy Service``` shortcut
-5. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
-6. Uninstallation: ```<installed location>\uninstall.exe```
+4. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
+5. Uninstallation: ```<installed location>\uninstall.exe```
