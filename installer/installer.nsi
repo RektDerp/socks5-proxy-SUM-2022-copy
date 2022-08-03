@@ -67,12 +67,10 @@ Function nsDialogsPage
 
     ${NSD_CreateCheckBox} 0 86% 100% 6% "Create Desktop shortcuts"
     Pop $CheckboxDesktop
-    ${NSD_Check} $CheckboxDesktop
     ${NSD_OnClick} $CheckboxDesktop switch
 
     ${NSD_CreateCheckBox} 0 94% 100% 6% "Create service control shortcuts"
     Pop $CheckboxServiceControls
-    ${NSD_Check} $CheckboxServiceControls
     ${NSD_OnClick} $CheckboxServiceControls switch
 	nsDialogs::Show
 FunctionEnd
