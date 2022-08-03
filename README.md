@@ -104,7 +104,10 @@ To create installer:
 ### Windows
 1. Download ```socks5_installer.exe``` from the repository
 2. Run and follow the instructions of the installer
-3. To start the server, click on the shortcut ```Start Socks5 Proxy Service```
-4. To close the server, click the ```Stop Socks5 Proxy Service``` shortcut
-5. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
-6. Uninstallation: ```<installed location>\uninstall.exe```
+3. To control the service, click on the shortcut ```Socks5 Proxy service control```
+- Start - starts service
+- Stop - stop service
+- Enable - enable start on reboot
+- Disable - disable start on reboot
+4. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
+5. Uninstallation: ```<installed location>\uninstall.exe```

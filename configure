@@ -45,9 +45,11 @@ copy_resources () {
 }
 
 package_win () {
+    mkdir -p $builddir/bin/statistics
+    mv $builddir/bin/interface.exe $builddir/bin/statistics
     cp -r $Qtdir/plugins/imageformats $Qtdir/plugins/platforms $Qtdir/plugins/sqldrivers $Qtdir/qml/QtQml $Qtdir/qml/QtQuick $builddir/bin
     cd $Qtdir/bin
-    cp libgcc_s_seh-1.dll ${Qt}OpenGL.dll ${Qt}Quick.dll libstdc++*.dll ${Qt}Qml.dll ${Qt}QuickLayouts.dll libwinpthread*.dll ${Qt}QmlModels.dll ${Qt}QuickTemplates2.dll ${Qt}Core.dll ${Qt}QmlWorkerScript.dll ${Qt}Sql.dll ${Qt}Gui.dll ${Qt}QuickControls2.dll ${Qt}Svg.dll ${Qt}Network.dll ${Qt}QuickControls2Impl.dll $builddir/bin
+    cp libgcc_s_seh-1.dll ${Qt}OpenGL.dll ${Qt}Quick.dll libstdc++*.dll ${Qt}Qml.dll ${Qt}QuickLayouts.dll libwinpthread*.dll ${Qt}QmlModels.dll ${Qt}QuickTemplates2.dll ${Qt}Core.dll ${Qt}QmlWorkerScript.dll ${Qt}Sql.dll ${Qt}Gui.dll ${Qt}QuickControls2.dll ${Qt}Svg.dll ${Qt}Network.dll ${Qt}QuickControls2Impl.dll $builddir/bin/statistics
     cd $basedir
     if ! ( wpath=`winepath -w "$basedir/installer/installer.nsi"` && wine 'C:\Program Files (x86)\NSIS\makensis.exe' "$wpath")
     then
