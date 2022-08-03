@@ -115,10 +115,14 @@ section "install"
     file "stop.ico"
     !insertmacro MoveFile "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"
     !insertmacro MoveFile "$INSTDIR\socks5-interface.ico" "$INSTDIR\statistics\socks5-interface.ico"
+    SetOutPath $INSTDIR\statistics
     createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+    SetOutPath $INSTDIR
     createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
     ${If} $bDesktop == "1"
+        SetOutPath $INSTDIR\statistics
         createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
+        SetOutPath $INSTDIR
         ${If} $bService == "1"
             createShortCut "$DESKTOP\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
             createShortCut "$DESKTOP\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
