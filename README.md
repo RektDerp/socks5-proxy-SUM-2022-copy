@@ -3,7 +3,7 @@
 SOCKS – це інтернет-протокол, який використовується для передачі пакетів із даними сервера до клієнта за допомогою проміжного проксі-сервера. На сьогодні це найбільш продвинута масова технологія для проксі. При її використанні трафік проходить через проксі-сервер, який використовує власний IP-адрес, з якого вже іде остаточне підключення до потрібної адреси. SOCKS проксі передає дані від клієнта до серверу, не втручається у вміст самих даних. Використовується з метою приховання IP адреси і обходу блокувань.
 
 Наш PROXY сервер має такий функціонал:
-- власне SOCKS4/5 сервер
+- підтримка SOCKS4, SOCKS5
 - інсталятор для Windows, установка apt для Linux
 - запуск у вигляді сервіса
 - перегляд, сортування та фільтрування статистики по підключенням за допомогою інтерфейсу
@@ -17,7 +17,7 @@ Install dependencies:
 - GCC 
 - Qt 5
 - QtQuick
-	- QtQuick Controls 2
+- QtQuick Controls 2
 - Sqlite 3
 
 Unbuntu / Debian
@@ -81,28 +81,27 @@ Compile using script
 
 To create installer:
 
-Download NSIS 
-
-https://nsis.sourceforge.io/Download
-    
-Open installer\\installer.nsi file using NSIS Compiler
-
+1. Download NSIS: [link](https://nsis.sourceforge.io/Download)
+2. Open installer\\installer.nsi file using NSIS Compiler<br>
 ![screenshot](https://imgur.com/X6sa19x.png)
 
 ---
 ## Usage
 ### Linux
-1.	Завантажити два пакети з репозиторію (socks5-proxy-2.2.8-1-any.pkg.tar.zst, socks5-proxy-Qt5-2.2.8-1_amd64.deb)
-2.	sudo dpkg -i *.deb
-o	Якщо виникли помилки: sudo apt --fix-broken install
-3.	Для запуску сервера: sudo systemctl start socks5-proxy
-4.	Для автоматичного перезапуску при перезавантаженні: sudo systemctl enable socks5-proxy
-5.	sudo systemctl stop socks5-proxy для закриття сервера
-6.	Для перегляду статистики у меню обрати Socks5 Proxy GUI
+1. Завантажити два пакети з репозиторію (```socks5-proxy-2.2.8-1-any.pkg.tar.zst```, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb```)
+2. ```sudo dpkg -i *.deb```
+- Якщо виникли помилки: ```sudo apt --fix-broken install```
+3. Для запуску сервера: ```sudo systemctl start socks5-proxy```
+4. Для автоматичного перезапуску при перезавантаженні: ```sudo systemctl enable socks5-proxy```
+5. Для закриття сервера: ```sudo systemctl stop socks5-proxy```
+6. Для перегляду статистики у меню обрати Socks5 Proxy GUI
+7. Для зупинки сервера: ```sudo systemctl stop socks5-proxy```
+8. Деінсталяція: ```sudo apt remove socks5-proxy```
 
 ### Windows
-1.	Завантажити socks5_installer.exe з репозиторію
-2.	Запустити та слідувати інструкціям інсталятора
-3.	Натиснути на ярлик Start Socks5 Proxy Service
-4.	Для закриття сервера натиснути ярлик Stop Socks5 Proxy Service
-5.	Для перегляду статистики натиснути ярлик Socks 5 Proxy, або в папці, яка була обрана в інсталяторі: \statistics\interface.exe
+1. Завантажити ```socks5_installer.exe``` з репозиторію
+2. Запустити та слідувати інструкціям інсталятора
+3. Натиснути на ярлик ```Start Socks5 Proxy Service```
+4. Для закриття сервера натиснути ярлик ```Stop Socks5 Proxy Service```
+5. Для перегляду статистики натиснути ярлик ```Socks 5 Proxy```, або ```<installed location>\statistics\interface.exe```
+6. Деінсталяція: ```<installed location>\uninstall.exe```
