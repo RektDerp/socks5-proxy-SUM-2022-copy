@@ -1,7 +1,13 @@
-# socks5-proxy-SUM-2022
-Корпоративный SOCKS5 Proxy
+# Корпоративний SOCKS5 Proxy
+## Опис
+SOCKS – це інтернет-протокол, який використовується для передачі пакетів із даними сервера до клієнта за допомогою проміжного проксі-сервера. На сьогодні це найбільш продвинута масова технологія для проксі. При її використанні трафік проходить через проксі-сервер, який використовує власний IP-адрес, з якого вже іде остаточне підключення до потрібної адреси. SOCKS проксі передає дані від клієнта до серверу, не втручається у вміст самих даних. Використовується з метою приховання IP адреси і обходу блокувань.
 
-A very interesting description
+Наш PROXY сервер має такий функціонал:
+- власне SOCKS4/5 сервер
+- інсталятор для Windows, установка apt для Linux
+- запуск у вигляді сервіса
+- перегляд, сортування та фільтрування статистики по підключенням за допомогою інтерфейсу
+- налаштування сервера: порт, макс. кількість підключень, розмір буфера
 
 ## Building from source
 
@@ -48,7 +54,7 @@ Or create package
 
 The package file will be written to `build` directory
 
-## Windows
+### Windows
 1. Download latest MinGW compiler: 
     https://github.com/niXman/mingw-builds-binaries/releases/download/12.1.0-rt_v10-rev3/x86_64-12.1.0-release-posix-seh-rt_v10-rev3.7z
     
@@ -85,4 +91,18 @@ Open installer\\installer.nsi file using NSIS Compiler
 
 ---
 ## Usage
+### Linux
+1.	Завантажити два пакети з репозиторію (socks5-proxy-2.2.8-1-any.pkg.tar.zst, socks5-proxy-Qt5-2.2.8-1_amd64.deb)
+2.	sudo dpkg -i *.deb
+o	Якщо виникли помилки: sudo apt --fix-broken install
+3.	Для запуску сервера: sudo systemctl start socks5-proxy
+4.	Для автоматичного перезапуску при перезавантаженні: sudo systemctl enable socks5-proxy
+5.	sudo systemctl stop socks5-proxy для закриття сервера
+6.	Для перегляду статистики у меню обрати Socks5 Proxy GUI
 
+### Windows
+1.	Завантажити socks5_installer.exe з репозиторію
+2.	Запустити та слідувати інструкціям інсталятора
+3.	Натиснути на ярлик Start Socks5 Proxy Service
+4.	Для закриття сервера натиснути ярлик Stop Socks5 Proxy Service
+5.	Для перегляду статистики натиснути ярлик Socks 5 Proxy, або в папці, яка була обрана в інсталяторі: \statistics\interface.exe
