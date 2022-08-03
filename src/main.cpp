@@ -20,7 +20,7 @@
     #include <stringapiset.h>
 	char defaultLogPath[PATHSIZE] = ".\\server.txt";
     char defaultConfigPath [PATHSIZE] = ".\\config.txt";
-    char defaultDatabasePath [PATHSIZE] = ".\\sessions_stat.db";
+    char defaultDatabasePath [PATHSIZE] = ".\\statistics.db";
 	wchar_t pwd[PATHSIZE];
 	char utf8_pwd[PATHSIZE];
 
@@ -44,7 +44,7 @@
 #else
 	char defaultLogPath[PATHSIZE] = "/tmp/server.log";
 	const char defaultConfigPath [PATHSIZE] = "/etc/socks5-config.txt";
-	const char defaultDatabasePath[PATHSIZE] = "/tmp/sessions_stat.db";
+	const char defaultDatabasePath[PATHSIZE] = "/tmp/statistics.db";
 
 	void init(){}
 #endif
