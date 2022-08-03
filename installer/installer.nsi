@@ -96,6 +96,9 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
 
+    mkdir ..\build\bin\statistics
+    nsExec::Exec 'move "..\build\bin\interface.exe" "..\build\bin\statistics\interface.exe"'
+
     FileOpen $4 "$INSTDIR\statistics\statistics.db" w
     FileWrite $4 ""
     FileClose $4
@@ -104,7 +107,6 @@ section "install"
     file "socks5-interface.ico"
     file "start.ico"
     file "stop.ico"
-    nsExec::Exec 'move "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"'
 
     createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
     createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
