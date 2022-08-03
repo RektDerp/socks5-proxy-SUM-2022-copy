@@ -34,7 +34,7 @@ xcopy %Qtdir%\plugins\sqldrivers %root%\build\bin\statistics\sqldrivers /S /E /Q
 xcopy %Qtdir%\qml\QtQml %root%\build\bin\statistics\QtQml /S /E /Q
 xcopy %Qtdir%\qml\QtQuick %root%\build\bin\statistics\QtQuick /S /E /Q
 for %%G in ( %dlls% ) do ( xcopy %Qtdir%\bin\%%G %root%\build\bin\statistics\ /S /E /Q /I )
-xcopy %root%\config.txt %root%\build\bin\config.txt /S /E /Q
+copy %root%\config.txt %root%\build\bin\config.txt
 
 :END
 pause
