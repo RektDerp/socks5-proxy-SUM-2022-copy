@@ -89,7 +89,8 @@ To create installer:
 ## Usage
 ### Linux
 1. Завантажити пакет з репозиторію (```socks5-proxy-2.2.8-1-any.pkg.tar.zst``` для Arch Linux, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb``` для Ubuntu/Debian)
-2. ```sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb #deb
+2. ```
+      sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb #deb
       sudo pacman -U socks5-proxy-2.2.8-1-any.pkg.tar.zst #Arch
    ```
 4. Для запуску сервера: ```sudo systemctl start socks5-proxy```
