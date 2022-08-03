@@ -12,6 +12,12 @@ SetCompressor lzma
 RequestExecutionLevel Admin
 Name "${APPNAME}"
 
+!insertmacro Locate
+ 
+Var /GLOBAL switch_overwrite
+
+!include 'MoveFileFolder.nsh'
+
 !define MUI_ICON "install.ico"
 #!define MUI_UNICON ""
 !define MUI_HEADERIMAGE
@@ -95,9 +101,10 @@ FunctionEnd
 section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
-
-    mkdir ..\build\bin\statistics
-    nsExec::Exec 'move "..\build\bin\interface.exe" "..\build\bin\statistics\interface.exe"'
+    
+    
+    ;nsExec::Exec 'move "..\build\bin\socks5-interface.ico" "..\build\bin\statistics\socks5-interface.ico"'
+    ;nsExec::Exec 'move "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"'
 
     FileOpen $4 "$INSTDIR\statistics\statistics.db" w
     FileWrite $4 ""
@@ -107,7 +114,8 @@ section "install"
     file "socks5-interface.ico"
     file "start.ico"
     file "stop.ico"
-
+    !insertmacro MoveFile "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"
+    !insertmacro MoveFile "$INSTDIR\socks5-interface.ico" "$INSTDIR\statistics\socks5-interface.ico"
     createShortCut "$SMPROGRAMS\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
     createShortCut "$SMPROGRAMS\Uninstall ${APPNAME}.lnk" "$INSTDIR\uninstall.exe" "" "${logo}" 0 "" "" "Apriorit project"
     ${If} $bDesktop == "1"
