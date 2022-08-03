@@ -45,7 +45,6 @@ Var Label
 Var CheckboxUser
 Var CheckboxDesktop
 Var CheckboxServiceControls
-
 Var bDesktop
 Var bService
 
@@ -102,7 +101,7 @@ section "install"
     setOutPath $INSTDIR
     writeUninstaller "$INSTDIR\uninstall.exe"
     
-    
+    StrCpy $switch_overwrite 0
     ;nsExec::Exec 'move "..\build\bin\socks5-interface.ico" "..\build\bin\statistics\socks5-interface.ico"'
     ;nsExec::Exec 'move "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"'
 
