@@ -1,13 +1,13 @@
 # Корпоративний SOCKS5 Proxy
-## Опис
-SOCKS – це інтернет-протокол, який використовується для передачі пакетів із даними сервера до клієнта за допомогою проміжного проксі-сервера. На сьогодні це найбільш продвинута масова технологія для проксі. При її використанні трафік проходить через проксі-сервер, який використовує власний IP-адрес, з якого вже іде остаточне підключення до потрібної адреси. SOCKS проксі передає дані від клієнта до серверу, не втручається у вміст самих даних. Використовується з метою приховання IP адреси і обходу блокувань.
+## Description
+SOCKS is an Internet protocol used to transfer packets of data from a server to a client using an intermediate proxy server. This is the most advanced mass proxy technology available today. When using it, client traffic passes proxy server and goes to the destination point with server IP. SOCKS proxy transfers data from the client to the server and does not interfere with the content of the data itself. It is used to hide the IP address and bypass blocking.
 
-Наш PROXY сервер має такий функціонал:
-- підтримка SOCKS4, SOCKS5
-- інсталятор для Windows, установка apt для Linux
-- запуск у вигляді сервіса
-- перегляд, сортування та фільтрування статистики по підключенням за допомогою інтерфейсу
-- налаштування сервера: порт, макс. кількість підключень, розмір буфера
+Our PROXY server has the following functionality:
+- SOCKS4, SOCKS5 support
+- installer for Windows, apt installation for Linux
+- launches as a service
+- view, sort and filter connection statistics using the interface
+- server settings: port, max. number of connections, buffer size
 
 ## Building from source
 
@@ -87,23 +87,24 @@ To create installer:
 
 ---
 ## Usage
+
 ### Linux
-1. Завантажити пакет з репозиторію (```socks5-proxy-2.2.8-1-any.pkg.tar.zst``` для Arch Linux, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb``` для Ubuntu/Debian)
+1. Download package from the repository (```socks5-proxy-2.2.8-1-any.pkg.tar.zst``` for Arch Linux, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb``` for Ubuntu/Debian)
 2. ```
-      sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb #deb
-      sudo pacman -U socks5-proxy-2.2.8-1-any.pkg.tar.zst #Arch
+    sudo pacman -U socks5-proxy-2.2.8-1-any.pkg.tar.zst #Arch
+    sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb 	#deb
    ```
-4. Для запуску сервера: ```sudo systemctl start socks5-proxy```
-5. Для автоматичного перезапуску при перезавантаженні: ```sudo systemctl enable socks5-proxy```
-6. Для закриття сервера: ```sudo systemctl stop socks5-proxy```
-7. Для перегляду статистики у меню обрати Socks5 Proxy GUI
-8. Для зупинки сервера: ```sudo systemctl stop socks5-proxy```
-9. Деінсталяція: ```sudo apt remove socks5-proxy```
+3. To start the server: ```sudo systemctl start socks5-proxy```
+4. To restart automatically on reboot: ```sudo systemctl enable socks5-proxy```
+5. To close the server: ```sudo systemctl stop socks5-proxy```
+6. To view statistics, select Socks5 Proxy GUI from the menu
+7. To stop the server: ```sudo systemctl stop socks5-proxy```
+8. Uninstallation: ```sudo apt remove socks5-proxy```
 
 ### Windows
-1. Завантажити ```socks5_installer.exe``` з репозиторію
-2. Запустити та слідувати інструкціям інсталятора
-3. Натиснути на ярлик ```Start Socks5 Proxy Service```
-4. Для закриття сервера натиснути ярлик ```Stop Socks5 Proxy Service```
-5. Для перегляду статистики натиснути ярлик ```Socks 5 Proxy```, або ```<installed location>\statistics\interface.exe```
-6. Деінсталяція: ```<installed location>\uninstall.exe```
+1. Download ```socks5_installer.exe``` from the repository
+2. Run and follow the instructions of the installer
+3. To start the server, click on the shortcut ```Start Socks5 Proxy Service```
+4. To close the server, click the ```Stop Socks5 Proxy Service``` shortcut
+5. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
+6. Uninstallation: ```<installed location>\uninstall.exe```
