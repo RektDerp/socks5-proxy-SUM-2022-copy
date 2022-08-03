@@ -117,6 +117,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   list(APPEND modules "${includedir}/sqlite3.c|")
   list(APPEND executables "winservice|${servicedir}/main.cpp")
   list(APPEND executables "service")
+  list(APPEND executables "servicecontrols|${servicedir}/servicecontrols.c")
+  list(APPEND executables "-static-libstdc++ -static-libgcc -mwindows")
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     list(TRANSFORM executables REPLACE "-lpthread" " -static-libgcc -static-libstdc++ -Wl,--whole-archive,-Bstatic -lssp -lpthread -Wl,--no-whole-archive" AT 1)
