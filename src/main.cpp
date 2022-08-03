@@ -87,15 +87,13 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	std::thread thread([&] {
-		try {
-			context.run();
-		}
-		catch (const std::exception& ex) {
-			log(FATAL_LOG) << "io_context throwed exception: " << ex.what();
-		}
-	});
-	thread.join();
+	try {
+		context.run();
+	}
+	catch (const std::exception& ex) {
+		log(FATAL_LOG) << "io_context throwed exception: " << ex.what();
+	}
+
 	log(INFO_LOG) << "Stopped server.";
 	Logger::getInstance().join();
 	return 0;
