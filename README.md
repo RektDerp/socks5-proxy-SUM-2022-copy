@@ -1,7 +1,13 @@
-# socks5-proxy-SUM-2022
-Корпоративный SOCKS5 Proxy
+# Корпоративний SOCKS5 Proxy
+## Description
+SOCKS is an Internet protocol used to transfer packets of data from a server to a client using an intermediate proxy server. This is the most advanced mass proxy technology available today. When using it, client traffic passes proxy server and goes to the destination point with server IP. SOCKS proxy transfers data from the client to the server and does not interfere with the content of the data itself. It is used to hide the IP address and bypass blocking.
 
-A very interesting description
+Our PROXY server has the following functionality:
+- SOCKS4, SOCKS5 support
+- installer for Windows, apt installation for Linux
+- launches as a service
+- view, sort and filter connection statistics using the interface
+- server settings: port, max. number of connections, buffer size
 
 ## Building from source
 
@@ -11,7 +17,7 @@ Install dependencies:
 - GCC 
 - Qt 5
 - QtQuick
-	- QtQuick Controls 2
+- QtQuick Controls 2
 - Sqlite 3
 
 Unbuntu / Debian
@@ -48,7 +54,7 @@ Or create package
 
 The package file will be written to `build` directory
 
-## Windows
+### Windows
 1. Download latest MinGW compiler: 
     https://github.com/niXman/mingw-builds-binaries/releases/download/12.1.0-rt_v10-rev3/x86_64-12.1.0-release-posix-seh-rt_v10-rev3.7z
     
@@ -75,14 +81,30 @@ Compile using script
 
 To create installer:
 
-Download NSIS 
-
-https://nsis.sourceforge.io/Download
-    
-Open installer\\installer.nsi file using NSIS Compiler
-
+1. Download NSIS: [link](https://nsis.sourceforge.io/Download)
+2. Open installer\\installer.nsi file using NSIS Compiler<br>
 ![screenshot](https://imgur.com/X6sa19x.png)
 
 ---
 ## Usage
 
+### Linux
+1. Download package from the repository (```socks5-proxy-2.2.8-1-any.pkg.tar.zst``` for Arch Linux, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb``` for Ubuntu/Debian)
+2. ```
+    sudo pacman -U socks5-proxy-2.2.8-1-any.pkg.tar.zst #Arch
+    sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb 	#deb
+   ```
+3. To start the server: ```sudo systemctl start socks5-proxy```
+4. To restart automatically on reboot: ```sudo systemctl enable socks5-proxy```
+5. To close the server: ```sudo systemctl stop socks5-proxy```
+6. To view statistics, select Socks5 Proxy GUI from the menu
+7. To stop the server: ```sudo systemctl stop socks5-proxy```
+8. Uninstallation: ```sudo apt remove socks5-proxy```
+
+### Windows
+1. Download ```socks5_installer.exe``` from the repository
+2. Run and follow the instructions of the installer
+3. To start the server, click on the shortcut ```Start Socks5 Proxy Service```
+4. To close the server, click the ```Stop Socks5 Proxy Service``` shortcut
+5. To view statistics, click the ```Socks 5 Proxy``` shortcut or ```<installed location>\statistics\interface.exe```
+6. Uninstallation: ```<installed location>\uninstall.exe```
