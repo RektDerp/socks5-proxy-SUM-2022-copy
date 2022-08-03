@@ -24,6 +24,7 @@ Item {
                 onTextChanged: {
                     table.userFilter = text
                 }
+                verticalAlignment: Text.AlignVCenter
             }
 
             CalendarButton {
@@ -65,6 +66,7 @@ Item {
                 onTextChanged: {
                     table.isActiveFilter = text
                 }
+                verticalAlignment: Text.AlignVCenter
             }
 
             TextField {
@@ -76,6 +78,7 @@ Item {
                 onTextChanged: {
                     table.srcEndpointFilter = text
                 }
+                verticalAlignment: Text.AlignVCenter
             }
 
             TextField {
@@ -87,6 +90,7 @@ Item {
                 onTextChanged: {
                     table.dstEndpointFilter = text
                 }
+                verticalAlignment: Text.AlignVCenter
             }
 
             TextField {
@@ -98,6 +102,7 @@ Item {
                 onTextChanged: {
                     table.bytesSentFilter = text.length > 0 ? text : "-1"
                 }
+                verticalAlignment: Text.AlignVCenter
             }
             TextField {
                 id: receivedFilter
@@ -108,6 +113,7 @@ Item {
                 onTextChanged: {
                     table.bytesRecvFilter = text.length > 0 ? text : "-1"
                 }
+                verticalAlignment: Text.AlignVCenter
             }
         }
 
