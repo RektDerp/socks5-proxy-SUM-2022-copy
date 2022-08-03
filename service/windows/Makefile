@@ -1,14 +1,16 @@
 CC=x86_64-w64-mingw32-g++
 WINEPREFIX=$(HOME)/.wine
 
-all : main
+all : service.exe controls
 
-main: service.o
-	$(CC) -g main.cpp service.o -o service.exe -static-libstdc++ -static-libgcc --static
-	cp service.exe $(WINEPREFIX)/drive_c
+controls:
+	$(CC) -o controls.exe servicecontrols.c -static-libstdc++ -static-libgcc -mwindows
+
+service.exe: service.o
+	$(CC) -o service.exe main.cpp service.o -static-libstdc++ -static-libgcc -static
 
 service.o :
-	$(CC) -c service.cpp -o service.o -lKernel32.dll -lAdvapi32.dll
+	$(CC) -o service.o -c service.cpp -lKernel32.dll -lAdvapi32.dll
 
 clean:
 	rm -f *.o *.exe
