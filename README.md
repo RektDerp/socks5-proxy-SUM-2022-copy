@@ -89,14 +89,15 @@ To create installer:
 ## Usage
 ### Linux
 1. Завантажити пакет з репозиторію (```socks5-proxy-2.2.8-1-any.pkg.tar.zst``` для Arch Linux, ```socks5-proxy-Qt5-2.2.8-1_amd64.deb``` для Ubuntu/Debian)
-2. ```sudo dpkg -i *.deb```
-- Якщо виникли помилки: ```sudo apt --fix-broken install```
-3. Для запуску сервера: ```sudo systemctl start socks5-proxy```
-4. Для автоматичного перезапуску при перезавантаженні: ```sudo systemctl enable socks5-proxy```
-5. Для закриття сервера: ```sudo systemctl stop socks5-proxy```
-6. Для перегляду статистики у меню обрати Socks5 Proxy GUI
-7. Для зупинки сервера: ```sudo systemctl stop socks5-proxy```
-8. Деінсталяція: ```sudo apt remove socks5-proxy```
+2. ```sudo dpkg -i socks5-proxy-Qt5-2.2.8-1_amd64.deb #deb
+      sudo pacman -U socks5-proxy-2.2.8-1-any.pkg.tar.zst #Arch
+   ```
+4. Для запуску сервера: ```sudo systemctl start socks5-proxy```
+5. Для автоматичного перезапуску при перезавантаженні: ```sudo systemctl enable socks5-proxy```
+6. Для закриття сервера: ```sudo systemctl stop socks5-proxy```
+7. Для перегляду статистики у меню обрати Socks5 Proxy GUI
+8. Для зупинки сервера: ```sudo systemctl stop socks5-proxy```
+9. Деінсталяція: ```sudo apt remove socks5-proxy```
 
 ### Windows
 1. Завантажити ```socks5_installer.exe``` з репозиторію
