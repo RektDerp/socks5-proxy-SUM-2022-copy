@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     using namespace proxy::ui;
     QGuiApplication app(argc, argv);
-    app.setWindowIcon(QIcon("icon.png"));
+    app.setWindowIcon(QIcon("socks5-interface.ico"));
     qmlRegisterType<SessionModel>("SessionModel", 0, 1, "SessionModel");
     qmlRegisterType<SortFilterSessionModel>("SortFilterSessionModel", 0, 1, "SortFilterSessionModel");
     QQmlApplicationEngine engine;
@@ -21,6 +21,5 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
     return app.exec();
 }
