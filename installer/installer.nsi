@@ -113,7 +113,6 @@ section "install"
     file "..\config.txt"
     file "socks5-interface.ico"
     file "start.ico"
-    file "stop.ico"
     !insertmacro MoveFile "$INSTDIR\interface.exe" "$INSTDIR\statistics\interface.exe"
     !insertmacro MoveFile "$INSTDIR\socks5-interface.ico" "$INSTDIR\statistics\socks5-interface.ico"
     SetOutPath $INSTDIR\statistics
