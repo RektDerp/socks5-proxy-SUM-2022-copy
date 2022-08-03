@@ -1,7 +1,7 @@
 #specifying the log level
 # OFF < FATAL < ERROR < INFO < DEBUG < TRACE
 
-log_level = DEBUG		
+log_level = INFO		
 
 # specifying the log type
 # DISABLE, CONSOLE, FILE, ENABLE
@@ -28,9 +28,9 @@ auth = 1
 
 # User credentials in format:
 # {
-# login: login
-# password: password
 # login: login1
+# password: password1
+# login: login2
 # password: password2
 # }
 
