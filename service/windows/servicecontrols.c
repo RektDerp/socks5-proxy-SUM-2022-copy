@@ -29,7 +29,6 @@ void wrapResult (HINSTANCE r){
 int main(int argc, char** argv)
 {
     if (!IsAppRunningAsAdminMode()){
-        MessageBox(hWnd, L"Not admin", L"control", MB_OK);
         wchar_t szPath[MAX_PATH];
     if (GetModuleFileName(NULL, szPath, ARRAYSIZE(szPath)))
     {
@@ -52,7 +51,6 @@ int main(int argc, char** argv)
         }
     }
     }
-    else MessageBox(hWnd, L"Admin", L"control", MB_OK);
     if (argc > 1){
         if (strcmp(argv[1], "start")) {
             wrapResult(ShellExecute(NULL,NULL,L"C:\\Windows\\System32\\sc.exe",L"start Socks5",NULL,SW_HIDE));
@@ -126,7 +124,7 @@ int windowSession (){
     wc.lpfnWndProc = WinProc;
     if(!RegisterClass(&wc))MessageBox(NULL,L"failed to register window class",L"error",MB_ICONERROR);
 
-    hWnd = CreateWindowEx(WS_EX_CLIENTEDGE,name,L"koksos", WS_SYSMENU | WS_CLIPCHILDREN,CW_USEDEFAULT,CW_USEDEFAULT,120,210,NULL,NULL,wc.hInstance,0);
+    hWnd = CreateWindowEx(WS_EX_CLIENTEDGE,name,L"Service", WS_SYSMENU | WS_CLIPCHILDREN,CW_USEDEFAULT,CW_USEDEFAULT,120,210,NULL,NULL,wc.hInstance,0);
     if(!hWnd)MessageBox(NULL,L"failed to create window",L"error",MB_ICONERROR);
 
     ShowWindow(hWnd,1);

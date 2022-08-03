@@ -124,17 +124,13 @@ section "install"
         createShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\statistics\interface.exe" "" "${logo}" 0 "" "" "Apriorit project"
         SetOutPath $INSTDIR
         ${If} $bService == "1"
-            createShortCut "$DESKTOP\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
-            createShortCut "$DESKTOP\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
+            createShortCut "$DESKTOP\${APPNAME} service control.lnk" "$INSTDIR\servicecontrols.exe" "" "${startLogo}" 0 "" "" "Service control"
          ${EndIf}
     ${EndIf}
 
     ${If} $bService == "1"
-        createShortCut "$SMPROGRAMS\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5"  "${startLogo}" 0 "" "" "Service control"
-        createShortCut "$SMPROGRAMS\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
+        createShortCut "$SMPROGRAMS\${APPNAME} service control.lnk" "$INSTDIR\servicecontrols.exe" "" "${startLogo}" 0 "" "" "Service control"
     ${EndIf}
-    createShortCut "$INSTDIR\Start ${APPNAME} service.lnk" "sc.exe" "start Socks5" "${startLogo}" 0 "" "" "Service control"
-    createShortCut "$INSTDIR\Stop ${APPNAME} service.lnk" "sc.exe" "stop Socks5" "${stopLogo}" 0 "" "" "Service control"
 
     nsExec::Exec '"sc.exe" delete Socks5'
     nsExec::Exec '"sc.exe" create Socks5 binpath="$INSTDIR\winservice.exe"'
@@ -158,11 +154,9 @@ section "uninstall"
     nsExec::Exec '"taskkill" /IM main.exe /F'
     rmDir /r "$INSTDIR"
     delete "$SMPROGRAMS\${APPNAME}.lnk"
-    delete "$SMPROGRAMS\Start ${APPNAME} service.lnk"
-    delete "$SMPROGRAMS\Stop ${APPNAME} service.lnk"
+    delete "$DESKTOP\${APPNAME} service control.lnk"
+    delete "$SMPROGRAMS\${APPNAME} service control.lnk"
     delete "$DESKTOP\${APPNAME}.lnk"
-    delete "$DESKTOP\Start ${APPNAME} service.lnk"
-    delete "$DESKTOP\Stop ${APPNAME} service.lnk"
 
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}"
 sectionEnd
