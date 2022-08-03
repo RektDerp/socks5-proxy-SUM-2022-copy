@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 
 Item {
     property SessionTableView table
+    property int filterHeight: 25
 
     ColumnLayout {
         id: filters
@@ -18,7 +19,7 @@ Item {
                 id: userFilter
                 placeholderText : qsTr("Username")
                 width: table.adaptiveColumnWidth(0)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: -table.contentX
                 onTextChanged: {
                     table.userFilter = text
@@ -29,7 +30,7 @@ Item {
                 id: createFilter
                 defaultText: "Create date"
                 width: table.adaptiveColumnWidth(1)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: userFilter.x + userFilter.width + table.spacingpx
                 onDateChanged: {
                     table.createDateFilter = selectedDate
@@ -43,8 +44,8 @@ Item {
                 id: updateFilter
                 defaultText: "Update date"
                 width: table.adaptiveColumnWidth(2)
+                implicitHeight: filterHeight
                 x: createFilter.x + createFilter.width + table.spacingpx
-                implicitHeight: 20
 
                 onDateChanged: {
                     table.updateDateFilter = selectedDate
@@ -59,7 +60,7 @@ Item {
                 id: activeFilter
                 placeholderText : qsTr("Active")
                 width: table.adaptiveColumnWidth(3)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: updateFilter.x + updateFilter.width + table.spacingpx
                 onTextChanged: {
                     table.isActiveFilter = text
@@ -70,7 +71,7 @@ Item {
                 id: srcFilter
                 placeholderText : qsTr("Client")
                 width: table.adaptiveColumnWidth(4)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: activeFilter.x + activeFilter.width + table.spacingpx
                 onTextChanged: {
                     table.srcEndpointFilter = text
@@ -81,7 +82,7 @@ Item {
                 id: dstFilter
                 placeholderText : qsTr("Server")
                 width: table.adaptiveColumnWidth(5)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: srcFilter.x + srcFilter.width + table.spacingpx
                 onTextChanged: {
                     table.dstEndpointFilter = text
@@ -92,7 +93,7 @@ Item {
                 id: sentFilter
                 placeholderText : qsTr("Sent bytes")
                 width: table.adaptiveColumnWidth(6)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: dstFilter.x + dstFilter.width + table.spacingpx
                 onTextChanged: {
                     table.bytesSentFilter = text.length > 0 ? text : "-1"
@@ -102,7 +103,7 @@ Item {
                 id: receivedFilter
                 placeholderText : qsTr("Recv bytes")
                 width: table.adaptiveColumnWidth(7)
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 x: sentFilter.x + sentFilter.width + table.spacingpx
                 onTextChanged: {
                     table.bytesRecvFilter = text.length > 0 ? text : "-1"
@@ -125,7 +126,7 @@ Item {
 
             CalendarButton {
                 id: from
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 defaultText: "[Not chosen]"
 
                 onDateChanged: {
@@ -145,7 +146,7 @@ Item {
 
             CalendarButton {
                 id: to
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 defaultText: "[Not chosen]"
                 onDateChanged: {
                     table.toDateFilter = selectedDate
@@ -158,7 +159,7 @@ Item {
 
             Button {
                 anchors.leftMargin: 50
-                implicitHeight: 20
+                implicitHeight: filterHeight
                 text: "Reset filters"
                 onClicked: {
                     userFilter.text = null

@@ -36,7 +36,7 @@ Window {
 
         FiltersBar {
             implicitWidth: parent.width
-            Layout.preferredHeight: 100
+            Layout.preferredHeight: 110
             table: table
         }
     }
