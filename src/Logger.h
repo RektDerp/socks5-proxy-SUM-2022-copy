@@ -35,15 +35,10 @@ namespace proxy {
         void log(const std::string& data, LOG_LEVEL level);
         void log(std::string&& data, LOG_LEVEL level);
 
-        void updateLogLevel(LOG_LEVEL logLevel);
-        void enableLog();
-        void disableLog();
-
-        void updateLogType(LOG_TYPE logType);
-        void enableConsoleLogging();
-        void enableFileLogging();
-        void enableALLLogging();
-        
+        inline void join()
+        {
+            m_worker.join();
+        }
     protected:
         Logger();
         ~Logger();

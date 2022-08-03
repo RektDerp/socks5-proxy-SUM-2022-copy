@@ -66,11 +66,11 @@ namespace proxy {
 
     void Logger::log(std::string&& data, LOG_LEVEL level)
     {
-        ba::post(m_worker, 
+        ba::post(m_worker,
             [this, data_Rvalue = std::move(data), level_value = level]
-            {
-                logTask(std::move(data_Rvalue), level_value);
-            });
+        {
+            logTask(std::move(data_Rvalue), level_value);
+        });
     }
 
     void Logger::logTask(const std::string& data, LOG_LEVEL level)
@@ -103,45 +103,6 @@ namespace proxy {
         return currentTime;
     }
 
-    void Logger::updateLogLevel(LOG_LEVEL logLevel)
-    {
-        m_LogLevel = logLevel;
-    }
-
-    void Logger::enableLog()
-    {
-        m_LogLevel = ALL_LOG;
-    }
-
-    void Logger::disableLog()
-    {
-        m_LogLevel = OFF_LOG; 
-    }
-
-    void Logger::updateLogType(LOG_TYPE logType)
-    {
-        m_LogType = logType;
-    }
-
-    void Logger::enableConsoleLogging()
-    {
-        if (m_LogType == OFF_LOG || m_LogType == CONSOLE_LOG) {
-            m_LogType = CONSOLE_LOG;
-        }
-        else {
-            m_LogType = ENABLE_LOG;
-        }
-    }
-
-    void Logger::enableFileLogging()
-    {
-        m_LogType = FILE_LOG; // todo fix
-    }
-    void Logger::enableALLLogging()
-    {
-        m_LogType = ENABLE_LOG;
-    }
-
     void Logger::configure()
     {
         ConfigReader& config = ConfigReader::getInstance();
@@ -157,11 +118,11 @@ namespace proxy {
                 m_LogLevel = static_cast<LOG_LEVEL>(it - LOG_LEVEL_NAMES.begin());
             }
             else {
-                log("Invalid log level, enabling all log", ERROR_LOG);
+                log("[logger] Invalid log level, enabling all log", ERROR_LOG);
             }
         }
         else {
-            log("No log level, enabling all log", ERROR_LOG);
+            log("[logger] No log level, enabling all log", ERROR_LOG);
         }
 
         if (config.getValue("log_type", logType_str))
@@ -172,11 +133,11 @@ namespace proxy {
                 m_LogType = static_cast<LOG_TYPE>(it - LOG_TYPE_NAMES.begin());
             }
             else {
-                log("Invalid log type, enabling all log", ERROR_LOG);
+                log("[logger] Invalid log type, enabling all log", ERROR_LOG);
             }
         }
         else {
-            log("No log type, enabling all log", ERROR_LOG);
+            log("[logger] No log type, enabling all log", ERROR_LOG);
         }
     }
 
