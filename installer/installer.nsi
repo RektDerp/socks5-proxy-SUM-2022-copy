@@ -152,6 +152,8 @@ section "uninstall"
     nsExec::Exec '"sc.exe" stop Socks5'
     nsExec::Exec '"sc.exe" delete Socks5'
     nsExec::Exec '"taskkill" /IM main.exe /F'
+    nsExec::Exec '"taskkill" /IM interface.exe /F'
+    nsExec::Exec '"taskkill" /IM servicecontrols.exe /F'
     rmDir /r "$INSTDIR"
     delete "$SMPROGRAMS\${APPNAME}.lnk"
     delete "$DESKTOP\${APPNAME} service control.lnk"
